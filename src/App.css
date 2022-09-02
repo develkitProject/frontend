@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+* {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+
+
 .App {
   text-align: center;
 }
@@ -35,4 +42,14 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../src/fonts/Montserrat-VariableFont_wght.ttf') format("truetype")
+}
+
+@font-face {
+  font-family: 'Consolas';
+  src: url('../src/fonts/CONSOLA.TTF') format("truetype")
 }
