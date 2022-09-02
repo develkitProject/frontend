@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import Footer from './components/Footer';
+
 import Header from './components/Header';
 import Landing from './pages/Landing';
 import Login from './login';
@@ -20,7 +20,6 @@ function App() {
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/workspace' element={<WorkSpace />} />
       </Routes>
-      <Footer />
     </>
   );
 }

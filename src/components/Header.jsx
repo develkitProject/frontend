@@ -25,7 +25,7 @@ function Header() {
   const logout = () => {
     removeCookieToken();
     // removeUserData();
-    window.location.href = '/login';
+    window.location.href = '/';
   };
 
   return (
