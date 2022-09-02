@@ -1,13 +1,26 @@
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { getCookieToken, removeCookieToken } from '../Cookie';
 import alarm from '../img/alarm.svg';
 import logo from '../img/logo.png';
 import profile from '../img/profile.png';
+import LoginModal from '../Modal/LoginModal';
+import SignupModal from '../Modal/SignupModal';
 
 function Header() {
   const navigate = useNavigate();
   const cookies = getCookieToken();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [signupOpen, setSignupOpen] = useState(false);
+  const onLoginButton = () => {
+    setIsOpen(true);
+  };
+
+  const onSignupButton = () => {
+    setSignupOpen(true);
+  };
 
   const logout = () => {
     removeCookieToken();
@@ -33,6 +46,32 @@ function Header() {
           <StLogJoin fc="#00A99D" onClick={() => navigate('/login')}>LOGIN</StLogJoin>
           <StLogJoin fc="white">·</StLogJoin>
           <StLogJoin fc="white" onClick={() => navigate('/signup')}>JOIN</StLogJoin>
+          <StLogBtn onClick={onLoginButton}>LOGIN</StLogBtn>
+          {isOpen && (
+            <LoginModal
+              setSignupOpen={setSignupOpen}
+              onSignupButton={onSignupButton}
+              open={isOpen}
+              onClose={() => {
+                setIsOpen(false);
+              }}
+            ></LoginModal>
+          )}
+          {signupOpen && (
+            <SignupModal
+              open={signupOpen}
+              onClose={() => {
+                setSignupOpen(false);
+              }}
+            ></SignupModal>
+          )}
+          <StJoinBtn
+            onClick={onSignupButton}
+            setSignupOpen={setSignupOpen}
+            onSignupButton={onSignupButton}
+          >
+            JOIN
+          </StJoinBtn>
         </StDiv>
       ) : (
         <StDiv>

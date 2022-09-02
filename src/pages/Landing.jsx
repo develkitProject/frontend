@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import LoginModal from '../Modal/LoginModal';
 
 function Landing() {
   const navigate = useNavigate();
 
-  const moveLogin = () => {
-    navigate('/login');
-  };
   return (
     <StWrapper>
       <StMain>
