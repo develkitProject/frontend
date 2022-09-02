@@ -1,5 +1,5 @@
 import './App.css';
-import Footer from './components/Footer';
+
 import Header from './components/Header';
 import Landing from './pages/Landing';
 import MyPage from './pages/MyPage';
@@ -17,7 +17,6 @@ function App() {
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/workspace' element={<WorkSpace />} />
       </Routes>
-      <Footer />
     </>
   );
 }
