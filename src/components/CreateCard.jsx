@@ -23,6 +23,9 @@ const StSpaceCard = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  &:hover {
+    background-color: #adb9e4;
+  }
 `;
 
 const StCardImage = styled.div`

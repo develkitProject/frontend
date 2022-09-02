@@ -8,8 +8,8 @@ function useOutSideClick(ref, callback) {
       }
     };
 
-    window.addEventListener('mousedown', handelClick);
-    return () => window.removeEventListener('mousedown', handelClick);
+    window.addEventListener('mouseup', handelClick);
+    return () => window.removeEventListener('mouseup', handelClick);
   }, [ref, callback]);
 }
 
