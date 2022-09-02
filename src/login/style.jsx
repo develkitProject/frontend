@@ -1,59 +1,98 @@
 import styled from 'styled-components';
 
-export const StWrapper = styled.div`
+export const ModalWrap = styled.div`
+  width: 500px;
+  height: 550px;
+  border-radius: 20px;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
   width: 100%;
-  height: 90vh;
-  background-color: #fafafa;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
 `;
 
-export const StLoginBox = styled.div`
-  width: 400px;
-  height: 500px;
-  background-color: white;
-  border: 1px solid #bababa;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-export const StSignupBox = styled.div`
-  width: 400px;
+export const StSpan = styled.span`
+  font-weight: 500;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 18px;
   margin-top: 30px;
-  height: 10vh;
-  background-color: white;
-  border: 1px solid #bababa;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
+  text-align: left;
 `;
 
-export const StInputBox = styled.input`
-  width: 70%;
-  height: 35px;
-  margin-top: 10px;
-  background-color: #fafafa;
-  border: 1px solid #d4d4d4;
-  border-radius: 5px;
-  &:focus,
-  &:active {
+export const StInput = styled.input`
+  font-family: 'Noto Sans KR', sans-serif;
+  border: 1px solid #999999;
+  line-height: 50px;
+  padding-left: 20px;
+  border-radius: 10px;
+  width: 93%;
+  margin-top: 18px;
+  font-size: 15px;
+  &:focus {
     outline: none;
   }
-  padding-left: 10px;
+`;
+
+export const LoginWrap = styled.div`
+  width: 65%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 70px;
+`;
+
+export const ButtonDiv = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 10px;
 `;
 
 export const StButton = styled.button`
-  width: 70%;
-  height: 35px;
-  margin-top: 30px;
+  width: 100%;
+  height: 50px;
+  border-radius: 8px;
   border: none;
+  background-color: #00a99d;
+  margin-top: 15px;
   color: white;
-  font-weight: 600;
-  font-size: 18px;
-  background-color: #0095f6;
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+`;
+
+export const StMent = styled.span`
+  color: ${(props) => props.fc};
+  font-family: 'Consolas';
+  font-size: 22px;
+  font-weight: 400;
+`;
+
+export const StMentDiv = styled.div`
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;

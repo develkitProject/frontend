@@ -1,12 +1,12 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import ModalContainer from './ModalContainer';
+import ModalContainer from '../Modal/ModalContainer';
 import useOutSideClick from '../hooks/useOutSideClick';
 import axios from 'axios';
 import { setAccessToken } from '../Cookie';
 import { useNavigate } from 'react-router-dom';
 
-const LoginModal = ({ onClose, setSignupOpen, onSignupButton }) => {
+const SignupModal = ({ onClose }) => {
   const [username, SetUsername] = useState('');
   const [password, SetPassword] = useState('');
   const navigate = useNavigate();
@@ -15,6 +15,12 @@ const LoginModal = ({ onClose, setSignupOpen, onSignupButton }) => {
   const handleClose = () => {
     onClose?.();
   };
+
+  useEffect(() => {
+    const $body = document.querySelector('body');
+    $body.style.overflow = 'hidden';
+    return () => ($body.style.overflow = 'auto');
+  }, []);
 
   const onClickLogin = async () => {
     if (username === '') {
@@ -40,7 +46,7 @@ const LoginModal = ({ onClose, setSignupOpen, onSignupButton }) => {
         setAccessToken(res.headers.authorization);
         alert('로그인완료!');
         // setRefreshToken(res.headers['refresh-token'])
-        navigate('/workspace');
+        navigate('/');
         window.location.reload();
       }
     } catch (err) {
@@ -56,6 +62,7 @@ const LoginModal = ({ onClose, setSignupOpen, onSignupButton }) => {
     <ModalContainer>
       <Overlay>
         <ModalWrap ref={modalRef}>
+          <h1>회원가입</h1>
           <LoginWrap>
             <StSpan>이메일</StSpan>
             <StInput
@@ -84,8 +91,7 @@ const LoginModal = ({ onClose, setSignupOpen, onSignupButton }) => {
                   border: '1px solid black',
                 }}
                 onClick={() => {
-                  onSignupButton();
-                  handleClose();
+                  // handleClose();
                 }}
               >
                 회원가입
@@ -98,7 +104,7 @@ const LoginModal = ({ onClose, setSignupOpen, onSignupButton }) => {
   );
 };
 
-export default LoginModal;
+export default SignupModal;
 
 const ModalWrap = styled.div`
   width: 500px;

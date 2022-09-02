@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import LoginModal from '../Modal/LoginModal';
+import Login from '../login';
 
 function Landing() {
   const navigate = useNavigate();
+
+  const moveMain = () => {
+    navigate('/workspace');
+  };
 
   return (
     <StWrapper>
@@ -26,7 +30,9 @@ function Landing() {
           </StIntroMent>
           <div>
             <div>화살표</div>
-            <div>디벨킷 시작하기</div>
+            <div onClick={moveMain} style={{ cursor: 'pointer' }}>
+              디벨킷 시작하기
+            </div>
           </div>
         </StIntro>
 
