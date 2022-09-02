@@ -11,19 +11,8 @@ function SpaceCard() {
         <CardProfile />
       </StCardImage>
       <StFooterBox>
-        <h3 style={{ marginLeft: '20px', fontWeight: '600', fontSize: '18px' }}>
-          에펠탑 보러 파리 가실분
-        </h3>
-        <h5
-          style={{
-            fontWeight: '500',
-            color: '#979797',
-            marginRight: '20px',
-            cursor: 'pointer',
-          }}
-        >
-          탈퇴하기
-        </h5>
+        <SpaceName>에펠탑 보러 파리 가실분</SpaceName>
+        <SpaceOutName>탈퇴하기</SpaceOutName>
       </StFooterBox>
     </StSpaceCard>
   );
@@ -32,10 +21,11 @@ function SpaceCard() {
 export default SpaceCard;
 
 const StSpaceCard = styled.div`
-  width: 400px;
-  height: 300px;
+  width: 350px;
+  height: 250px;
   border-radius: 20px;
   border: 2px solid #d7d7d7;
+  margin-left: 20px;
 `;
 
 const StCardImage = styled.div`
@@ -55,4 +45,19 @@ const StFooterBox = styled.div`
   justify-content: space-between;
   align-items: center;
   text-align: center;
+`;
+
+const SpaceName = styled.span`
+  font-size: 17px;
+  font-weight: 500;
+  margin-left: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+`;
+
+const SpaceOutName = styled.span`
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  margin-right: 10px;
+  color: #999999;
 `;

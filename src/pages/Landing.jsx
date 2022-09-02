@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import LoginModal from '../Modal/LoginModal';
 
 function Landing() {
   const navigate = useNavigate();
 
-  const moveLogin = () => {
-    navigate('/login');
-  };
   return (
     <StWrapper>
       <div>D.Velkit 랜딩페이지</div>
-      <StLogin onClick={moveLogin}>로그인하기</StLogin>
+      <StLogin>로그인하기</StLogin>
     </StWrapper>
   );
 }
@@ -41,4 +39,7 @@ const StLogin = styled.div`
   justify-content: center;
   margin-top: 20px;
   cursor: pointer;
+  color: red;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
 `;

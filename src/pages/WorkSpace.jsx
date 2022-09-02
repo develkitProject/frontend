@@ -1,13 +1,19 @@
 import styled from 'styled-components';
 
 import CreateCard from '../components/CreateCard';
-import SpaceCard from '../components/SpaceCard';
+import SpaceCard from '../components/SpaceCard.jsx';
 
 function WorkSpace() {
   return (
     <StWrapper>
-      <CreateCard />
-      <SpaceCard />
+      <CardWrapper>
+        <CreateCard />
+        <SpaceCard />
+        <SpaceCard />
+        <SpaceCard />
+        <SpaceCard />
+        <SpaceCard />
+      </CardWrapper>
     </StWrapper>
   );
 }
@@ -19,7 +25,15 @@ const StWrapper = styled.div`
   height: 90vh;
   background-color: #fafafa;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
-  flex-direction: column;
+`;
+
+const CardWrapper = styled.div`
+  width: 70%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 150px;
 `;

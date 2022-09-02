@@ -15,8 +15,8 @@ function CreateCard() {
 export default CreateCard;
 
 const StSpaceCard = styled.div`
-  width: 400px;
-  height: 300px;
+  width: 350px;
+  height: 250px;
   border-radius: 20px;
   background-color: #dfe6ff;
   display: flex;
