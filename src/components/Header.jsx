@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
 import { getCookieToken, removeCookieToken } from '../Cookie';
 import alarm from '../img/alarm.svg';
 import logo from '../img/logo.png';
@@ -19,14 +18,21 @@ function Header() {
   return (
     <StHeaderDiv>
       <StDiv onClick={() => navigate('/')}>
-        <StLogo alt='logo' src={logo} />
-        <StName onClick={() => navigate('/')}>D.Velkit</StName>
+        <StLogo alt='logo' src={logo}/>
+      </StDiv>
+
+      <StDiv>
+        <StMenuName>About</StMenuName>
+        <StMenuName>Proejct</StMenuName>
+        <StMenuName>Community</StMenuName>
+        <StMenuName>FAQ</StMenuName>
       </StDiv>
 
       {!cookies ? (
         <StDiv>
-          <StLogBtn onClick={() => navigate('/login')}>LOGIN</StLogBtn>
-          <StJoinBtn onClick={() => navigate('/signup')}>JOIN</StJoinBtn>
+          <StLogJoin fc="#00A99D" onClick={() => navigate('/login')}>LOGIN</StLogJoin>
+          <StLogJoin fc="white">·</StLogJoin>
+          <StLogJoin fc="white" onClick={() => navigate('/signup')}>JOIN</StLogJoin>
         </StDiv>
       ) : (
         <StDiv>
@@ -51,13 +57,14 @@ export default Header;
 const StHeaderDiv = styled.div`
   align-items: center;
   flex-direction: row;
-  background-color: #040404;
+  background-color: #000000;
   width: 100%;
-  height: 10vh;
+  height: 120px;
   left: 0px;
   top: 0px;
+  /* border-bottom: 1px solid white; */
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 const StDiv = styled.div`
@@ -65,24 +72,37 @@ const StDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 40px;
-  margin-right: 40px;
+  margin-left: 8%;
+  margin-right: 8%;
 `;
 
 const StLogo = styled.img`
-  margin-left: 40px;
-  width: 40px;
-  height: 40px;
+  width: 198px;
+  height: 42px;
   cursor: pointer;
 `;
 
-const StName = styled.p`
+
+const StMenuName = styled.p`
   color: white;
-  font-size: 26px;
-  font-weight: 500;
+  letter-spacing: -0.05em;
+  font-size: 20px;
+  font-weight: 400;
   margin-left: 15px;
+  margin-right: 15px;
   cursor: pointer;
 `;
+
+const StLogJoin = styled.p`
+  color: ${props =>props.fc};
+  padding-left: 5px;
+  padding-right: 5px;
+  font-family: 'Montserrat';
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+`;
+
 const StLogBtn = styled.button`
   margin-right: 10px;
   width: 120px;
@@ -95,17 +115,6 @@ const StLogBtn = styled.button`
   cursor: pointer; ;
 `;
 
-const StJoinBtn = styled.button`
-  margin-right: 40px;
-  width: 120px;
-  height: 40px;
-  border-radius: 100px;
-  background-color: #244ddd;
-  color: white;
-  font-size: 16px;
-  border: solid #244ddd 1px;
-  cursor: pointer; ;
-`;
 
 const StProfileImg = styled.img`
   padding: 1px;
