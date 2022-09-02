@@ -5,8 +5,8 @@ import { getCookieToken, removeCookieToken } from '../Cookie';
 import alarm from '../img/alarm.svg';
 import logo from '../img/logo.png';
 import profile from '../img/profile.png';
-import LoginModal from '../Modal/LoginModal';
-import SignupModal from '../Modal/SignupModal';
+import Login from '../login';
+import SignupModal from '../signup/SignupModal';
 
 function Header() {
   const navigate = useNavigate();
@@ -57,14 +57,14 @@ function Header() {
           </StLogJoin>
           {/* <StLogBtn onClick={onLoginButton}>LOGIN</StLogBtn> */}
           {isOpen && (
-            <LoginModal
+            <Login
               setSignupOpen={setSignupOpen}
               onSignupButton={onSignupButton}
               open={isOpen}
               onClose={() => {
                 setIsOpen(false);
               }}
-            ></LoginModal>
+            ></Login>
           )}
           {signupOpen && (
             <SignupModal

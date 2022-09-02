@@ -36,6 +36,11 @@ const StCardImage = styled.div`
   background-image: url('https://p4.wallpaperbetter.com/wallpaper/1014/843/831/4k-eiffel-tower-france-8k-wallpaper-preview.jpg');
   background-size: cover;
   position: relative;
+  background-blend-mode: multiply;
+  &:hover {
+    background-color: #978888;
+    z-index: 9;
+  }
 `;
 
 const StFooterBox = styled.div`
@@ -60,4 +65,5 @@ const SpaceOutName = styled.span`
   font-size: 14px;
   margin-right: 10px;
   color: #999999;
+  cursor: pointer;
 `;

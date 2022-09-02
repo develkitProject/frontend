@@ -4,9 +4,15 @@ import styled from 'styled-components';
 import Footer from '../components/Footer';
 import icon from '../img/icon1.png';
 import scroll from '../img/scroll.svg';
+import Login from '../login';
+
 
 function Landing() {
   const navigate = useNavigate();
+
+  const moveMain = () => {
+    navigate('/workspace');
+  };
 
   return (
     <>
@@ -20,6 +26,7 @@ function Landing() {
                 “Devlop Your Teamwork through D.VelKit!”;
               </StMent>
             </StMent>
+
             <StIntroMent>
               <div style={{ marginBottom: '15px' }}>성장하는 사람들을 위한</div>
               <div>
