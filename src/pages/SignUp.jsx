@@ -126,23 +126,19 @@ function SignUp() {
     }
   };
 
-  // const emailCheck = async(event:any)=>{
-  //     event.preventDefault()
-  //     try{
-  //       const data = await axios.post(
-  //       `http://hosung.shop/api/members/email/${username}`
-  //       );
-  //       console.log('data')
-  // setUsernameCheck(data);
-  // if(data.data.data=== '사용가능한 닉네임입니다.'){
-  //   alert(data.data.data);
-  //   return;
-  // }
-  // alert('이미 사용중인 닉네임입니다.');
-  // }catch(error){
-  //   throw new Error('error');
-  //   }
-  // }
+  const emailCheck = async () => {
+    const checkDuplicate = {
+      username,
+    };
+    try {
+      await axios.post('http://hosung.shop/api/members/email', checkDuplicate)
+        .then(() => {
+          alert('닉네임을 사용하실 수 있습니다.');
+        });
+    } catch (error) {
+      alert('이미 존재하는 닉네임입니다.');
+    }
+  };
 
   return (
     <StWrapper>
@@ -175,7 +171,7 @@ function SignUp() {
                   </span>
                 )}
               </StMsg>
-              <button type='button'>중복확인</button>
+              <button onClick={emailCheck} type='button'>중복확인</button>
             </div>
           </div>
 
