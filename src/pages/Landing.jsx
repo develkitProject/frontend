@@ -10,30 +10,34 @@ function Landing() {
   return (
     <StWrapper>
       <StMain>
-            <StIntro>
-              <StMent>let <StMent fc="#00A99D">D.Velkit</StMent> = <StMent fc="#F5D28C">“Devlop Your Teamwork through D.VelKit!”;</StMent></StMent>
-              <StIntroMent>
-                <div style={{marginBottom:"15px"}}>성장하는 사람들을 위한</div>
-                <div>프로젝트 협업 서비스, <span style={{color:"#00A99D"}}>디벨킷</span></div>
-              </StIntroMent>
-              <div>
-                <div>화살표</div>
-                <div onClick={moveLogin}>디벨킷 시작하기</div>
-              </div>
-            </StIntro>
-
-
-
+        <StIntro>
+          <StMent>
+            let <StMent fc='#00A99D'>D.Velkit</StMent> ={' '}
+            <StMent fc='#F5D28C'>
+              “Devlop Your Teamwork through D.VelKit!”;
+            </StMent>
+          </StMent>
+          <StIntroMent>
+            <div style={{ marginBottom: '15px' }}>성장하는 사람들을 위한</div>
             <div>
-              <div>마우스</div>
-              <div>scroll down</div>
+              프로젝트 협업 서비스,{' '}
+              <span style={{ color: '#00A99D' }}>디벨킷</span>
             </div>
-      </StMain>  
+          </StIntroMent>
+          <div>
+            <div>화살표</div>
+            <div>디벨킷 시작하기</div>
+          </div>
+        </StIntro>
 
-      <StBar> 
         <div>
-          옆에 세로 따라다니는
+          <div>마우스</div>
+          <div>scroll down</div>
         </div>
+      </StMain>
+
+      <StBar>
+        <div>옆에 세로 따라다니는</div>
       </StBar>
     </StWrapper>
   );
@@ -76,21 +80,20 @@ const StIntro = styled.div`
 `;
 
 const StMent = styled.span`
-  color: ${props =>props.fc};
+  color: ${(props) => props.fc};
   font-family: 'Consolas';
   font-size: 22px;
   font-weight: 400;
 `;
 
 const StIntroMent = styled.div`
-  color: ${props =>props.fc};
+  color: ${(props) => props.fc};
   margin-top: 4%;
   font-size: 54px;
   font-weight: 500;
   flex-direction: column;
   font-family: 'Noto Sans KR', sans-serif;
 `;
-
 
 const StBar = styled.div`
   color: white;
@@ -103,4 +106,3 @@ const StBar = styled.div`
   font-weight: 600;
   font-size: 20px;
 `;
-
