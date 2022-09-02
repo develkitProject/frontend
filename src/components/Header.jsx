@@ -31,7 +31,7 @@ function Header() {
   return (
     <StHeaderDiv>
       <StDiv onClick={() => navigate('/')}>
-        <StLogo alt='logo' src={logo}/>
+        <StLogo alt='logo' src={logo} />
       </StDiv>
 
       <StDiv>
@@ -43,10 +43,19 @@ function Header() {
 
       {!cookies ? (
         <StDiv>
-          <StLogJoin fc="#00A99D" onClick={() => navigate('/login')}>LOGIN</StLogJoin>
-          <StLogJoin fc="white">·</StLogJoin>
-          <StLogJoin fc="white" onClick={() => navigate('/signup')}>JOIN</StLogJoin>
-          <StLogBtn onClick={onLoginButton}>LOGIN</StLogBtn>
+          <StLogJoin fc='#00A99D' onClick={onLoginButton}>
+            LOGIN
+          </StLogJoin>
+          <StLogJoin fc='white'>·</StLogJoin>
+          <StLogJoin
+            fc='white'
+            onClick={() => onSignupButton()}
+            setSignupOpen={setSignupOpen}
+            onSignupButton={onSignupButton}
+          >
+            JOIN
+          </StLogJoin>
+          {/* <StLogBtn onClick={onLoginButton}>LOGIN</StLogBtn> */}
           {isOpen && (
             <LoginModal
               setSignupOpen={setSignupOpen}
@@ -65,13 +74,7 @@ function Header() {
               }}
             ></SignupModal>
           )}
-          <StJoinBtn
-            onClick={onSignupButton}
-            setSignupOpen={setSignupOpen}
-            onSignupButton={onSignupButton}
-          >
-            JOIN
-          </StJoinBtn>
+          <StLogJoin>JOIN</StLogJoin>
         </StDiv>
       ) : (
         <StDiv>
@@ -121,7 +124,6 @@ const StLogo = styled.img`
   cursor: pointer;
 `;
 
-
 const StMenuName = styled.p`
   color: white;
   letter-spacing: -0.05em;
@@ -133,7 +135,7 @@ const StMenuName = styled.p`
 `;
 
 const StLogJoin = styled.p`
-  color: ${props =>props.fc};
+  color: ${(props) => props.fc};
   padding-left: 5px;
   padding-right: 5px;
   font-family: 'Montserrat';
@@ -153,7 +155,6 @@ const StLogBtn = styled.button`
   border: 1px solid #d7d7d7;
   cursor: pointer; ;
 `;
-
 
 const StProfileImg = styled.img`
   padding: 1px;
