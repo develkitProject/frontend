@@ -12,7 +12,7 @@ function SpaceCard() {
       </StCardImage>
       <StFooterBox>
         <SpaceName>에펠탑 보러 파리 가실분</SpaceName>
-        <SpaceOutName>탈퇴하기</SpaceOutName>
+        <SpaceOutName>나가기</SpaceOutName>
       </StFooterBox>
     </StSpaceCard>
   );
