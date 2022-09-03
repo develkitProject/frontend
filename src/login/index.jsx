@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import useOutSideClick from '../hooks/useOutSideClick';
 import ModalContainer from '../Modal/ModalContainer';
-import useInputLogin from './hooks/useinputLogin';
+import useInputLogin from './hooks/useInputLogin';
 
 import {
   Overlay,
