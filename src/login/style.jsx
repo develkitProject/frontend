@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 export const ModalWrap = styled.div`
-  width: 500px;
-  height: 550px;
+  width: 464px;
+  height: 756px;
   border-radius: 20px;
   position: absolute;
-  top: 60%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
@@ -84,15 +84,5 @@ export const StMent = styled.span`
   font-family: 'Consolas';
   font-size: 22px;
   font-weight: 400;
-`;
-
-export const StMentDiv = styled.div`
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  font-family: 'Noto Sans KR', sans-serif;
 `;

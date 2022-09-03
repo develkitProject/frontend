@@ -6,9 +6,7 @@ import icon from '../img/icon1.png';
 import scroll from '../img/scroll.svg';
 import Login from '../login';
 import 'animate.css';
-//https://animate.style/
-//https://www.youtube.com/watch?v=N4899I-tAW4
-//https://codepen.io/eehayman/pen/qdGZJr
+
 
 function Landing() {
   const navigate = useNavigate();
@@ -19,25 +17,28 @@ function Landing() {
 
   return (
     <>
-    <StWrapper>
-      <StMain>
-        <StWrap>
-          <StIntro>
-            <StMent>
-              let <StMent fc='#00A99D'>D.Velkit</StMent> ={' '}
-              <StMent fc='#F5D28C'>
-                “Devlop Your Teamwork through D.VelKit!”;
+      <StWrapper>
+        <StMain>
+          <StWrap>
+            <StIntro>
+              <StMent>
+                let <StMent fc='#00A99D'>D.Velkit</StMent> ={' '}
+                <StMent fc='#F5D28C'>
+                  “Devlop Your Teamwork through D.VelKit!”;
+                </StMent>
               </StMent>
-            </StMent>
 
-            <StIntroMent>
-              <div style={{ marginBottom: '15px' }}>성장하는 사람들을 위한</div>
-              <div>
-                프로젝트 협업 서비스,{' '}
-                <span style={{ color: '#00A99D' }}>디벨킷</span>
-              </div>
-            </StIntroMent>
+              <StIntroMent>
+                <div style={{ marginBottom: '15px' }}>
+                  성장하는 사람들을 위한
+                </div>
+                <div>
+                  프로젝트 협업 서비스,{' '}
+                  <span style={{ color: '#00A99D' }}>디벨킷</span>
+                </div>
+              </StIntroMent>
               <StStart onClick={() => navigate('/workspace')}>
+
                 <StIcon src={icon}/> 
                 <StLink >디벨킷 시작하기</StLink>
               </StStart>
@@ -124,7 +125,7 @@ export default Landing;
 const StWrapper = styled.div`
   color: white;
   width: 100%;
-  height: 100%;
+  height: 88vh;
   display: flex;
   background: #000000;
 `;
@@ -160,9 +161,7 @@ const StMent = styled.span`
   font-family: 'Consolas';
   font-size: 22px;
   font-weight: 400;
-  `;
-
-
+`;
 
 const StIntroMent = styled.div`
   color: ${(props) => props.fc};
@@ -181,6 +180,7 @@ const StStart = styled.div`
   flex-direction: row;
   cursor: pointer;
 `;
+
 
 const StIcon =styled.img`
     margin-top: auto;
@@ -205,8 +205,9 @@ const StScroll = styled.div`
   align-items: center;
   flex-direction: column;
   text-align: center;
-  cursor:n-resize;
+  cursor: n-resize;
   font-family: 'Montserrat';
+
   &:hover{
       animation: bounce;
       animation-duration: 1.5s;

@@ -34,28 +34,35 @@ const Login = ({ onClose, onSignupButton }) => {
   return (
     <ModalContainer>
       <Overlay>
-        <StMentDiv ref={modalRef}>
-          <StMent
-            fc='#00A99D'
-            style={{
-              fontSize: '40px',
-              marginBottom: '50px',
-              fontWeight: '600',
-            }}
-          >
-            로그인
-          </StMent>{' '}
-          <StMent>
-            <span style={{ color: 'white' }}>let</span>{' '}
-            <StMent fc='#00A99D'>D.Velkit</StMent>{' '}
-            <span style={{ color: 'white' }}>=</span>{' '}
-            <StMent fc='#F5D28C'>
-              “Devlop Your Teamwork through D.VelKit!”;
-            </StMent>
-          </StMent>
-        </StMentDiv>
         <ModalWrap ref={modalRef}>
           <LoginWrap>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: '30px',
+              }}
+            >
+              <StMent
+                fc='#00A99D'
+                style={{
+                  fontSize: '35px',
+                  marginBottom: '20px',
+                  fontWeight: '600',
+                }}
+              >
+                로그인
+              </StMent>
+              <StMent
+                fc='#999999'
+                style={{ fontSize: '15px', fontWeight: '600', width: '110%' }}
+              >
+                성장하는 사람들을 위한 프로젝트 협업 서비스 디벨킷.
+              </StMent>
+            </div>
             <StSpan>이메일</StSpan>
             <StInput
               name='username'
@@ -66,7 +73,7 @@ const Login = ({ onClose, onSignupButton }) => {
             <StInput
               type='password'
               name='password'
-              style={{ marginBottom: '40px' }}
+              style={{ marginBottom: '20px' }}
               placeholder='비밀번호를 입력해주세요!'
               onChange={onChangeUserInputs}
             ></StInput>
