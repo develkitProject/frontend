@@ -24,6 +24,8 @@ function MyPage() {
   //     </div>
   //   );
   // }
+
+  console.log(user);
   const onChangeImage = () => {
     const reader = new FileReader();
     const file = imgRef?.current?.files[0];
