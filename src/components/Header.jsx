@@ -52,7 +52,7 @@ function Header() {
             fc='white'
             onClick={() => onSignupButton()}
             setSignupOpen={setSignupOpen}
-            onSignupButton={onSignupButton}
+            SignupButton={onSignupButton}
           >
             JOIN
           </StLogJoin>
@@ -103,7 +103,7 @@ const StHeaderDiv = styled.div`
   flex-direction: row;
   background-color: #000000;
   width: 100%;
-  height: 12vh;
+  height: 10vh;
   left: 0px;
   top: 0px;
   /* border-bottom: 1px solid white; */

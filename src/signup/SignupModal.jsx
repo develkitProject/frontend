@@ -16,6 +16,7 @@ const SignupModal = ({ onClose }) => {
     onClose?.();
   };
 
+
   useEffect(() => {
     const $body = document.querySelector('body');
     $body.style.overflow = 'hidden';
@@ -36,6 +37,7 @@ const SignupModal = ({ onClose }) => {
   //     alert('이미 존재하는 닉네임입니다.');
   //   }
   // };
+
 
   useOutSideClick(modalRef, handleClose);
 
