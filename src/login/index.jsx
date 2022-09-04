@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import useOutSideClick from '../hooks/useOutSideClick';
 import ModalContainer from '../Modal/ModalContainer';
 import useInputLogin from './hooks/useInputLogin';
-import { REST_API_KEY, REDIRECT_URI } from '../data/kakaodata';
 import KakaoLogin from '../components/KaKaoLogin';
 
 import {
@@ -17,7 +16,7 @@ import {
 } from './style';
 
 const Login = ({ onClose, SignupButton }) => {
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REST_API_KEY}&redirect_uri=${process.env.REDIRECT_URI}&response_type=code`;
   const { onClickLogin, onChangeUserInputs } = useInputLogin();
 
   const modalRef = useRef(null);
