@@ -2,16 +2,14 @@ import styled from 'styled-components';
 
 import CreateCard from '../components/CreateCard';
 import SpaceCard from '../components/SpaceCard.jsx';
+import SpaceHeader from '../components/SpaceHeader';
 
 function WorkSpace() {
   return (
     <StWrapper>
+      <SpaceHeader></SpaceHeader>
       <CardWrapper>
         <CreateCard />
-        <SpaceCard />
-        <SpaceCard />
-        <SpaceCard />
-        <SpaceCard />
         <SpaceCard />
       </CardWrapper>
     </StWrapper>
@@ -25,6 +23,7 @@ const StWrapper = styled.div`
   height: 90vh;
   background-color: #fafafa;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;

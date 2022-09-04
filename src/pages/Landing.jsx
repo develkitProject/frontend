@@ -7,7 +7,6 @@ import scroll from '../img/scroll.svg';
 import Login from '../login';
 import 'animate.css';
 
-
 function Landing() {
   const navigate = useNavigate();
 
@@ -38,29 +37,26 @@ function Landing() {
                 </div>
               </StIntroMent>
               <StStart onClick={() => navigate('/workspace')}>
-
-                <StIcon src={icon}/> 
-                <StLink >디벨킷 시작하기</StLink>
+                <StIcon src={icon} />
+                <StLink>디벨킷 시작하기</StLink>
               </StStart>
-          </StIntro>
-        </StWrap>
+            </StIntro>
+          </StWrap>
 
-        <StScroll>
-          <StScrollImg alt='scroll' src={scroll} />
-          <div className="animate__shakeY">scroll down</div>
-        </StScroll>
-      </StMain>
-    </StWrapper>
+          <StScroll>
+            <StScrollImg alt='scroll' src={scroll} />
+            <div className='animate__shakeY'>scroll down</div>
+          </StScroll>
+        </StMain>
+      </StWrapper>
 
-
-    <StWrapper>
-      <StMain>
-        <StWrap>
-          <StIntro>
-            <StMent>
-              let <StMent fc='#00A99D'>D.Velkit</StMent> ={' '}
-              <StMent fc='#F5D28C'>
-                “Point!”;
+      <StWrapper>
+        <StMain>
+          <StWrap>
+            <StIntro>
+              <StMent>
+                let <StMent fc='#00A99D'>D.Velkit</StMent> ={' '}
+                <StMent fc='#F5D28C'>“Point!”;</StMent>
               </StMent>
             </StMent>
             <StIntroMent>
@@ -115,7 +111,6 @@ function Landing() {
     </StWrapper>
 
    </> 
-
   );
 }
 
@@ -180,11 +175,10 @@ const StStart = styled.div`
   cursor: pointer;
 `;
 
-
-const StIcon =styled.img`
-    margin-top: auto;
-    width: 60px;
-`
+const StIcon = styled.img`
+  margin-top: auto;
+  width: 60px;
+`;
 
 const StLink = styled.div`
   margin-top: auto;
@@ -207,17 +201,17 @@ const StScroll = styled.div`
   cursor: n-resize;
   font-family: 'Montserrat';
 
-  &:hover{
-      animation: bounce;
-      animation-duration: 1.5s;
-    }
-`
+  &:hover {
+    animation: bounce;
+    animation-duration: 1.5s;
+  }
+`;
 const StScrollImg = styled.img`
   width: 20px;
-  &:hover{
-      width: 22px;
-    }
-`
+  &:hover {
+    width: 22px;
+  }
+`;
 
 const StCardContainer = styled.div`
   margin-top: 15vh;
@@ -226,7 +220,7 @@ const StCardContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-`
+`;
 
 const StCard = styled.div`
   max-width: 22%;
@@ -235,17 +229,17 @@ const StCard = styled.div`
   height: 50vh;
   border-radius: 20px;
   background: linear-gradient(to bottom, #000 0%, ${(props) => props.gc} 100%);
-`
+`;
 
-const StCardText= styled.div`
+const StCardText = styled.div`
   margin-top: 70%;
   margin-left: 11.1%;
-`
+`;
 
 const StCardTitle = styled.div`
   color: ${(props) => props.fc};
   font-size: 24px;
-`
+`;
 
 const StCardContent = styled.div`
   margin-top: 6%;
@@ -253,4 +247,4 @@ const StCardContent = styled.div`
   font-size: 20px;
   font-weight: 400;
   line-height: 1.5;
-`
+`;
