@@ -29,6 +29,7 @@ function Header() {
   };
 
   return (
+    <>
     <StHeaderDiv>
       <StDiv onClick={() => navigate('/')}>
         <StLogo alt='logo' src={logo} />
@@ -56,24 +57,6 @@ function Header() {
             JOIN
           </StLogJoin>
           {/* <StLogBtn onClick={onLoginButton}>LOGIN</StLogBtn> */}
-          {isOpen && (
-            <Login
-              setSignupOpen={setSignupOpen}
-              onSignupButton={onSignupButton}
-              open={isOpen}
-              onClose={() => {
-                setIsOpen(false);
-              }}
-            ></Login>
-          )}
-          {signupOpen && (
-            <SignupModal
-              open={signupOpen}
-              onClose={() => {
-                setSignupOpen(false);
-              }}
-            ></SignupModal>
-          )}
           <StLogJoin>JOIN</StLogJoin>
         </StDiv>
       ) : (
@@ -91,6 +74,25 @@ function Header() {
         </StDiv>
       )}
     </StHeaderDiv>
+    {isOpen && (
+        <Login
+          setSignupOpen={setSignupOpen}
+          onSignupButton={onSignupButton}
+          open={isOpen}
+          onClose={() => {
+            setIsOpen(false);
+          }}
+        ></Login>
+      )}
+      {signupOpen && (
+        <SignupModal
+          open={signupOpen}
+          onClose={() => {
+            setSignupOpen(false);
+          }}
+        ></SignupModal>
+      )}
+    </>
   );
 }
 
