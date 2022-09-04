@@ -1,141 +1,43 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
+
 import styled from 'styled-components';
 import ModalContainer from '../Modal/ModalContainer';
 import useOutSideClick from '../hooks/useOutSideClick';
-import axios from 'axios';
-import { setAccessToken } from '../Cookie';
-import { useNavigate } from 'react-router-dom';
+
+import useInputSignUp from './hooks/useInputSignUp';
+import UserInputForm from './components/UserInputForm';
 
 const SignupModal = ({ onClose }) => {
-  const [username, setUsername] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  const [isUsername, setIsUsername] = useState(false);
-  const [isNickname, setIsNickname] = useState(false);
-  const [isPassword, setIsPassword] = useState(false);
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
-
-  const [usernameMsg, setUsernameMsg] = useState('');
-  const [nicknameMsg, setNicknameMsg] = useState('');
-  const [passwordMsg, setPasswordMsg] = useState('');
-  const [passwordConfirmMsg, setPasswordConfirmMsg] = useState('');
+  const { onChangeSignUpInputs } = useInputSignUp()
 
   const modalRef = useRef(null);
   const handleClose = () => {
     onClose?.();
   };
 
-  const onChangeUsername = (event) => {
-    const usernameRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    if (event.target.value && usernameRegex.test(event.target.value)) {
-      setIsUsername(true);
-      setUsernameMsg('올바른 이메일 형식입니다.');
-    } else {
-      setIsUsername(false);
-      setUsernameMsg('유효하지 않은 이메일 주소입니다.');
-    }
-    setUsername(event.target.value);
-  };
 
-  const onChangePassword = (event) => {
-    const passwordRegex =
-      /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
-    if (
-      event.target.value.length > 7 &&
-      event.target.value.length < 21 &&
-      event.target.value &&
-      passwordRegex.test(event.target.value)
-    ) {
-      setIsPassword(true);
-      setPasswordMsg('올바른 비밀번호 형식입니다.');
-    } else {
-      setIsPassword(false);
-      setPasswordMsg('비밀번호는 8~20자 내외로 영어+숫자+특수문자 조합입니다.');
-    }
-    setPassword(event.target.value);
-  };
+  useEffect(() => {
+    const $body = document.querySelector('body');
+    $body.style.overflow = 'hidden';
+    return () => ($body.style.overflow = 'auto');
+  }, []);
 
-  const onChangeNickname = (event) => {
-    if (event.target.value.length < 2 || event.target.value.length > 8) {
-      setIsNickname(false);
-      setNicknameMsg('2~8글자 내외(한글, 영어, 숫자)로 입력해주세요.');
-    } else {
-      setIsNickname(true);
-      setNicknameMsg('올바른 아이디 형식입니다.');
-    }
-    setNickname(event.target.value);
-  };
+  // const emailCheck = async () => {
+  //   const checkDuplicate = {
+  //     username,
+  //   };
+  //   try {
+  //     await axios
+  //       .post('http://hosung.shop/api/members/email', checkDuplicate)
+  //       .then(() => {
+  //         alert('닉네임을 사용하실 수 있습니다.');
+  //       });
+  //   } catch (error) {
+  //     alert('이미 존재하는 닉네임입니다.');
+  //   }
+  // };
 
-  const onChangePasswordConfirm = (event) => {
-    if (password === event.target.value) {
-      setIsPasswordConfirm(true);
-      setPasswordConfirmMsg('동일한 비밀번호입니다.');
-    } else {
-      setIsPasswordConfirm(false);
-      setPasswordConfirmMsg('비밀번호가 다릅니다.');
-    }
-    setIsPassword(true);
-    setPasswordConfirm(event.target.value);
-  };
-
-  const validation = () => {
-    if (username) setIsUsername(true);
-    if (nickname) setIsNickname(true);
-    if (password) setIsPassword(true);
-    if (passwordConfirm) setIsPasswordConfirm(true);
-    if (
-      username &&
-      nickname &&
-      password &&
-      passwordConfirm &&
-      isUsername &&
-      isNickname &&
-      isPassword &&
-      isPasswordConfirm
-    ) {
-      return true;
-    }
-    return false;
-  };
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    if (validation()) {
-      try {
-        const res = await axios.post('http://hosung.shop/api/members/signup', {
-          username,
-          password,
-          nickname,
-        });
-      } catch (error) {
-        throw new Error('error');
-      }
-      alert('회원 가입 완료하였습니다!!');
-      setUsername('');
-      setNickname('');
-      setPassword('');
-    } else {
-      alert('입력 정보를 다시 확인하세요!!');
-    }
-  };
-
-  const emailCheck = async () => {
-    const checkDuplicate = {
-      username,
-    };
-    try {
-      await axios
-        .post('http://hosung.shop/api/members/email', checkDuplicate)
-        .then(() => {
-          alert('닉네임을 사용하실 수 있습니다.');
-        });
-    } catch (error) {
-      alert('이미 존재하는 닉네임입니다.');
-    }
-  };
 
   useOutSideClick(modalRef, handleClose);
 
@@ -176,42 +78,10 @@ const SignupModal = ({ onClose }) => {
                 성장하는 사람들을 위한 프로젝트 협업 서비스 디벨킷.
               </StMent>
             </div>
-            <StSpan>닉네임</StSpan>
-            <StInput
-              name='nickname'
-              placeholder='닉네임'
-              onChange={(event) => {
-                setUsername(event.target.value);
-              }}
-            ></StInput>
-            <StSpan>이메일</StSpan>
-            <StInput
-              name='username'
-              placeholder='이메일을 입력해주세요!'
-              onChange={(event) => {
-                setUsername(event.target.value);
-              }}
-            ></StInput>
-            <StSpan>비밀번호</StSpan>
-            <StInput
-              type='password'
-              name='password'
-              placeholder='비밀번호를 입력해주세요!'
-              onChange={(event) => {
-                setPassword(event.target.value);
-              }}
-            ></StInput>
-            <StSpan>비밀번호 확인</StSpan>
-            <StInput
-              type='password'
-              name='passwordConfirm'
-              style={{ marginBottom: '40px' }}
-              placeholder='비밀번호를 한번 더 입력해주세요!'
-              onChange={(event) => {
-                setPassword(event.target.value);
-              }}
-            ></StInput>
-            <StMsg>
+            <UserInputForm 
+              onChange={onChangeSignUpInputs}
+            />
+            {/* <StMsg>
               {passwordConfirm.length > 0 && (
                 <span
                   className={`message ${
@@ -221,7 +91,7 @@ const SignupModal = ({ onClose }) => {
                   {passwordConfirmMsg}
                 </span>
               )}
-            </StMsg>
+            </StMsg> */}
             <ButtonDiv>
               <StButton
                 style={{}}
@@ -280,31 +150,8 @@ const Overlay = styled.div`
   z-index: 9999;
 `;
 
-const StSpan = styled.span`
-  font-weight: 500;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 18px;
-  margin-top: 20px;
-  text-align: left;
-`;
-
-const StInput = styled.input`
-  font-family: 'Noto Sans KR', sans-serif;
-  border: 1px solid #999999;
-  line-height: 45px;
-  padding-left: 20px;
-  border-radius: 10px;
-  width: 93%;
-  margin-top: 18px;
-  font-size: 15px;
-  &:focus {
-    outline: none;
-  }
-`;
-
 const LoginWrap = styled.div`
-  width: 65%;
-  height: 80%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
