@@ -58,69 +58,59 @@ function Landing() {
                 let <StMent fc='#00A99D'>D.Velkit</StMent> ={' '}
                 <StMent fc='#F5D28C'>“Point!”;</StMent>
               </StMent>
-              <StIntroMent>
-                <div style={{ marginBottom: '15px' }}>
-                  프로젝트 협업의 새로운 시작
-                </div>
-                <div>업무관리가 더욱 쉽고 간편해집니다.</div>
-              </StIntroMent>
-            </StIntro>
+            </StMent>
+            <StIntroMent>
+              <div style={{ marginBottom: '15px' }}>프로젝트 협업의 새로운 시작</div>
+              <div>
+                업무관리가 더욱 쉽고 간편해집니다.
+              </div>
+            </StIntroMent>
+          </StIntro>
 
-            <StCardContainer>
-              <StCard gc='#1e0e0e'>
-                <StCardText>
-                  <StCardTitle fc='#832e2e'>일정관리</StCardTitle>
-                  <StCardContent fc='#832e2e'>
-                    <p>
-                      달력에서 바로바로!
-                      <br />팀 전체 일정도 한 눈에{' '}
-                    </p>
-                  </StCardContent>
-                </StCardText>
-              </StCard>
+          <StCardContainer>
 
-              <StCard gc='#003d38'>
-                <StCardText>
-                  <StCardTitle fc='#003d38'>문서 아카이빙</StCardTitle>
-                  <StCardContent fc='#003d38'>
-                    <p>
-                      달력에서 바로바로!
-                      <br />팀 전체 일정도 한 눈에{' '}
-                    </p>
-                  </StCardContent>
-                </StCardText>
-              </StCard>
+            <StCard gc='#1e0e0e'>
+              <StCardText>
+                <StCardTitle fc='#832e2e'>일정관리</StCardTitle>
+                <StCardContent fc='#832e2e'>
+                  <p>달력에서 바로바로!<br/>팀 전체 일정도 한 눈에 </p>
+                </StCardContent>
+              </StCardText>
+            </StCard>
 
-              <StCard gc='#4a3711'>
-                <StCardText>
-                  <StCardTitle fc='#4a3711'>실시간 채팅</StCardTitle>
-                  <StCardContent fc='#4a3711'>
-                    <p>
-                      달력에서 바로바로!
-                      <br />팀 전체 일정도 한 눈에{' '}
-                    </p>
-                  </StCardContent>
-                </StCardText>
-              </StCard>
+            <StCard gc='#003d38'>
+            <StCardText>
+                <StCardTitle fc='#003d38'>문서 아카이빙</StCardTitle>
+                <StCardContent fc='#003d38'>
+                  <p>달력에서 바로바로!<br/>팀 전체 일정도 한 눈에 </p>
+                </StCardContent>
+              </StCardText>
+            </StCard>
 
-              <StCard gc='#4a3711'>
-                <StCardText>
-                  <StCardTitle fc='#4a3711'>실시간 채팅</StCardTitle>
-                  <StCardContent fc='#4a3711'>
-                    <p>
-                      달력에서 바로바로!
-                      <br />팀 전체 일정도 한 눈에{' '}
-                    </p>
-                  </StCardContent>
-                </StCardText>
-              </StCard>
-            </StCardContainer>
-          </StWrap>
-        </StMain>
-      </StWrapper>
+            <StCard gc='#4a3711'>
+            <StCardText>
+                <StCardTitle fc='#4a3711'>실시간 채팅</StCardTitle>
+                <StCardContent fc='#4a3711'>
+                  <p>달력에서 바로바로!<br/>팀 전체 일정도 한 눈에 </p>
+                </StCardContent>
+              </StCardText>
+            </StCard>
 
-      {/* <Footer /> */}
-    </>
+            <StCard gc='#4a3711'>
+            <StCardText>
+                <StCardTitle fc='#4a3711'>실시간 채팅</StCardTitle>
+                <StCardContent fc='#4a3711'>
+                  <p>달력에서 바로바로!<br/>팀 전체 일정도 한 눈에 </p>
+                </StCardContent>
+              </StCardText>
+            </StCard>
+
+          </StCardContainer>
+        </StWrap>
+      </StMain>
+    </StWrapper>
+
+   </> 
   );
 }
 
@@ -129,7 +119,7 @@ export default Landing;
 const StWrapper = styled.div`
   color: white;
   width: 100%;
-  height: 88vh;
+  height: 100%;
   display: flex;
   background: #000000;
 `;
