@@ -44,6 +44,10 @@
   }
 }
 
+.ql-editor strong{
+  font-weight:bold;
+}
+
 @font-face {
   font-family: 'Montserrat';
   src: url('../src/fonts/Montserrat-VariableFont_wght.ttf') format("truetype")

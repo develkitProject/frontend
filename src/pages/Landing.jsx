@@ -114,7 +114,6 @@ function Landing() {
       </StMain>
     </StWrapper>
 
-    <Footer />
    </> 
 
   );
@@ -125,7 +124,7 @@ export default Landing;
 const StWrapper = styled.div`
   color: white;
   width: 100%;
-  height: 88vh;
+  height: 100%;
   display: flex;
   background: #000000;
 `;
