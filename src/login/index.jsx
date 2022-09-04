@@ -1,11 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import useOutSideClick from '../hooks/useOutSideClick';
 import ModalContainer from '../Modal/ModalContainer';
 import useInputLogin from './hooks/useInputLogin';
+import { REST_API_KEY, REDIRECT_URI } from '../data/kakaodata';
+import KakaoLogin from '../components/KaKaoLogin';
 
 import {
   Overlay,
-  StMentDiv,
   StMent,
   ModalWrap,
   LoginWrap,
@@ -15,7 +16,8 @@ import {
   StButton,
 } from './style';
 
-const Login = ({ onClose, onSignupButton }) => {
+const Login = ({ onClose, SignupButton }) => {
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   const { onClickLogin, onChangeUserInputs } = useInputLogin();
 
   const modalRef = useRef(null);
@@ -23,11 +25,9 @@ const Login = ({ onClose, onSignupButton }) => {
     onClose?.();
   };
 
-  useEffect(() => {
-    const $body = document.querySelector('body');
-    $body.style.overflow = 'hidden';
-    return () => ($body.style.overflow = 'auto');
-  }, []);
+  const handleLogin = () => {
+    window.location.href = KAKAO_AUTH_URL;
+  };
 
   useOutSideClick(modalRef, handleClose);
 
@@ -86,13 +86,17 @@ const Login = ({ onClose, onSignupButton }) => {
                   border: '1px solid black',
                 }}
                 onClick={() => {
-                  onSignupButton();
+                  SignupButton();
                   handleClose();
                 }}
               >
                 회원가입
               </StButton>
             </ButtonDiv>
+            <KakaoLogin
+              onClick={handleLogin}
+              style={{ width: '100%' }}
+            ></KakaoLogin>
           </LoginWrap>
         </ModalWrap>
       </Overlay>

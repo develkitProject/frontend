@@ -7,7 +7,6 @@ import scroll from '../img/scroll.svg';
 import Login from '../login';
 import 'animate.css';
 
-
 function Landing() {
   const navigate = useNavigate();
 
@@ -38,85 +37,90 @@ function Landing() {
                 </div>
               </StIntroMent>
               <StStart onClick={() => navigate('/workspace')}>
-
-                <StIcon src={icon}/> 
-                <StLink >디벨킷 시작하기</StLink>
+                <StIcon src={icon} />
+                <StLink>디벨킷 시작하기</StLink>
               </StStart>
-          </StIntro>
-        </StWrap>
+            </StIntro>
+          </StWrap>
 
-        <StScroll>
-          <StScrollImg alt='scroll' src={scroll} />
-          <div className="animate__shakeY">scroll down</div>
-        </StScroll>
-      </StMain>
-    </StWrapper>
+          <StScroll>
+            <StScrollImg alt='scroll' src={scroll} />
+            <div className='animate__shakeY'>scroll down</div>
+          </StScroll>
+        </StMain>
+      </StWrapper>
 
-
-    <StWrapper>
-      <StMain>
-        <StWrap>
-          <StIntro>
-            <StMent>
-              let <StMent fc='#00A99D'>D.Velkit</StMent> ={' '}
-              <StMent fc='#F5D28C'>
-                “Point!”;
+      <StWrapper>
+        <StMain>
+          <StWrap>
+            <StIntro>
+              <StMent>
+                let <StMent fc='#00A99D'>D.Velkit</StMent> ={' '}
+                <StMent fc='#F5D28C'>“Point!”;</StMent>
               </StMent>
-            </StMent>
-            <StIntroMent>
-              <div style={{ marginBottom: '15px' }}>프로젝트 협업의 새로운 시작</div>
-              <div>
-                업무관리가 더욱 쉽고 간편해집니다.
-              </div>
-            </StIntroMent>
-          </StIntro>
+              <StIntroMent>
+                <div style={{ marginBottom: '15px' }}>
+                  프로젝트 협업의 새로운 시작
+                </div>
+                <div>업무관리가 더욱 쉽고 간편해집니다.</div>
+              </StIntroMent>
+            </StIntro>
 
-          <StCardContainer>
+            <StCardContainer>
+              <StCard gc='#1e0e0e'>
+                <StCardText>
+                  <StCardTitle fc='#832e2e'>일정관리</StCardTitle>
+                  <StCardContent fc='#832e2e'>
+                    <p>
+                      달력에서 바로바로!
+                      <br />팀 전체 일정도 한 눈에{' '}
+                    </p>
+                  </StCardContent>
+                </StCardText>
+              </StCard>
 
-            <StCard gc='#1e0e0e'>
-              <StCardText>
-                <StCardTitle fc='#832e2e'>일정관리</StCardTitle>
-                <StCardContent fc='#832e2e'>
-                  <p>달력에서 바로바로!<br/>팀 전체 일정도 한 눈에 </p>
-                </StCardContent>
-              </StCardText>
-            </StCard>
+              <StCard gc='#003d38'>
+                <StCardText>
+                  <StCardTitle fc='#003d38'>문서 아카이빙</StCardTitle>
+                  <StCardContent fc='#003d38'>
+                    <p>
+                      달력에서 바로바로!
+                      <br />팀 전체 일정도 한 눈에{' '}
+                    </p>
+                  </StCardContent>
+                </StCardText>
+              </StCard>
 
-            <StCard gc='#003d38'>
-            <StCardText>
-                <StCardTitle fc='#003d38'>문서 아카이빙</StCardTitle>
-                <StCardContent fc='#003d38'>
-                  <p>달력에서 바로바로!<br/>팀 전체 일정도 한 눈에 </p>
-                </StCardContent>
-              </StCardText>
-            </StCard>
+              <StCard gc='#4a3711'>
+                <StCardText>
+                  <StCardTitle fc='#4a3711'>실시간 채팅</StCardTitle>
+                  <StCardContent fc='#4a3711'>
+                    <p>
+                      달력에서 바로바로!
+                      <br />팀 전체 일정도 한 눈에{' '}
+                    </p>
+                  </StCardContent>
+                </StCardText>
+              </StCard>
 
-            <StCard gc='#4a3711'>
-            <StCardText>
-                <StCardTitle fc='#4a3711'>실시간 채팅</StCardTitle>
-                <StCardContent fc='#4a3711'>
-                  <p>달력에서 바로바로!<br/>팀 전체 일정도 한 눈에 </p>
-                </StCardContent>
-              </StCardText>
-            </StCard>
+              <StCard gc='#4a3711'>
+                <StCardText>
+                  <StCardTitle fc='#4a3711'>실시간 채팅</StCardTitle>
+                  <StCardContent fc='#4a3711'>
+                    <p>
+                      달력에서 바로바로!
+                      <br />팀 전체 일정도 한 눈에{' '}
+                    </p>
+                  </StCardContent>
+                </StCardText>
+              </StCard>
+            </StCardContainer>
+          </StWrap>
+        </StMain>
+      </StWrapper>
 
-            <StCard gc='#4a3711'>
-            <StCardText>
-                <StCardTitle fc='#4a3711'>실시간 채팅</StCardTitle>
-                <StCardContent fc='#4a3711'>
-                  <p>달력에서 바로바로!<br/>팀 전체 일정도 한 눈에 </p>
-                </StCardContent>
-              </StCardText>
-            </StCard>
-
-          </StCardContainer>
-        </StWrap>
-      </StMain>
-    </StWrapper>
-
-    <Footer />
-   </> 
-
+      {/* <Footer /> */}
+    </>
   );
 }
 
@@ -181,11 +185,10 @@ const StStart = styled.div`
   cursor: pointer;
 `;
 
-
-const StIcon =styled.img`
-    margin-top: auto;
-    width: 60px;
-`
+const StIcon = styled.img`
+  margin-top: auto;
+  width: 60px;
+`;
 
 const StLink = styled.div`
   margin-top: auto;
@@ -208,17 +211,17 @@ const StScroll = styled.div`
   cursor: n-resize;
   font-family: 'Montserrat';
 
-  &:hover{
-      animation: bounce;
-      animation-duration: 1.5s;
-    }
-`
+  &:hover {
+    animation: bounce;
+    animation-duration: 1.5s;
+  }
+`;
 const StScrollImg = styled.img`
   width: 20px;
-  &:hover{
-      width: 22px;
-    }
-`
+  &:hover {
+    width: 22px;
+  }
+`;
 
 const StCardContainer = styled.div`
   margin-top: 15vh;
@@ -227,7 +230,7 @@ const StCardContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-`
+`;
 
 const StCard = styled.div`
   max-width: 22%;
@@ -236,17 +239,17 @@ const StCard = styled.div`
   height: 50vh;
   border-radius: 20px;
   background: linear-gradient(to bottom, #000 0%, ${(props) => props.gc} 100%);
-`
+`;
 
-const StCardText= styled.div`
+const StCardText = styled.div`
   margin-top: 70%;
   margin-left: 11.1%;
-`
+`;
 
 const StCardTitle = styled.div`
   color: ${(props) => props.fc};
   font-size: 24px;
-`
+`;
 
 const StCardContent = styled.div`
   margin-top: 6%;
@@ -254,4 +257,4 @@ const StCardContent = styled.div`
   font-size: 20px;
   font-weight: 400;
   line-height: 1.5;
-`
+`;

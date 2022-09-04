@@ -55,7 +55,7 @@ export const LoginWrap = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: 70px;
+  margin-bottom: 0px;
 `;
 
 export const ButtonDiv = styled.div`

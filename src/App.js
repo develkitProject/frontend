@@ -5,6 +5,7 @@ import Landing from './pages/Landing';
 import MyPage from './pages/MyPage';
 // import SignUp from './pages/SignUp';
 import WorkSpace from './pages/WorkSpace';
+import Kakao from './pages/KaKao';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         {/* <Route path='/signup' element={<SignUp />} /> */}
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/workspace' element={<WorkSpace />} />
+        <Route path='/kakao' element={<Kakao />} />
       </Routes>
     </>
   );
