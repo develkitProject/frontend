@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         margin: 0;
         font-family: 'Noto Sans KR', sans-serif;
+        letter-spacing: -1.8px;
     };
     /* button{
         display: flex;

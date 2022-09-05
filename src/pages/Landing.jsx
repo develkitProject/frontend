@@ -1,18 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Footer from '../components/Footer';
 import icon from '../img/icon1.png';
 import scroll from '../img/scroll.svg';
-import Login from '../login';
 import 'animate.css';
 
 function Landing() {
   const navigate = useNavigate();
-
-  const moveMain = () => {
-    navigate('/workspace');
-  };
 
   return (
     <>

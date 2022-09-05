@@ -30,51 +30,60 @@ function Header() {
 
   return (
     <>
-    <StHeaderDiv>
-      <StDiv onClick={() => navigate('/')}>
-        <StLogo alt='logo' src={logo} />
-      </StDiv>
+      <StHeaderDiv>
+        <div
+          style={{
+            width: '50%',
+            display: 'flex',
+            marginLeft: '50px',
+            height: '100%',
+            alignItems: 'center',
+          }}
+        >
+          <StLogo alt='logo' src={logo} onClick={() => navigate('/')} />
 
-      <StDiv>
-        <StMenuName>About</StMenuName>
-        <StMenuName>Proejct</StMenuName>
-        <StMenuName>Community</StMenuName>
-        <StMenuName>FAQ</StMenuName>
-      </StDiv>
+          {/* <StDiv style={!matches ? { display: 'none' } : null}> */}
+          <StMenuDiv>
+            <StMenuName>About</StMenuName>
+            <StMenuName>Proejct</StMenuName>
+            <StMenuName>Community</StMenuName>
+            <StMenuName>FAQ</StMenuName>
+            {/* </StDiv> */}
+          </StMenuDiv>
+        </div>
 
-      {!cookies ? (
-        <StDiv>
-          <StLogJoin fc='#00A99D' onClick={onLoginButton}>
-            LOGIN
-          </StLogJoin>
-          <StLogJoin fc='white'>·</StLogJoin>
-          <StLogJoin
-            fc='white'
-            onClick={() => onSignupButton()}
-            setSignupOpen={setSignupOpen}
-            SignupButton={onSignupButton}
-          >
-            JOIN
-          </StLogJoin>
-          {/* <StLogBtn onClick={onLoginButton}>LOGIN</StLogBtn> */}
-          <StLogJoin>JOIN</StLogJoin>
-        </StDiv>
-      ) : (
-        <StDiv>
-          <StAlarmImg src={alarm} />
-          <StProfileImg src={profile} onClick={() => navigate('/mypage')} />
-          <StLogBtn
-            onClick={() => {
-              logout();
-            }}
-            style={{ marginRight: '40px' }}
-          >
-            LOGOUT
-          </StLogBtn>
-        </StDiv>
-      )}
-    </StHeaderDiv>
-    {isOpen && (
+        {!cookies ? (
+          <StDiv>
+            <StLogJoin fc='#00A99D' onClick={onLoginButton}>
+              LOGIN
+            </StLogJoin>
+            <StLogJoin fc='white'>·</StLogJoin>
+            <StLogJoin
+              fc='white'
+              onClick={() => onSignupButton()}
+              setSignupOpen={setSignupOpen}
+              SignupButton={onSignupButton}
+            >
+              JOIN
+            </StLogJoin>
+            {/* <StLogBtn onClick={onLoginButton}>LOGIN</StLogBtn> */}
+            <StLogJoin>JOIN</StLogJoin>
+          </StDiv>
+        ) : (
+          <StDiv>
+            <StAlarmImg src={alarm} />
+            <StProfileImg src={profile} onClick={() => navigate('/mypage1')} />
+            <StLogBtn
+              onClick={() => {
+                logout();
+              }}
+            >
+              LOGOUT
+            </StLogBtn>
+          </StDiv>
+        )}
+      </StHeaderDiv>
+      {isOpen && (
         <Login
           setSignupOpen={setSignupOpen}
           onSignupButton={onSignupButton}
@@ -108,16 +117,18 @@ const StHeaderDiv = styled.div`
   top: 0px;
   /* border-bottom: 1px solid white; */
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  min-height: 100px;
 `;
 
 const StDiv = styled.div`
+  width: 50%;
   height: 40px;
   display: flex;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
   margin-left: 8%;
-  margin-right: 8%;
+  margin-right: 50px;
 `;
 
 const StLogo = styled.img`
@@ -126,14 +137,20 @@ const StLogo = styled.img`
   cursor: pointer;
 `;
 
-const StMenuName = styled.p`
+const StMenuName = styled.span`
   color: white;
   letter-spacing: -0.05em;
   font-size: 20px;
   font-weight: 400;
-  margin-left: 15px;
+  margin-left: 60px;
   margin-right: 15px;
+  font-family: 'Montserrat';
+  font-weight: 600;
+  opacity: 0.6;
   cursor: pointer;
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 const StLogJoin = styled.p`
@@ -147,7 +164,6 @@ const StLogJoin = styled.p`
 `;
 
 const StLogBtn = styled.button`
-  margin-right: 10px;
   width: 120px;
   height: 40px;
   border-radius: 100px;
@@ -178,4 +194,13 @@ const StAlarmImg = styled.img`
   border-radius: 70%;
   background-color: white;
   cursor: pointer;
+`;
+
+const StMenuDiv = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 50px;
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
 `;
