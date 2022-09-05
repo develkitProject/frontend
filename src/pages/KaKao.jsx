@@ -20,9 +20,9 @@ const KaKao = () => {
         });
     };
     if (code) {
-      kakao(code);
+      kakao();
     }
-  }, [code]);
+  }, []);
 
   return <div>카카오페이지입니다.</div>;
 };
