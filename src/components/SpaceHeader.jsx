@@ -43,8 +43,3 @@ const StInput = styled.input`
   }
   position: relative;
 `;
-
-const StGo = styled.span`
-  color: #00a99d;
-  font-size: 30px;
-`;
