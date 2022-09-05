@@ -1,18 +1,34 @@
 import styled from 'styled-components';
+import { getCookieToken} from '../Cookie';
 
 import CreateCard from '../components/CreateCard';
 import SpaceCard from '../components/SpaceCard.jsx';
 import SpaceHeader from '../components/SpaceHeader';
+import WorkSpaceErrorModal from '../workspace/error'
 
 function WorkSpace() {
+  const cookies = getCookieToken();
+
   return (
+    <>
+    {!cookies ? (<WorkSpaceErrorModal/>)
+    :(
     <StWrapper>
-      <SpaceHeader></SpaceHeader>
+      <SpaceHeader/>
       <CardWrapper>
         <CreateCard />
         <SpaceCard />
+        <SpaceCard />
+        <SpaceCard />
+        <SpaceCard />
+        <SpaceCard />
+        <SpaceCard />
+        <SpaceCard />
+        <SpaceCard />
+        <SpaceCard />
       </CardWrapper>
-    </StWrapper>
+    </StWrapper>)}
+    </>
   );
 }
 
@@ -20,19 +36,18 @@ export default WorkSpace;
 
 const StWrapper = styled.div`
   width: 100%;
-  height: 90vh;
-  background-color: #fafafa;
+  min-height: 90vh;
+  background-color: #000000;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 `;
 
 const CardWrapper = styled.div`
-  width: 70%;
-  height: 100%;
+  width: 90%;
+  min-height: 100%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 150px;
+  margin-top: 50px;
 `;
