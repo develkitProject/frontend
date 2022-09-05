@@ -1,13 +1,12 @@
 import React from 'react';
-
 import styled from 'styled-components';
-
 import Add from '../img/add.png';
 
 function CreateCard() {
   return (
     <StSpaceCard>
-      <StCardImage />
+      <StText>진행중인 프로젝트</StText>
+      <StButton>+프로젝트 생성하기</StButton>
     </StSpaceCard>
   );
 }
@@ -15,32 +14,34 @@ function CreateCard() {
 export default CreateCard;
 
 const StSpaceCard = styled.div`
-  width: 350px;
-  height: 250px;
-  border-radius: 20px;
-  background-color: #dfe6ff;
+  width: 100%;
+  height: 50px;
+  margin: 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  margin-bottom: 2%;
+`;
+
+const StText = styled.p`
+  width: 100%;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -1.5px;
+  text-align: left;
+  color: white;
+`;
+
+const StButton = styled.button`
+  width: 25%;
+  height: 100%;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: -1px;
+  text-align: center;
+  background-color: #00a99d;
+  color: white;
   cursor: pointer;
-  &:hover {
-    background-color: #adb9e4;
-  }
+  border: none;
 `;
-
-const StCardImage = styled.div`
-  width: 50%;
-  height: 40%;
-  border-radius: 20px 20px 0px 0px;
-  background-image: url(${Add});
-  background-size: 100% 100%;
-`;
-
-// const StFooterBox = styled.div`
-//   width:100%;
-//   height:20%;
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   text-align: center;
-// `;

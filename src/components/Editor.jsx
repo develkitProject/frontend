@@ -48,4 +48,3 @@ const Editor = ({placeholder, value, ...rest})=>{
     }
 
 export default Editor
-
