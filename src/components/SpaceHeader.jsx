@@ -60,3 +60,19 @@ const StInput = styled.input`
   display:inline;
 `;
 
+const StGo = styled.button`
+  font-family: Montserrat;
+  font-size:1.2em;
+  font-weight: 700;
+  color: #00a99d;
+  background-color: transparent;
+  border: none;
+  box-sizing: border-box;
+  margin-left: -65px;
+  margin-top: 0;
+  display:inline;
+  cursor: pointer;
+  @media screen and (max-width: 800px) {
+  display: none;
+  }
+`;
