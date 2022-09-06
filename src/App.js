@@ -9,6 +9,7 @@ import Kakao from './pages/KaKao';
 import { Routes, Route } from 'react-router-dom';
 import Editor from './components/Editor';
 import MyPage1 from './pages/MyPage1';
+import WorkSpaceDetail from './pages/WorkSpaceDetail';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path='/workspace' element={<WorkSpace />} />
         <Route path='/editor' element={<Editor />} />
         <Route path='/kakao' element={<Kakao />} />
+        <Route path='/workspace/1' element={<WorkSpaceDetail />} />
       </Routes>
     </>
   );
