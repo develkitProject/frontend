@@ -11,16 +11,16 @@ export default function BasicInput({
     onChange,
     name,
     label,
+    isError,
     isSuccess,
-    subText,
     errorText,
 }) {
 
     const setBorderStyle = useCallback(() => {
         if(isSuccess) return '1px solid #00A99D'
-        if(errorText) return '1px solid #E75E5E'
+        if(isError) return '1px solid #E75E5E'
         return '1px solid #999999'
-    }, [errorText, isSuccess])
+    }, [isError, isSuccess])
     
     return (
         <Spacer
@@ -44,7 +44,7 @@ export default function BasicInput({
                     <Icon.CheckSuccess />
                 )}
             </InputWrapper>
-            {errorText && (
+            {isError && (
                 <div>
                     <ErrorText>{errorText}</ErrorText>
                 </div>
@@ -71,9 +71,9 @@ const InputWrapper = styled.div`
     border: ${(props) => props.borderStyle};
     line-height: 60px;
     border-radius: 10px;
-    padding-left: 20px;
+    // padding-left: 20px;
     margin-top: 8px;
-    width: 360px;
+    width: 100%;
     height: 60px;
     font-size: 15px;
 `
@@ -82,7 +82,8 @@ const StInput = styled.input`
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 16px;
   margin: auto 0;
-  width: 310px;
+  width: 290px;
+  margin-left: 20px;
   border:none;
     outline: none;
 `;

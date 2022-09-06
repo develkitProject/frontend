@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useGetSignUpMutation } from '../../redux/query/signup';
 
 export default function useInputSignUp() {
     const [signUpInputs, setSignUpInputs] = useState({
@@ -8,12 +9,7 @@ export default function useInputSignUp() {
         passwordConfirm: ''
     })
 
-    const [errorTexts, setErrorTexts] = useState({
-        nicknameError: '',
-        emailError: '',
-        passwordError: '',
-        passwordConfirmError: '',
-    })
+    const [getSignUp, { data }] = useGetSignUpMutation()
 
     const onChangeSignUpInputs = useCallback((e) => {
         const { name, value } = e.target
@@ -24,11 +20,17 @@ export default function useInputSignUp() {
     }, [signUpInputs])
 
     const handleSignUp = useCallback(() => {
-        // if(username)
-    }, [])
-
+        const { nickname, email, password } = signUpInputs;
+        getSignUp({
+            username: email,
+            nickname,
+            password,
+        })
+    }, [getSignUp, signUpInputs])
 
     return {
-        onChangeSignUpInputs
+        signUpInputs,
+        onChangeSignUpInputs,
+        handleSignUp
     }
 }
