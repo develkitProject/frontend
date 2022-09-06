@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useReducer } from 'react';
 import styled from 'styled-components';
 import useGetUser from '../hooks/useGetUser';
-import { useGetWorkspacesQuery } from '../redux/modules/workspaces';
-import BasicInput from '../components/BasicInput';
-import useInput from '../hooks/useInput';
-// import {}
-import Button1 from '../elements/Button';
+import {
+  useGetWorkspacesQuery,
+  useAddWorkSpacesMutation,
+  useDeleteWorkSpacesMutation,
+} from '../redux/modules/workspaces';
 
 const reducer = (state, action) => {
   return {
@@ -17,17 +17,23 @@ const reducer = (state, action) => {
 function MyPage1() {
   const { user } = useGetUser();
   const { data, error, isLoading } = useGetWorkspacesQuery();
+  const [addWorkSpaces] = useAddWorkSpacesMutation();
+  const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
   const workspaces = data?.data?.workSpaces;
 
   const [state, setState] = useReducer(reducer, {
     title: '',
     content: '',
   });
-
   const { title, content } = state;
+
   const onChange = (e) => {
     setState(e.target);
-    console.log(state);
+  };
+
+  const handleSubmit = () => {
+    addWorkSpaces(state);
+    setState({ title: '', content: '' });
   };
 
   return (
@@ -115,7 +121,7 @@ function MyPage1() {
           <Intro style={{ marginTop: '50px', fontWeight: '400' }}>
             프로젝트 관리
           </Intro>
-          <StButton>space 생성</StButton>
+          <StButton onClick={handleSubmit}>space 생성</StButton>
           <input
             id='title'
             placeholder='title'
@@ -139,6 +145,9 @@ function MyPage1() {
                   <div key={i}>
                     <h3 style={{ marginTop: '30px' }}>{a.title}</h3>
                     <h3>{a.content}</h3>
+                    <button onClick={() => deleteWorkSpaces(a.id)}>
+                      지우기버튼
+                    </button>
                   </div>
                 );
               })}
@@ -172,7 +181,7 @@ const RowDiv = styled.div`
 `;
 
 const TabDiv1 = styled.div`
-  width: 20%;
+  width: 15%;
   height: 300px;
   display: flex;
   align-items: left;
