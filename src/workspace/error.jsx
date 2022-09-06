@@ -6,7 +6,6 @@ import useOutSideClick from '../hooks/useOutSideClick';
 import error_outline from '../img/error_outline.svg';
 
 const WorkSpaceErrorModal = ({ onClose }) => {
-
   const modalRef = useRef(null);
   const handleClose = () => {
     onClose?.();
@@ -17,19 +16,40 @@ const WorkSpaceErrorModal = ({ onClose }) => {
     <ModalContainer>
       <Overlay>
         <ModalWrap ref={modalRef}>
-            <StAlert fw="bold" fs="28px" fc="#00a99d"><StErrorImg src={error_outline}/>로그인을 해주세요!</StAlert>
-            <StAlert fs="16px" fc="#626262">성장하는 사람들을 위한 프로젝트 협업 서비스 디벨킷</StAlert>
-            <StButton bc="#00a99d">로그인</StButton>
-            <StMent>
-                <StAlert fs="16px" fc="#999">디벨킷에 처음인가요?</StAlert>
-                <StAlert fs="16px" fc="#00a99d" 
-                style={{marginLeft: "10px", textDecoration: "underline", cursor: "pointer"}}>회원가입하기</StAlert>
-            </StMent>
-            <StMent>
-                    <StLine></StLine>
-                    <StAlert fs="12px" fc="#d9d9d9">또는</StAlert><StLine></StLine>
-            </StMent>
-            <StButton bc="#ffe502" style={{color: "black"}}>카카오계정으로 로그인</StButton>
+          <StAlert fw='bold' fs='28px' fc='#00a99d'>
+            <StErrorImg src={error_outline} />
+            로그인을 해주세요!
+          </StAlert>
+          <StAlert fs='16px' fc='#626262'>
+            성장하는 사람들을 위한 프로젝트 협업 서비스 디벨킷
+          </StAlert>
+          <StButton bc='#00a99d'>로그인</StButton>
+          <StMent>
+            <StAlert fs='16px' fc='#999'>
+              디벨킷에 처음인가요?
+            </StAlert>
+            <StAlert
+              fs='16px'
+              fc='#00a99d'
+              style={{
+                marginLeft: '10px',
+                textDecoration: 'underline',
+                cursor: 'pointer',
+              }}
+            >
+              회원가입하기
+            </StAlert>
+          </StMent>
+          <StMent>
+            <StLine></StLine>
+            <StAlert fs='12px' fc='#d9d9d9'>
+              또는
+            </StAlert>
+            <StLine></StLine>
+          </StMent>
+          <StButton bc='#ffe502' style={{ color: 'black' }}>
+            카카오계정으로 로그인
+          </StButton>
         </ModalWrap>
       </Overlay>
     </ModalContainer>
@@ -65,7 +85,7 @@ const ModalWrap = styled.div`
   align-items: center;
 `;
 
-const StAlert = styled.div`
+export const StAlert = styled.div`
   letter-spacing: -1.5px;
   font-weight: ${(props) => props.fw};
   font-size: ${(props) => props.fs};
@@ -73,7 +93,6 @@ const StAlert = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
 `;
-
 
 export const StButton = styled.button`
   width: 60%;
@@ -97,11 +116,11 @@ const StMent = styled.div`
 `;
 
 const StLine = styled.hr`
-height: 0.1px;
-width: 35%;
-background-color:"#d9d9d9";
+  height: 0.1px;
+  width: 35%;
+  background-color: '#d9d9d9';
 `;
 
 const StErrorImg = styled.img`
-margin-right: 5px;
+  margin-right: 5px;
 `;
