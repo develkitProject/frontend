@@ -22,7 +22,7 @@ const SignupModal = ({ onClose }) => {
     onClose?.();
   };
 
-
+  console.log(process.env.BASE_URL)
   useEffect(() => {
     const $body = document.querySelector('body');
     $body.style.overflow = 'hidden';

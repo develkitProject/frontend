@@ -1,19 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query';
-import { workspaceApi } from '../modules/workspaces';
 
 import user from '../modules/user';
 import { coreApi } from '../query/coreApi';
+import { workspaceApi } from '../modules/workspaces';
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     user,
+    [workspaceApi.reducerPath]: workspaceApi.reducer,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware(),
     coreApi.middleware,
-    // workspaceApi.middleware
   ]
 });
 
-setupListeners(store.dispatch);
+export default store
