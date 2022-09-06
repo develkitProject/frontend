@@ -34,7 +34,7 @@ const Editor = ({placeholder, value, ...rest})=>{
 
             </div>
             <div>
-                <ReactQuill style={{height: "400px", width: "500px"}}
+                <ReactQuill style={{height: "400px", width: "900px"}}
                     {...rest}
                     placeholder = 'Develop your teamwork through D.Velkit!'
                     value={value || ''} 
