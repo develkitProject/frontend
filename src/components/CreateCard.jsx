@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Add from '../img/add.png';
 
-function CreateCard() {
+function CreateCard({ createOpen, setCreateOpen }) {
+  const OpenModal = () => {
+    setCreateOpen(true);
+  };
+
   return (
     <StSpaceCard>
       <StText>진행중인 프로젝트</StText>
-      <StButton>+프로젝트 생성하기</StButton>
+      <StButton onClick={OpenModal}>+프로젝트 생성하기</StButton>
     </StSpaceCard>
   );
 }

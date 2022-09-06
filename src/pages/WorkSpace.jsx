@@ -1,33 +1,64 @@
 import styled from 'styled-components';
-import { getCookieToken} from '../Cookie';
-
+import { getCookieToken } from '../Cookie';
+import {
+  useGetWorkspacesQuery,
+  useAddWorkSpacesMutation,
+  useDeleteWorkSpacesMutation,
+} from '../redux/modules/workspaces';
 import CreateCard from '../components/CreateCard';
 import SpaceCard from '../components/SpaceCard.jsx';
 import SpaceHeader from '../components/SpaceHeader';
-import WorkSpaceErrorModal from '../workspace/error'
+import WorkSpaceErrorModal from '../workspace/error';
+import CreateSpaceModal from '../Modal/CreateSpaceModal';
+import React, { useEffect, useState } from 'react';
 
 function WorkSpace() {
+  const { data, error, isLoading, refetch } = useGetWorkspacesQuery();
+  const [addWorkSpaces] = useAddWorkSpacesMutation();
+  const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
+  const workspaces = data?.data?.workSpaces;
   const cookies = getCookieToken();
+  const [createOpen, setCreateOpen] = useState(false);
+
+  useEffect(() => {
+    refetch();
+  }, [data]);
 
   return (
     <>
-    {!cookies ? (<WorkSpaceErrorModal/>)
-    :(
-    <StWrapper>
-      <SpaceHeader/>
-      <CardWrapper>
-        <CreateCard />
-        <SpaceCard />
-        <SpaceCard />
-        <SpaceCard />
-        <SpaceCard />
-        <SpaceCard />
-        <SpaceCard />
-        <SpaceCard />
-        <SpaceCard />
-        <SpaceCard />
-      </CardWrapper>
-    </StWrapper>)}
+      {!cookies ? (
+        <WorkSpaceErrorModal />
+      ) : (
+        <StWrapper>
+          <SpaceHeader />
+          <CardWrapper>
+            <CreateCard createOpen={createOpen} setCreateOpen={setCreateOpen} />
+            {error ? (
+              <>Oh no, there was an error</>
+            ) : isLoading ? (
+              <>Loading...</>
+            ) : data ? (
+              <>
+                {workspaces?.map((data, i) => {
+                  return (
+                    <>
+                      <SpaceCard data={data} />
+                    </>
+                  );
+                })}
+              </>
+            ) : null}
+          </CardWrapper>
+          {}
+        </StWrapper>
+      )}
+      {createOpen && (
+        <CreateSpaceModal
+          onClose={() => {
+            setCreateOpen(false);
+          }}
+        ></CreateSpaceModal>
+      )}
     </>
   );
 }

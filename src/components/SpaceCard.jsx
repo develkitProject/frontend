@@ -4,28 +4,49 @@ import styled from 'styled-components';
 
 import CardProfile from '../elements/CardProfile.jsx';
 
-function SpaceCard() {
+function SpaceCard({ data }) {
   return (
-    <StSpaceCard direction="column">
-      <StCardImage/>
+    <StSpaceCard direction='column'>
+      <StCardImage />
       <StFooterBox>
         <StFooterDiv>
           <StFooter>
-            <SpaceName>디벨킷(D.velkit)</SpaceName>
+            <SpaceName>{data.title}</SpaceName>
             <SpaceDate>2022.08.20</SpaceDate>
-            <SpaceGoal weight="500">목표   <SpaceGoal weight="200">세상에 없는 협업툴을 선도한다!</SpaceGoal></SpaceGoal>
+            <SpaceGoal weight='500'>
+              목표 <SpaceGoal weight='200'>{data.content}</SpaceGoal>
+            </SpaceGoal>
           </StFooter>
-          <CardProfile/>
+          <CardProfile />
         </StFooterDiv>
-        <hr style={{width: "95%", height: "0.5px", backgroundColor:"#dddddd" }}/>
+        <hr
+          style={{ width: '95%', height: '0.5px', backgroundColor: '#dddddd' }}
+        />
         <StFooter>
           <StDiv>
-          <SpaceName style={{color:"#00a99d", marginRight: "10px"}}>공지</SpaceName><SpaceName style={{color:"black", fontWeight: "500"}}>프로젝트 명이 정해졌습니다. 다들 화이팅★ </SpaceName>
+            <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
+              공지
+            </SpaceName>
+            <SpaceName style={{ color: 'black', fontWeight: '500' }}>
+              프로젝트 명이 정해졌습니다. 다들 화이팅★{' '}
+            </SpaceName>
           </StDiv>
           <StDiv>
-          <SpaceName style={{color:"#00a99d", marginRight: "10px"}}>일정</SpaceName>
-          <SpaceName style={{color:"#999999", marginRight: "10px", fontWeight: "500"}}>2022.09.22</SpaceName>
-          <SpaceName style={{color:"black", fontWeight: "500"}}>프로젝트 주간회의 </SpaceName>
+            <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
+              일정
+            </SpaceName>
+            <SpaceName
+              style={{
+                color: '#999999',
+                marginRight: '10px',
+                fontWeight: '500',
+              }}
+            >
+              2022.09.22
+            </SpaceName>
+            <SpaceName style={{ color: 'black', fontWeight: '500' }}>
+              프로젝트 주간회의{' '}
+            </SpaceName>
           </StDiv>
         </StFooter>
       </StFooterBox>
@@ -50,7 +71,7 @@ const StSpaceCard = styled.div`
 const StCardImage = styled.div`
   cursor: pointer;
   width: 100%;
-  height:47%;
+  height: 47%;
   border-radius: 16px 16px 0px 0px;
   background-image: url('https://p4.wallpaperbetter.com/wallpaper/1014/843/831/4k-eiffel-tower-france-8k-wallpaper-preview.jpg');
   background-size: cover;
@@ -68,14 +89,14 @@ const StFooterBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: left;
-  flex-direction:column;
+  flex-direction: column;
   margin-top: 10px;
 `;
 
 const StFooterDiv = styled.div`
   width: 100%;
   display: flex;
-  flex-direction:row;
+  flex-direction: row;
   justify-content: space-between;
 `;
 
@@ -86,11 +107,11 @@ const StFooter = styled.div`
   display: flex;
   align-items: left;
   text-align: left;
-  flex-direction:column;
+  flex-direction: column;
 `;
 
 const StDiv = styled.div`
-margin-top: 10px;
+  margin-top: 10px;
 `;
 
 const SpaceName = styled.span`
@@ -105,7 +126,7 @@ const SpaceDate = styled.span`
   font-size: 14px;
   height: 17px;
   font-weight: 500;
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
   color: #999;
 `;
 
@@ -117,4 +138,3 @@ const SpaceGoal = styled.span`
   font-family: 'Noto Sans KR', sans-serif;
   color: #999;
 `;
-
