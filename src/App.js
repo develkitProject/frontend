@@ -23,8 +23,7 @@ function App() {
         <Route path='/workspace' element={<WorkSpace />} />
         <Route path='/editor' element={<Editor />} />
         <Route path='/kakao' element={<Kakao />} />
-        {/* <Route path='/workspace/:workspaceId/main' element={<WorkSpaceDetail />} /> */}
-        <Route path='/workspace/1' element={<WorkSpaceDetail />} />
+        <Route path='/workspace/main/:id' element={<WorkSpaceDetail />} />
       </Routes>
     </>
   );

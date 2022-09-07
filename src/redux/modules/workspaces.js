@@ -44,13 +44,12 @@ export const workspaceApi = coreApi.injectEndpoints({
         return {
           url: `/api/workspaces/${id}/main`,
           method: 'GET',
-          body: id,
+          // body: id,
           headers,
         };
       },
       invalidatesTags: ['Workspaces'],
     }),
-
   }),
 });
 

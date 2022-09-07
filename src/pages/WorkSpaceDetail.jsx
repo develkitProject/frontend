@@ -3,44 +3,42 @@ import SideMenu from '../components/SideMenu';
 import Notice from '../components/Notice';
 import Schedule from '../components/Schedule';
 import { useParams } from 'react-router-dom';
-import {useGetMainWorkSpacesQuery} from '../redux/modules/workspaces';
+import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
 
 
 function WorkSpaceDetail() {
-  // let {workspaceId} = useParams();
-  // console.log(workspaceId)
+  const params = useParams();
+  const id = Number(params.id);
+  // let { workspaceId } = useParams();
+  // console.log(workspaceId);
 
-  const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery()
+  const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
 
-  console.log(data)
-  
   // const workspaces = data?.data?.workSpaces;
   // useEffect(() => {
   //   refetch();
   // }, [data]);
-  
-
 
   return (
     <StWrapper>
-        <SideMenu/>
-        <Projects>
-            <StIntroContainer>
-                <div>
-                    <StTitle>디벨킷 프로젝트</StTitle>
-                    <StContent>개발자들을 위한 최고의 협업툴 디벨킷입니다 :)</StContent>
-                </div>
-                <StButton>팀원초대하기</StButton>
-            </StIntroContainer>
+      <SideMenu />
+      <Projects>
+        <StIntroContainer>
+          <div>
+            <StTitle>디벨킷 프로젝트</StTitle>
+            <StContent>개발자들을 위한 최고의 협업툴 디벨킷입니다 :(</StContent>
+          </div>
+          <StButton>팀원초대하기</StButton>
+        </StIntroContainer>
 
-            <div>
-                <Notice/>
-            </div>
-            <div>
-                <Schedule/>
-            </div>
-        </Projects>
+        <div>
+          <Notice />
+        </div>
+        <div>
+          <Schedule />
+        </div>
+      </Projects>
     </StWrapper>
   );
 }
@@ -77,35 +75,34 @@ const StIntroContainer = styled.div`
   border-bottom: solid 1px #c6c6c6;
 `;
 
-
 const StButton = styled.button`
- background-color: #000000;
- margin-left: 3%;
- width: 20%;
- height: 35px;
- border-radius: 8px;
- border: 0px;
- color:#fff;
- text-align: center;
- font-size: 0.9rem;
- font-weight: 500;
- /* letter-spacing: -1px; */
- cursor: pointer;
+  background-color: #000000;
+  margin-left: 3%;
+  width: 20%;
+  height: 35px;
+  border-radius: 8px;
+  border: 0px;
+  color: #fff;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  /* letter-spacing: -1px; */
+  cursor: pointer;
 `;
 
 const StTitle = styled.p`
- color: #333333;
- text-align: left;
- font-size: 1.5rem;
- font-weight: bold;
- letter-spacing: -1.5px;
+  color: #333333;
+  text-align: left;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: -1.5px;
 `;
 
 const StContent = styled.p`
- margin-top: 10px;
- color: #333333;
- text-align: left;
- font-size: 1rem;
- font-weight: normal;
- letter-spacing: -1px;
+  margin-top: 10px;
+  color: #333333;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: normal;
+  letter-spacing: -1px;
 `;
