@@ -14,11 +14,11 @@ import React, { useEffect, useState } from 'react';
 
 function WorkSpace() {
   const { data, error, isLoading, refetch } = useGetWorkspacesQuery();
-  const [addWorkSpaces] = useAddWorkSpacesMutation();
   const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
   const workspaces = data?.data?.workSpaces;
   const cookies = getCookieToken();
   const [createOpen, setCreateOpen] = useState(false);
+  const [deleteButton, setDeletebutton] = useState(true);
 
   useEffect(() => {
     refetch();
@@ -42,7 +42,12 @@ function WorkSpace() {
                 {workspaces?.map((data, i) => {
                   return (
                     <>
-                      <SpaceCard data={data} />
+                      <SpaceCard
+                        data={data}
+                        width='70%'
+                        deleteButton={deleteButton}
+                        deleteWorkSpaces={deleteWorkSpaces}
+                      />
                     </>
                   );
                 })}

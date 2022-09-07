@@ -72,7 +72,7 @@ function Header() {
         ) : (
           <StDiv>
             <StAlarmImg src={alarm} />
-            <StProfileImg src={profile} onClick={() => navigate('/mypage1')} />
+            <StProfileImg src={profile} onClick={() => navigate('/mypage')} />
             <StLogBtn
               onClick={() => {
                 logout();

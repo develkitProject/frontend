@@ -1,6 +1,6 @@
 // Need to use the React-specific entry point to import createApi
 import { getCookieToken } from '../../Cookie';
-import { coreApi } from '../query/coreApi'
+import { coreApi } from '../query/coreApi';
 
 const headers = {
   Authorization: getCookieToken(),
@@ -13,8 +13,8 @@ export const workspaceApi = coreApi.injectEndpoints({
         url: '/api/workspaces',
         method: 'GET',
         headers,
-      })
-      // providesTags: ['Workspaces'],
+      }),
+      providesTags: ['Workspaces'],
     }),
     addWorkSpaces: builder.mutation({
       query: (workspace) => {
@@ -25,7 +25,7 @@ export const workspaceApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      // invalidatesTags: ['Workspaces'],
+      invalidatesTags: ['Workspaces'],
     }),
     deleteWorkSpaces: builder.mutation({
       query: (id) => {
@@ -36,10 +36,10 @@ export const workspaceApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      // invalidatesTags: ['Workspaces'],
+      invalidatesTags: ['Workspaces'],
     }),
   }),
-})
+});
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints

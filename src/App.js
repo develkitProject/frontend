@@ -8,7 +8,7 @@ import WorkSpace from './pages/WorkSpace';
 import Kakao from './pages/KaKao';
 import { Routes, Route } from 'react-router-dom';
 import Editor from './components/Editor';
-import MyPage1 from './pages/MyPage1';
+import MyPage2 from './pages/MyPage2';
 import WorkSpaceDetail from './pages/WorkSpaceDetail';
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
         <Route path='/' element={<Landing />} />
         {/* <Route path='/signup' element={<SignUp />} /> */}
         <Route path='/mypage' element={<MyPage />} />
-        <Route path='/mypage1' element={<MyPage1 />} />
+        <Route path='/mypage2' element={<MyPage2 />} />
         <Route path='/workspace' element={<WorkSpace />} />
         <Route path='/editor' element={<Editor />} />
         <Route path='/kakao' element={<Kakao />} />
