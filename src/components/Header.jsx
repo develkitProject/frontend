@@ -22,6 +22,13 @@ function Header() {
     setSignupOpen(true);
   };
 
+  const moveMain = () => {
+    navigate('/');
+  };
+  const moveProject = () => {
+    navigate('/workspace');
+  };
+
   const logout = () => {
     removeCookieToken();
     // removeUserData();
@@ -41,12 +48,12 @@ function Header() {
             alignItems: 'center',
           }}
         >
-          <StLogo alt='logo' src={logo} onClick={() => navigate('/')} />
+          <StLogo alt='logo' src={logo} onClick={moveMain} />
 
           {/* <StDiv style={!matches ? { display: 'none' } : null}> */}
           <StMenuDiv>
-            <StMenuName>About</StMenuName>
-            <StMenuName>Proejct</StMenuName>
+            <StMenuName onClick={moveMain}>About</StMenuName>
+            <StMenuName onClick={moveProject}>Proejct</StMenuName>
             <StMenuName>Community</StMenuName>
             <StMenuName>FAQ</StMenuName>
             {/* </StDiv> */}
