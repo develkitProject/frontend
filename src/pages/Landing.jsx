@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import icon from '../asset/img/icon1.png';
 import scroll from '../asset/img/scroll.svg';
 import 'animate.css';
-import WorkSpaceErrorModal from '../Modal/error';
+import WorkSpaceErrorModal from '../common/Modal/error';
 import { getCookieToken } from '../Cookie';
 
 function Landing() {

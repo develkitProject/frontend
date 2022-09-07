@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import useGetUser from '../hooks/useGetUser';
+import useGetUser from '../common/hooks/useGetUser';
 import { useGetWorkspacesQuery } from '../redux/modules/workspaces';
 import SpaceCard from '../components/SpaceCard';
 

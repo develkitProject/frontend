@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import CardProfile from '../elements/CardProfile.jsx';
+import CardProfile from '../common/elements/CardProfile.jsx';
 
 function SpaceCard({ data, width, deleteButton, deleteWorkSpaces }) {
   const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import useOutSideClick from '../hooks/useOutSideClick';
-import ModalContainer from '../Modal/ModalContainer';
+import useOutSideClick from '../common/hooks/useOutSideClick';
+import ModalContainer from '../common/Modal/ModalContainer';
 import useInputLogin from './hooks/useInputLogin';
 import KakaoLogin from '../components/KaKaoLogin';
 

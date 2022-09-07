@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
-import { getCookieToken } from '../Cookie';
+import { getCookieToken } from '../../Cookie';
 
 const useGetUser = () => {
   const [user, setUser] = useState([]);
