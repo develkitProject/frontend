@@ -13,8 +13,8 @@ export const workspaceApi = coreApi.injectEndpoints({
         url: '/api/workspaces',
         method: 'GET',
         headers,
-      })
-      // providesTags: ['Workspaces'],
+      }),
+      providesTags: ['Workspaces'],
     }),
     addWorkSpaces: builder.mutation({
       query: (workspace) => {
@@ -25,7 +25,7 @@ export const workspaceApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      // invalidatesTags: ['Workspaces'],
+      invalidatesTags: ['Workspaces'],
     }),
     deleteWorkSpaces: builder.mutation({
       query: (id) => {
@@ -36,7 +36,7 @@ export const workspaceApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      // invalidatesTags: ['Workspaces'],
+      invalidatesTags: ['Workspaces'],
     }),
   }),
 })
