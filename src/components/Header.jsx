@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { getCookieToken, removeCookieToken } from '../Cookie';
 import alarm from '../img/alarm.svg';
 import logo from '../img/logo.png';
-import profile from '../img/profile.png';
 import Login from '../login';
 import SignupModal from '../signup/SignupModal';
+import useGetUser from '../hooks/useGetUser';
 
 function Header() {
   const navigate = useNavigate();
@@ -27,6 +27,7 @@ function Header() {
     // removeUserData();
     window.location.href = '/';
   };
+  const { user } = useGetUser();
 
   return (
     <>
@@ -72,16 +73,19 @@ function Header() {
         ) : (
           <StDiv>
             <StAlarmImg src={alarm} />
-            <StProfileImg src={profile} onClick={() => navigate('/mypage')} />
-            
-            <StLogBtn style={{width: "10px", height: "10px", color: "black"}}
+            <StProfileImg
+              src={user.profileImageUrl}
+              onClick={() => navigate('/mypage')}
+            />
+
+            <StLogBtn
+              style={{ width: '10px', height: '10px', color: 'black' }}
               onClick={() => {
                 logout();
               }}
             >
               LOGOUT
             </StLogBtn>
-            
           </StDiv>
         )}
       </StHeaderDiv>
@@ -179,9 +183,8 @@ const StLogBtn = styled.button`
 const StProfileImg = styled.img`
   padding: 1px;
   margin-right: 10px;
-  width: 40px;
-  height: 40px;
-  border: solid white 1px;
+  width: 50px;
+  height: 50px;
   border-radius: 70%;
   /* background-color: white; */
   cursor: pointer;

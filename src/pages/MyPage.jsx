@@ -1,17 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import useGetUser from '../hooks/useGetUser';
-import {
-  useGetWorkspacesQuery,
-  useAddWorkSpacesMutation,
-  useDeleteWorkSpacesMutation,
-} from '../redux/modules/workspaces';
+import { useGetWorkspacesQuery } from '../redux/modules/workspaces';
 import SpaceCard from '../components/SpaceCard';
 
 function MyPage() {
   const { user } = useGetUser();
   const { data, error, isLoading } = useGetWorkspacesQuery();
-  const workspaces = data?.data?.workSpaces;
+  const workspaces = data?.data;
 
   return (
     <StWrapper>
@@ -106,9 +102,9 @@ function MyPage() {
             <>
               {workspaces?.map((data, i) => {
                 return (
-                  <>
+                  <div style={{ width: '100%' }} key={data.workspaces.id}>
                     <SpaceCard data={data} width='100%' />
-                  </>
+                  </div>
                 );
               })}
             </>

@@ -2,23 +2,17 @@ import styled from 'styled-components';
 import SideMenu from '../components/SideMenu';
 import Notice from '../components/Notice';
 import Schedule from '../components/Schedule';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
-import { useEffect } from 'react';
-
 
 function WorkSpaceDetail() {
+  const { state } = useLocation();
   const params = useParams();
   const id = Number(params.id);
-  // let { workspaceId } = useParams();
-  // console.log(workspaceId);
+  const title = state.code.workspaces.title;
+  const content = state.code.workspaces.content;
 
   const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
-
-  // const workspaces = data?.data?.workSpaces;
-  // useEffect(() => {
-  //   refetch();
-  // }, [data]);
 
   return (
     <StWrapper>
@@ -26,8 +20,8 @@ function WorkSpaceDetail() {
       <Projects>
         <StIntroContainer>
           <div>
-            <StTitle>디벨킷 프로젝트</StTitle>
-            <StContent>개발자들을 위한 최고의 협업툴 디벨킷입니다 :(</StContent>
+            <StTitle>{title}</StTitle>
+            <StContent>{content}</StContent>
           </div>
           <StButton>팀원초대하기</StButton>
         </StIntroContainer>

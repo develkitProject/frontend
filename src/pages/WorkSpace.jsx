@@ -7,7 +7,7 @@ import {
 import CreateCard from '../components/CreateCard';
 import SpaceCard from '../components/SpaceCard.jsx';
 import SpaceHeader from '../components/SpaceHeader';
-import WorkSpaceErrorModal from '../workspace/error';
+import WorkSpaceErrorModal from '../Modal/error';
 import CreateSpaceModal from '../Modal/CreateSpaceModal';
 import React, { useEffect, useState } from 'react';
 
@@ -40,14 +40,14 @@ function WorkSpace() {
               <>
                 {workspaces?.map((data, i) => {
                   return (
-                    <>
+                    <div style={{ width: '70%' }} key={data.workspaces.id}>
                       <SpaceCard
                         data={data}
-                        width='70%'
+                        width='100%'
                         deleteButton={deleteButton}
                         deleteWorkSpaces={deleteWorkSpaces}
                       />
-                    </>
+                    </div>
                   );
                 })}
               </>

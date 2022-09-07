@@ -11,7 +11,11 @@ function SpaceCard({ data, width, deleteButton, deleteWorkSpaces }) {
       <StCardImage
         data={data.workspaces}
         onClick={() => {
-          navigate(`/workspace/main/${data.workspaces.id}`);
+          navigate(`/workspace/main/${data.workspaces.id}`, {
+            state: {
+              code: data,
+            },
+          });
         }}
       />
       <StFooterBox>
@@ -54,15 +58,6 @@ function SpaceCard({ data, width, deleteButton, deleteWorkSpaces }) {
               프로젝트 주간회의{' '}
             </SpaceName>
           </StDiv>
-          {deleteButton ? (
-            <X_button
-              onClick={() => {
-                deleteWorkSpaces(data.workspacesa.id);
-              }}
-            >
-              x
-            </X_button>
-          ) : null}
         </StFooter>
       </StFooterBox>
     </StSpaceCard>
@@ -153,13 +148,4 @@ const SpaceGoal = styled.span`
   font-weight: ${(props) => props.weight};
   font-family: 'Noto Sans KR', sans-serif;
   color: #999;
-`;
-
-const X_button = styled.button`
-  background-color: white;
-  border: none;
-  font-size: 30px;
-  cursor: pointer;
-  position: absolute;
-  right: 0;
 `;

@@ -4,16 +4,17 @@ import styled from 'styled-components';
 import icon from '../img/icon1.png';
 import scroll from '../img/scroll.svg';
 import 'animate.css';
-import WorkSpaceErrorModal from '../workspace/error'
-import { getCookieToken} from '../Cookie';
+import WorkSpaceErrorModal from '../Modal/error';
+import { getCookieToken } from '../Cookie';
 
 function Landing() {
   const navigate = useNavigate();
   const cookies = getCookieToken();
 
   const [isOpen, setIsOpen] = useState(false);
-  const onStartButton = () => {setIsOpen(true);};
-
+  const onStartButton = () => {
+    setIsOpen(true);
+  };
 
   return (
     <>
@@ -37,20 +38,23 @@ function Landing() {
                   <span style={{ color: '#00A99D' }}>디벨킷</span>
                 </div>
               </StIntroMent>
-              <StStart onClick={() => 
-              {!cookies ? (
-                <>{onStartButton(true)}</>
-                )
-              :(navigate('/workspace'))}}>
-
-              {isOpen && (
-                <WorkSpaceErrorModal
-                        open={isOpen}
-                        onClose={() => {
-                          setIsOpen(false);
-                        }}
-                      ></WorkSpaceErrorModal>
-                    )}
+              <StStart
+                onClick={() => {
+                  !cookies ? (
+                    <>{onStartButton(true)}</>
+                  ) : (
+                    navigate('/workspace')
+                  );
+                }}
+              >
+                {isOpen && (
+                  <WorkSpaceErrorModal
+                    open={isOpen}
+                    onClose={() => {
+                      setIsOpen(false);
+                    }}
+                  ></WorkSpaceErrorModal>
+                )}
 
                 <StIcon src={icon} />
                 <StLink>디벨킷 시작하기</StLink>
