@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import CardProfile from '../elements/CardProfile.jsx';
 
 function SpaceCard({ data, width, deleteButton, deleteWorkSpaces }) {
-  console.log(data);
   return (
     <StSpaceCard direction='row' width={width} key={data.id}>
       <StCardImage data={data} />

@@ -18,3 +18,4 @@ const StDiv = styled.div`
   margin-right: 20px;
   align-items: right;
 `;
+/* url(${(props) => props.data.imageUrl}) */

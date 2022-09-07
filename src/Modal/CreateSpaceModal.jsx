@@ -39,14 +39,18 @@ const CreateSpaceModal = ({ onClose }) => {
   };
 
   const handleSubmit = () => {
-    const obj = {
-      image: imageUrl,
-      title,
-      content,
-    };
-    addWorkSpaces(obj);
-    window.alert('프로젝트가 생성되었습니다!');
-    handleClose();
+    if (title !== '' && content !== '') {
+      const obj = {
+        image: imageUrl,
+        title,
+        content,
+      };
+      addWorkSpaces(obj);
+      window.alert('프로젝트가 생성되었습니다!');
+      handleClose();
+    } else {
+      window.alert('프로젝트 제목과 소개를 모두 채워주세요!');
+    }
   };
 
   const onChangeImage = () => {
