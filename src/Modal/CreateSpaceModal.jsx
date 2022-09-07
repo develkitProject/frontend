@@ -1,28 +1,63 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import ModalContainer from './ModalContainer';
-import useOutSideClick from '../hooks/useOutSideClick';
-import axios from 'axios';
-import { setAccessToken } from '../Cookie';
-import { useNavigate } from 'react-router-dom';
+import { StButton } from '../login/style';
+import imgupload from '../img/imgupload.svg';
 
-const CreateSpaceModal = ({ onClose, setSignupOpen, onSignupButton }) => {
-  const [username, SetUsername] = useState('');
-  const [password, SetPassword] = useState('');
-  const navigate = useNavigate();
+import {
+  useGetWorkspacesQuery,
+  useAddWorkSpacesMutation,
+  useDeleteWorkSpacesMutation,
+} from '../redux/modules/workspaces';
+
+const reducer = (state, action) => {
+  return {
+    ...state,
+    [action.name]: action.value,
+  };
+};
+
+const CreateSpaceModal = ({ onClose }) => {
+  const imgRef = useRef('');
+  const [imageUrl, setImageUrl] = useState(null);
+  const [imgFile, setImgFile] = useState('');
+  const [addWorkSpaces] = useAddWorkSpacesMutation();
+
+  const [state, setState] = useReducer(reducer, {
+    title: '',
+    content: '',
+  });
+
+  const { title, content } = state;
+  const onChange = (e) => {
+    setState(e.target);
+  };
 
   const modalRef = useRef(null);
   const handleClose = () => {
     onClose?.();
   };
 
-  useEffect(() => {
-    const $body = document.querySelector('body');
-    $body.style.overflow = 'hidden';
-    return () => ($body.style.overflow = 'auto');
-  }, []);
+  const handleSubmit = () => {
+    const obj = {
+      image: imageUrl,
+      title,
+      content,
+    };
+    addWorkSpaces(obj);
+    window.alert('프로젝트가 생성되었습니다!');
+    handleClose();
+  };
 
-  useOutSideClick(modalRef, handleClose);
+  const onChangeImage = () => {
+    const reader = new FileReader();
+    const file = imgRef?.current?.files[0];
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImageUrl(reader.result);
+      setImgFile(file);
+    };
+  };
 
   return (
     <ModalContainer>
@@ -34,22 +69,59 @@ const CreateSpaceModal = ({ onClose, setSignupOpen, onSignupButton }) => {
               프로젝트를 생성 후, 프로젝트 홈에서 초대코드를 복사할 수 있습니다.
             </StMent>
             <StInputTitle>커버 이미지</StInputTitle>
-            <StImageBox></StImageBox>
+            <StImageBox
+              src={imageUrl ? imageUrl : imgupload}
+              onClick={() => imgRef.current.click()}
+            ></StImageBox>
             <StInputTitle>프로젝트 이름</StInputTitle>
-            <StInput placeholder='프로젝트명을 입력해주세요'></StInput>
+            <StInput
+              onChange={onChange}
+              name='title'
+              placeholder='프로젝트명을 입력해주세요'
+            ></StInput>
             <StInputTitle>프로젝트 소개</StInputTitle>
-            <StInput placeholder='프로젝트를 소개해주세요'></StInput>
+            <StInput
+              onChange={onChange}
+              name='content'
+              placeholder='프로젝트를 소개해주세요'
+            ></StInput>
+            <StButton
+              onClick={handleSubmit}
+              style={{
+                width: '75%',
+                marginTop: '40px',
+                height: '60px',
+                fontSize: '20px',
+              }}
+            >
+              프로젝트 생성하기
+            </StButton>
           </Wrapper>
           <button
+            onClick={handleClose}
             style={{
               position: 'absolute',
               backgroundColor: 'white',
               border: 'none',
               fontWeight: '600',
+              fontSize: '20px',
+              top: '20px',
+              right: '20px',
+              color: '#323232',
+              cursor: 'pointer',
             }}
           >
             X
           </button>
+          <input
+            style={{ display: 'none' }}
+            accept='image/*'
+            id='upload-photo'
+            name='upload-photo'
+            type='file'
+            onChange={onChangeImage}
+            ref={imgRef}
+          />
         </ModalWrap>
       </Overlay>
     </ModalContainer>
@@ -116,14 +188,16 @@ const StInputTitle = styled.span`
   margin-right: 250px;
 `;
 
-const StImageBox = styled.div`
+const StImageBox = styled.img`
   width: 70%;
-  height: 92px;
+  height: 98px;
   border: 1px solid black;
   margin-top: 10px;
   border-radius: 15px;
   background-color: #dedede;
+  background-size: cover;
   border: none;
+  cursor: pointer;
 `;
 
 const StInput = styled.input`

@@ -4,10 +4,11 @@ import styled from 'styled-components';
 
 import CardProfile from '../elements/CardProfile.jsx';
 
-function SpaceCard({ data }) {
+function SpaceCard({ data, width, deleteButton, deleteWorkSpaces }) {
+  console.log(data);
   return (
-    <StSpaceCard direction='column'>
-      <StCardImage />
+    <StSpaceCard direction='row' width={width} key={data.id}>
+      <StCardImage data={data} />
       <StFooterBox>
         <StFooterDiv>
           <StFooter>
@@ -17,7 +18,7 @@ function SpaceCard({ data }) {
               목표 <SpaceGoal weight='200'>{data.content}</SpaceGoal>
             </SpaceGoal>
           </StFooter>
-          <CardProfile />
+          <CardProfile data={data} />
         </StFooterDiv>
         <hr
           style={{ width: '95%', height: '0.5px', backgroundColor: '#dddddd' }}
@@ -48,6 +49,15 @@ function SpaceCard({ data }) {
               프로젝트 주간회의{' '}
             </SpaceName>
           </StDiv>
+          {deleteButton ? (
+            <X_button
+              onClick={() => {
+                deleteWorkSpaces(data.id);
+              }}
+            >
+              x
+            </X_button>
+          ) : null}
         </StFooter>
       </StFooterBox>
     </StSpaceCard>
@@ -60,8 +70,8 @@ const StSpaceCard = styled.div`
   display: flex;
   flex-direction: ${(props) => props.direction};
   margin: 10px 10px 10px 10px;
-  width: 40%;
-  height: 360px;
+  width: ${(props) => props.width};
+  height: 400px;
   border-radius: 16px;
   margin-left: 20px;
   margin-bottom: 20px;
@@ -70,11 +80,11 @@ const StSpaceCard = styled.div`
 
 const StCardImage = styled.div`
   cursor: pointer;
-  width: 100%;
-  height: 47%;
+  width: 40%;
+  height: 100%;
   border-radius: 16px 16px 0px 0px;
-  background-image: url('https://p4.wallpaperbetter.com/wallpaper/1014/843/831/4k-eiffel-tower-france-8k-wallpaper-preview.jpg');
-  background-size: cover;
+  background-image: url(${(props) => props.data.imageUrl});
+  background-size: 100% 100%;
   position: relative;
   background-blend-mode: multiply;
   &:hover {
@@ -84,8 +94,8 @@ const StCardImage = styled.div`
 `;
 
 const StFooterBox = styled.div`
-  width: 100%;
-  height: 53%;
+  width: 60%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: left;
@@ -108,6 +118,7 @@ const StFooter = styled.div`
   align-items: left;
   text-align: left;
   flex-direction: column;
+  position: relative;
 `;
 
 const StDiv = styled.div`
@@ -137,4 +148,13 @@ const SpaceGoal = styled.span`
   font-weight: ${(props) => props.weight};
   font-family: 'Noto Sans KR', sans-serif;
   color: #999;
+`;
+
+const X_button = styled.button`
+  background-color: white;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
 `;

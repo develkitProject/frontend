@@ -17,6 +17,7 @@ const KaKao = () => {
         .then((res) => {
           setAccessToken(res.headers.authorization);
           navigate('/workspace');
+          window.location.reload();
         });
     };
     if (code) {
