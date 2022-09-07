@@ -89,7 +89,7 @@ const Login = ({ onClose, SignupButton }) => {
                   handleClose();
                 }}
               >
-                회원가입
+                이메일로 회원가입
               </StButton>
             </ButtonDiv>
             <KakaoLogin

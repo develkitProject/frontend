@@ -51,7 +51,6 @@ export const workspaceApi = coreApi.injectEndpoints({
       invalidatesTags: ['Workspaces'],
     }),
 
-
   }),
 });
 
@@ -61,4 +60,5 @@ export const {
   useGetWorkspacesQuery,
   useAddWorkSpacesMutation,
   useDeleteWorkSpacesMutation,
+  useGetMainWorkSpacesQuery,
 } = workspaceApi;
