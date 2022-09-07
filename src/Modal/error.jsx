@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ModalContainer from './ModalContainer';
 import useOutSideClick from '../hooks/useOutSideClick';
-import error_outline from '../img/error_outline.svg';
+import error_outline from '../asset/img/error_outline.svg';
 
 const WorkSpaceErrorModal = ({ onClose }) => {
   const modalRef = useRef(null);

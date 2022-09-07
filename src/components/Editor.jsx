@@ -30,6 +30,7 @@ const Editor = ({placeholder, value, ...rest})=>{
         return(
         <StEditorContainer>
             <StInputTitle placeholder='제목'/>
+            <EditorBlock>
             <ReactQuill style={{height: "500px", width: "96%"}}
                     {...rest}
                     value={value || ''} 
@@ -37,8 +38,9 @@ const Editor = ({placeholder, value, ...rest})=>{
                     modules={modules}
                     formats={formats}>
             </ReactQuill>
+            </EditorBlock>
 
-            <div style={{marginTop: "50px"}}/>
+            {/* <div style={{marginTop: "50px"}}/> */}
 
             <StButton>게시하기</StButton>
         </StEditorContainer>
@@ -53,7 +55,6 @@ const StEditorContainer = styled.div`
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  /* background-color: red; */
 `;
 
 const StInputTitle = styled.input`
@@ -66,6 +67,10 @@ const StInputTitle = styled.input`
  border-radius: 4px;
  border: 1px solid #C6C6C6;
  :focus{outline: 1px solid #00A99D}
+`;
+
+const EditorBlock = styled.div`
+  padding-bottom: 4rem;
 `;
 
 const StButton = styled.button`

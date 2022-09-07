@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import ModalContainer from './ModalContainer';
 import { StButton } from '../login/style';
-import imgupload from '../img/imgupload.svg';
+import imgupload from '../asset/img/imgupload.svg';
 
 import {
   useGetWorkspacesQuery,

@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import home from '../img/home.svg';
-import document from '../img/document.svg';
-import schedule from '../img/schedule.svg';
-import contacts from '../img/contacts.svg';
-import laptop from '../img/laptop.svg';
-import chat from '../img/chat.svg';
-import arrowDown from '../img/arrowDown.svg'
+import home from '../asset/img/home.svg';
+import document from '../asset/img/document.svg';
+import schedule from '../asset/img/schedule.svg';
+import contacts from '../asset/img/contacts.svg';
+import laptop from '../asset/img/laptop.svg';
+import chat from '../asset/img/chat.svg';
+import arrowDown from '../asset/img/arrowDown.svg'
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 

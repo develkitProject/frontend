@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import KakaoIcon from '../img/kakaoIcon.png';
+import KakaoIcon from '../asset/img/kakaoIcon.png';
 
 const { Kakao } = window;
 const loginWithKakao = () => {

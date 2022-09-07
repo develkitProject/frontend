@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import profile from '../img/profile.png';
+import profile from '../asset/img/profile.png';
 
 axios.defaults.withCredentials = true;
 
