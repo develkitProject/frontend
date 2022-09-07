@@ -3,7 +3,7 @@ import styled from 'styled-components';
 function Notice() {
   return (
         <StWrapper>
-            <StTitle fc="#333333">필독</StTitle>
+            {/* <StTitle fc="#333333">필독</StTitle> */}
             <StNoticeContainer>
                 <StTitle fc="#00a99d">공지사항</StTitle>
                 <StTitle fc="#333333">[공유] 9월 17일 중간 발표</StTitle>

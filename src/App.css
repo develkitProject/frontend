@@ -50,6 +50,11 @@
   font-weight:bold;
 }
 
+.ql-editor{
+  font-size:18px;
+  letter-spacing: 0.05em;
+}
+
 @font-face {
   font-family: 'Montserrat';
   src: url('../src/fonts/Montserrat-VariableFont_wght.ttf') format("truetype")

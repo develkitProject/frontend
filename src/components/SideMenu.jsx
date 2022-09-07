@@ -6,18 +6,28 @@ import contacts from '../img/contacts.svg';
 import laptop from '../img/laptop.svg';
 import chat from '../img/chat.svg';
 import arrowDown from '../img/arrowDown.svg'
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-function SideMenu() {
+function SideMenu(data) {
+
+  const navigate = useNavigate();
+  const params = useParams();
+  const id = Number(params.id);
+
   return (
         <StWrapper>
-            <StLabel><StIcon src={home}/>홈</StLabel>
-
+            <StLabel
+            onClick={() => {navigate(`/workspace/main/${id}`)}} 
+            ><StIcon src={home}/>홈</StLabel>
             <StLabel style={{borderBottom: "none"}}>
                 <StIcon src={document}/>게시판
                 <StIcon src={arrowDown}/>
             </StLabel>
                     <StMenuInDiv>
-                        <StMenuIn>공지사항</StMenuIn>
+                        <StMenuIn 
+                        onClick={() => {navigate(`/workspace/main/${id}/notice`);}} 
+                        >공지사항</StMenuIn>
                         <StMenuIn>문서</StMenuIn>
                     </StMenuInDiv>
             <StLabel style={{borderTop: "solid 1px #c6c6c6"}}><StIcon src={schedule}/>일정 관리</StLabel>
