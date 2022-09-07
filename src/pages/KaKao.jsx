@@ -23,7 +23,7 @@ const KaKao = () => {
     if (code) {
       kakao();
     }
-  }, []);
+  }, [code, navigate]);
 
   return <div>카카오페이지입니다.</div>;
 };

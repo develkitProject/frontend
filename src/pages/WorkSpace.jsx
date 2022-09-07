@@ -10,6 +10,7 @@ import SpaceCard from '../components/SpaceCard.jsx';
 import SpaceHeader from '../components/SpaceHeader';
 import WorkSpaceErrorModal from '../workspace/error';
 import CreateSpaceModal from '../Modal/CreateSpaceModal';
+import useGetUser from '../hooks/useGetUser';
 import React, { useEffect, useState } from 'react';
 
 function WorkSpace() {
@@ -19,6 +20,7 @@ function WorkSpace() {
   const cookies = getCookieToken();
   const [createOpen, setCreateOpen] = useState(false);
   const [deleteButton, setDeletebutton] = useState(true);
+  const user = useGetUser();
 
   useEffect(() => {
     refetch();
