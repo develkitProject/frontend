@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 
-import ModalContainer from '../Modal/ModalContainer';
-import useOutSideClick from '../hooks/useOutSideClick';
+import ModalContainer from '../common/Modal/ModalContainer';
+import useOutSideClick from '../common/hooks/useOutSideClick';
 
 import useInputSignUp from './hooks/useInputSignUp';
 import UserInputForm from './components/UserInputForm';

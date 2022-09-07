@@ -6,7 +6,7 @@ import alarm from '../asset/img/alarm.svg';
 import logo from '../asset/img/logo.png';
 import Login from '../login';
 import SignupModal from '../signup/SignupModal';
-import useGetUser from '../hooks/useGetUser';
+import useGetUser from '../common/hooks/useGetUser';
 
 function Header() {
   const navigate = useNavigate();

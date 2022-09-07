@@ -7,8 +7,8 @@ import {
 import CreateCard from '../components/CreateCard';
 import SpaceCard from '../components/SpaceCard.jsx';
 import SpaceHeader from '../components/SpaceHeader';
-import WorkSpaceErrorModal from '../Modal/error';
-import CreateSpaceModal from '../Modal/CreateSpaceModal';
+import WorkSpaceErrorModal from '../common/Modal/error';
+import CreateSpaceModal from '../common/Modal/CreateSpaceModal';
 import React, { useEffect, useState } from 'react';
 
 function WorkSpace() {

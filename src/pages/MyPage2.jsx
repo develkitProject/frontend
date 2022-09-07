@@ -3,7 +3,7 @@ import React, { useCallback, useState, useRef } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
-import useGetUser from '../hooks/useGetUser';
+import useGetUser from '../common/hooks/useGetUser';
 
 import { getCookieToken } from '../Cookie';
 
