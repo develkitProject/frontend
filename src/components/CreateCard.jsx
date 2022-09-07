@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Add from '../img/add.png';
+import Add from '../asset/img/add.png';
 
 function CreateCard({ createOpen, setCreateOpen }) {
   const OpenModal = () => {

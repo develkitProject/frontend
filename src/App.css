@@ -57,10 +57,10 @@
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('../src/fonts/Montserrat-VariableFont_wght.ttf') format("truetype")
+  src: url('../src/asset/fonts/Montserrat-VariableFont_wght.ttf') format("truetype")
 }
 
 @font-face {
   font-family: 'Consolas';
-  src: url('../src/fonts/CONSOLA.TTF') format("truetype")
+  src: url('../src//asset/fonts/CONSOLA.TTF') format("truetype")
 }

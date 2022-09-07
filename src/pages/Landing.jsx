@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import icon from '../img/icon1.png';
-import scroll from '../img/scroll.svg';
+import icon from '../asset/img/icon1.png';
+import scroll from '../asset/img/scroll.svg';
 import 'animate.css';
 import WorkSpaceErrorModal from '../Modal/error';
 import { getCookieToken } from '../Cookie';
