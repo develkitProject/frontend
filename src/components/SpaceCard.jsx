@@ -1,23 +1,29 @@
 import React from 'react';
 
 import styled from 'styled-components';
-
+import { useNavigate } from 'react-router-dom';
 import CardProfile from '../elements/CardProfile.jsx';
 
 function SpaceCard({ data, width, deleteButton, deleteWorkSpaces }) {
+  const navigate = useNavigate();
   return (
-    <StSpaceCard direction='row' width={width} key={data.id}>
-      <StCardImage data={data} />
+    <StSpaceCard direction='row' width={width} key={data.workspaces.id}>
+      <StCardImage
+        data={data.workspaces}
+        onClick={() => {
+          navigate(`/workspace/main/${data.workspaces.id}`);
+        }}
+      />
       <StFooterBox>
         <StFooterDiv>
           <StFooter>
-            <SpaceName>{data.title}</SpaceName>
+            <SpaceName>{data.workspaces.title}</SpaceName>
             <SpaceDate>2022.08.20</SpaceDate>
             <SpaceGoal weight='500'>
-              목표 <SpaceGoal weight='200'>{data.content}</SpaceGoal>
+              목표 <SpaceGoal weight='200'>{data.workspaces.content}</SpaceGoal>
             </SpaceGoal>
           </StFooter>
-          <CardProfile data={data} />
+          <CardProfile data={data.workspaces} />
         </StFooterDiv>
         <hr
           style={{ width: '95%', height: '0.5px', backgroundColor: '#dddddd' }}
@@ -51,7 +57,7 @@ function SpaceCard({ data, width, deleteButton, deleteWorkSpaces }) {
           {deleteButton ? (
             <X_button
               onClick={() => {
-                deleteWorkSpaces(data.id);
+                deleteWorkSpaces(data.workspacesa.id);
               }}
             >
               x

@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { getCookieToken } from '../Cookie';
 import {
   useGetWorkspacesQuery,
-  useAddWorkSpacesMutation,
   useDeleteWorkSpacesMutation,
 } from '../redux/modules/workspaces';
 import CreateCard from '../components/CreateCard';
@@ -10,23 +9,19 @@ import SpaceCard from '../components/SpaceCard.jsx';
 import SpaceHeader from '../components/SpaceHeader';
 import WorkSpaceErrorModal from '../workspace/error';
 import CreateSpaceModal from '../Modal/CreateSpaceModal';
-import useGetUser from '../hooks/useGetUser';
 import React, { useEffect, useState } from 'react';
 
 function WorkSpace() {
   const { data, error, isLoading, refetch } = useGetWorkspacesQuery();
   const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
-  const workspaces = data?.data?.workSpaces;
+  const workspaces = data?.data;
   const cookies = getCookieToken();
   const [createOpen, setCreateOpen] = useState(false);
   const [deleteButton, setDeletebutton] = useState(true);
-  const user = useGetUser();
 
   useEffect(() => {
     refetch();
-  }, [data]);
-
-  console.log(data)
+  }, [data, refetch]);
 
   return (
     <>
