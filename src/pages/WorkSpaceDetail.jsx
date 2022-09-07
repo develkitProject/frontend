@@ -3,14 +3,14 @@ import SideMenu from '../components/SideMenu';
 import Notice from '../components/Notice';
 import Schedule from '../components/Schedule';
 import { useLocation, useParams } from 'react-router-dom';
-import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
+import {
+  useGetMainWorkSpacesQuery,
+  useGetWorkspacesQuery,
+} from '../redux/modules/workspaces';
 
 function WorkSpaceDetail() {
-  const { state } = useLocation();
   const params = useParams();
   const id = Number(params.id);
-  const title = state.code.workspaces.title;
-  const content = state.code.workspaces.content;
 
   const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
 
@@ -20,8 +20,8 @@ function WorkSpaceDetail() {
       <Projects>
         <StIntroContainer>
           <div>
-            <StTitle>{title}</StTitle>
-            <StContent>{content}</StContent>
+            <StTitle></StTitle>
+            <StContent></StContent>
           </div>
           <StButton>팀원초대하기</StButton>
         </StIntroContainer>
