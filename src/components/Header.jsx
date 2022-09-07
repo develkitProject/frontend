@@ -73,13 +73,15 @@ function Header() {
           <StDiv>
             <StAlarmImg src={alarm} />
             <StProfileImg src={profile} onClick={() => navigate('/mypage')} />
-            <StLogBtn
+            
+            <StLogBtn style={{width: "10px", height: "10px", color: "black"}}
               onClick={() => {
                 logout();
               }}
             >
               LOGOUT
             </StLogBtn>
+            
           </StDiv>
         )}
       </StHeaderDiv>
@@ -179,20 +181,20 @@ const StProfileImg = styled.img`
   margin-right: 10px;
   width: 40px;
   height: 40px;
-  border: solid black 1px;
+  border: solid white 1px;
   border-radius: 70%;
-  background-color: white;
+  /* background-color: white; */
   cursor: pointer;
 `;
 
 const StAlarmImg = styled.img`
   padding: 1px;
-  margin-right: 10px;
-  width: 40px;
-  height: 40px;
+  margin-right: 20px;
+  width: 20px;
+  height: 20.5px;
   border: solid black 1px;
-  border-radius: 70%;
-  background-color: white;
+  /* border-radius: 70%; */
+  /* background-color: white; */
   cursor: pointer;
 `;
 

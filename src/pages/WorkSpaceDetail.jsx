@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
 
+
 function WorkSpaceDetail() {
   const params = useParams();
   const id = Number(params.id);
@@ -13,12 +14,11 @@ function WorkSpaceDetail() {
   // console.log(workspaceId);
 
   const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
+
   // const workspaces = data?.data?.workSpaces;
   // useEffect(() => {
   //   refetch();
   // }, [data]);
-
-  console.log(data?.data);
 
   return (
     <StWrapper>
