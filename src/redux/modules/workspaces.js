@@ -38,6 +38,20 @@ export const workspaceApi = coreApi.injectEndpoints({
       },
       invalidatesTags: ['Workspaces'],
     }),
+
+    getMainWorkSpaces: builder.query({
+      query: (id) => {
+        return {
+          url: `/api/workspaces/${id}/main`,
+          method: 'GET',
+          body: id,
+          headers,
+        };
+      },
+      invalidatesTags: ['Workspaces'],
+    }),
+
+
   }),
 });
 

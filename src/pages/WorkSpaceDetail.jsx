@@ -2,8 +2,21 @@ import styled from 'styled-components';
 import SideMenu from '../components/SideMenu';
 import Notice from '../components/Notice';
 import Schedule from '../components/Schedule';
+import { useParams } from 'react-router-dom';
+import {useGetWorkspacesQuery,} from '../redux/modules/workspaces';
+import { useEffect } from 'react';
 
 function WorkSpaceDetail() {
+  let {workspaceId} = useParams();
+  console.log(workspaceId)
+
+  const { data, error, isLoading, refetch } = useGetWorkspacesQuery();
+  const workspaces = data?.data?.workSpaces;
+  useEffect(() => {
+    refetch();
+  }, [data]);
+  
+  console.log(data)
 
   return (
     <StWrapper>

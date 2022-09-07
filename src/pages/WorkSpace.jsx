@@ -24,6 +24,8 @@ function WorkSpace() {
     refetch();
   }, [data]);
 
+  console.log(data)
+
   return (
     <>
       {!cookies ? (
