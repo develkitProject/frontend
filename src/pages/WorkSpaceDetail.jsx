@@ -3,6 +3,7 @@ import SideMenu from '../components/SideMenu';
 import Notice from '../components/Notice';
 import Schedule from '../components/Schedule';
 import { useLocation, useParams } from 'react-router-dom';
+import Chatting from '../components/Chatting';
 import {
   useGetMainWorkSpacesQuery,
   useGetWorkspacesQuery,
@@ -11,8 +12,9 @@ import {
 function WorkSpaceDetail() {
   const params = useParams();
   const id = Number(params.id);
-
   const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
+  const title = data?.data.workspaces.title;
+  const content = data?.data.workspaces.content;
 
   return (
     <StWrapper>
@@ -20,8 +22,8 @@ function WorkSpaceDetail() {
       <Projects>
         <StIntroContainer>
           <div>
-            <StTitle></StTitle>
-            <StContent></StContent>
+            <StTitle>{title}</StTitle>
+            <StContent>{content}</StContent>
           </div>
           <StButton>팀원초대하기</StButton>
         </StIntroContainer>
@@ -33,6 +35,7 @@ function WorkSpaceDetail() {
           <Schedule />
         </div>
       </Projects>
+      <Chatting title={title}></Chatting>
     </StWrapper>
   );
 }
@@ -45,6 +48,7 @@ const StWrapper = styled.div`
   background-color: #f2f2f2;
   display: flex;
   flex-direction: row;
+  position: fixed;
 `;
 
 const Projects = styled.div`

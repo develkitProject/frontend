@@ -149,6 +149,7 @@ const StWrapper = styled.div`
   height: 100%;
   display: flex;
   background: #000000;
+  overflow: hidden;
 `;
 
 const StMain = styled.div`
