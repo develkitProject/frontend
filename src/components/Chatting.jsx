@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
+import Draggable from 'react-draggable';
 
 export default function Chatting({ title }) {
   const client = useRef({});
