@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         font-family: 'Noto Sans KR', sans-serif;
         letter-spacing: -1.8px;
+        overflow-x: hidden;
     };
     /* button{
         display: flex;

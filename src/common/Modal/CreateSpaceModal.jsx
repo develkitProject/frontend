@@ -1,14 +1,11 @@
-import React, { useRef, useState, useEffect, useReducer } from 'react';
+import React, { useRef, useState, useReducer } from 'react';
 import styled from 'styled-components';
 import ModalContainer from './ModalContainer';
-import { StButton } from '../../login/style'
+import { StButton } from '../../login/style';
 import imgupload from '../../asset/img/imgupload.svg';
+import CloseButton from '../elements/CloseButton';
 
-import {
-  useGetWorkspacesQuery,
-  useAddWorkSpacesMutation,
-  useDeleteWorkSpacesMutation,
-} from '../../redux/modules/workspaces';
+import { useAddWorkSpacesMutation } from '../../redux/modules/workspaces';
 
 const reducer = (state, action) => {
   return {
@@ -101,22 +98,7 @@ const CreateSpaceModal = ({ onClose }) => {
               프로젝트 생성하기
             </StButton>
           </Wrapper>
-          <button
-            onClick={handleClose}
-            style={{
-              position: 'absolute',
-              backgroundColor: 'white',
-              border: 'none',
-              fontWeight: '600',
-              fontSize: '20px',
-              top: '20px',
-              right: '20px',
-              color: '#323232',
-              cursor: 'pointer',
-            }}
-          >
-            X
-          </button>
+          <CloseButton handleClose={handleClose}>X</CloseButton>
           <input
             style={{ display: 'none' }}
             accept='image/*'

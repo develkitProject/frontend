@@ -3,6 +3,7 @@ import useOutSideClick from '../common/hooks/useOutSideClick';
 import ModalContainer from '../common/Modal/ModalContainer';
 import useInputLogin from './hooks/useInputLogin';
 import KakaoLogin from '../components/KaKaoLogin';
+import CloseButton from '../common/elements/CloseButton';
 
 import {
   Overlay,
@@ -28,7 +29,7 @@ const Login = ({ onClose, SignupButton }) => {
     window.location.href = KAKAO_AUTH_URL;
   };
 
-  useOutSideClick(modalRef, handleClose);
+  // useOutSideClick(modalRef, handleClose);
 
   return (
     <ModalContainer>
@@ -96,6 +97,7 @@ const Login = ({ onClose, SignupButton }) => {
               onClick={handleLogin}
               style={{ width: '100%' }}
             ></KakaoLogin>
+            <CloseButton handleClose={handleClose}></CloseButton>
           </LoginWrap>
         </ModalWrap>
       </Overlay>
