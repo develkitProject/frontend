@@ -50,6 +50,30 @@ export const workspaceApi = coreApi.injectEndpoints({
       },
       invalidatesTags: ['Workspaces'],
     }),
+
+    getNotice: builder.query({
+      query: (id) => {
+        return {
+          url: `/api/workspaces/${id}/notice`,
+          method: 'GET',
+          // body: notice,
+          headers,
+        };
+      },
+      invalidatesTags: ['Notice'],
+    }),
+
+    addNotice: builder.mutation({
+      query:(id, notice) =>{
+        return {
+          url: `/api/workspaces/${id}/notice`,
+          method: 'POST',
+          body: notice,
+          headers,
+        }
+      },
+      invalidatesTags: ['notice'],
+    })
   }),
 });
 
@@ -60,4 +84,6 @@ export const {
   useAddWorkSpacesMutation,
   useDeleteWorkSpacesMutation,
   useGetMainWorkSpacesQuery,
+  useAddNoticeMutation,
+  useGetNoticeQuery,
 } = workspaceApi;

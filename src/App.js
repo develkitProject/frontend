@@ -11,7 +11,7 @@ import Editor from './components/Editor';
 import MyPage2 from './pages/MyPage2';
 import WorkSpaceDetail from './pages/WorkSpaceDetail';
 import NoticePage from './pages/NoticePage';
-import NoticeWrite from './pages/NoticeWrite';
+import NoticeWrite from './pages/NoticeWritePage';
 
 function App() {
   return (

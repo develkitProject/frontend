@@ -1,23 +1,55 @@
 import styled from 'styled-components';
+import { useGetNoticeQuery } from '../redux/modules/workspaces';
+import React, { useEffect } from 'react';
+import { getCookieToken } from '../Cookie'
+import { useParams } from 'react-router-dom';
+import WorkSpaceErrorModal from '../common/Modal/error'
 
 function Notice() {
-  return (
-        <StWrapper>
-            {/* <StTitle fc="#333333">필독</StTitle> */}
-            <StNoticeContainer>
-                <StTitle fc="#00a99d">공지사항</StTitle>
-                <StTitle fc="#333333">[공유] 9월 17일 중간 발표</StTitle>
-                <StContent> 
-                    이번주까지 CRUD화이팅 'ㅅ')! <br/>
-                </StContent>
-                <StInfoDiv>
-                <p>신짱구 ｜</p>
-                <p>2022.09.13 ｜</p>
-                <p>읽음 7 </p>
-                </StInfoDiv>
-            </StNoticeContainer>
-        </StWrapper>
+  const params = useParams();
+  const id = Number(params.id);
+  const {data, error, isLoading, refetch} = useGetNoticeQuery(id)
+  const notice = data?.data
+  const cookies = getCookieToken();
 
+  console.log(data)
+
+  useEffect(() => {
+    refetch();
+  }, [data, refetch]);
+
+  return (
+    <>
+    {!cookies? (<WorkSpaceErrorModal/>
+    ):(
+      <StWrapper>
+      {/* <StTitle fc="#333333">필독</StTitle> */}
+      <StNoticeContainer>
+      <StTitle fc="#00a99d">공지사항</StTitle>
+      {error ? (
+              <>Oh no, there was an error</>
+            ) : isLoading ? (
+              <>Loading...</>
+            ) : data ? (
+              <>
+            {notice?.map((data, i) => {
+              return(
+                  <StNoticeBox key={notice.id}>
+                      <StTitle fc="#333333">{notice[i].title}</StTitle>
+                      <StContent> {notice[i].content}</StContent>
+                      <StInfoDiv>
+                        <p>{notice[i].nickname} ｜</p>
+                        <p>2022.09.13 ｜</p>
+                        <p>읽음 7 </p>
+                      </StInfoDiv>
+                  </StNoticeBox>
+
+              )
+              })}</>):null}
+      </StNoticeContainer>
+      </StWrapper>
+    )}
+        </>
   );
 }
 
@@ -54,6 +86,17 @@ const StNoticeContainer = styled.div`
   align-items: left;
   background-color: #eef8f8;
 `;
+
+
+const StNoticeBox = styled.div`
+  margin-top: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+`;
+
+
 
 const StContent = styled.div`
   width: 75%;

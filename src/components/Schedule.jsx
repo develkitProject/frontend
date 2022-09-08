@@ -8,45 +8,30 @@ function Schedule() {
       <StTableContainer>
         <StThead>
           <StTable style={{ borderBottom: 'none' }}>
-            <th>담당자</th>
-            <th>업무명</th>
-            <th>작성자</th>
-            <th>등록일</th>
-            <th>수정일</th>
+            <div>담당자</div>
+            <div>업무명</div>
+            <div>작성자</div>
+            <div>등록일</div>
+            <div>수정일</div>
           </StTable>
         </StThead>
         <StTbody>
           <StTable>
-            <th>신짱구</th>
-            <th>제목_업무요청_20220906</th>
-            <th>이지혜</th>
-            <th>2022.09.13</th>
-            <th>2022.09.20</th>
+            <div>신짱구</div>
+            <div>제목_업무요청_20220906</div>
+            <div>이지혜</div>
+            <div>2022.09.13</div>
+            <div>2022.09.20</div>
           </StTable>
 
           <StTable>
-            <th>신짱구</th>
-            <th>제목_업무요청_20220906</th>
-            <th>이지혜</th>
-            <th>2022.09.13</th>
-            <th>2022.09.20</th>
+            <div>신짱구</div>
+            <div>제목_업무요청_20220906</div>
+            <div>이지혜</div>
+            <div>2022.09.13</div>
+            <div>2022.09.20</div>
           </StTable>
-
-          <StTable>
-            <th>신짱구</th>
-            <th>제목_업무요청_20220906</th>
-            <th>이지혜</th>
-            <th>2022.09.13</th>
-            <th>2022.09.20</th>
-          </StTable>
-
-          <StTable>
-            <th>신짱구</th>
-            <th>제목_업무요청_20220906</th>
-            <th>이지혜</th>
-            <th>2022.09.13</th>
-            <th>2022.09.20</th>
-          </StTable>
+          
         </StTbody>
       </StTableContainer>
     </StWrapper>

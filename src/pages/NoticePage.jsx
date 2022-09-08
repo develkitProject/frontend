@@ -1,22 +1,16 @@
 import styled from 'styled-components';
-import SideMenu from '../components/SideMenu';
+import SideMenu from '../components/SideMenu'
 import Notice from '../components/Notice';
 import { useParams } from 'react-router-dom';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 function NoticePage() {
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
   
-  // let { workspaceId } = useParams();
-  // console.log(workspaceId);
-
-  const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
-
   // const workspaces = data?.data?.workSpaces;
   // useEffect(() => {
   //   refetch();
@@ -35,9 +29,6 @@ function NoticePage() {
         </StIntroContainer>
 
         <div>
-          <Notice />
-          <Notice />
-          <Notice />
           <Notice />
         </div>
       </Projects>
