@@ -12,8 +12,6 @@ function Notice() {
   const notice = data?.data
   const cookies = getCookieToken();
 
-  console.log(data)
-
   useEffect(() => {
     refetch();
   }, [data, refetch]);

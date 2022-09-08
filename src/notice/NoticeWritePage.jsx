@@ -1,38 +1,25 @@
 import styled from 'styled-components';
 import SideMenu from '../components/SideMenu';
-import Notice from '../components/Notice';
+import Notice from './Notice';
 import { useParams } from 'react-router-dom';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Editor from '../components/Editor';
+import NoticeWrite from './NoticeWrite';
 
-function NoticeWrite() {
-  const navigate = useNavigate();
-  const params = useParams();
-  const id = Number(params.id);
-  
-  // let { workspaceId } = useParams();
-  // console.log(workspaceId);
-
-  const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
-
-  // const workspaces = data?.data?.workSpaces;
-  // useEffect(() => {
-  //   refetch();
-  // }, [data]);
+function NoticeWritePage() {
 
   return (
     <StWrapper>
       <SideMenu />
       <Projects>
-        <Editor/>
+        <NoticeWrite/>
       </Projects>
     </StWrapper>
   );
 }
 
-export default NoticeWrite;
+export default NoticeWritePage;
 
 const StWrapper = styled.div`
   width: 100%;

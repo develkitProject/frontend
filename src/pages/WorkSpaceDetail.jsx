@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import SideMenu from '../components/SideMenu';
-import Notice from '../components/Notice';
+import Notice from '../notice/Notice';
 import Schedule from '../components/Schedule';
 import { useLocation, useParams } from 'react-router-dom';
 import Chatting from '../components/Chatting';
