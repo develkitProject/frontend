@@ -10,8 +10,8 @@ import { Routes, Route } from 'react-router-dom';
 import Editor from './components/Editor';
 import MyPage2 from './pages/MyPage2';
 import WorkSpaceDetail from './pages/WorkSpaceDetail';
-import NoticePage from './pages/NoticePage';
-import NoticeWrite from './pages/NoticeWritePage';
+import NoticePage from './notice/NoticePage';
+import NoticeWritePage from './notice/NoticeWritePage';
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
         <Route path='/kakao' element={<Kakao />} />
         <Route path='/workspace/main/:id' element={<WorkSpaceDetail />} />
         <Route path='/workspace/main/:id/notice' element={<NoticePage />} />
-        <Route path='/workspace/main/:id/notice/write' element={<NoticeWrite />} />
+        <Route path='/workspace/main/:id/notice/write' element={<NoticeWritePage />} />
       </Routes>
     </>
   );
