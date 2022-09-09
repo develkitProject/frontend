@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import { useGetNoticeQuery } from '../redux/modules/workspaces';
 import React, { useEffect } from 'react';
-import { getCookieToken } from '../Cookie'
+import { getCookieToken } from '../Cookie';
 import { useParams } from 'react-router-dom';
-import WorkSpaceErrorModal from '../common/Modal/error'
+import WorkSpaceErrorModal from '../common/Modal/error';
 
 function Notice() {
   const params = useParams();
   const id = Number(params.id);
-  const {data, error, isLoading, refetch} = useGetNoticeQuery(id)
-  const notice = data?.data
+  const { data, error, isLoading, refetch } = useGetNoticeQuery(id);
+  const notice = data?.data;
   const cookies = getCookieToken();
 
   useEffect(() => {
@@ -18,36 +18,38 @@ function Notice() {
 
   return (
     <>
-    {!cookies? (<WorkSpaceErrorModal/>
-    ):(
-      <StWrapper>
-      {/* <StTitle fc="#333333">필독</StTitle> */}
-      <StNoticeContainer>
-      <StTitle fc="#00a99d">공지사항</StTitle>
-      {error ? (
+      {!cookies ? (
+        <WorkSpaceErrorModal />
+      ) : (
+        <StWrapper>
+          {/* <StTitle fc="#333333">필독</StTitle> */}
+          <StNoticeContainer>
+            <StTitle fc='#00a99d'>공지사항</StTitle>
+            {error ? (
               <>Oh no, there was an error</>
             ) : isLoading ? (
               <>Loading...</>
             ) : data ? (
               <>
-            {notice?.map((data, i) => {
-              return(
-                  <StNoticeBox key={notice.id}>
-                      <StTitle fc="#333333">{notice[i].title}</StTitle>
-                      <StContent> {notice[i].content}</StContent>
+                {notice?.map((data, i) => {
+                  return (
+                    <StNoticeBox key={notice.id}>
+                      <StTitle fc='#333333'>{data.title}</StTitle>
+                      <StContent> {data.content}</StContent>
                       <StInfoDiv>
-                        <p>{notice[i].nickname} ｜</p>
+                        <p>{data.nickname} ｜</p>
                         <p>2022.09.13 ｜</p>
                         <p>읽음 7 </p>
                       </StInfoDiv>
-                  </StNoticeBox>
-
-              )
-              })}</>):null}
-      </StNoticeContainer>
-      </StWrapper>
-    )}
-        </>
+                    </StNoticeBox>
+                  );
+                })}
+              </>
+            ) : null}
+          </StNoticeContainer>
+        </StWrapper>
+      )}
+    </>
   );
 }
 
@@ -67,12 +69,12 @@ const StWrapper = styled.div`
 `;
 
 const StTitle = styled.p`
- color: ${(props) => props.fc};
- text-align: left;
- font-size: 1.3rem;
- font-weight: bold;
- letter-spacing: -1.2px;
- margin-bottom: 20px;
+  color: ${(props) => props.fc};
+  text-align: left;
+  font-size: 1.3rem;
+  font-weight: bold;
+  letter-spacing: -1.2px;
+  margin-bottom: 20px;
 `;
 
 const StNoticeContainer = styled.div`
@@ -85,7 +87,6 @@ const StNoticeContainer = styled.div`
   background-color: #eef8f8;
 `;
 
-
 const StNoticeBox = styled.div`
   margin-top: 15px;
   margin-bottom: 15px;
@@ -93,8 +94,6 @@ const StNoticeBox = styled.div`
   flex-direction: column;
   align-items: left;
 `;
-
-
 
 const StContent = styled.div`
   width: 75%;
