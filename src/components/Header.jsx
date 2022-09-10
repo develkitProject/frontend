@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { getCookieToken} from '../Cookie';
+import { getCookieToken, removeCookieToken } from '../Cookie';
 import alarm from '../asset/img/alarm.svg';
 import logo from '../asset/img/logo.png';
 import Login from '../login';
@@ -9,16 +9,13 @@ import SignupModal from '../signup/SignupModal';
 import useGetUser from '../common/hooks/useGetUser';
 import MyProfileModal from '../common/Modal/MyProfileModal';
 
-
 function Header() {
   const navigate = useNavigate();
   const cookies = getCookieToken();
-  const location = useLocation().pathname;
 
   const [isOpen, setIsOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-
 
   const onLoginButton = () => {
     setIsOpen(true);
@@ -29,26 +26,6 @@ function Header() {
     setSignupOpen(true);
   };
 
-  const onInfoButton = () => {
-    setInfoOpen(true);
-  };
-
-  const pathname = () => {
-    if (location === '/') {
-      setPath(1);
-    } else if (location === '/workspace') {
-      setPath(2);
-    } else if (location === '/community') {
-      setPath(3);
-    } else {
-      setPath(4);
-    }
-  };
-
-  useEffect(() => {
-    pathname();
-  });
-
   const moveMain = () => {
     navigate('/');
   };
@@ -56,13 +33,11 @@ function Header() {
     navigate('/workspace');
   };
 
-  const { user } = useGetUser();
   const logout = () => {
     removeCookieToken();
     // removeUserData();
     window.location.href = '/';
   };
-
 
   return (
     <>
@@ -80,14 +55,10 @@ function Header() {
 
           {/* <StDiv style={!matches ? { display: 'none' } : null}> */}
           <StMenuDiv>
-            <StMenuName path={path} onClick={moveMain}>
-              About
-            </StMenuName>
-            <StMenuName path={path} onClick={moveProject}>
-              Proejct
-            </StMenuName>
-            <StMenuName path={path}>Community</StMenuName>
-            <StMenuName path={path}>FAQ</StMenuName>
+            <StMenuName onClick={moveMain}>About</StMenuName>
+            <StMenuName onClick={moveProject}>Proejct</StMenuName>
+            <StMenuName>Community</StMenuName>
+            <StMenuName>FAQ</StMenuName>
             {/* </StDiv> */}
           </StMenuDiv>
         </div>
@@ -114,24 +85,11 @@ function Header() {
             <StAlarmImg src={alarm} />
             <StProfileImg
               src={user.profileImageUrl}
-
-              onClick={()=>{setProfileOpen(profileOpen===false? true:false)}}/>
-              {profileOpen===true?<MyProfileModal/>:null}
-
               onClick={() => {
-                navigate('/mypage');
+                setProfileOpen(profileOpen === false ? true : false);
               }}
             />
-
-            <StLogBtn
-              style={{ width: '10px', height: '10px', color: 'black' }}
-              onClick={() => {
-                logout();
-              }}
-            >
-              {/* LOGOUT */}
-            </StLogBtn>
-
+            {profileOpen === true ? <MyProfileModal /> : null}
           </StDiv>
         )}
       </StHeaderDiv>
@@ -152,13 +110,6 @@ function Header() {
             setSignupOpen(false);
           }}
         ></SignupModal>
-      )}
-      {infoOpen && (
-        <InfoModal
-          onClose={() => {
-            setInfoOpen(false);
-          }}
-        ></InfoModal>
       )}
     </>
   );
