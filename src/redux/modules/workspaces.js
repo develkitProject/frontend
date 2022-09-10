@@ -74,6 +74,22 @@ export const workspaceApi = coreApi.injectEndpoints({
       },
       invalidatesTags: ['Notice'],
     }),
+
+    getMemberList: builder.query({
+      query: (id) => {
+        return {
+          url: `/api/workspaces/${id}`,
+          method: 'GET',
+          headers,
+        };
+      },
+      providesTags: ['Notice'],
+    }),
+
+
+
+
+
   }),
 });
 
@@ -86,6 +102,7 @@ export const {
   useGetMainWorkSpacesQuery,
   useAddNoticeMutation,
   useGetNoticeQuery,
+  useGetMemberListQuery,
 } = workspaceApi;
 
 

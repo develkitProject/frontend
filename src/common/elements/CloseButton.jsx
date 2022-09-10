@@ -22,4 +22,5 @@ const XButton = styled.button`
   right: 20px;
   color: #323232;
   cursor: pointer;
+  font-family: 'Montserrat';
 `;
