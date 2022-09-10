@@ -7,11 +7,14 @@ import MyPage from './pages/MyPage';
 import WorkSpace from './pages/WorkSpace';
 import Kakao from './pages/KaKao';
 import { Routes, Route } from 'react-router-dom';
-import Editor from './components/Editor';
+import PostEditor from './components/PostEditor';
 import MyPage2 from './pages/MyPage2';
 import WorkSpaceDetail from './pages/WorkSpaceDetail';
 import NoticePage from './notice/NoticePage';
 import NoticeWritePage from './notice/NoticeWritePage';
+import Docs from './pages/Docs';
+import DocsWritePage from './pages/DocsWritePage';
+import AddressPage from './pages/AddressPage';
 
 function App() {
   return (
@@ -23,11 +26,14 @@ function App() {
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/mypage2' element={<MyPage2 />} />
         <Route path='/workspace' element={<WorkSpace />} />
-        <Route path='/editor' element={<Editor />} />
+        <Route path='/editor' element={<PostEditor />} />
         <Route path='/kakao' element={<Kakao />} />
         <Route path='/workspace/main/:id' element={<WorkSpaceDetail />} />
         <Route path='/workspace/main/:id/notice' element={<NoticePage />} />
         <Route path='/workspace/main/:id/notice/write' element={<NoticeWritePage />} />
+        <Route path='/workspace/main/:id/docs' element={<Docs />} />
+        <Route path='/workspace/main/:id/docs/write' element={<DocsWritePage />} />
+        <Route path='/workspace/main/:id/address' element={<AddressPage/>} /> 
       </Routes>
     </>
   );

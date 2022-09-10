@@ -18,38 +18,40 @@ function Notice() {
 
   return (
     <>
-      {!cookies ? (
-        <WorkSpaceErrorModal />
-      ) : (
-        <StWrapper>
-          {/* <StTitle fc="#333333">필독</StTitle> */}
-          <StNoticeContainer>
-            <StTitle fc='#00a99d'>공지사항</StTitle>
-            {error ? (
+
+    {!cookies? (<WorkSpaceErrorModal/>
+    ):(
+      <StWrapper>
+
+      {error ? (
+
               <>Oh no, there was an error</>
             ) : isLoading ? (
               <>Loading...</>
             ) : data ? (
               <>
-                {notice?.map((data, i) => {
-                  return (
-                    <StNoticeBox key={notice.id}>
-                      <StTitle fc='#333333'>{data.title}</StTitle>
+
+            {notice?.map((data, i) => {
+              return(
+                <StNoticeContainer>
+                <StTitle fc="#00a99d">공지사항</StTitle>
+                  <StNoticeBox key={notice.id}>
+                      <StTitle fc="#333333">{data.title}</StTitle>
                       <StContent> {data.content}</StContent>
                       <StInfoDiv>
                         <p>{data.nickname} ｜</p>
-                        <p>2022.09.13 ｜</p>
+                        <p>{data.createdAt} ｜</p>
                         <p>읽음 7 </p>
                       </StInfoDiv>
-                    </StNoticeBox>
-                  );
-                })}
-              </>
-            ) : null}
-          </StNoticeContainer>
-        </StWrapper>
-      )}
-    </>
+                  </StNoticeBox>
+                  </StNoticeContainer>
+              )
+              })}</>):null}
+              <div style={{marginTop: "5%"}}></div>
+
+      </StWrapper>
+    )}
+        </>
   );
 }
 
@@ -69,22 +71,23 @@ const StWrapper = styled.div`
 `;
 
 const StTitle = styled.p`
-  color: ${(props) => props.fc};
-  text-align: left;
-  font-size: 1.3rem;
-  font-weight: bold;
-  letter-spacing: -1.2px;
-  margin-bottom: 20px;
+ color: ${(props) => props.fc};
+ text-align: left;
+ font-size: 1.3rem;
+ font-weight: bold;
+ letter-spacing: -1.2px;
+ margin-bottom: 15px;
 `;
 
 const StNoticeContainer = styled.div`
-  padding: 5%;
+  padding: 3%;
   width: 90%;
   min-height: 15vh;
   display: flex;
   flex-direction: column;
   align-items: left;
   background-color: #eef8f8;
+  margin: 5px;
 `;
 
 const StNoticeBox = styled.div`
@@ -95,21 +98,22 @@ const StNoticeBox = styled.div`
   align-items: left;
 `;
 
+
 const StContent = styled.div`
-  width: 75%;
+  width: 100%;
   min-height: 5vh;
   max-height: 20vh;
   display: flex;
   flex-direction: column;
   align-items: left;
-  overflow-y: auto;
   font-size: 1.1rem;
   line-height: 1.5rem;
   font-weight: 500;
+  white-space:pre-wrap;
 `;
 
 const StInfoDiv = styled.div`
-  margin-top: 1%;
+  margin-top: 2.5%;
   display: flex;
   flex-direction: row;
   align-items: left;

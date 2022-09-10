@@ -28,10 +28,14 @@ function SideMenu(data) {
                         <StMenuIn 
                         onClick={() => {navigate(`/workspace/main/${id}/notice`);}} 
                         >공지사항</StMenuIn>
-                        <StMenuIn>문서</StMenuIn>
+                        <StMenuIn
+                        onClick={() => {navigate(`/workspace/main/${id}/docs`);}} 
+                        >문서</StMenuIn>
                     </StMenuInDiv>
             <StLabel style={{borderTop: "solid 1px #c6c6c6"}}><StIcon src={schedule}/>일정 관리</StLabel>
-            <StLabel><StIcon src={contacts}/>주소록</StLabel>
+            <StLabel
+              onClick={() => {navigate(`/workspace/main/${id}/address`);}}>
+            <StIcon src={contacts}/>주소록</StLabel>
             <StLabel><StIcon src={laptop}/>프로젝트 정보</StLabel>
             <div>
                 <StButton><StIcon src={chat}/>채팅하기</StButton>

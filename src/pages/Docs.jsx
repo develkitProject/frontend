@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import SideMenu from '../components/SideMenu'
-import Notice from './Notice';
 import { useParams } from 'react-router-dom';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Board from '../components/Board';
 
-function NoticePage() {
+function Docs() {
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
@@ -17,20 +17,20 @@ function NoticePage() {
       <Projects>
         <StIntroContainer>
           <div>
-            <StTitle>공지사항</StTitle>
-            <StContent>공지사항 필독 부탁드립니다.</StContent>
+            <StTitle>문서</StTitle>
+            <StContent>프로젝트 관련 일일보고 및 계획 등</StContent>
           </div>
-          <StButton onClick={()=>{navigate(`/workspace/main/${id}/notice/write`)}}>글쓰기</StButton>
+          <StButton onClick={()=>{navigate(`/workspace/main/${id}/docs/write`)}}>글쓰기</StButton>
         </StIntroContainer>
         <div>
-          <Notice />
+            <Board/>
         </div>
       </Projects>
     </StWrapper>
   );
 }
 
-export default NoticePage;
+export default Docs;
 
 const StWrapper = styled.div`
   width: 100%;

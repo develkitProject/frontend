@@ -1,82 +1,101 @@
-import styled from 'styled-components';
-import React, { useState, useReducer } from 'react';
+import { useRef, useState, useCallback, useMemo } from "react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useAddNoticeMutation } from '../redux/modules/workspaces';
+import styled from 'styled-components';
+
+export const formats = [
+  'header',
+  'bold', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link', 'image',
+  'align', 'color', 'background',        
+];
+
+const toolbarOptions =[
+  [{ 'header': [1, 2, false] }],
+  ['bold','underline','strike', 'blockquote'],
+  [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+  ['link', 'image'],
+  [{ 'align': [] }, { 'color': [] }, { 'background': [] }],
+  ['clean'],
+]
+
+const Editor = ({setCon}) =>{
+
+  const QuillRef = useRef();
+  const [content, setContent] = useState("");
+  setCon(content)
+
+  const imageHandler = () =>{
+    const input = document.createElement("input");
 
 
-// const toolbarOptions =[
-//           [{ 'header': [1, 2, false] }],
-//           ['bold','underline','strike', 'blockquote'],
-//           [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-//           ['link', 'image'],
-//           [{ 'align': [] }, { 'color': [] }, { 'background': [] }],
-//           ['clean'],
-//         ]
-
-// export const formats = [
-//         'header',
-//         'bold', 'underline', 'strike', 'blockquote',
-//         'list', 'bullet', 'indent',
-//         'link', 'image',
-//         'align', 'color', 'background',        
-//       ];
-
-// const modules = {
-//     toolbar:{
-//         container: toolbarOptions,
-//     }
-// };
-// const Editor = ({placeholder, value, ...rest})=>{
-
-  const reducer = (state, action) => {
-    return {
-      ...state,
-      [action.name]: action.value,
-    };
-  };
-  
-  const Editor = ()=>{
-    const [addNotice] = useAddNoticeMutation();
-
-    const [state, setState] = useReducer(reducer, {
-      title: '',
-      content: '',
-    });
-
-    const { title, content } = state;
-    const onChange = (e) => {
-      setState(e.target);
-    };
-
-    const handleSubmit = () => {
-      if (title !== '' && content !== '') {
-        const obj = {
-          title,
-          content,
-        };
-        addNotice(obj);
-        window.alert('공지사항이 등록되었습니다');
-      } else {
-        window.alert('제목과 내용을 모두 채워주세요!');
-      }
-    };
     
-        return(
+    const FormData = new FormData();
+    let url ="";
+
+    input.setAttribute("type", "file");
+    input.setAttribute("accept", "image/*");
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files;
+      if (file !== null) {
+        FormData.append("image", file[0])
+        try{
+          // const res = res.data.url;
+          // url = res.data.url;
+
+          const range = QuillRef.current?.getEditor().getSelection()?.index;
+          if (range !== null && range !== undefined) {
+            let quill = QuillRef.current?.getEditor();
+
+            quill?.setSelection(range, 1);
+            quill?.clipboard.dangerouslyPasteHTML(
+              range,
+              `<img src=${url} alt="이미지 태그가 삽입됩니다." />`
+              );
+            }
+  
+            // return { ...res, success: true };
+          } catch (error) {
+            const err = ("error")
+            return { ...err.response, success: false };
+          }
+        }
+      };
+    };
+
+    const modules = useMemo(()=>{
+      return{
+      toolbar:{
+          container: toolbarOptions,
+          handlers: {
+            image: imageHandler,
+          },
+      },
+    }},[]);
+
+    return(
         <StEditorContainer>
-            <StInputTitle onChange={onChange} name='title' placeholder='제목'/>
-            <StInputTitle onChange={onChange} name='content' placeholder='내용'/>
             <EditorBlock>
-            {/* <ReactQuill style={{height: "500px", width: "96%"}}
-                    {...rest}
-                    value={value || ''} 
-                    theme="snow"
-                    modules={modules}
-                    formats={formats}>
-            </ReactQuill> */}
+              <ReactQuill 
+                ref={(element)=>{
+                  if (element!==null){
+                    QuillRef.current = element;
+                }
+              }} 
+              style={{height: "500px", width: "96%"}}
+                  value={content} 
+                  theme="snow"
+                  name="content"
+                  modules={modules}
+                  formats={formats}
+                  onChange={setContent}
+                  content={content}
+                  >
+              </ReactQuill>
             </EditorBlock>
-            {/* <div style={{marginTop: "50px"}}/> */}
-            <StButton onClick={handleSubmit}>게시하기</StButton>
         </StEditorContainer>
         )
     }
@@ -91,32 +110,17 @@ const StEditorContainer = styled.div`
   flex-direction: column;
 `;
 
-const StInputTitle = styled.input`
- margin-bottom: 2%;
- width: 94%;
- height: 30px;
- padding: 5px;
- padding-left: 15px;
- font-size: 20px;
- border-radius: 4px;
- border: 1px solid #C6C6C6;
- :focus{outline: 1px solid #00A99D}
-`;
-
 const EditorBlock = styled.div`
   padding-bottom: 4rem;
 `;
 
-const StButton = styled.button`
-  background-color: #000000;
-  margin-left: 3%;
-  width: 20%;
-  height: 35px;
-  border-radius: 8px;
-  border: 0px;
-  color: #fff;
-  text-align: center;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-`;
+
+
+
+
+
+
+
+
+
+
