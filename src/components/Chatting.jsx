@@ -1,77 +1,104 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import SockJS from 'sockjs-client';
-import { Stomp } from '@stomp/stompjs';
+// import { Stomp } from '@stomp/stompjs';
+import Stomp from 'stompjs';
+import { useParams } from 'react-router-dom';
+import { useGetChatMessageQuery } from '../redux/modules/chat';
+import { getCookieToken } from '../Cookie';
+import Draggable from 'react-draggable';
 
 export default function Chatting({ title }) {
-  const client = useRef({});
   const [chatMessages, setChatMessages] = useState([]);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState('d');
+  const id = useParams().id;
+  const { data, isLoading, refetch, error } = useGetChatMessageQuery(id);
+  console.log(data?.data);
 
-  // useEffect(() => {
-  //   connect();
+  const headers = {
+    token: getCookieToken(),
+  };
+  const sockJS = new SockJS('http://hosung.shop/stomp/chat');
+  const stompClient = Stomp.over(sockJS);
+  // let stompClient = Stomp.over(function () {
+  //   return new SockJS('http://hosung.shop/stomp/chat');
+  // });
 
-  //   return () => disconnect();
-  // }, []);
+  // stompClient.debug = () => {};
 
-  // const connect = () => {
-  //   client.current = new Stomp.Client({
-  //     // brokerURL: "ws://localhost:8080/ws-stomp/websocket", // 웹소켓 서버로 직접 접속
-  //     webSocketFactory: () => new SockJS('/ws-stomp'), // proxy를 통한 접속
-  //     connectHeaders: {
-  //       'auth-token': 'spring-chat-auth-token',
-  //     },
-  //     debug: function (str) {
-  //       console.log(str);
-  //     },
-  //     reconnectDelay: 5000,
-  //     heartbeatIncoming: 4000,
-  //     heartbeatOutgoing: 4000,
-  //     onConnect: () => {
-  //       subscribe();
-  //     },
-  //     onStompError: (frame) => {
-  //       console.error(frame);
-  //     },
-  //   });
+  useEffect(() => {
+    // onConnected();
+    // return () => onConnected();
+  }, []);
 
-  //   client.current.activate();
-  // };
+  function onConnected() {
+    try {
+      stompClient.connect(headers, () => {
+        stompClient.subscribe(
+          `/sub/chat/room/${id}`,
+          (data) => {
+            const newMessage = JSON.parse(data.body);
+            console.log(newMessage);
+          },
+          headers
+        );
+        publish_1();
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  // const disconnect = () => {
-  //   client.current.deactivate();
-  // };
+  const disconnect = () => {
+    stompClient.deactivate();
+  };
 
-  // const subscribe = () => {
-  //   client.current.subscribe(`/sub/chat/`, ({ body }) => {
-  //     setChatMessages((_chatMessages) => [..._chatMessages, JSON.parse(body)]);
-  //   });
-  // };
+  const publish_1 = (message) => {
+    if (!stompClient.connected) {
+      return;
+    }
+    stompClient.send(
+      `/pub/chat/enter`,
+      headers,
+      JSON.stringify({ roomId: id, message })
+    );
+    setMessage('');
+  };
 
-  // const publish = (message) => {
-  //   if (!client.current.connected) {
-  //     return;
-  //   }
+  const sendMessage = () => {
+    stompClient.send(
+      `/pub/chat/message`,
+      headers,
+      JSON.stringify({
+        roomId: id,
+        message: message,
+      })
+    );
+    setMessage('');
+  };
 
-  //   client.current.publish({
-  //     destination: '/pub/chat',
-  //     body: JSON.stringify({ roomSeq: ROOM_SEQ, message }),
-  //   });
-
-  //   setMessage('');
-  // };
   return (
     <>
+      {/* <Draggable> */}
       <StChatBox>
         <StChatHeader>{title}</StChatHeader>
         <StChatBody></StChatBody>
         <StChatFooter>
-          <StInput onChange={(e) => setMessage(e.target.value)}></StInput>
-          <StButton message={message} disabled={message.length === 0}>
+          <StInput
+            name='message'
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          ></StInput>
+          <StButton
+            onClick={sendMessage}
+            message={message}
+            disabled={message.length === 0}
+          >
             전송
           </StButton>
         </StChatFooter>
       </StChatBox>
+      {/* </Draggable> */}
     </>
   );
 }

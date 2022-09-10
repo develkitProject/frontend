@@ -3,16 +3,18 @@ import { configureStore } from '@reduxjs/toolkit';
 import user from '../modules/user';
 import { coreApi } from '../query/coreApi';
 import { workspaceApi } from '../modules/workspaces';
+import { chatApi } from '../modules/chat';
 
 const store = configureStore({
   reducer: {
     user,
     [workspaceApi.reducerPath]: workspaceApi.reducer,
+    [chatApi.reducerPath]: chatApi.reducer,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware(),
     coreApi.middleware,
-  ]
+  ],
 });
 
-export default store
+export default store;

@@ -4,6 +4,7 @@ import ModalContainer from './ModalContainer';
 import { StButton } from '../../login/style';
 import imgupload from '../../asset/img/imgupload.svg';
 import CloseButton from '../elements/CloseButton';
+import Draggable from 'react-draggable';
 
 import { useAddWorkSpacesMutation } from '../../redux/modules/workspaces';
 
@@ -61,56 +62,59 @@ const CreateSpaceModal = ({ onClose }) => {
   };
 
   return (
-    <ModalContainer>
-      <Overlay>
-        <ModalWrap ref={modalRef}>
-          <Wrapper>
-            <StProejct>프로젝트 생성하기</StProejct>
-            <StMent>
-              프로젝트를 생성 후, 프로젝트 홈에서 초대코드를 복사할 수 있습니다.
-            </StMent>
-            <StInputTitle>커버 이미지</StInputTitle>
-            <StImageBox
-              src={imageUrl ? imageUrl : imgupload}
-              onClick={() => imgRef.current.click()}
-            ></StImageBox>
-            <StInputTitle>프로젝트 이름</StInputTitle>
-            <StInput
-              onChange={onChange}
-              name='title'
-              placeholder='프로젝트명을 입력해주세요'
-            ></StInput>
-            <StInputTitle>프로젝트 소개</StInputTitle>
-            <StInput
-              onChange={onChange}
-              name='content'
-              placeholder='프로젝트를 소개해주세요'
-            ></StInput>
-            <StButton
-              onClick={handleSubmit}
-              style={{
-                width: '75%',
-                marginTop: '40px',
-                height: '60px',
-                fontSize: '20px',
-              }}
-            >
-              프로젝트 생성하기
-            </StButton>
-          </Wrapper>
-          <CloseButton handleClose={handleClose}>X</CloseButton>
-          <input
-            style={{ display: 'none' }}
-            accept='image/*'
-            id='upload-photo'
-            name='upload-photo'
-            type='file'
-            onChange={onChangeImage}
-            ref={imgRef}
-          />
-        </ModalWrap>
-      </Overlay>
-    </ModalContainer>
+    <Draggable>
+      <ModalContainer>
+        <Overlay>
+          <ModalWrap ref={modalRef}>
+            <Wrapper>
+              <StProejct>프로젝트 생성하기</StProejct>
+              <StMent>
+                프로젝트를 생성 후, 프로젝트 홈에서 초대코드를 복사할 수
+                있습니다.
+              </StMent>
+              <StInputTitle>커버 이미지</StInputTitle>
+              <StImageBox
+                src={imageUrl ? imageUrl : imgupload}
+                onClick={() => imgRef.current.click()}
+              ></StImageBox>
+              <StInputTitle>프로젝트 이름</StInputTitle>
+              <StInput
+                onChange={onChange}
+                name='title'
+                placeholder='프로젝트명을 입력해주세요'
+              ></StInput>
+              <StInputTitle>프로젝트 소개</StInputTitle>
+              <StInput
+                onChange={onChange}
+                name='content'
+                placeholder='프로젝트를 소개해주세요'
+              ></StInput>
+              <StButton
+                onClick={handleSubmit}
+                style={{
+                  width: '75%',
+                  marginTop: '40px',
+                  height: '60px',
+                  fontSize: '20px',
+                }}
+              >
+                프로젝트 생성하기
+              </StButton>
+            </Wrapper>
+            <CloseButton handleClose={handleClose}>X</CloseButton>
+            <input
+              style={{ display: 'none' }}
+              accept='image/*'
+              id='upload-photo'
+              name='upload-photo'
+              type='file'
+              onChange={onChangeImage}
+              ref={imgRef}
+            />
+          </ModalWrap>
+        </Overlay>
+      </ModalContainer>
+    </Draggable>
   );
 };
 

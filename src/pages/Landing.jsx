@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import icon from '../asset/img/icon1.png';
@@ -10,15 +10,20 @@ import { getCookieToken } from '../Cookie';
 function Landing() {
   const navigate = useNavigate();
   const cookies = getCookieToken();
+  const homeRef = useRef(null);
 
   const [isOpen, setIsOpen] = useState(false);
   const onStartButton = () => {
     setIsOpen(true);
   };
 
+  const onHomeClick = () => {
+    homeRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <>
-      <StWrapper>
+      <StWrapper height={'90vh'}>
         <StMain>
           <StWrap>
             <StIntro>
@@ -63,13 +68,15 @@ function Landing() {
           </StWrap>
 
           <StScroll>
-            <StScrollImg alt='scroll' src={scroll} />
-            <div className='animate__shakeY'>scroll down</div>
+            <StScrollImg alt='scroll' src={scroll} onClick={onHomeClick} />
+            <div onClick={onHomeClick} className='animate__shakeY'>
+              scroll down
+            </div>
           </StScroll>
         </StMain>
       </StWrapper>
 
-      <StWrapper>
+      <StWrapper height={'100vh'}>
         <StMain>
           <StWrap>
             <StIntro>
@@ -85,7 +92,7 @@ function Landing() {
               </StIntroMent>
             </StIntro>
 
-            <StCardContainer>
+            <StCardContainer ref={homeRef}>
               <StCard gc='#1e0e0e'>
                 <StCardText>
                   <StCardTitle fc='#832e2e'>일정관리</StCardTitle>
@@ -146,7 +153,7 @@ export default Landing;
 const StWrapper = styled.div`
   color: white;
   width: 100%;
-  height: 100%;
+  height: ${(props) => props.height};
   display: flex;
   background: #000000;
   overflow: hidden;
@@ -201,6 +208,7 @@ const StStart = styled.div`
   display: flex;
   flex-direction: row;
   cursor: pointer;
+  width: 230px;
 `;
 
 const StIcon = styled.img`
@@ -218,17 +226,18 @@ const StLink = styled.div`
 `;
 
 const StScroll = styled.div`
-  margin-top: 12%;
-  margin-bottom: 5%;
   font-size: 16px;
   font-weight: 400;
+  width: 40px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   text-align: center;
-  cursor: n-resize;
+  cursor: pointer;
   font-family: 'Montserrat';
-
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
   &:hover {
     animation: bounce;
     animation-duration: 1.5s;

@@ -8,6 +8,7 @@ import {
   useGetMainWorkSpacesQuery,
   useGetWorkspacesQuery,
 } from '../redux/modules/workspaces';
+import { useEffect } from 'react';
 
 function WorkSpaceDetail() {
   const params = useParams();
@@ -33,9 +34,7 @@ function WorkSpaceDetail() {
           </div>
           <StButton>팀원 초대하기</StButton>
         </StIntroContainer>
-
         <div>
-          {/* <Notice /> */}
           
           <StNoticeWrapper>
             <StTitle style={{marginBottom:"15px"}} fc="#333333" fs="20px">필독</StTitle>
@@ -67,7 +66,7 @@ export default WorkSpaceDetail;
 
 const StWrapper = styled.div`
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   background-color: #f2f2f2;
   display: flex;
   flex-direction: row;

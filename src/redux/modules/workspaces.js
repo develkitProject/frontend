@@ -60,7 +60,7 @@ export const workspaceApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      invalidatesTags: ['Notice'],
+      providesTags: ['Notice'],
     }),
 
     addNotice: builder.mutation({
@@ -70,10 +70,10 @@ export const workspaceApi = coreApi.injectEndpoints({
           method: 'POST',
           body: notice,
           headers,
-        }
+        };
       },
-      invalidatesTags: ['notice'],
-    })
+      invalidatesTags: ['Notice'],
+    }),
   }),
 });
 

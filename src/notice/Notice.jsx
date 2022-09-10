@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import { useGetNoticeQuery } from '../redux/modules/workspaces';
 import React, { useEffect } from 'react';
-import { getCookieToken } from '../Cookie'
+import { getCookieToken } from '../Cookie';
 import { useParams } from 'react-router-dom';
-import WorkSpaceErrorModal from '../common/Modal/error'
+import WorkSpaceErrorModal from '../common/Modal/error';
 
 function Notice() {
   const params = useParams();
   const id = Number(params.id);
-  const {data, error, isLoading, refetch} = useGetNoticeQuery(id)
-  const notice = data?.data
+  const { data, error, isLoading, refetch } = useGetNoticeQuery(id);
+  const notice = data?.data;
   const cookies = getCookieToken();
 
   useEffect(() => {
@@ -18,16 +18,19 @@ function Notice() {
 
   return (
     <>
+
     {!cookies? (<WorkSpaceErrorModal/>
     ):(
       <StWrapper>
 
       {error ? (
+
               <>Oh no, there was an error</>
             ) : isLoading ? (
               <>Loading...</>
             ) : data ? (
               <>
+
             {notice?.map((data, i) => {
               return(
                 <StNoticeContainer>
@@ -86,7 +89,6 @@ const StNoticeContainer = styled.div`
   background-color: #eef8f8;
   margin: 5px;
 `;
-
 
 const StNoticeBox = styled.div`
   margin-top: 15px;

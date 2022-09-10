@@ -6,6 +6,7 @@ import { useAddNoticeMutation } from '../redux/modules/workspaces';
 import { useNavigate, useParams } from 'react-router-dom';
 import Editor from '../components/Editor';
 
+
 const NoticeWrite = ()=>{
  const navigate = useNavigate();
  const params = useParams();
@@ -51,6 +52,7 @@ return(
     )}
 export default NoticeWrite
 
+
 const StEditorContainer = styled.div`
  margin: 2%;
  width: 100%;
@@ -60,15 +62,17 @@ const StEditorContainer = styled.div`
 `;
 
 const StInputTitle = styled.input`
- margin-bottom: 2%;
- width: 94%;
- height: 30px;
- padding: 5px;
- padding-left: 15px;
- font-size: 20px;
- border-radius: 4px;
- border: 1px solid #C6C6C6;
- :focus{outline: 1px solid #00A99D}
+  margin-bottom: 2%;
+  width: 94%;
+  height: 30px;
+  padding: 5px;
+  padding-left: 15px;
+  font-size: 20px;
+  border-radius: 4px;
+  border: 1px solid #c6c6c6;
+  :focus {
+    outline: 1px solid #00a99d;
+  }
 `;
 
 const StInputContent = styled.textarea`
@@ -92,6 +96,7 @@ const EditorBlock = styled.div`
 `;
 
 const StButton = styled.button`
+
  background-color: #000000;
  margin-left: 3%;
  width: 20%;
@@ -104,3 +109,4 @@ const StButton = styled.button`
  font-weight: 500;
  cursor: pointer;
 `;
+
