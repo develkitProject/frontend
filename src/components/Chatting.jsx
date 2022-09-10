@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import SockJS from 'sockjs-client';
-import { Stomp } from '@stomp/stompjs';
+// import { Stomp } from '@stomp/stompjs';
+import Stomp from 'stompjs';
 import { useParams } from 'react-router-dom';
 import { useGetChatMessageQuery } from '../redux/modules/chat';
 import { getCookieToken } from '../Cookie';
@@ -12,19 +13,22 @@ export default function Chatting({ title }) {
   const [message, setMessage] = useState('d');
   const id = useParams().id;
   const { data, isLoading, refetch, error } = useGetChatMessageQuery(id);
+  console.log(data?.data);
 
   const headers = {
-    'content-type': 'application/octet-stream',
     token: getCookieToken(),
   };
   const sockJS = new SockJS('http://hosung.shop/stomp/chat');
   const stompClient = Stomp.over(sockJS);
+  // let stompClient = Stomp.over(function () {
+  //   return new SockJS('http://hosung.shop/stomp/chat');
+  // });
 
-  stompClient.debug = () => {};
+  // stompClient.debug = () => {};
 
   useEffect(() => {
-    onConnected();
-    return () => onConnected();
+    // onConnected();
+    // return () => onConnected();
   }, []);
 
   function onConnected() {
@@ -38,27 +42,30 @@ export default function Chatting({ title }) {
           },
           headers
         );
-        // publish_1();
+        publish_1();
       });
     } catch (error) {
       console.log(error);
     }
   }
 
+  const disconnect = () => {
+    stompClient.deactivate();
+  };
+
   const publish_1 = (message) => {
     if (!stompClient.connected) {
       return;
     }
-    stompClient.publish({
-      destination: '/pub/chat/enter',
+    stompClient.send(
+      `/pub/chat/enter`,
       headers,
-      body: JSON.stringify({ roomId: id, message }),
-    });
+      JSON.stringify({ roomId: id, message })
+    );
     setMessage('');
   };
 
   const sendMessage = () => {
-    console.log(id, message);
     stompClient.send(
       `/pub/chat/message`,
       headers,
@@ -79,12 +86,12 @@ export default function Chatting({ title }) {
         <StChatFooter>
           <StInput
             name='message'
-            // value={message}
+            value={message}
             onChange={(e) => setMessage(e.target.value)}
           ></StInput>
           <StButton
             onClick={sendMessage}
-            // message={message}
+            message={message}
             disabled={message.length === 0}
           >
             전송

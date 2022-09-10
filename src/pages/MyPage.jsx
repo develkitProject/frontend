@@ -26,7 +26,7 @@ function MyPage() {
             style={{
               width: '100%',
               display: 'flex',
-              justifyContent: 'space-around',
+              justifyContent: 'space-between',
             }}
           >
             <IntroBox>
@@ -35,17 +35,7 @@ function MyPage() {
                 <BoxSpan style={{ fontWeight: '500' }}>프로젝트</BoxSpan>
               </div>
               <div style={{ marginTop: '50px' }}>
-                <BoxSpan
-                  style={{
-                    color: '#00a99d',
-                    fontSize: '60px',
-                    fontWeight: 'bold',
-                    letterSpacing: '0px',
-                    fontFamily: 'Montserrat',
-                  }}
-                >
-                  {workspaces?.length}
-                </BoxSpan>
+                <BoxNumSpan>{workspaces?.length}</BoxNumSpan>
                 <BoxSpan> 개</BoxSpan>
               </div>
             </IntroBox>
@@ -55,17 +45,7 @@ function MyPage() {
                 <BoxSpan style={{ fontWeight: '500' }}>총 일정</BoxSpan>
               </div>
               <div style={{ marginTop: '50px' }}>
-                <BoxSpan
-                  style={{
-                    color: '#00a99d',
-                    fontSize: '60px',
-                    fontWeight: 'bold',
-                    letterSpacing: '0px',
-                    fontFamily: 'Montserrat',
-                  }}
-                >
-                  50
-                </BoxSpan>
+                <BoxNumSpan>50</BoxNumSpan>
                 <BoxSpan> 개</BoxSpan>
               </div>
             </IntroBox>
@@ -76,17 +56,7 @@ function MyPage() {
                 <BoxSpan>작성 수</BoxSpan>
               </div>
               <div style={{ marginTop: '50px' }}>
-                <BoxSpan
-                  style={{
-                    color: '#00a99d',
-                    fontSize: '60px',
-                    fontWeight: 'bold',
-                    letterSpacing: '0px',
-                    fontFamily: 'Montserrat',
-                  }}
-                >
-                  120
-                </BoxSpan>
+                <BoxNumSpan>120</BoxNumSpan>
                 <BoxSpan> 건</BoxSpan>
               </div>
             </IntroBox>
@@ -184,7 +154,7 @@ const Intro = styled.span`
 `;
 
 const IntroBox = styled.div`
-  width: 411px;
+  width: 350px;
   height: 296px;
   font-weight: 500;
   font-size: 27px;
@@ -200,6 +170,14 @@ const IntroBox = styled.div`
 const BoxSpan = styled.span`
   font-weight: 400;
   font-size: 27px;
+`;
+
+const BoxNumSpan = styled.span`
+  color: #00a99d;
+  font-size: 60px;
+  font-weight: bold;
+  letter-spacing: 0px;
+  font-family: 'Montserrat';
 `;
 
 const StButton = styled.button`
