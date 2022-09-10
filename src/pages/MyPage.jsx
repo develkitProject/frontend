@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import useGetUser from '../common/hooks/useGetUser';
 import { useGetWorkspacesQuery } from '../redux/modules/workspaces';
 import SpaceCard from '../components/SpaceCard';
+import MyPage2 from './MyPage2';
 
 function MyPage() {
   const { user } = useGetUser();
+  const [tab, setTab] = useState(false);
   const { data, error, isLoading } = useGetWorkspacesQuery();
   const workspaces = data?.data;
 
@@ -14,71 +16,94 @@ function MyPage() {
       <RowDiv>
         <TabDiv1>
           <MyPageSpan>마이페이지</MyPageSpan>
-          <TabSpan>프로젝트 관리</TabSpan>
-          <TabSpan>회원정보</TabSpan>
+          <TabSpan
+            onClick={() => {
+              setTab(false);
+            }}
+            style={!tab ? { fontWeight: '600' } : null}
+          >
+            프로젝트 관리
+          </TabSpan>
+          <TabSpan
+            onClick={() => {
+              setTab(true);
+            }}
+            style={tab ? { fontWeight: '600' } : null}
+          >
+            회원정보
+          </TabSpan>
         </TabDiv1>
         <TabDiv2>
-          <Intro>
-            <Intro style={{ fontWeight: '700' }}>{user?.nickname}님</Intro>,
-            오늘도 디벨킷에서 성장하고 있습니다 🙌
-          </Intro>
-          <div
-            style={{
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            <IntroBox>
-              <div>
-                <BoxSpan>참여중인 </BoxSpan>
-                <BoxSpan style={{ fontWeight: '500' }}>프로젝트</BoxSpan>
-              </div>
-              <div style={{ marginTop: '50px' }}>
-                <BoxNumSpan>{workspaces?.length}</BoxNumSpan>
-                <BoxSpan> 개</BoxSpan>
-              </div>
-            </IntroBox>
-            <IntroBox>
-              <div>
-                <BoxSpan>참여한 </BoxSpan>
-                <BoxSpan style={{ fontWeight: '500' }}>총 일정</BoxSpan>
-              </div>
-              <div style={{ marginTop: '50px' }}>
-                <BoxNumSpan>50</BoxNumSpan>
-                <BoxSpan> 개</BoxSpan>
-              </div>
-            </IntroBox>
-            <IntroBox>
-              <div>
-                <BoxSpan>총 </BoxSpan>
-                <BoxSpan style={{ fontWeight: '500' }}>게시글 </BoxSpan>
-                <BoxSpan>작성 수</BoxSpan>
-              </div>
-              <div style={{ marginTop: '50px' }}>
-                <BoxNumSpan>120</BoxNumSpan>
-                <BoxSpan> 건</BoxSpan>
-              </div>
-            </IntroBox>
-          </div>
-          <Intro style={{ marginTop: '50px', fontWeight: '400' }}>
-            프로젝트 관리
-          </Intro>
-          {error ? (
-            <>Oh no, there was an error</>
-          ) : isLoading ? (
-            <>Loading...</>
-          ) : data ? (
+          {!tab ? (
             <>
-              {workspaces?.map((data, i) => {
-                return (
-                  <div style={{ width: '100%' }} key={data.workspaces.id}>
-                    <SpaceCard data={data} width='100%' />
+              <Intro>
+                <Intro style={{ fontWeight: '700' }}>{user?.nickname}님</Intro>,
+                오늘도 디벨킷에서 성장하고 있습니다 🙌
+              </Intro>
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <IntroBox>
+                  <div>
+                    <BoxSpan>참여중인 </BoxSpan>
+                    <BoxSpan style={{ fontWeight: '500' }}>프로젝트</BoxSpan>
                   </div>
-                );
-              })}
+                  <div style={{ marginTop: '50px' }}>
+                    <BoxNumSpan>{workspaces?.length}</BoxNumSpan>
+                    <BoxSpan> 개</BoxSpan>
+                  </div>
+                </IntroBox>
+                <IntroBox>
+                  <div>
+                    <BoxSpan>참여한 </BoxSpan>
+                    <BoxSpan style={{ fontWeight: '500' }}>총 일정</BoxSpan>
+                  </div>
+                  <div style={{ marginTop: '50px' }}>
+                    <BoxNumSpan>50</BoxNumSpan>
+                    <BoxSpan> 개</BoxSpan>
+                  </div>
+                </IntroBox>
+                <IntroBox>
+                  <div>
+                    <BoxSpan>총 </BoxSpan>
+                    <BoxSpan style={{ fontWeight: '500' }}>게시글 </BoxSpan>
+                    <BoxSpan>작성 수</BoxSpan>
+                  </div>
+                  <div style={{ marginTop: '50px' }}>
+                    <BoxNumSpan>120</BoxNumSpan>
+                    <BoxSpan> 건</BoxSpan>
+                  </div>
+                </IntroBox>
+              </div>
+              <Intro style={{ marginTop: '50px', fontWeight: '400' }}>
+                프로젝트 관리
+              </Intro>
+
+              {error ? (
+                <>Oh no, there was an error</>
+              ) : isLoading ? (
+                <>Loading...</>
+              ) : data ? (
+                <>
+                  {workspaces?.map((data, i) => {
+                    return (
+                      <div style={{ width: '100%' }} key={data.workspaces.id}>
+                        <SpaceCard data={data} width='100%' />
+                      </div>
+                    );
+                  })}
+                </>
+              ) : null}
             </>
-          ) : null}
+          ) : (
+            <>
+              <MyPage2></MyPage2>
+            </>
+          )}
         </TabDiv2>
       </RowDiv>
     </StWrapper>
@@ -145,6 +170,9 @@ const TabSpan = styled.span`
   display: flex;
   align-items: center;
   cursor: pointer;
+  &:hover {
+    font-weight: 600;
+  }
 `;
 
 const Intro = styled.span`
@@ -154,7 +182,7 @@ const Intro = styled.span`
 `;
 
 const IntroBox = styled.div`
-  width: 350px;
+  width: 28%;
   height: 296px;
   font-weight: 500;
   font-size: 27px;

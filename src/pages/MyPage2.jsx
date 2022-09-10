@@ -7,7 +7,7 @@ import useGetUser from '../common/hooks/useGetUser';
 
 import { getCookieToken } from '../Cookie';
 
-function MyPage() {
+function MyPage2() {
   const imgRef = useRef('');
   const [imageUrl, setImageUrl] = useState(null);
   const [imgFile, setImgFile] = useState('');
@@ -69,7 +69,7 @@ function MyPage() {
   return (
     <StWrapper>
       <StProfile>
-        <StSpan>프로필 관리</StSpan>
+        <StSpan>나의 프로필</StSpan>
         <StImage profileImageUrl={user?.profileImageUrl} />
         <div
           style={{
@@ -79,18 +79,17 @@ function MyPage() {
             width: '100%',
           }}
         >
-          <StEmail>이메일 :{user?.username}</StEmail>
-          <StEmail>
-            닉네임 :
-            <StInput
-              type='text'
-              placeholder={user?.nickname}
-              onChange={onChange}
-            />
+          <StEmail fs={'20px'} fc={'#000000'} fw={'500'}>
+            {user?.nickname}
+          </StEmail>
+          <StEmail fs={'18px'} fc={'#999999'} fw={'400'}>
+            {user?.username}
           </StEmail>
         </div>
-        <StChange onClick={onSubmit}>회원 정보 수정</StChange>
+        <StChange onClick={onSubmit}>회원탈퇴</StChange>
       </StProfile>
+
+      <StDetail></StDetail>
 
       {imageUrl ? <StImgTag src={imageUrl} /> : null}
 
@@ -103,38 +102,40 @@ function MyPage() {
         onChange={onChangeImage}
         ref={imgRef}
       />
-      <STImageButton onClick={() => imgRef.current.click()}>
+      {/* <STImageButton onClick={() => imgRef.current.click()}>
         프로필 변경
-      </STImageButton>
+      </STImageButton> */}
     </StWrapper>
   );
 }
 
-export default MyPage;
+export default MyPage2;
 
 const StWrapper = styled.div`
   width: 100%;
-  height: 90vh;
+  height: 75vh;
   background-color: #f8f8f8;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   font-weight: 600;
   font-size: 20px;
 `;
 
 const StProfile = styled.div`
-  border: 1px solid black;
-  width: 500px;
+  width: 40%;
+  min-width: 400px;
+  max-width: 600px;
   height: 600px;
   display: flex;
   flex-direction: column;
   text-align: center;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
-  background-color: #e4e4e4;
+  background-color: #ffffff;
+  position: relative;
+  box-shadow: 12px 16px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const StSpan = styled.span`
@@ -149,34 +150,27 @@ const StImage = styled.div`
   border-radius: 100px;
   background-size: 100% 100%;
   background-image: url(${(props) => props.profileImageUrl});
-  margin-top: 20px;
+  margin-top: 30px;
 `;
 
 const StEmail = styled.span`
-  font-weight: 500;
-  font-size: 20px;
-  margin-top: 20px;
+  font-weight: ${(props) => props.fw};
+  font-size: ${(props) => props.fs};
+  color: ${(props) => props.fc};
+  margin-top: 15px;
+  letter-spacing: -0.8px;
 `;
 
-const StInput = styled.input`
-  width: 180px;
-  height: 40px;
-  border: none;
+const StChange = styled.span`
+  width: 13%;
+  min-width: 60px;
+  height: 20px;
+  margin-top: 100px;
   font-size: 17px;
-  padding-left: 20px;
-  &:focus {
-    outline: none;
-  }
-`;
-
-const StChange = styled.button`
-  width: 70%;
-  height: 50px;
-  background-color: #c0c0c0;
-  border: none;
-  font-size: 20px;
-  margin-top: 20px;
   cursor: pointer;
+  font-weight: 200;
+  color: grey;
+  border-bottom: 1px solid grey;
 `;
 
 const StImgTag = styled.img`
@@ -184,15 +178,11 @@ const StImgTag = styled.img`
   height: 350px;
 `;
 
-const STImageButton = styled.button`
-  background: #456d87;
+const StDetail = styled.div`
+  width: 60%;
+  min-width: 600px;
+  height: 600px;
+  background-color: #ffffff;
   border: none;
-  color: white;
-  font-size: 13px;
-  width: 120px;
-  height: 30px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 600;
-  margin-top: 10px;
+  box-shadow: 12px 16px 30px rgba(0, 0, 0, 0.1);
 `;
