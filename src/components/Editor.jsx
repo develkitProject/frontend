@@ -28,9 +28,6 @@ const Editor = ({setCon}) =>{
 
   const imageHandler = () =>{
     const input = document.createElement("input");
-
-
-    
     const FormData = new FormData();
     let url ="";
 
@@ -78,7 +75,6 @@ const Editor = ({setCon}) =>{
 
     return(
         <StEditorContainer>
-            <EditorBlock>
               <ReactQuill 
                 ref={(element)=>{
                   if (element!==null){
@@ -95,7 +91,6 @@ const Editor = ({setCon}) =>{
                   content={content}
                   >
               </ReactQuill>
-            </EditorBlock>
         </StEditorContainer>
         )
     }
@@ -103,16 +98,12 @@ const Editor = ({setCon}) =>{
 export default Editor
 
 const StEditorContainer = styled.div`
-  margin: 2%;
   width: 100%;
-  min-height: 100%;
+  min-height: 0%;
   display: flex;
   flex-direction: column;
 `;
 
-const EditorBlock = styled.div`
-  padding-bottom: 4rem;
-`;
 
 
 

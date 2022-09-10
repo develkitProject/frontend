@@ -31,7 +31,6 @@ const StWrapper = styled.div`
 
 const Projects = styled.div`
   width: 65%;
-  min-height: 100%;
   margin-left: 2%;
   margin-top: 4%;
   background-color: white;

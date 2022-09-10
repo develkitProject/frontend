@@ -42,9 +42,8 @@ const NoticeWrite = ()=>{
     
 return(
       <StEditorContainer>
-       <StInputTitle onChange={onTitleChange} name='title' placeholder='제목' value={title}/>
+            <StInputTitle onChange={onTitleChange} name='title' placeholder='제목' value={title}/>
             <Editor setCon={setContent}/>
-            {/* <StInputContent onChange={onChange} name='content' placeholder='내용'/> */}
             <EditorBlock>
               <StButton onClick={handleSubmit}>게시하기</StButton>
             </EditorBlock>
@@ -56,7 +55,7 @@ export default NoticeWrite
 const StEditorContainer = styled.div`
  margin: 2%;
  width: 100%;
- min-height: 100%;
+ min-height: 60%;
  display: flex;
  flex-direction: column;
 `;
@@ -75,28 +74,12 @@ const StInputTitle = styled.input`
   }
 `;
 
-const StInputContent = styled.textarea`
- margin-bottom: 2%;
- width: 94%;
- height: 450px;
- padding: 5px;
- padding-left: 15px;
- font-size: 20px;
- border-radius: 4px;
- border: 1px solid #C6C6C6;
- :focus{outline: 1px solid #00A99D}
- margin-bottom: 3rem;
- white-space:pre-wrap;
-`;
-
 const EditorBlock = styled.div`
- padding-bottom: 1rem;
  align-items: center;
  text-align: center;
 `;
 
 const StButton = styled.button`
-
  background-color: #000000;
  margin-left: 3%;
  width: 20%;
@@ -108,5 +91,6 @@ const StButton = styled.button`
  font-size: 0.9rem;
  font-weight: 500;
  cursor: pointer;
+ margin-top: 60px;
 `;
 

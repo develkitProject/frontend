@@ -1,34 +1,19 @@
 import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import ModalContainer from './ModalContainer';
-import useOutSideClick from '../../common/hooks/useOutSideClick';
 import useGetUser from '../hooks/useGetUser';
 import { removeCookieToken } from '../../Cookie';
 import { useNavigate } from 'react-router-dom';
-import CloseButton from '../elements/CloseButton';
 
 const MyProfileModal = ({ onClose }) => {
   const navigate = useNavigate();
-
-  const modalRef = useRef(null);
-
-  const handleClose = () => {
-    onClose?.();
-  };
-
   const { user } = useGetUser();
-
-  // useOutSideClick(modalRef, handleClose);
-
   const logout = () => {
     removeCookieToken();
     window.location.href = '/';
   };
 
   return (
-    <ModalContainer>
-      <Overlay>
-        <ModalWrap ref={modalRef}>
+        <ModalWrap>
           <StProfileWrap>
             <StDiv style={{ borderBottom: '1.2px solid #999999' }}>
               <StProfileImg src={user.profileImageUrl} />
@@ -39,7 +24,7 @@ const MyProfileModal = ({ onClose }) => {
               <StButton onClick={() => navigate('/mypage')}>
                 마이페이지
               </StButton>
-              <StButton
+              <StButton bc="#999999" fc="#999999"
                 onClick={() => {
                   logout();
                 }}
@@ -47,50 +32,34 @@ const MyProfileModal = ({ onClose }) => {
                 로그아웃
               </StButton>
             </StDiv>
-            <CloseButton handleClose={handleClose}></CloseButton>
           </StProfileWrap>
         </ModalWrap>
-      </Overlay>
-    </ModalContainer>
   );
 };
 
 export default MyProfileModal;
 
-const Overlay = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  /* background: rgba(0, 0, 0, 0.7); */
-  z-index: 9999;
-`;
-
 const ModalWrap = styled.div`
   width: 25vh;
   height: 38vh;
   position: absolute;
-  margin-top: 10vh;
-  margin-left: 82%;
+  margin-top: 45vh;
+  margin-left: 75%;
   border-radius: 20px;
   background-color: white;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+  border: 1px solid #999999;
+  z-index: 999;
 `;
 
 const StProfileWrap = styled.div`
-  width: 95%;
-  height: 70%;
-  display: flex;
-  flex-direction: columm;
+  width: 100%;
+  height: 100%;
   justify-content: center;
   margin-bottom: 0px;
-  background-color: #b8b8b8;
 `;
 
 export const StDiv = styled.div`
@@ -106,7 +75,7 @@ export const StDiv = styled.div`
 `;
 
 const StProfileImg = styled.img`
-  margin-top: 10%;
+  margin-top: 15%;
   padding: 1%;
   width: 60px;
   height: 60px;
@@ -126,7 +95,7 @@ export const StButton = styled.button`
   width: 78%;
   height: 5.5vh;
   border-radius: 20px;
-  border: 1.5px solid black;
+  border: 1.5px solid ${(props)=>props.bc};
   background-color: #ffffff;
   margin-top: 8px;
   margin-bottom: 8px;
