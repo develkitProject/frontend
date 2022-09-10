@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { getCookieToken, removeCookieToken } from '../Cookie';
+import { getCookieToken} from '../Cookie';
 import alarm from '../asset/img/alarm.svg';
 import logo from '../asset/img/logo.png';
 import Login from '../login';
 import SignupModal from '../signup/SignupModal';
 import useGetUser from '../common/hooks/useGetUser';
+import MyProfileModal from '../common/Modal/MyProfileModal';
 
 function Header() {
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ function Header() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+
   const onLoginButton = () => {
     setIsOpen(true);
   };
@@ -29,11 +32,7 @@ function Header() {
     navigate('/workspace');
   };
 
-  const logout = () => {
-    removeCookieToken();
-    // removeUserData();
-    window.location.href = '/';
-  };
+
   const { user } = useGetUser();
 
   return (
@@ -82,17 +81,8 @@ function Header() {
             <StAlarmImg src={alarm} />
             <StProfileImg
               src={user.profileImageUrl}
-              onClick={() => navigate('/mypage')}
-            />
-
-            <StLogBtn
-              style={{ width: '10px', height: '10px', color: 'black' }}
-              onClick={() => {
-                logout();
-              }}
-            >
-              LOGOUT
-            </StLogBtn>
+              onClick={()=>{setProfileOpen(profileOpen===false? true:false)}}/>
+              {profileOpen===true?<MyProfileModal/>:null}
           </StDiv>
         )}
       </StHeaderDiv>

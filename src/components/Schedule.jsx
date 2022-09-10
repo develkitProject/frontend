@@ -57,7 +57,7 @@ const StWrapper = styled.div`
 const StTitle = styled.p`
   color: ${(props) => props.fc};
   text-align: left;
-  font-size: 1.3rem;
+  font-size: 20px;
   font-weight: bold;
   letter-spacing: -1.2px;
 `;
@@ -82,8 +82,9 @@ const StThead = styled.div`
   color: white;
   align-items: center;
   line-height: 50px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
+  text-align: center;
 `;
 
 const StTbody = styled.div`
@@ -91,7 +92,8 @@ const StTbody = styled.div`
   color: #333333;
   align-items: center;
   line-height: 50px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: normal;
   cursor: pointer;
+  text-align: center;
 `;

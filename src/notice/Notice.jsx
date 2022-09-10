@@ -21,9 +21,7 @@ function Notice() {
     {!cookies? (<WorkSpaceErrorModal/>
     ):(
       <StWrapper>
-      {/* <StTitle fc="#333333">필독</StTitle> */}
-      <StNoticeContainer>
-      <StTitle fc="#00a99d">공지사항</StTitle>
+
       {error ? (
               <>Oh no, there was an error</>
             ) : isLoading ? (
@@ -32,19 +30,22 @@ function Notice() {
               <>
             {notice?.map((data, i) => {
               return(
+                <StNoticeContainer>
+                <StTitle fc="#00a99d">공지사항</StTitle>
                   <StNoticeBox key={notice.id}>
-                      <StTitle fc="#333333">{notice[i].title}</StTitle>
-                      <StContent> {notice[i].content}</StContent>
+                      <StTitle fc="#333333">{data.title}</StTitle>
+                      <StContent> {data.content}</StContent>
                       <StInfoDiv>
-                        <p>{notice[i].nickname} ｜</p>
-                        <p>2022.09.13 ｜</p>
+                        <p>{data.nickname} ｜</p>
+                        <p>{data.createdAt} ｜</p>
                         <p>읽음 7 </p>
                       </StInfoDiv>
                   </StNoticeBox>
-
+                  </StNoticeContainer>
               )
               })}</>):null}
-      </StNoticeContainer>
+              <div style={{marginTop: "5%"}}></div>
+
       </StWrapper>
     )}
         </>
@@ -72,17 +73,18 @@ const StTitle = styled.p`
  font-size: 1.3rem;
  font-weight: bold;
  letter-spacing: -1.2px;
- margin-bottom: 20px;
+ margin-bottom: 15px;
 `;
 
 const StNoticeContainer = styled.div`
-  padding: 5%;
+  padding: 3%;
   width: 90%;
   min-height: 15vh;
   display: flex;
   flex-direction: column;
   align-items: left;
   background-color: #eef8f8;
+  margin: 5px;
 `;
 
 
@@ -95,22 +97,21 @@ const StNoticeBox = styled.div`
 `;
 
 
-
 const StContent = styled.div`
-  width: 75%;
+  width: 100%;
   min-height: 5vh;
   max-height: 20vh;
   display: flex;
   flex-direction: column;
   align-items: left;
-  overflow-y: auto;
   font-size: 1.1rem;
   line-height: 1.5rem;
   font-weight: 500;
+  white-space:pre-wrap;
 `;
 
 const StInfoDiv = styled.div`
-  margin-top: 1%;
+  margin-top: 2.5%;
   display: flex;
   flex-direction: row;
   align-items: left;

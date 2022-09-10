@@ -64,9 +64,9 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
 
     addNotice: builder.mutation({
-      query:(id, notice) =>{
+      query:(notice) =>{
         return {
-          url: `/api/workspaces/${id}/notice`,
+          url: `/api/workspaces/${notice.id}/notice`,
           method: 'POST',
           body: notice,
           headers,
@@ -87,3 +87,5 @@ export const {
   useAddNoticeMutation,
   useGetNoticeQuery,
 } = workspaceApi;
+
+
