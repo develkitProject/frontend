@@ -8,23 +8,30 @@ import Login from '../login';
 import SignupModal from '../signup/SignupModal';
 import useGetUser from '../common/hooks/useGetUser';
 import MyProfileModal from '../common/Modal/MyProfileModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsLoginModal, setIsSignUpModal } from '../redux/modules/global';
+import { selectIsLoginModal, selectIsSignUpModal } from '../redux/modules/global/selectors';
 
 function Header() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const cookies = getCookieToken();
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [signupOpen, setSignupOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
-  const onLoginButton = () => {
-    setIsOpen(true);
-  };
+  const isLogin = useSelector(selectIsLoginModal)
+  const isSignUp = useSelector(selectIsSignUpModal)
+
   const { user } = useGetUser();
 
-  const onSignupButton = () => {
-    setSignupOpen(true);
-  };
+  const openLoginModal = () => {
+    dispatch(setIsLoginModal(true))
+  }
+
+  const openSignUpModal = () => {
+    dispatch(setIsSignUpModal(true))
+  }
 
   const moveMain = () => {
     navigate('/');
@@ -65,19 +72,17 @@ function Header() {
 
         {!cookies ? (
           <StDiv>
-            <StLogJoin fc='#00A99D' onClick={onLoginButton}>
+            <StLogJoin fc='#00A99D' onClick={openLoginModal}>
               LOGIN
             </StLogJoin>
             <StLogJoin fc='white'>·</StLogJoin>
             <StLogJoin
               fc='white'
-              onClick={() => onSignupButton()}
-              setSignupOpen={setSignupOpen}
-              SignupButton={onSignupButton}
+              onClick={openSignUpModal}
+              SignupButton={openSignUpModal}
             >
               JOIN
             </StLogJoin>
-            {/* <StLogBtn onClick={onLoginButton}>LOGIN</StLogBtn> */}
             <StLogJoin>JOIN</StLogJoin>
           </StDiv>
         ) : (
@@ -93,23 +98,16 @@ function Header() {
           </StDiv>
         )}
       </StHeaderDiv>
-      {isOpen && (
+      {isLogin && (
         <Login
-          setSignupOpen={setSignupOpen}
-          onSignupButton={onSignupButton}
-          open={isOpen}
-          onClose={() => {
-            setIsOpen(false);
-          }}
-        ></Login>
+        onSignupButton={openSignUpModal}
+        open={isLogin}
+      ></Login>
       )}
-      {signupOpen && (
+      {isSignUp && (
         <SignupModal
-          open={signupOpen}
-          onClose={() => {
-            setSignupOpen(false);
-          }}
-        ></SignupModal>
+        open={isSignUp}
+      ></SignupModal>
       )}
     </>
   );

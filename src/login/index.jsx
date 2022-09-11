@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import useOutSideClick from '../common/hooks/useOutSideClick';
 import ModalContainer from '../common/Modal/ModalContainer';
 import useInputLogin from './hooks/useInputLogin';
@@ -15,21 +15,28 @@ import {
   ButtonDiv,
   StButton,
 } from './style';
+import { useDispatch } from 'react-redux';
+import { setIsLoginModal, setIsSignUpModal } from '../redux/modules/global';
 
-const Login = ({ onClose, SignupButton }) => {
+const Login = () => {
+  const dispatch = useDispatch();
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REST_API_KEY}&redirect_uri=${process.env.REDIRECT_URI}&response_type=code`;
   const { onClickLogin, onChangeUserInputs } = useInputLogin();
 
   const modalRef = useRef(null);
+  
   const handleClose = () => {
-    onClose?.();
+    dispatch(setIsLoginModal(false));
   };
+
+  const goSignUp = useCallback(() => {
+    dispatch(setIsLoginModal(false));
+    dispatch(setIsSignUpModal(true));
+  }, [dispatch])
 
   const handleLogin = () => {
     window.location.href = KAKAO_AUTH_URL;
   };
-
-  // useOutSideClick(modalRef, handleClose);
 
   return (
     <ModalContainer>
@@ -85,10 +92,7 @@ const Login = ({ onClose, SignupButton }) => {
                   color: 'black',
                   border: '1px solid black',
                 }}
-                onClick={() => {
-                  SignupButton();
-                  handleClose();
-                }}
+                onClick={goSignUp}
               >
                 이메일로 회원가입
               </StButton>

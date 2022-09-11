@@ -1,15 +1,31 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useCallback } from 'react';
 
 import styled from 'styled-components';
 import ModalContainer from './ModalContainer';
-import useOutSideClick from '../../common/hooks/useOutSideClick';
+import useOutSideClick from '../hooks/useOutSideClick';
 import error_outline from '../../asset/img/error_outline.svg';
+import { useDispatch } from 'react-redux';
+import { setIsLoginModal, setIsSignUpModal } from '../../redux/modules/global';
 
 const WorkSpaceErrorModal = ({ onClose }) => {
+  const dispatch = useDispatch()
+
   const modalRef = useRef(null);
-  const handleClose = () => {
+
+  const handleClose = useCallback(() => {
     onClose?.();
-  };
+  }, [onClose]);
+
+  const handleOpenSignUp = useCallback((event) => {
+    onClose()
+    dispatch(setIsSignUpModal(true))
+  }, [dispatch, onClose])
+
+  const handleOpenLogin = useCallback(() => {
+    onClose();
+    dispatch(setIsLoginModal(true))
+  }, [dispatch, onClose])
+
   useOutSideClick(modalRef, handleClose);
 
   return (
@@ -23,7 +39,12 @@ const WorkSpaceErrorModal = ({ onClose }) => {
           <StAlert fs='16px' fc='#626262'>
             성장하는 사람들을 위한 프로젝트 협업 서비스 디벨킷
           </StAlert>
-          <StButton bc='#00a99d'>로그인</StButton>
+          <StButton 
+            type="button"
+            onClick={handleOpenLogin} 
+            bc='#00a99d'>
+            로그인
+          </StButton>
           <StMent>
             <StAlert fs='16px' fc='#999'>
               디벨킷에 처음인가요?
@@ -31,6 +52,7 @@ const WorkSpaceErrorModal = ({ onClose }) => {
             <StAlert
               fs='16px'
               fc='#00a99d'
+              onClick={handleOpenSignUp}
               style={{
                 marginLeft: '10px',
                 textDecoration: 'underline',
