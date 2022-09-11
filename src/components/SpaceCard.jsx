@@ -24,7 +24,13 @@ function SpaceCard({ data, width, deleteButton, deleteWorkSpaces }) {
             <SpaceName>{data.workspaces.title}</SpaceName>
             <SpaceDate>2022.08.20</SpaceDate>
             <SpaceGoal weight='500'>
-              목표 <SpaceGoal weight='200'>{data.workspaces.content}</SpaceGoal>
+              목표{' '}
+              <SpaceGoal
+                weight='200'
+                style={{ marginLeft: '10px', fontWeight: '400' }}
+              >
+                {data.workspaces.content}
+              </SpaceGoal>
             </SpaceGoal>
           </StFooter>
           <CardProfile data={data.workspaces} />
@@ -71,9 +77,9 @@ const StSpaceCard = styled.div`
   flex-direction: ${(props) => props.direction};
   margin: 10px 10px 10px 10px;
   width: ${(props) => props.width};
-  height: 400px;
+  height: 300px;
   border-radius: 16px;
-  margin-left: 20px;
+  /* margin-left: 20px; */
   margin-bottom: 20px;
   background-color: white;
 `;
@@ -82,7 +88,7 @@ const StCardImage = styled.div`
   cursor: pointer;
   width: 40%;
   height: 100%;
-  border-radius: 16px 16px 0px 0px;
+  border-radius: 16px 16px 16px 16px;
   background-image: url(${(props) => props.data.imageUrl});
   background-size: 100% 100%;
   position: relative;
@@ -142,7 +148,7 @@ const SpaceDate = styled.span`
 `;
 
 const SpaceGoal = styled.span`
-  margin-top: 20px;
+  margin-top: 35px;
   font-size: 16px;
   height: 23px;
   font-weight: ${(props) => props.weight};

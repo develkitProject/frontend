@@ -42,16 +42,6 @@ function MyPage2() {
     setNickname(e.target.value);
   }, []);
 
-  const onSubmit = () => {
-    const obj = {
-      profileImageUrl: imageUrl,
-      nickname,
-    };
-    addpost(obj);
-    alert('등록완료!');
-    // window.location.reload();
-  };
-
   const addpost = async (newList) => {
     const response = await axios.post(
       'http://hosung.shop/api/members/profile',
@@ -86,7 +76,7 @@ function MyPage2() {
             {user?.username}
           </StEmail>
         </div>
-        <StChange onClick={onSubmit}>회원탈퇴</StChange>
+        <StChange>회원탈퇴</StChange>
       </StProfile>
 
       <StDetail></StDetail>
