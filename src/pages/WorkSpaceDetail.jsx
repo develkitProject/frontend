@@ -14,14 +14,9 @@ function WorkSpaceDetail() {
   const params = useParams();
   const id = Number(params.id);
   const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
-  console.log(data?.data?.notices);
   const title = data?.data?.workspaces?.title;
   const content = data?.data.workspaces.content;
-  const noticeTitle = data?.data.notices.title;
-  const noticeContent = data?.data.notices.content;
-  const noticeNickname = data?.data.notices.nickname;
-  const noticeDate = data?.data.notices.createdAt;
-  const document=data?.data.documents
+  const document = data?.data.documents;
 
   return (
     <StWrapper>
@@ -51,13 +46,17 @@ function WorkSpaceDetail() {
                   fc='#333333'
                   fs='20px'
                 >
-                  {noticeTitle}
+                  {data?.data.notices && data?.data.notices.title}
                 </StTitle>
-                <StNoticeContent> {noticeContent}</StNoticeContent>
+                <StNoticeContent>
+                  {data?.data.notices && data?.data.notices.content}
+                </StNoticeContent>
                 <StInfoDiv>
-                  <p>{noticeNickname} ｜</p>
-                  <p>{noticeDate} ｜</p>
-                  <p>읽음 7 </p>
+                  <p>
+                    {data?.data.notices && data?.data.notices.noticeNickname}
+                  </p>
+                  <p>{data?.data.notices && data?.data.notices.noticeDate}</p>
+                  <p>{data?.data.notices && '읽음 7'}</p>
                 </StInfoDiv>
               </StNoticeBox>
             </StNoticeContainer>
@@ -79,19 +78,18 @@ function WorkSpaceDetail() {
               </StThead>
 
               <StTbody>
-
-                {document?.map((data,i)=>{
-                  return(
+                {document?.map((data, i) => {
+                  return (
                     <StTable key={id}>
-                    <div>{document[i].user.nickname}</div>
-                    <div>{document[i].title}</div>
-                    <div>{document[i].user.nickname}</div>
-                    <div>{document[i].createdAt}</div>
-                    <div>{document[i].modifiedAt}</div>
-                  </StTable>
-                  )})}
+                      <div>{document[i].user.nickname}</div>
+                      <div>{document[i].title}</div>
+                      <div>{document[i].user.nickname}</div>
+                      <div>{document[i].createdAt}</div>
+                      <div>{document[i].modifiedAt}</div>
+                    </StTable>
+                  );
+                })}
               </StTbody>
-
             </StTableContainer>
           </StScheduleWrapper>
         </div>
@@ -217,8 +215,6 @@ const StInfoDiv = styled.div`
   font-size: 0.9rem;
   margin-top: 15px;
 `;
-
-
 
 const StScheduleWrapper = styled.div`
   width: 96%;

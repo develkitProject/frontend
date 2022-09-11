@@ -8,6 +8,7 @@ function Address() {
   const id = Number(params.id);
   const { data, error, isLoading, refetch } = useGetMemberListQuery(id);
   const member = data?.data;
+  console.log(member);
 
   useEffect(() => {
     refetch();
@@ -15,38 +16,28 @@ function Address() {
 
   return (
     <StWrapper>
-      {/* {error ? (
+      {error ? (
         <>에러가 발생했습니다.</>
       ) : isLoading ? (
         <>회원 정보를 불러오는 중입니다.</>
       ) : data ? (
         <>
           {member?.map((data, i) => {
-            return ( */}
-      <StAddressContainer key={id}>
-        <StAddress>
-          <StMemberTitle>팀원</StMemberTitle>
-          <StProfileImg src={member[0].user.profileImage} />
-          <StNameContainer>
-            <StNickName>{member[0].user.nickname}</StNickName>
-            <StUserName>{member[0].user.username}</StUserName>
-          </StNameContainer>
-        </StAddress>
-      </StAddressContainer>
-      <StAddressContainer>
-        <StAddress>
-          <StMemberTitle>팀원</StMemberTitle>
-          <StProfileImg src={member[0].user.profileImage} />
-          <StNameContainer>
-            <StNickName>{member[0].user.nickname}</StNickName>
-            <StUserName>{member[0].user.username}</StUserName>
-          </StNameContainer>
-        </StAddress>
-      </StAddressContainer>
-      {/* );
-          })} */}
-      {/* </>
-      ) : null} */}
+            return (
+              <StAddressContainer>
+                <StAddress>
+                  <StMemberTitle>팀원</StMemberTitle>
+                  <StProfileImg src={data?.user.profileImage} />
+                  <StNameContainer>
+                    <StNickName>{data?.user.nickname}</StNickName>
+                    <StUserName>{data?.user.username}</StUserName>
+                  </StNameContainer>
+                </StAddress>
+              </StAddressContainer>
+            );
+          })}
+        </>
+      ) : null}
     </StWrapper>
   );
 }
@@ -57,9 +48,10 @@ const StWrapper = styled.div`
   width: 100%;
   /* min-height: 40vh; */
   margin-top: 30px;
+  margin-left: 40px;
   margin-bottom: 10vh;
   display: flex;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   color: #333333;
   font-size: 16px;
   letter-spacing: -0.8px;

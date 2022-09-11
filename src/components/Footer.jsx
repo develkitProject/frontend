@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import logo from '../asset/img/logo.png';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Footer() {
-
   const navigate = useNavigate();
 
   const moveMain = () => {
@@ -13,37 +12,34 @@ function Footer() {
     navigate('/workspace');
   };
 
-
   return (
     <StFooterDiv>
       <StFooterWrapper>
-       <StDivLeft>
-        <StMenuDiv>
-              <StMenuName onClick={moveMain}>About</StMenuName>
-              <StMenuName onClick={moveProject}>Proejct</StMenuName>
-              <StMenuName>Community</StMenuName>
-              <StMenuName>FAQ</StMenuName>
-              <StMenuName>Team</StMenuName>
-        </StMenuDiv>
+        <StDivLeft>
+          <StMenuDiv>
+            <StMenuName onClick={moveMain}>About</StMenuName>
+            <StMenuName onClick={moveProject}>Proejct</StMenuName>
+            <StMenuName>Community</StMenuName>
+            <StMenuName>FAQ</StMenuName>
+            <StMenuName>Team</StMenuName>
+          </StMenuDiv>
 
-        <StInfoDiv>
+          <StInfoDiv>
+            <StInfoDetail>
+              <StInfoName cs='pointer'>개인정보 처리 방침</StInfoName>
+              <StInfoName>|</StInfoName>
+              <StInfoName cs='pointer'>이용약관</StInfoName>
+              <StInfoName>|</StInfoName>
+              <StInfoName cs='pointer'>법적고지</StInfoName>
+              <StInfoName>|</StInfoName>
+              <StInfoName cs='pointer'>이메일무단수집거부</StInfoName>
+            </StInfoDetail>
 
-          <StInfoDetail>
-            <StInfoName cs="pointer">개인정보 처리 방침</StInfoName>
-            <StInfoName>|</StInfoName>
-            <StInfoName cs="pointer">이용약관</StInfoName>
-            <StInfoName>|</StInfoName>
-            <StInfoName cs="pointer">법적고지</StInfoName>
-            <StInfoName>|</StInfoName>
-            <StInfoName cs="pointer">이메일무단수집거부</StInfoName>
-          </StInfoDetail>
-
-          <StCopyright>
-            <p>Copyright, D.vel kit.All rights reserved.</p>
-          </StCopyright>
-        </StInfoDiv>
-
-      </StDivLeft>
+            <StCopyright>
+              <p>Copyright, D.vel kit.All rights reserved.</p>
+            </StCopyright>
+          </StInfoDiv>
+        </StDivLeft>
 
         <StDivRight>
           <StLogo alt='logo' src={logo} />
@@ -58,7 +54,7 @@ export default Footer;
 const StFooterDiv = styled.div`
   align-items: center;
   flex-direction: row;
-  background-color: #1B1B1B;
+  background-color: #1b1b1b;
   color: #999999;
   width: 100%;
   height: 170px;
@@ -114,15 +110,13 @@ const StInfoDetail = styled.div`
   flex-direction: row;
 `;
 
-const StInfoName = styled.p`
+const StInfoName = styled.span`
   margin-right: 8px;
-  cursor: ${(props) => props.cs};;
-
+  cursor: ${(props) => props.cs}; ;
 `;
 
-const StCopyright = styled.p`
+const StCopyright = styled.span`
   margin-top: 10px;
-
 `;
 
 const StDivRight = styled.div`
@@ -130,11 +124,7 @@ const StDivRight = styled.div`
   align-items: center;
 `;
 
-
 const StLogo = styled.img`
   width: 140px;
   height: 30px;
 `;
-
-
-
