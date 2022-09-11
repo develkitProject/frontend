@@ -13,9 +13,14 @@ function Landing() {
   const homeRef = useRef(null);
 
   const [isOpen, setIsOpen] = useState(false);
+
   const onStartButton = () => {
     setIsOpen(true);
   };
+
+  const handleClose = () => {
+    setIsOpen(false);
+  }
 
   const onHomeClick = () => {
     homeRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -55,9 +60,7 @@ function Landing() {
                 {isOpen && (
                   <WorkSpaceErrorModal
                     open={isOpen}
-                    onClose={() => {
-                      setIsOpen(false);
-                    }}
+                    onClose={handleClose}
                   ></WorkSpaceErrorModal>
                 )}
 
