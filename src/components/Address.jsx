@@ -23,7 +23,7 @@ function Address() {
         <>
           {member?.map((data, i) => {
             return ( */}
-      <StAddressContainer>
+      <StAddressContainer key={id}>
         <StAddress>
           <StMemberTitle>팀원</StMemberTitle>
           <StProfileImg src={member[0].user.profileImage} />

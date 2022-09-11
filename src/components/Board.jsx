@@ -1,67 +1,49 @@
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useGetDocQuery } from '../redux/modules/workspaces';
+import { useEffect } from 'react';
 
 function Board() {
+
+  const params = useParams();
+  const id = Number(params.id);
+  const { data, error, isLoading, refetch } = useGetDocQuery(id);
+  const doc = data?.data;
+
+  useEffect(() => {
+    refetch();
+  }, [doc, refetch]);
+
   return (
     <StWrapper>
       <StTitle fc='#333333'>일정관리</StTitle>
-
       <StTableContainer>
         <StThead>
           <StTable style={{ borderBottom: 'none' }}>
-            <div>상태</div>
-            <div>담당자</div>
+            <div>No</div>
             <div>업무명</div>
-            <div>시작일</div>
-            <div>마감일</div>
             <div>작성자</div>
             <div>등록일</div>
             <div>수정일</div>
           </StTable>
         </StThead>
         <StTbody>
-          <StTable>
-            <div><StBtnStatus fc="#f88600">진행중</StBtnStatus></div>
-            <div>이지혜</div>
-            <div style={{textAlign: "left", overflow: "hidden"}}>업데이트된 기획안 입니다 진짜 최종_최종_FINAL!</div>
-            <div>2022.09.13</div>
-            <div>2022.09.20</div>
-            <div>김철수</div>
-            <div>2022.09.08</div>
-            <div>2022.09.20</div>
+        {error ? (
+       <>에러가 발생했습니다.</>
+       ) : isLoading ? (
+        <>회원 정보를 불러오는 중입니다.</>
+        ) : data ? (
+        <>
+      {doc?.map((data, i) => {
+      return(
+          <StTable key={id}>
+            <div>{doc[i].id}</div>
+            <div style={{textAlign: "left", overflow: "hidden"}}>{doc[i].title}</div>
+            <div>{doc[i].nickname}</div>
+            <div>{doc[i].createdAt.slice(0, -13)}</div>
+            <div>{doc[i].modifiedAt.slice(0, -13)}</div>
           </StTable>
-
-          <StTable>
-            <div><StBtnStatus fc="#dadada">완료</StBtnStatus></div>
-            <div>이지혜</div>
-            <div style={{textAlign: "left"}}>일일보고</div>
-            <div>2022.09.13</div>
-            <div>2022.09.20</div>
-            <div>김철수</div>
-            <div>2022.09.08</div>
-            <div>2022.09.20</div>
-          </StTable>
-
-          <StTable>
-            <div><StBtnStatus fc="#dadada">완료</StBtnStatus></div>
-            <div>이지혜</div>
-            <div style={{textAlign: "left"}}>일일보고</div>
-            <div>2022.09.13</div>
-            <div>2022.09.20</div>
-            <div>김철수</div>
-            <div>2022.09.08</div>
-            <div>2022.09.20</div>
-          </StTable>
-
-          <StTable>
-            <div><StBtnStatus fc="#f88600">진행중</StBtnStatus></div>
-            <div>이지혜</div>
-            <div style={{textAlign: "left"}}>일일보고</div>
-            <div>2022.09.13</div>
-            <div>2022.09.20</div>
-            <div>김철수</div>
-            <div>2022.09.08</div>
-            <div>2022.09.20</div>
-          </StTable>
+          )})}</>):null}
         </StTbody>
       </StTableContainer>
     </StWrapper>
@@ -72,10 +54,10 @@ export default Board;
 
 const StWrapper = styled.div`
   width: 96%;
-  min-height: 40vh;
-  margin-left: 2%;
-  margin-top: 3%;
-  margin-bottom: 10vh;
+  min-height: 400px;
+  margin-left: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -93,14 +75,14 @@ const StTitle = styled.p`
 `;
 
 const StTableContainer = styled.div`
-  margin-top: 3%;
+  margin-top: 28px;
   width: 100%;
-  min-height: 15vh;
+  min-height: 100px;
   align-items: left;
 `;
 
 const StTable = styled.div`
-  grid-template-columns: 1fr 1fr 3fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 3fr 1fr 1fr 1fr;
   display: grid;
   border-bottom: 1px solid #c6c6c6;
   overflow: hidden;

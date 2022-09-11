@@ -30,9 +30,6 @@ const NoticeWrite = ()=>{
     };
       addNotice(notice);
       window.alert('공지사항이 등록되었습니다');
-
-      //바로 업데이트가 되는 줄 알았는데 안되고 있습니다! 이유가 뭘까요?
-      
       navigate(`/workspace/main/${id}/notice`);
 
       } else {
