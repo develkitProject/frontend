@@ -14,14 +14,15 @@ function WorkSpaceDetail() {
   const params = useParams();
   const id = Number(params.id);
   const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
-  const title = data?.data.workspaces.title;
+  console.log(data?.data?.notices);
+  const title = data?.data?.workspaces?.title;
   const content = data?.data.workspaces.content;
   const noticeTitle = data?.data.notices.title;
   const noticeContent = data?.data.notices.content;
   const noticeNickname = data?.data.notices.nickname;
   const noticeDate = data?.data.notices.createdAt;
 
-  console.log(data)
+  console.log(data);
 
   return (
     <StWrapper>
@@ -29,29 +30,39 @@ function WorkSpaceDetail() {
       <Projects>
         <StIntroContainer>
           <div>
-            <StTitle fc="#333333" fs="1.5rem">{title}</StTitle>
+            <StTitle fc='#333333' fs='1.5rem'>
+              {title}
+            </StTitle>
             <StContent>{content}</StContent>
           </div>
           <StButton>팀원 초대하기</StButton>
         </StIntroContainer>
         <div>
-          
           <StNoticeWrapper>
-            <StTitle style={{marginBottom:"15px"}} fc="#333333" fs="20px">필독</StTitle>
+            <StTitle style={{ marginBottom: '15px' }} fc='#333333' fs='20px'>
+              필독
+            </StTitle>
             <StNoticeContainer>
-              <StTitle style={{marginBottom:"15px"}}fc="#00a99d" fs="20px">공지사항</StTitle>
+              <StTitle style={{ marginBottom: '15px' }} fc='#00a99d' fs='20px'>
+                공지사항
+              </StTitle>
               <StNoticeBox>
-                <StTitle style={{marginBottom:"15px"}} fc="#333333" fs="20px">{noticeTitle}</StTitle>
-                <StNoticeContent > {noticeContent}</StNoticeContent>
-                  <StInfoDiv>
+                <StTitle
+                  style={{ marginBottom: '15px' }}
+                  fc='#333333'
+                  fs='20px'
+                >
+                  {noticeTitle}
+                </StTitle>
+                <StNoticeContent> {noticeContent}</StNoticeContent>
+                <StInfoDiv>
                   <p>{noticeNickname} ｜</p>
                   <p>{noticeDate} ｜</p>
                   <p>읽음 7 </p>
-                  </StInfoDiv>
+                </StInfoDiv>
               </StNoticeBox>
             </StNoticeContainer>
           </StNoticeWrapper>
-
         </div>
         <div>
           <Schedule />
@@ -110,7 +121,7 @@ const StButton = styled.button`
 const StTitle = styled.p`
   color: ${(props) => props.fc};
   text-align: left;
-  font-size: ${(props) => props.fs} ;
+  font-size: ${(props) => props.fs};
   font-weight: bold;
   letter-spacing: -1.5px;
 `;
@@ -153,8 +164,6 @@ const StNoticeBox = styled.div`
   align-items: left;
 `;
 
-
-
 const StNoticeContent = styled.div`
   width: 100%;
   min-height: 5vh;
@@ -165,7 +174,7 @@ const StNoticeContent = styled.div`
   font-size: 18px;
   line-height: 1.5rem;
   font-weight: 500;
-  white-space:pre-wrap;
+  white-space: pre-wrap;
 `;
 
 const StInfoDiv = styled.div`

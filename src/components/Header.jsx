@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { getCookieToken, removeCookieToken } from '../Cookie';
@@ -12,10 +12,13 @@ import MyProfileModal from '../common/Modal/MyProfileModal';
 function Header() {
   const navigate = useNavigate();
   const cookies = getCookieToken();
+  const location = useLocation().pathname;
+  const modalRef = useRef(null);
 
   const [isOpen, setIsOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [path, setPath] = useState(1);
 
   const onLoginButton = () => {
     setIsOpen(true);
@@ -28,15 +31,11 @@ function Header() {
 
   const moveMain = () => {
     navigate('/');
+    setPath(1);
   };
   const moveProject = () => {
     navigate('/workspace');
-  };
-
-  const logout = () => {
-    removeCookieToken();
-    // removeUserData();
-    window.location.href = '/';
+    setPath(2);
   };
 
   return (
@@ -55,8 +54,18 @@ function Header() {
 
           {/* <StDiv style={!matches ? { display: 'none' } : null}> */}
           <StMenuDiv>
-            <StMenuName onClick={moveMain}>About</StMenuName>
-            <StMenuName onClick={moveProject}>Proejct</StMenuName>
+            <StMenuName
+              onClick={moveMain}
+              style={path === 1 ? { opacity: '1' } : null}
+            >
+              About
+            </StMenuName>
+            <StMenuName
+              onClick={moveProject}
+              style={path === 2 ? { opacity: '1' } : null}
+            >
+              Proejct
+            </StMenuName>
             <StMenuName>Community</StMenuName>
             <StMenuName>FAQ</StMenuName>
             {/* </StDiv> */}

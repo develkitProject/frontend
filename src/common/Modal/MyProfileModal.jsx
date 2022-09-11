@@ -13,27 +13,27 @@ const MyProfileModal = ({ onClose }) => {
   };
 
   return (
-        <ModalWrap>
-          <StProfileWrap>
-            <StDiv style={{ borderBottom: '1.2px solid #999999' }}>
-              <StProfileImg src={user.profileImageUrl} />
-              <StMent>{user?.nickname}님</StMent>
-            </StDiv>
+    <ModalWrap>
+      <StProfileWrap>
+        <StDiv style={{ borderBottom: '1.2px solid #999999' }}>
+          <StProfileImg src={user.profileImageUrl} />
+          <StMent>{user?.nickname}님</StMent>
+        </StDiv>
 
-            <StDiv>
-              <StButton onClick={() => navigate('/mypage')}>
-                마이페이지
-              </StButton>
-              <StButton bc="#999999" fc="#999999"
-                onClick={() => {
-                  logout();
-                }}
-              >
-                로그아웃
-              </StButton>
-            </StDiv>
-          </StProfileWrap>
-        </ModalWrap>
+        <StDiv>
+          <StButton onClick={() => navigate('/mypage')}>마이페이지</StButton>
+          <StButton
+            bc='#999999'
+            fc='#999999'
+            onClick={() => {
+              logout();
+            }}
+          >
+            로그아웃
+          </StButton>
+        </StDiv>
+      </StProfileWrap>
+    </ModalWrap>
   );
 };
 
@@ -95,7 +95,7 @@ export const StButton = styled.button`
   width: 78%;
   height: 5.5vh;
   border-radius: 20px;
-  border: 1.5px solid ${(props)=>props.bc};
+  border: 1.5px solid ${(props) => props.bc};
   background-color: #ffffff;
   margin-top: 8px;
   margin-bottom: 8px;
