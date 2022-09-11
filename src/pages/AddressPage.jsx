@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SideMenu from '../components/SideMenu'
+import SideMenu from '../components/SideMenu';
 import { useParams } from 'react-router-dom';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
@@ -21,10 +21,16 @@ function AddressPage() {
             <StTitle>주소록</StTitle>
             <StContent>주소록입니다</StContent>
           </div>
-          <StButton onClick={()=>{alert("모달창 생성여부확인")}}>회원초대하기</StButton>
+          <StButton
+            onClick={() => {
+              alert('모달창 생성여부확인');
+            }}
+          >
+            회원초대하기
+          </StButton>
         </StIntroContainer>
         <div>
-          <Address/>
+          <Address />
         </div>
       </Projects>
     </StWrapper>
@@ -65,8 +71,7 @@ const StIntroContainer = styled.div`
 
 const StButton = styled.button`
   background-color: #000000;
-  margin-left: 3%;
-  width: 20%;
+  width: 100px;
   height: 35px;
   border-radius: 8px;
   border: 0px;

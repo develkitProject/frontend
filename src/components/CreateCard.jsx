@@ -18,7 +18,7 @@ function CreateCard({ createOpen, setCreateOpen }) {
 export default CreateCard;
 
 const StSpaceCard = styled.div`
-  width: 100%;
+  width: 1200px;
   height: 50px;
   margin: 0;
   display: flex;
@@ -37,7 +37,7 @@ const StText = styled.p`
 `;
 
 const StButton = styled.button`
-  width: 25%;
+  width: 220px;
   height: 100%;
   border-radius: 8px;
   font-size: 1.2rem;

@@ -6,6 +6,7 @@ import scroll from '../asset/img/scroll.svg';
 import 'animate.css';
 import WorkSpaceErrorModal from '../common/Modal/error';
 import { getCookieToken } from '../Cookie';
+import velkit from '../asset/img/velkit.png';
 
 function Landing() {
   const navigate = useNavigate();
@@ -13,9 +14,14 @@ function Landing() {
   const homeRef = useRef(null);
 
   const [isOpen, setIsOpen] = useState(false);
+
   const onStartButton = () => {
     setIsOpen(true);
   };
+
+  const handleClose = () => {
+    setIsOpen(false);
+  }
 
   const onHomeClick = () => {
     homeRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -25,10 +31,10 @@ function Landing() {
     <>
       <StWrapper height={'90vh'}>
         <StMain>
-          <StWrap>
+          <StWrap dp='flex'>
             <StIntro>
               <StMent>
-                let <StMent fc='#00A99D'>D.Velkit</StMent> ={' '}
+                let <StMent fc='#00A99D'>D_Velkit</StMent> ={' '}
                 <StMent fc='#F5D28C'>
                   “Devlop Your Teamwork through D.VelKit!”;
                 </StMent>
@@ -55,9 +61,7 @@ function Landing() {
                 {isOpen && (
                   <WorkSpaceErrorModal
                     open={isOpen}
-                    onClose={() => {
-                      setIsOpen(false);
-                    }}
+                    onClose={handleClose}
                   ></WorkSpaceErrorModal>
                 )}
 
@@ -65,6 +69,7 @@ function Landing() {
                 <StLink>디벨킷 시작하기</StLink>
               </StStart>
             </StIntro>
+            <StVelkit></StVelkit>
           </StWrap>
 
           <StScroll>
@@ -78,10 +83,10 @@ function Landing() {
 
       <StWrapper height={'100vh'}>
         <StMain>
-          <StWrap>
+          <StWrap dp='column'>
             <StIntro>
               <StMent>
-                let <StMent fc='#00A99D'>D.Velkit</StMent> ={' '}
+                let <StMent fc='#00A99D'>D_Velkit</StMent> ={' '}
                 <StMent fc='#F5D28C'>“Point!”;</StMent>
               </StMent>
               <StIntroMent>
@@ -175,6 +180,7 @@ const StWrap = styled.div`
   justify-content: left;
   align-items: left;
   flex-direction: row;
+  display: ${(props) => props.dp};
 `;
 
 const StIntro = styled.div`
@@ -204,7 +210,7 @@ const StIntroMent = styled.div`
 `;
 
 const StStart = styled.div`
-  margin-top: 3%;
+  margin-top: 100px;
   display: flex;
   flex-direction: row;
   cursor: pointer;
@@ -284,4 +290,14 @@ const StCardContent = styled.div`
   font-size: 20px;
   font-weight: 400;
   line-height: 1.5;
+`;
+
+const StVelkit = styled.div`
+  width: 500px;
+  height: 500px;
+  background-image: url(${velkit});
+  background-size: 100% 100%;
+  position: absolute;
+  left: 60%;
+  top: 20%;
 `;

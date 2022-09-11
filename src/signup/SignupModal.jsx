@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 
 import ModalContainer from '../common/Modal/ModalContainer';
 import useOutSideClick from '../common/hooks/useOutSideClick';
@@ -9,15 +9,21 @@ import useInputStatus from './hooks/useInputStatus';
 import CloseButton from '../common/elements/CloseButton';
 
 import * as St from './style';
+import { useDispatch } from 'react-redux';
+import { setIsSignUpModal } from '../redux/modules/global';
 
 const SignupModal = ({ onClose }) => {
+  const dispatch = useDispatch();
+
   const { signUpInputs, onChangeSignUpInputs, handleSignUp } = useInputSignUp();
 
   const { successStatus, errorStatus } = useInputStatus({ signUpInputs });
+
   const modalRef = useRef(null);
-  const handleClose = () => {
-    onClose?.();
-  };
+  
+  const handleClose = useCallback(() => {
+    dispatch(setIsSignUpModal(false));
+  }, [dispatch]);
 
   useEffect(() => {
     const $body = document.querySelector('body');

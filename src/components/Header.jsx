@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { getCookieToken, removeCookieToken } from '../Cookie';
@@ -8,35 +8,41 @@ import Login from '../login';
 import SignupModal from '../signup/SignupModal';
 import useGetUser from '../common/hooks/useGetUser';
 import MyProfileModal from '../common/Modal/MyProfileModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsLoginModal, setIsSignUpModal } from '../redux/modules/global';
+import { selectIsLoginModal, selectIsSignUpModal } from '../redux/modules/global/selectors';
 
 function Header() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const cookies = getCookieToken();
+  const location = useLocation().pathname;
+  const modalRef = useRef(null);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [signupOpen, setSignupOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [path, setPath] = useState(1);
 
-  const onLoginButton = () => {
-    setIsOpen(true);
-  };
+  const isLogin = useSelector(selectIsLoginModal)
+  const isSignUp = useSelector(selectIsSignUpModal)
+
   const { user } = useGetUser();
 
-  const onSignupButton = () => {
-    setSignupOpen(true);
-  };
+  const openLoginModal = () => {
+    dispatch(setIsLoginModal(true))
+  }
+
+  const openSignUpModal = () => {
+    dispatch(setIsSignUpModal(true))
+  }
 
   const moveMain = () => {
     navigate('/');
+    setPath(1);
   };
   const moveProject = () => {
     navigate('/workspace');
-  };
-
-  const logout = () => {
-    removeCookieToken();
-    // removeUserData();
-    window.location.href = '/';
+    setPath(2);
   };
 
   return (
@@ -55,8 +61,18 @@ function Header() {
 
           {/* <StDiv style={!matches ? { display: 'none' } : null}> */}
           <StMenuDiv>
-            <StMenuName onClick={moveMain}>About</StMenuName>
-            <StMenuName onClick={moveProject}>Proejct</StMenuName>
+            <StMenuName
+              onClick={moveMain}
+              style={path === 1 ? { opacity: '1' } : null}
+            >
+              About
+            </StMenuName>
+            <StMenuName
+              onClick={moveProject}
+              style={path === 2 ? { opacity: '1' } : null}
+            >
+              Proejct
+            </StMenuName>
             <StMenuName>Community</StMenuName>
             <StMenuName>FAQ</StMenuName>
             {/* </StDiv> */}
@@ -65,19 +81,17 @@ function Header() {
 
         {!cookies ? (
           <StDiv>
-            <StLogJoin fc='#00A99D' onClick={onLoginButton}>
+            <StLogJoin fc='#00A99D' onClick={openLoginModal}>
               LOGIN
             </StLogJoin>
             <StLogJoin fc='white'>·</StLogJoin>
             <StLogJoin
               fc='white'
-              onClick={() => onSignupButton()}
-              setSignupOpen={setSignupOpen}
-              SignupButton={onSignupButton}
+              onClick={openSignUpModal}
+              SignupButton={openSignUpModal}
             >
               JOIN
             </StLogJoin>
-            {/* <StLogBtn onClick={onLoginButton}>LOGIN</StLogBtn> */}
             <StLogJoin>JOIN</StLogJoin>
           </StDiv>
         ) : (
@@ -93,23 +107,16 @@ function Header() {
           </StDiv>
         )}
       </StHeaderDiv>
-      {isOpen && (
+      {isLogin && (
         <Login
-          setSignupOpen={setSignupOpen}
-          onSignupButton={onSignupButton}
-          open={isOpen}
-          onClose={() => {
-            setIsOpen(false);
-          }}
-        ></Login>
+        onSignupButton={openSignUpModal}
+        open={isLogin}
+      ></Login>
       )}
-      {signupOpen && (
+      {isSignUp && (
         <SignupModal
-          open={signupOpen}
-          onClose={() => {
-            setSignupOpen(false);
-          }}
-        ></SignupModal>
+        open={isSignUp}
+      ></SignupModal>
       )}
     </>
   );
