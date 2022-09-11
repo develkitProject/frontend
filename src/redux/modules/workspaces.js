@@ -87,6 +87,16 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
 
 
+    getDoc: builder.query({
+      query: (id) => {
+        return {
+          url: `/api/workspaces/${id}/docs`,
+          method: 'GET',
+          headers,
+        };
+      },
+      providesTags: ['Docs'],
+    }),
 
 
 
@@ -103,6 +113,7 @@ export const {
   useAddNoticeMutation,
   useGetNoticeQuery,
   useGetMemberListQuery,
+  useGetDocQuery,
 } = workspaceApi;
 
 

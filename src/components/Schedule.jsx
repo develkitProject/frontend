@@ -16,6 +16,7 @@ function Schedule() {
           </StTable>
         </StThead>
         <StTbody>
+          
           <StTable>
             <div>신짱구</div>
             <div>제목_업무요청_20220906</div>
@@ -24,13 +25,6 @@ function Schedule() {
             <div>2022.09.20</div>
           </StTable>
 
-          <StTable>
-            <div>신짱구</div>
-            <div>제목_업무요청_20220906</div>
-            <div>이지혜</div>
-            <div>2022.09.13</div>
-            <div>2022.09.20</div>
-          </StTable>
           
         </StTbody>
       </StTableContainer>

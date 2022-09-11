@@ -40,7 +40,7 @@ function Notice() {
                       <StContent> {data.content}</StContent>
                       <StInfoDiv>
                         <p>{data.nickname} ｜</p>
-                        <p>{data.createdAt} ｜</p>
+                        <p>{data.createdAt.slice(0, -13)} ｜</p>
                         <p>읽음 7 </p>
                       </StInfoDiv>
                   </StNoticeBox>

@@ -15,6 +15,7 @@ import NoticeWritePage from './notice/NoticeWritePage';
 import Docs from './pages/Docs';
 import DocsWritePage from './pages/DocsWritePage';
 import AddressPage from './pages/AddressPage';
+import Footer from './components/Footer'
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path='/workspace/main/:id/docs/write' element={<DocsWritePage />} />
         <Route path='/workspace/main/:id/address' element={<AddressPage/>} /> 
       </Routes>
+      <Footer />
     </>
   );
 }
