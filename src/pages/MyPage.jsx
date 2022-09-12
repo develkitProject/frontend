@@ -1,110 +1,111 @@
-import React, { useCallback, useState, useRef } from 'react';
-
-import axios from 'axios';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-
-import useGetUser from '../hooks/useGetUser';
-
-import { getCookieToken } from '../Cookie';
+import useGetUser from '../common/hooks/useGetUser';
+import { useGetWorkspacesQuery } from '../redux/modules/workspaces';
+import SpaceCard from '../components/SpaceCard';
+import MyPage2 from './MyPage2';
 
 function MyPage() {
-  const imgRef = useRef('');
-  const [imageUrl, setImageUrl] = useState(null);
-  const [imgFile, setImgFile] = useState('');
-
   const { user } = useGetUser();
-  // let objcopy:userType= {};
-
-  // objcopy = { ...user };
-
-  // if (objcopy === undefined) {
-  //   return (
-  //     <div>
-  //       d
-  //     </div>
-  //   );
-  // }
-  const onChangeImage = () => {
-    const reader = new FileReader();
-    const file = imgRef?.current?.files[0];
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImageUrl(reader.result);
-      setImgFile(file);
-    };
-  };
-
-  const [nickname, setNickname] = useState('');
-  const onChange = useCallback((e) => {
-    // let { value } = {...e.target}
-    // setNickname(value)
-    setNickname(e.target.value);
-  }, []);
-
-  const onSubmit = () => {
-    const obj = {
-      profileImageUrl: imageUrl,
-      nickname,
-    };
-    addpost(obj);
-    alert('등록완료!');
-    // window.location.reload();
-  };
-
-  const addpost = async (newList) => {
-    const response = await axios.post(
-      'http://hosung.shop/api/members/profile',
-      newList,
-      {
-        headers: {
-          Authorization: getCookieToken(),
-        },
-      }
-    );
-
-    return response.data;
-  };
+  const [tab, setTab] = useState(false);
+  const { data, error, isLoading } = useGetWorkspacesQuery();
+  const workspaces = data?.data;
 
   return (
     <StWrapper>
-      <StProfile>
-        <StSpan>프로필 관리</StSpan>
-        <StImage profileImageUrl={user?.profileImageUrl} />
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'left',
-            width: '100%',
-          }}
-        >
-          <StEmail>이메일 :{user?.username}</StEmail>
-          <StEmail>
-            닉네임 :
-            <StInput
-              type='text'
-              placeholder={user?.nickname}
-              onChange={onChange}
-            />
-          </StEmail>
-        </div>
-        <StChange onClick={onSubmit}>회원 정보 수정</StChange>
-      </StProfile>
+      <RowDiv>
+        <TabDiv1>
+          <MyPageSpan>마이페이지</MyPageSpan>
+          <TabSpan
+            onClick={() => {
+              setTab(false);
+            }}
+            style={!tab ? { fontWeight: '600' } : null}
+          >
+            프로젝트 관리
+          </TabSpan>
+          <TabSpan
+            onClick={() => {
+              setTab(true);
+            }}
+            style={tab ? { fontWeight: '600' } : null}
+          >
+            회원정보
+          </TabSpan>
+        </TabDiv1>
+        <TabDiv2>
+          {!tab ? (
+            <>
+              <Intro>
+                <Intro style={{ fontWeight: '700' }}>{user?.nickname}님</Intro>,
+                오늘도 디벨킷에서 성장하고 있습니다 🙌
+              </Intro>
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <IntroBox>
+                  <div>
+                    <BoxSpan>참여중인 </BoxSpan>
+                    <BoxSpan style={{ fontWeight: '500' }}>프로젝트</BoxSpan>
+                  </div>
+                  <div style={{ marginTop: '50px' }}>
+                    <BoxNumSpan>{workspaces?.length}</BoxNumSpan>
+                    <BoxSpan> 개</BoxSpan>
+                  </div>
+                </IntroBox>
+                <IntroBox>
+                  <div>
+                    <BoxSpan>참여한 </BoxSpan>
+                    <BoxSpan style={{ fontWeight: '500' }}>총 일정</BoxSpan>
+                  </div>
+                  <div style={{ marginTop: '50px' }}>
+                    <BoxNumSpan>50</BoxNumSpan>
+                    <BoxSpan> 개</BoxSpan>
+                  </div>
+                </IntroBox>
+                <IntroBox>
+                  <div>
+                    <BoxSpan>총 </BoxSpan>
+                    <BoxSpan style={{ fontWeight: '500' }}>게시글 </BoxSpan>
+                    <BoxSpan>작성 수</BoxSpan>
+                  </div>
+                  <div style={{ marginTop: '50px' }}>
+                    <BoxNumSpan>120</BoxNumSpan>
+                    <BoxSpan> 건</BoxSpan>
+                  </div>
+                </IntroBox>
+              </div>
+              <Intro style={{ marginTop: '50px', fontWeight: '400' }}>
+                프로젝트 관리
+              </Intro>
 
-      {imageUrl ? <StImgTag src={imageUrl} /> : null}
-
-      <input
-        style={{ display: 'none' }}
-        accept='image/*'
-        id='upload-photo'
-        name='upload-photo'
-        type='file'
-        onChange={onChangeImage}
-        ref={imgRef}
-      />
-      <STImageButton onClick={() => imgRef.current.click()}>
-        프로필 변경
-      </STImageButton>
+              {error ? (
+                <>Oh no, there was an error</>
+              ) : isLoading ? (
+                <>Loading...</>
+              ) : data ? (
+                <>
+                  {workspaces?.map((data, i) => {
+                    return (
+                      <div style={{ width: '100%' }} key={data.workspaces.id}>
+                        <SpaceCard data={data} width='100%' />
+                      </div>
+                    );
+                  })}
+                </>
+              ) : null}
+            </>
+          ) : (
+            <>
+              <MyPage2></MyPage2>
+            </>
+          )}
+        </TabDiv2>
+      </RowDiv>
     </StWrapper>
   );
 }
@@ -113,85 +114,106 @@ export default MyPage;
 
 const StWrapper = styled.div`
   width: 100%;
-  height: 90vh;
   background-color: #f8f8f8;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
   font-weight: 600;
   font-size: 20px;
+  min-height: 90vh;
 `;
 
-const StProfile = styled.div`
-  border: 1px solid black;
-  width: 500px;
-  height: 600px;
+const RowDiv = styled.div`
+  width: 80%;
   display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
+  justify-content: space-between;
+  margin-top: 50px;
+`;
+
+const TabDiv1 = styled.div`
+  width: 15%;
+  height: 300px;
+  display: flex;
+  align-items: left;
   justify-content: center;
-  margin-top: 20px;
-  background-color: #e4e4e4;
-`;
-
-const StSpan = styled.span`
-  font-weight: 600;
-  font-size: 30px;
-  margin-bottom: 20px;
-`;
-
-const StImage = styled.div`
-  width: 180px;
-  height: 180px;
-  border-radius: 100px;
-  background-size: 100% 100%;
-  background-image: url(${(props) => props.profileImageUrl});
-  margin-top: 20px;
-`;
-
-const StEmail = styled.span`
-  font-weight: 500;
-  font-size: 20px;
-  margin-top: 20px;
-`;
-
-const StInput = styled.input`
-  width: 180px;
-  height: 40px;
-  border: none;
-  font-size: 17px;
-  padding-left: 20px;
-  &:focus {
-    outline: none;
+  flex-direction: column;
+  @media screen and (max-width: 500px) {
+    display: none;
   }
 `;
 
-const StChange = styled.button`
-  width: 70%;
-  height: 50px;
-  background-color: #c0c0c0;
-  border: none;
+const TabDiv2 = styled.div`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MyPageSpan = styled.div`
+  font-size: 30px;
+  font-weight: 600;
+  color: #333333;
+  border-bottom: 2px solid black;
+  height: 70px;
+  display: flex;
+  align-items: center;
+`;
+
+const TabSpan = styled.span`
   font-size: 20px;
-  margin-top: 20px;
+  font-weight: 400;
+  color: #333333;
+  border-bottom: 2px solid #c6c6c6;
+  height: 70px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
+  &:hover {
+    font-weight: 600;
+  }
 `;
 
-const StImgTag = styled.img`
-  width: 300px;
-  height: 350px;
+const Intro = styled.span`
+  width: 100%;
+  font-size: 30px;
+  font-weight: 500;
 `;
 
-const STImageButton = styled.button`
-  background: #456d87;
+const IntroBox = styled.div`
+  width: 28%;
+  height: 296px;
+  font-weight: 500;
+  font-size: 27px;
+  border: 1px solid #999;
+  margin-top: 50px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const BoxSpan = styled.span`
+  font-weight: 400;
+  font-size: 27px;
+`;
+
+const BoxNumSpan = styled.span`
+  color: #00a99d;
+  font-size: 60px;
+  font-weight: bold;
+  letter-spacing: 0px;
+  font-family: 'Montserrat';
+`;
+
+const StButton = styled.button`
+  width: 200px;
+  height: 30px;
+  background-color: rgb(0, 169, 157);
+  font-size: 20px;
+  cursor: pointer;
   border: none;
   color: white;
-  font-size: 13px;
-  width: 120px;
-  height: 30px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 600;
-  margin-top: 10px;
 `;

@@ -15,11 +15,11 @@ export const addUserAsync = createAsyncThunk('ADD_USER', async (user) => {
   return response.data;
 });
 
-const userSlice = createSlice({
+const {actions, reducer} = createSlice({
   name: 'user',
   initialState,
   reducers: {},
   extraReducers: (builder) => {},
 });
 
-export default userSlice.reducer;
+export default reducer;
