@@ -21,7 +21,7 @@ function Landing() {
 
   const handleClose = () => {
     setIsOpen(false);
-  }
+  };
 
   const onHomeClick = () => {
     homeRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -293,11 +293,31 @@ const StCardContent = styled.div`
 `;
 
 const StVelkit = styled.div`
-  width: 500px;
-  height: 500px;
+  width: 30%;
+  height: 50%;
+  min-width: 400px;
+  min-height: 300px;
   background-image: url(${velkit});
   background-size: 100% 100%;
   position: absolute;
   left: 60%;
   top: 20%;
+  /* animation-iteration-count: infinite;
+  animation-name: bounce;
+  animation-timing-function: linear; */
+
+  @keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  /* @media screen and (max-width: 800px) {
+    width: ;
+  } */
 `;

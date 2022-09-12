@@ -10,7 +10,7 @@ import Draggable from 'react-draggable';
 
 export default function Chatting({ title }) {
   const [chatMessages, setChatMessages] = useState([]);
-  const [message, setMessage] = useState('d');
+  const [message, setMessage] = useState('');
   const id = useParams().id;
   const { data, isLoading, refetch, error } = useGetChatMessageQuery(id);
   console.log(data?.data);
@@ -27,8 +27,8 @@ export default function Chatting({ title }) {
   // stompClient.debug = () => {};
 
   useEffect(() => {
-    // onConnected();
-    // return () => onConnected();
+    onConnected();
+    return () => onConnected();
   }, []);
 
   function onConnected() {
