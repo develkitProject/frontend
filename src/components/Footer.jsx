@@ -36,7 +36,7 @@ function Footer() {
             </StInfoDetail>
 
             <StCopyright>
-              <p>Copyright, D.vel kit.All rights reserved.</p>
+              Copyright, D.vel kit.All rights reserved.
             </StCopyright>
           </StInfoDiv>
         </StDivLeft>
@@ -86,7 +86,7 @@ const StMenuDiv = styled.div`
   }
 `;
 
-const StMenuName = styled.span`
+const StMenuName = styled.div`
   color: white;
   font-family: 'Montserrat';
   font-size: 16px;
@@ -110,13 +110,13 @@ const StInfoDetail = styled.div`
   flex-direction: row;
 `;
 
-const StInfoName = styled.span`
+const StInfoName = styled.div`
   margin-right: 8px;
   cursor: ${(props) => props.cs}; ;
 `;
 
-const StCopyright = styled.span`
-  margin-top: 10px;
+const StCopyright = styled.div`
+  margin-top: 7px;
 `;
 
 const StDivRight = styled.div`

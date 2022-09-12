@@ -91,6 +91,7 @@ const Editor = ({setCon}) =>{
                   content={content}
                   >
               </ReactQuill>
+              
         </StEditorContainer>
         )
     }

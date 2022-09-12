@@ -49,7 +49,7 @@ function WorkSpaceDetail() {
                   {data?.data.notices && data?.data.notices.title}
                 </StTitle>
                 <StNoticeContent>
-                  {data?.data.notices && data?.data.notices.content}
+                <div dangerouslySetInnerHTML={{ __html: data?.data.notices && data?.data.notices.content} }/>
                 </StNoticeContent>
                 <StInfoDiv>
                   <p>
