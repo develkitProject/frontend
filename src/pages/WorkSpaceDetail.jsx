@@ -113,6 +113,7 @@ const StWrapper = styled.div`
   background-color: #f2f2f2;
   display: flex;
   flex-direction: row;
+  position: relative;
 `;
 
 const Projects = styled.div`

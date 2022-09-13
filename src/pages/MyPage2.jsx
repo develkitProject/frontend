@@ -44,7 +44,7 @@ function MyPage2() {
 
   const addpost = async (newList) => {
     const response = await axios.post(
-      'http://hosung.shop/api/members/profile',
+      'https://hosung.shop/api/members/profile',
       newList,
       {
         headers: {

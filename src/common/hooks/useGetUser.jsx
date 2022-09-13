@@ -6,7 +6,7 @@ import { getCookieToken } from '../../Cookie';
 
 const useGetUser = () => {
   const [user, setUser] = useState([]);
-  const API_URL = 'http://hosung.shop/api/members/profile';
+  const API_URL = 'https://hosung.shop/api/members/profile';
 
   const readUser = async () => {
     const response = await axios.get(API_URL, {
