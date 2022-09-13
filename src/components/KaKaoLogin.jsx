@@ -6,7 +6,7 @@ const { Kakao } = window;
 const loginWithKakao = () => {
   // console.log('hello');
   Kakao.Auth.authorize({
-    redirectUri: 'http://localhost:3000/kakao',
+    redirectUri: 'https://d-velkit.com/kakao',
   });
 };
 
@@ -21,17 +21,16 @@ const KakaoLogin = () => {
       }}
     >
       <a onClick={loginWithKakao}>
-
         <StKaKaoLoginButton>
-          <StIcon src={KakaoIcon}/>카카오계정으로 로그인
+          <StIcon src={KakaoIcon} />
+          카카오계정으로 로그인
         </StKaKaoLoginButton>
-        
+
         {/* <img
           art='kakao login'
           src='//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg'
           style={{ width: '100%', height: '75%', cursor: 'pointer' }}
         /> */}
-
       </a>
     </div>
   );
@@ -52,6 +51,6 @@ const StKaKaoLoginButton = styled.button`
 `;
 
 const StIcon = styled.img`
- margin-right: 5px;
- width: 6.5%;
+  margin-right: 5px;
+  width: 6.5%;
 `;

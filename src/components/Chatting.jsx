@@ -1,4 +1,10 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useMemo,
+  useCallback,
+} from 'react';
 import styled from 'styled-components';
 import SockJS from 'sockjs-client';
 // import { Stomp } from '@stomp/stompjs';
@@ -24,11 +30,12 @@ export default function Chatting({ title }) {
   const headers = {
     token: getCookieToken(),
   };
-  const sockJS = new SockJS('http://hosung.shop/stomp/chat');
+  const sockJS = new SockJS('https://hosung.shop/stomp/chat');
   const stompClient = Stomp.over(sockJS);
 
   useEffect(() => {
     onConnected();
+    console.log('dd');
     return () => {
       disConnect();
     };
@@ -42,7 +49,7 @@ export default function Chatting({ title }) {
           (data) => {
             const newMessage = JSON.parse(data.body);
             console.log(newMessage);
-            // setChatMessages([newMessage, ...chatMessages]);
+            setChatMessages([newMessage, ...chatMessages]);
           },
           headers
         );
@@ -96,16 +103,25 @@ export default function Chatting({ title }) {
     setMessage('');
   };
 
-  const onChange = (e) => {
-    setMessage(e.target.value);
-  };
+  const onChange = useCallback(
+    (e) => {
+      setMessage(e.target.value);
+    },
+    [message]
+  );
 
   return (
     <>
       <Draggable>
         <StChatBox>
           <StChatHeader>{title}</StChatHeader>
-          <StChatBody></StChatBody>
+          <StChatBody>
+            {chatMessages.message}
+            {/* {chatMessages.map((a, i) => {
+              <div>{a}</div>;
+            })} */}
+            {/* <div>{chatMessages}</div> */}
+          </StChatBody>
           <StChatFooter>
             <StInput
               name='message'
@@ -130,11 +146,11 @@ const StChatBox = styled.div`
   width: 350px;
   height: 500px;
   background-color: #f6daa2;
-  position: absolute;
+  position: relative;
   left: 50%;
   top: 50px;
   box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.1), 0 4px 20px 0 rgba(0, 0, 0, 0.2);
-  /* position: relative; */
+  position: absolute;
 `;
 
 const StChatHeader = styled.div`
@@ -157,6 +173,8 @@ const StChatFooter = styled.div`
   display: flex;
   bottom: 0;
   pointer-events: visible;
+  position: absolute;
+  z-index: -999;
 `;
 
 const StInput = styled.textarea`

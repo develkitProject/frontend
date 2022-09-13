@@ -19,7 +19,7 @@ import {
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const API_URL = 'http://hosung.shop/api/members/profile';
+  const API_URL = 'https://hosung.shop/api/members/profile';
   const cookies = getCookieToken();
 
   const [profileOpen, setProfileOpen] = useState(false);

@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
-    baseURL: 'http://hosung.shop',
+  baseURL: 'https://hosung.shop',
 });
