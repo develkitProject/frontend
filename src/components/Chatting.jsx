@@ -8,7 +8,10 @@ import { useGetChatMessageQuery } from '../redux/modules/chat';
 import { getCookieToken } from '../Cookie';
 import Draggable from 'react-draggable';
 
-export default function Chatting({ title, setMessage, message, sendMessage }) {
+export default function Chatting({ title }) {
+  const [chatMessages, setChatMessages] = useState([]);
+  const [username, setUsername] = useState('');
+  const [message, setMessage] = useState('');
   const id = useParams().id;
   const { data, isLoading, refetch, error } = useGetChatMessageQuery(id);
 
@@ -17,6 +20,81 @@ export default function Chatting({ title, setMessage, message, sendMessage }) {
   // });
 
   // stompClient.debug = () => {};
+
+  const headers = {
+    token: getCookieToken(),
+  };
+  const sockJS = new SockJS('http://hosung.shop/stomp/chat');
+  const stompClient = Stomp.over(sockJS);
+
+  useEffect(() => {
+    onConnected();
+    return () => {
+      disConnect();
+    };
+  }, []);
+
+  function onConnected() {
+    try {
+      stompClient.connect(headers, () => {
+        stompClient.subscribe(
+          `/sub/chat/room/${id}`,
+          (data) => {
+            const newMessage = JSON.parse(data.body);
+            console.log(newMessage);
+            // setChatMessages([newMessage, ...chatMessages]);
+          },
+          headers
+        );
+        publish_1();
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const disConnect = () => {
+    if (stompClient != null) {
+      if (stompClient.connected) stompClient.disconnect();
+    }
+  };
+
+  // const handelEnter = () => {
+  //   const newMessage = { username, chatMessages };
+  //   stompClient.send(
+  //     '/pub/chat/enter',
+  //     headers,
+  //     JSON.stringify({ roomId: id, newMessage })
+  //   );
+  //   setMessage('');
+  // };
+
+  // const addMessage = () => {
+  //   setChatMessages((prev) => [...prev, message]);
+  // };
+
+  const publish_1 = (message) => {
+    if (!stompClient.connected) {
+      return;
+    }
+    stompClient.send(
+      `/pub/chat/enter`,
+      headers,
+      JSON.stringify({ roomId: id, message })
+    );
+    setMessage('');
+  };
+
+  const sendMessage = () => {
+    stompClient.send(
+      `/pub/chat/message`,
+      headers,
+      JSON.stringify({
+        roomId: id,
+        message: message,
+      })
+    );
+    setMessage('');
+  };
 
   const onChange = (e) => {
     setMessage(e.target.value);

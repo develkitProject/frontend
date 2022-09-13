@@ -1,12 +1,10 @@
 import styled from 'styled-components';
 import SideMenu from '../components/SideMenu';
 import { useParams } from 'react-router-dom';
-import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Board from './Board';
+import CalendarApp from './Calendar';
 
-function Docs() {
+export default function ClaendarPage() {
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
@@ -14,29 +12,27 @@ function Docs() {
   return (
     <StWrapper>
       <SideMenu />
+
       <Projects>
+        {' '}
         <StIntroContainer>
           <div>
-            <StTitle>문서</StTitle>
-            <StContent>프로젝트 관련 일일보고 및 계획 등</StContent>
+            <StTitle>일정관리</StTitle>
+            <StContent>프로젝트 팀원들의 일정을 관리해보세요.</StContent>
           </div>
           <StButton
             onClick={() => {
-              navigate(`/workspace/main/${id}/docs/write`);
+              // navigate(`/workspace/main/${id}/notice/write`);
             }}
           >
-            글쓰기
+            일정만들기
           </StButton>
         </StIntroContainer>
-        <div>
-          <Board />
-        </div>
+        <CalendarApp></CalendarApp>
       </Projects>
     </StWrapper>
   );
 }
-
-export default Docs;
 
 const StWrapper = styled.div`
   width: 100%;
@@ -56,6 +52,7 @@ const Projects = styled.div`
   flex-direction: column;
   align-items: left;
   margin-bottom: 40px;
+  justify-content: center;
 `;
 
 const StIntroContainer = styled.div`
@@ -71,14 +68,14 @@ const StIntroContainer = styled.div`
 
 const StButton = styled.button`
   background-color: #000000;
-  margin-left: 3%;
+  margin-left: 30px;
   width: 20%;
   height: 35px;
   border-radius: 8px;
   border: 0px;
   color: #fff;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 16px;
   font-weight: 500;
   /* letter-spacing: -1px; */
   cursor: pointer;
@@ -87,7 +84,7 @@ const StButton = styled.button`
 const StTitle = styled.p`
   color: #333333;
   text-align: left;
-  font-size: 1.5rem;
+  font-size: 24px;
   font-weight: bold;
   letter-spacing: -1.5px;
 `;

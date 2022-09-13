@@ -9,9 +9,6 @@ import { useEffect, useState } from 'react';
 import { getCookieToken } from '../Cookie';
 
 function WorkSpaceDetail() {
-  const [chatMessages, setChatMessages] = useState([]);
-  const [username, setUsername] = useState('');
-  const [message, setMessage] = useState('');
   const params = useParams();
   const id = Number(params.id);
   const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
@@ -19,86 +16,9 @@ function WorkSpaceDetail() {
   const content = data?.data.workspaces.content;
   const document = data?.data.documents;
 
-
   useEffect(() => {
     refetch();
   }, [data, refetch]);
-
-  const headers = {
-    token: getCookieToken(),
-  };
-  const sockJS = new SockJS('http://hosung.shop/stomp/chat');
-  const stompClient = Stomp.over(sockJS);
-
-  useEffect(() => {
-    onConnected();
-    return () => {
-      disConnect();
-    };
-  }, []);
-
-  function onConnected() {
-    try {
-      stompClient.connect(headers, () => {
-        stompClient.subscribe(
-          `/sub/chat/room/${id}`,
-          (data) => {
-            const newMessage = JSON.parse(data.body);
-            console.log(newMessage);
-            // setChatMessages([newMessage, ...chatMessages]);
-          },
-          headers
-        );
-        publish_1();
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  const disConnect = () => {
-    if (stompClient != null) {
-      if (stompClient.connected) stompClient.disconnect();
-    }
-  };
-
-  // const handelEnter = () => {
-  //   const newMessage = { username, chatMessages };
-  //   stompClient.send(
-  //     '/pub/chat/enter',
-  //     headers,
-  //     JSON.stringify({ roomId: id, newMessage })
-  //   );
-  //   setMessage('');
-  // };
-
-  // const addMessage = () => {
-  //   setChatMessages((prev) => [...prev, message]);
-  // };
-
-  const publish_1 = (message) => {
-    if (!stompClient.connected) {
-      return;
-    }
-    stompClient.send(
-      `/pub/chat/enter`,
-      headers,
-      JSON.stringify({ roomId: id, message })
-    );
-    setMessage('');
-  };
-
-  const sendMessage = () => {
-    stompClient.send(
-      `/pub/chat/message`,
-      headers,
-      JSON.stringify({
-        roomId: id,
-        message: message,
-      })
-    );
-    setMessage('');
-  };
-
 
   return (
     <StWrapper>
@@ -167,11 +87,11 @@ function WorkSpaceDetail() {
                 {document?.map((data, i) => {
                   return (
                     <StTable key={id}>
-                      <div>{document[i].user.nickname}</div>
-                      <div>{document[i].title}</div>
-                      <div>{document[i].user.nickname}</div>
-                      <div>{document[i].createdAt}</div>
-                      <div>{document[i].modifiedAt}</div>
+                      <div>{data.user.nickname}</div>
+                      <div>{data.title}</div>
+                      <div>{data.user.nickname}</div>
+                      <div>{data.createdAt}</div>
+                      <div>{data.modifiedAt}</div>
                     </StTable>
                   );
                 })}
@@ -180,12 +100,7 @@ function WorkSpaceDetail() {
           </StScheduleWrapper>
         </div>
       </Projects>
-      <Chatting
-        title={title}
-        setMessage={setMessage}
-        message={message}
-        sendMessage={sendMessage}
-      ></Chatting>
+      <Chatting title={title}></Chatting>
     </StWrapper>
   );
 }
