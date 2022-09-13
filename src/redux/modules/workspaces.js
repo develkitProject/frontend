@@ -44,7 +44,6 @@ export const workspaceApi = coreApi.injectEndpoints({
         return {
           url: `/api/workspaces/${id}/main`,
           method: 'GET',
-          // body: id,
           headers,
         };
       },
@@ -57,7 +56,6 @@ export const workspaceApi = coreApi.injectEndpoints({
         return {
           url: `/api/workspaces/${id}/notice`,
           method: 'GET',
-          // body: notice,
           headers,
         };
       },
@@ -120,7 +118,21 @@ export const workspaceApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      invalidatesTags: ['Document'],
+      invalidatesTags: ['AddDocs'],
+    }),
+
+
+    //에디터 이미지 업로드
+    addImage: builder.mutation({
+      query:(img) =>{
+        return {
+          url: `/api/images`,
+          method: 'POST',
+          body: img,
+          headers,
+        };
+      },
+      invalidatesTags: ['Image'],
     }),
 
   }),

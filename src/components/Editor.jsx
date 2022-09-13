@@ -40,8 +40,8 @@ const Editor = ({setCon}) =>{
       if (file !== null) {
         FormData.append("image", file[0])
         try{
-          // const res = res.data.url;
-          // url = res.data.url;
+          const res = res.data.url;
+          url = res.data.url;
 
           const range = QuillRef.current?.getEditor().getSelection()?.index;
           if (range !== null && range !== undefined) {
@@ -54,7 +54,7 @@ const Editor = ({setCon}) =>{
               );
             }
   
-            // return { ...res, success: true };
+            return { ...res, success: true };
           } catch (error) {
             const err = ("error")
             return { ...err.response, success: false };
