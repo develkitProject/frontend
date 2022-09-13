@@ -75,7 +75,7 @@ const StAddress = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 50px;
+  margin-left: 30px;
 `;
 
 const StMemberTitle = styled.div`
