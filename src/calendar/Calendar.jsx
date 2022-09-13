@@ -15,7 +15,10 @@ export default function CalendarApp() {
         alignItems: 'center',
       }}
     >
-      <Calendar onChange={onChange} value={value} />
+      <Calendar onChange={onChange} value={value} 
+       formatDay={(locale, date) => date.toLocaleString("en", {day: "numeric"})}
+       />
+    
       {/* <div className='text-gray-500 mt-4'>
         {moment(value).format('YYYY년 MM월 DD일')}
       </div> */}

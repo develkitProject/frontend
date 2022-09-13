@@ -123,11 +123,11 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
     //에디터 이미지 업로드
     addImage: builder.mutation({
-      query:(img) =>{
+      query:(image) =>{
         return {
           url: `/api/images`,
           method: 'POST',
-          body: img,
+          body: image,
           headers,
         };
       },
@@ -149,4 +149,5 @@ export const {
   useGetDocQuery,
   useGetDocDetailQuery,
   useAddDocMutation,
+  useAddImageMutation,
 } = workspaceApi;
