@@ -18,7 +18,7 @@ function NoticePage() {
         <StIntroContainer>
           <div>
             <StTitle>공지사항</StTitle>
-            <StContent>공지사항 필독 부탁드립니다.</StContent>
+            <StContent>프로젝트 관련 주요 공지사항입니다</StContent>
           </div>
           <StButton onClick={()=>{navigate(`/workspace/main/${id}/notice/write`)}}>글쓰기</StButton>
         </StIntroContainer>
@@ -43,8 +43,9 @@ const StWrapper = styled.div`
 const Projects = styled.div`
   width: 65%;
   min-height: 90vh;
-  margin-left: 2%;
-  margin-top: 4%;
+  margin-left: 50px;
+  margin-top: 60px;
+  margin-bottom: 40px;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -64,14 +65,14 @@ const StIntroContainer = styled.div`
 
 const StButton = styled.button`
   background-color: #000000;
-  margin-left: 3%;
+  margin-left: 30px;
   width: 20%;
   height: 35px;
   border-radius: 8px;
   border: 0px;
   color: #fff;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 16px;
   font-weight: 500;
   /* letter-spacing: -1px; */
   cursor: pointer;
@@ -80,7 +81,7 @@ const StButton = styled.button`
 const StTitle = styled.p`
   color: #333333;
   text-align: left;
-  font-size: 1.5rem;
+  font-size: 24px;
   font-weight: bold;
   letter-spacing: -1.5px;
 `;
@@ -89,7 +90,7 @@ const StContent = styled.p`
   margin-top: 10px;
   color: #333333;
   text-align: left;
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: normal;
   letter-spacing: -1px;
 `;

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Board from '../components/Board';
+import Board from './Board';
 
 function Docs() {
   const navigate = useNavigate();
@@ -42,13 +42,14 @@ const StWrapper = styled.div`
 
 const Projects = styled.div`
   width: 65%;
-  min-height: 90vh;
-  margin-left: 2%;
+  min-height: 50vh;
+  margin-left: 50px;
   margin-top: 4%;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: left;
+  margin-bottom: 40px;
 `;
 
 const StIntroContainer = styled.div`
@@ -89,7 +90,7 @@ const StContent = styled.p`
   margin-top: 10px;
   color: #333333;
   text-align: left;
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: normal;
   letter-spacing: -1px;
 `;

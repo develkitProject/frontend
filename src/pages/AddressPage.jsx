@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Board from '../components/Board';
+import Board from '../document/Board';
 import Address from '../components/Address';
 
 function AddressPage() {

@@ -5,6 +5,7 @@ import { getCookieToken } from '../Cookie';
 import { useParams } from 'react-router-dom';
 import WorkSpaceErrorModal from '../common/Modal/error';
 
+
 function Notice() {
   const params = useParams();
   const id = Number(params.id);
@@ -38,7 +39,14 @@ function Notice() {
                   <StNoticeBox key={notice.id}>
                       <StTitle fc="#333333">{data.title}</StTitle>
                       <StContent>
-                        <div dangerouslySetInnerHTML={{ __html: data.content} }/></StContent>   
+                        <div dangerouslySetInnerHTML={{ __html: data.content} }/>
+                        {/* {data.content} */}
+                        {/* 
+                        {process.browser?(
+                          <div dangerouslySetInnerHTML={{ 
+                          __html: DOMPurify.sanitize(data.content)} }/>
+                          ):(<div/>)} */}
+                        </StContent>   
                       <StInfoDiv>
                         <p>{data.nickname} ｜</p>
                         <p>{data.createdAt.slice(0, -13)} ｜</p>

@@ -51,6 +51,7 @@ export const workspaceApi = coreApi.injectEndpoints({
       invalidatesTags: ['Workspaces'],
     }),
 
+    //공지사항
     getNotice: builder.query({
       query: (id) => {
         return {
@@ -75,6 +76,7 @@ export const workspaceApi = coreApi.injectEndpoints({
       invalidatesTags: ['Notice'],
     }),
 
+    //프로젝트 가입 회원 조회
     getMemberList: builder.query({
       query: (id) => {
         return {
@@ -86,7 +88,7 @@ export const workspaceApi = coreApi.injectEndpoints({
       providesTags: ['Notice'],
     }),
 
-
+    //문서
     getDoc: builder.query({
       query: (id) => {
         return {
@@ -98,7 +100,28 @@ export const workspaceApi = coreApi.injectEndpoints({
       providesTags: ['Docs'],
     }),
 
+    getDocDetail: builder.query({
+      query: ({workspaces, docid}) => {
+        return {
+          url: `/api/workspaces/${workspaces}/docs/${docid}`,
+          method: 'GET',
+          headers,
+        };
+      },
+      providesTags: ['DocsDetail'],
+    }),
 
+    addDoc: builder.mutation({
+      query:(document) =>{
+        return {
+          url: `/api/workspaces/${document.id}/docs`,
+          method: 'POST',
+          body: document,
+          headers,
+        };
+      },
+      invalidatesTags: ['Document'],
+    }),
 
   }),
 });
@@ -114,6 +137,8 @@ export const {
   useGetNoticeQuery,
   useGetMemberListQuery,
   useGetDocQuery,
+  useGetDocDetailQuery, 
+  useAddDocMutation,
 } = workspaceApi;
 
 
