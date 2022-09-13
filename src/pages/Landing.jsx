@@ -7,6 +7,7 @@ import 'animate.css';
 import WorkSpaceErrorModal from '../common/Modal/error';
 import { getCookieToken } from '../Cookie';
 import velkit from '../asset/img/velkit.png';
+import twinklestar from '../asset/img/twinklestar.svg';
 
 function Landing() {
   const navigate = useNavigate();
@@ -69,6 +70,7 @@ function Landing() {
                 <StLink>디벨킷 시작하기</StLink>
               </StStart>
             </StIntro>
+            <Twinklestar></Twinklestar>
             <StVelkit></StVelkit>
           </StWrap>
 
@@ -320,4 +322,11 @@ const StVelkit = styled.div`
   /* @media screen and (max-width: 800px) {
     width: ;
   } */
+`;
+
+const Twinklestar = styled.div`
+  width: 30%;
+  height: 60%;
+  background-image: url(${twinklestar});
+  background-size: cover;
 `;
