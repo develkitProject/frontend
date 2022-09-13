@@ -36,7 +36,7 @@ function Notice() {
               return(
                 <StNoticeContainer>
                 <StTitle fc="#00a99d">공지사항</StTitle>
-                  <StNoticeBox key={notice.id}>
+                  <StNoticeBox key={data.id}>
                       <StTitle fc="#333333">{data.title}</StTitle>
                       <StContent>
                         <div dangerouslySetInnerHTML={{ __html: data.content} }/>

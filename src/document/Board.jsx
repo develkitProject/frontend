@@ -37,7 +37,7 @@ function Board() {
               {doc?.map((data, i) => {
                 return (
                   <StTable
-                    key={id}
+                    key={data.id}
                     onClick={() => {
                       navigate(`/workspace/main/${id}/docs/${data.id}`);
                     }}

@@ -86,7 +86,7 @@ function WorkSpaceDetail() {
               <StTbody>
                 {document?.map((data, i) => {
                   return (
-                    <StTable key={id}>
+                    <StTable key={data.id}>
                       <div>{data.user.nickname}</div>
                       <div>{data.title}</div>
                       <div>{data.user.nickname}</div>
