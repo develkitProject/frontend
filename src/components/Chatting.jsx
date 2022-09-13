@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import SockJS from 'sockjs-client';
 // import { Stomp } from '@stomp/stompjs';
@@ -8,97 +8,42 @@ import { useGetChatMessageQuery } from '../redux/modules/chat';
 import { getCookieToken } from '../Cookie';
 import Draggable from 'react-draggable';
 
-export default function Chatting({ title }) {
-  const [chatMessages, setChatMessages] = useState([]);
-  const [message, setMessage] = useState('');
+export default function Chatting({ title, setMessage, message, sendMessage }) {
   const id = useParams().id;
   const { data, isLoading, refetch, error } = useGetChatMessageQuery(id);
-  console.log(data?.data);
 
-  const headers = {
-    token: getCookieToken(),
-  };
-  const sockJS = new SockJS('http://hosung.shop/stomp/chat');
-  const stompClient = Stomp.over(sockJS);
   // let stompClient = Stomp.over(function () {
   //   return new SockJS('http://hosung.shop/stomp/chat');
   // });
 
   // stompClient.debug = () => {};
 
-  useEffect(() => {
-    onConnected();
-    return () => onConnected();
-  }, []);
-
-  function onConnected() {
-    try {
-      stompClient.connect(headers, () => {
-        stompClient.subscribe(
-          `/sub/chat/room/${id}`,
-          (data) => {
-            const newMessage = JSON.parse(data.body);
-            console.log(newMessage);
-          },
-          headers
-        );
-        publish_1();
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const disconnect = () => {
-    stompClient.deactivate();
-  };
-
-  const publish_1 = (message) => {
-    if (!stompClient.connected) {
-      return;
-    }
-    stompClient.send(
-      `/pub/chat/enter`,
-      headers,
-      JSON.stringify({ roomId: id, message })
-    );
-    setMessage('');
-  };
-
-  const sendMessage = () => {
-    stompClient.send(
-      `/pub/chat/message`,
-      headers,
-      JSON.stringify({
-        roomId: id,
-        message: message,
-      })
-    );
-    setMessage('');
+  const onChange = (e) => {
+    setMessage(e.target.value);
   };
 
   return (
     <>
-      {/* <Draggable> */}
-      <StChatBox>
-        <StChatHeader>{title}</StChatHeader>
-        <StChatBody></StChatBody>
-        <StChatFooter>
-          <StInput
-            name='message'
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          ></StInput>
-          <StButton
-            onClick={sendMessage}
-            message={message}
-            disabled={message.length === 0}
-          >
-            전송
-          </StButton>
-        </StChatFooter>
-      </StChatBox>
-      {/* </Draggable> */}
+      <Draggable>
+        <StChatBox>
+          <StChatHeader>{title}</StChatHeader>
+          <StChatBody></StChatBody>
+          <StChatFooter>
+            <StInput
+              name='message'
+              value={message}
+              onChange={onChange}
+            ></StInput>
+            <StButton
+              onClick={sendMessage}
+              message={message}
+              disabled={message.length === 0}
+            >
+              전송
+            </StButton>
+          </StChatFooter>
+        </StChatBox>
+      </Draggable>
     </>
   );
 }

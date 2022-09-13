@@ -15,7 +15,7 @@ import NoticeWritePage from './notice/NoticeWritePage';
 import Docs from './pages/Docs';
 import DocsWritePage from './pages/DocsWritePage';
 import AddressPage from './pages/AddressPage';
-import Footer from './components/Footer'
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -31,10 +31,16 @@ function App() {
         <Route path='/kakao' element={<Kakao />} />
         <Route path='/workspace/main/:id' element={<WorkSpaceDetail />} />
         <Route path='/workspace/main/:id/notice' element={<NoticePage />} />
-        <Route path='/workspace/main/:id/notice/write' element={<NoticeWritePage />} />
+        <Route
+          path='/workspace/main/:id/notice/write'
+          element={<NoticeWritePage />}
+        />
         <Route path='/workspace/main/:id/docs' element={<Docs />} />
-        <Route path='/workspace/main/:id/docs/write' element={<DocsWritePage />} />
-        <Route path='/workspace/main/:id/address' element={<AddressPage/>} /> 
+        <Route
+          path='/workspace/main/:id/docs/write'
+          element={<DocsWritePage />}
+        />
+        <Route path='/workspace/main/:id/address' element={<AddressPage />} />
       </Routes>
       <Footer />
     </>
