@@ -19,6 +19,11 @@ function WorkSpaceDetail() {
   const content = data?.data.workspaces.content;
   const document = data?.data.documents;
 
+
+  useEffect(() => {
+    refetch();
+  }, [data, refetch]);
+
   const headers = {
     token: getCookieToken(),
   };
@@ -93,6 +98,7 @@ function WorkSpaceDetail() {
     );
     setMessage('');
   };
+
 
   return (
     <StWrapper>
@@ -196,8 +202,9 @@ const StWrapper = styled.div`
 
 const Projects = styled.div`
   width: 65%;
-  margin-left: 2%;
-  margin-top: 4%;
+  margin-left: 50px;
+  margin-top: 55px;
+  margin-bottom: 50px;
   background-color: white;
   display: flex;
   flex-direction: column;

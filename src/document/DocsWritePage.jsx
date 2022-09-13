@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NoticeWrite from '../notice/NoticeWrite';
+import DocsWrite from './DocsWrite';
 
 function DocsWritePage() {
 
@@ -12,7 +12,7 @@ function DocsWritePage() {
     <StWrapper>
       <SideMenu />
       <Projects>
-        <NoticeWrite/>
+        <DocsWrite/>
       </Projects>
     </StWrapper>
   );

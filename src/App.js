@@ -12,10 +12,12 @@ import MyPage2 from './pages/MyPage2';
 import WorkSpaceDetail from './pages/WorkSpaceDetail';
 import NoticePage from './notice/NoticePage';
 import NoticeWritePage from './notice/NoticeWritePage';
-import Docs from './pages/Docs';
-import DocsWritePage from './pages/DocsWritePage';
+import Docs from './document/Docs';
+import DocsWritePage from './document/DocsWritePage';
 import AddressPage from './pages/AddressPage';
-import Footer from './components/Footer';
+import Footer from './components/Footer'
+import DocDetail from './document/DocDetail';
+
 
 function App() {
   return (
@@ -36,11 +38,10 @@ function App() {
           element={<NoticeWritePage />}
         />
         <Route path='/workspace/main/:id/docs' element={<Docs />} />
-        <Route
-          path='/workspace/main/:id/docs/write'
-          element={<DocsWritePage />}
-        />
-        <Route path='/workspace/main/:id/address' element={<AddressPage />} />
+
+        <Route path='/workspace/main/:id/docs/write' element={<DocsWritePage />} />
+        <Route path='/workspace/main/:id/address' element={<AddressPage/>} /> 
+        <Route path='/workspace/main/:id/docs/:docid' element={<DocDetail/>} /> 
       </Routes>
       <Footer />
     </>
