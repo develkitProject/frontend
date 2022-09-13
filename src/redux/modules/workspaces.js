@@ -63,7 +63,7 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
 
     addNotice: builder.mutation({
-      query:(notice) =>{
+      query: (notice) => {
         return {
           url: `/api/workspaces/${notice.id}/notice`,
           method: 'POST',
@@ -99,7 +99,7 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
 
     getDocDetail: builder.query({
-      query: ({workspaces, docid}) => {
+      query: ({ workspaces, docid }) => {
         return {
           url: `/api/workspaces/${workspaces}/docs/${docid}`,
           method: 'GET',
@@ -110,7 +110,7 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
 
     addDoc: builder.mutation({
-      query:(document) =>{
+      query: (document) => {
         return {
           url: `/api/workspaces/${document.id}/docs`,
           method: 'POST',
@@ -118,10 +118,9 @@ export const workspaceApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      invalidatesTags: ['AddDocs'],
+
+      invalidatesTags: ['Docs'],
     }),
-
-
     //에디터 이미지 업로드
     addImage: builder.mutation({
       query:(img) =>{
@@ -134,7 +133,6 @@ export const workspaceApi = coreApi.injectEndpoints({
       },
       invalidatesTags: ['Image'],
     }),
-
   }),
 });
 
@@ -149,8 +147,6 @@ export const {
   useGetNoticeQuery,
   useGetMemberListQuery,
   useGetDocQuery,
-  useGetDocDetailQuery, 
+  useGetDocDetailQuery,
   useAddDocMutation,
 } = workspaceApi;
-
-

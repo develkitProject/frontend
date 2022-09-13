@@ -28,22 +28,32 @@ function Board() {
           </StTable>
         </StThead>
         <StTbody>
-        {error ? (
-       <>에러가 발생했습니다.</>
-       ) : isLoading ? (
-        <>문서를 불러오는 중입니다.</>
-        ) : data ? (
-        <>
-      {doc?.map((data, i) => {
-      return(
-          <StTable key={id} onClick={()=>{navigate(`/workspace/main/${id}/docs/${doc[i].id}`)}}>
-            <div>{doc[i].id}</div>
-            <div style={{textAlign: "left", overflow: "hidden"}}>{doc[i].title}</div>
-            <div>{doc[i].nickname}</div>
-            <div>{doc[i].createdAt.slice(0, -13)}</div>
-            <div>{doc[i].modifiedAt.slice(0, -13)}</div>
-          </StTable>
-          )})}</>):null}
+          {error ? (
+            <>에러가 발생했습니다.</>
+          ) : isLoading ? (
+            <>문서를 불러오는 중입니다.</>
+          ) : data ? (
+            <>
+              {doc?.map((data, i) => {
+                return (
+                  <StTable
+                    key={id}
+                    onClick={() => {
+                      navigate(`/workspace/main/${id}/docs/${data.id}`);
+                    }}
+                  >
+                    <div>{data.id}</div>
+                    <div style={{ textAlign: 'left', overflow: 'hidden' }}>
+                      {data.title}
+                    </div>
+                    <div>{data.nickname}</div>
+                    <div>{data.createdAt.slice(0, -13)}</div>
+                    <div>{data.modifiedAt.slice(0, -13)}</div>
+                  </StTable>
+                );
+              })}
+            </>
+          ) : null}
         </StTbody>
       </StTableContainer>
     </StWrapper>

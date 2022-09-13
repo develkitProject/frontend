@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SideMenu from '../components/SideMenu'
+import SideMenu from '../components/SideMenu';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -7,16 +7,19 @@ import { useGetDocDetailQuery } from '../redux/modules/workspaces';
 import Board from './Board';
 
 function DocDetail() {
-    const navigate = useNavigate();
-    const params = useParams();
-    const workspaces = Number(params.id);
-    const docid = Number(params.docid);
-    const { data, error, isLoading, refetch } = useGetDocDetailQuery({workspaces, docid});
-    const document = data?.data
+  const navigate = useNavigate();
+  const params = useParams();
+  const workspaces = Number(params.id);
+  const docid = Number(params.docid);
+  const { data, error, isLoading, refetch } = useGetDocDetailQuery({
+    workspaces,
+    docid,
+  });
+  const document = data?.data;
 
-    useEffect(() => {
-      refetch();
-    }, [data, refetch]);
+  useEffect(() => {
+    refetch();
+  }, [data, refetch]);
 
   return (
     <StWrapper>
@@ -24,20 +27,22 @@ function DocDetail() {
       <DocContainer>
         <Projects>
           <StIntroContainer>
-              <StIntroMent>프로젝트 관련 일일보고 및 계획 등</StIntroMent>
-              <StTitle>{document?.title}</StTitle>
-              <StInfoContainer>
-                <StProfileImg>{document?.profileImg}</StProfileImg>
-                <StNickname>{document?.nickname}</StNickname>
-                <StCreatedAt>{document?.createdAt.slice(0, -7)}</StCreatedAt>
-              </StInfoContainer>
+            <StIntroMent>프로젝트 관련 일일보고 및 계획 등</StIntroMent>
+            <StTitle>{document?.title}</StTitle>
+            <StInfoContainer>
+              <StProfileImg>{document?.profileImg}</StProfileImg>
+              <StNickname>{document?.nickname}</StNickname>
+              <StCreatedAt>{document?.createdAt.slice(0, -7)}</StCreatedAt>
+            </StInfoContainer>
           </StIntroContainer>
           <StContentContainer>
-            <StContent><div dangerouslySetInnerHTML={{ __html: document?.content} }/></StContent>
+            <StContent>
+              <div dangerouslySetInnerHTML={{ __html: document?.content }} />
+            </StContent>
           </StContentContainer>
         </Projects>
         <BoardContainer>
-          <Board/>
+          <Board />
         </BoardContainer>
       </DocContainer>
     </StWrapper>
@@ -83,7 +88,7 @@ const StIntroContainer = styled.div`
 const StIntroMent = styled.div`
   margin: 10px;
   font-size: 16px;
-  color: #C6C6C6;
+  color: #c6c6c6;
   letter-spacing: -0.05em;
 `;
 
@@ -96,7 +101,7 @@ const StTitle = styled.p`
   letter-spacing: -0.05em;
 `;
 
-const StInfoContainer= styled.div`
+const StInfoContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -124,7 +129,7 @@ const StNickname = styled.div`
 const StCreatedAt = styled.div`
   margin-left: 28px;
   font-size: 18px;
-  color: #B4B4B4;
+  color: #b4b4b4;
   letter-spacing: -0.05em;
   font-weight: 400;
 `;
@@ -137,7 +142,7 @@ const StContentContainer = styled.div`
   align-items: left;
 `;
 
-const StContent = styled.p`
+const StContent = styled.span`
   margin-left: 20px;
   margin-bottom: 20px;
   font-size: 18px;
@@ -150,7 +155,3 @@ const StContent = styled.p`
 const BoardContainer = styled.div`
   margin-left: 50px;
 `;
-
-
-
-
