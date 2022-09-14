@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 import { useGetChatMessageQuery } from '../redux/modules/chat';
 import { getCookieToken } from '../Cookie';
 import Draggable from 'react-draggable';
+import ModalContainer from '../common/Modal/ModalContainer';
 
 export default function Chatting({ title }) {
   const [chatMessages, setChatMessages] = useState([]);
@@ -111,31 +112,45 @@ export default function Chatting({ title }) {
     [message]
   );
 
+  const onKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      console.log(e.key);
+      sendMessage();
+    }
+  };
+
   return (
     <>
       <Draggable>
-        <StChatBox>
-          <StChatHeader>{title}</StChatHeader>
-          <StChatBody>
-            {chatMessages?.map((a, i) => {
-              return <div>{a.message}</div>;
-            })}
-          </StChatBody>
-          <StChatFooter>
-            <StInput
-              name='message'
-              value={message}
-              onChange={onChange}
-            ></StInput>
-            <StButton
-              onClick={sendMessage}
-              message={message}
-              disabled={message.length === 0}
-            >
-              전송
-            </StButton>
-          </StChatFooter>
-        </StChatBox>
+        <ModalContainer>
+          <StChatBox>
+            <StChatHeader>{title}</StChatHeader>
+            <StChatBody>
+              {chatMessages?.map((a, i) => {
+                return (
+                  <>
+                    <MessageBox>{a.message}</MessageBox>
+                  </>
+                );
+              })}
+            </StChatBody>
+            <StChatFooter>
+              <StInput
+                name='message'
+                value={message}
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+              ></StInput>
+              <StButton
+                onClick={sendMessage}
+                message={message}
+                disabled={message.length === 0}
+              >
+                전송
+              </StButton>
+            </StChatFooter>
+          </StChatBox>
+        </ModalContainer>
       </Draggable>
     </>
   );
@@ -213,4 +228,14 @@ const StChatBody = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const MessageBox = styled.div`
+  /* height: 20px; */
+  border-radius: 8px;
+  width: auto;
+  background-color: #e9e9e9;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 `;
