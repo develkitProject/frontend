@@ -11,7 +11,6 @@ import InvitationCodeModal from '../common/Modal/InvitationCodeModal';
 import MyProfileModal from '../common/Modal/MyProfileModal';
 import BlackButton from '../common/elements/BlackButton';
 
-
 function WorkSpaceDetail() {
   const params = useParams();
   const id = Number(params.id);
@@ -24,7 +23,9 @@ function WorkSpaceDetail() {
   const handleClose = () => {
     setInvitationCodeOpen(false);
   };
-
+  const handleClick = () => {
+    setInvitationCodeOpen(invitationCodeOpen === false ? true : false);
+  };
 
   // useEffect(() => {
   //   refetch();
@@ -36,17 +37,16 @@ function WorkSpaceDetail() {
       <Projects>
         <StIntroContainer>
           <div>
-            <StTitle fc='#333333' fs='1.5rem'>{title}</StTitle>
+            <StTitle fc='#333333' fs='1.5rem'>
+              {title}
+            </StTitle>
             <StContent>{content}</StContent>
           </div>
-          <StButton 
-            onClick={() => {
-            setInvitationCodeOpen(invitationCodeOpen === false ? true : false);
-            }}
-            >팀원 초대하기</StButton>
-          <BlackButton text='초대코드 확인'></BlackButton>
+          <BlackButton text='초대코드 확인' onClick={handleClick}></BlackButton>
         </StIntroContainer>
-        {invitationCodeOpen ? <InvitationCodeModal onClose={handleClose}/> : null}
+        {invitationCodeOpen ? (
+          <InvitationCodeModal onClose={handleClose} />
+        ) : null}
         <div>
           <StNoticeWrapper>
             <StTitle style={{ marginBottom: '15px' }} fc='#333333' fs='20px'>
