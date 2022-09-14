@@ -5,11 +5,16 @@ import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Board from './Board';
+import BlackButton from '../common/elements/BlackButton';
 
 function Docs() {
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
+
+  const handleClick = () => {
+    navigate(`/workspace/main/${id}/docs/write`);
+  };
 
   return (
     <StWrapper>
@@ -20,13 +25,7 @@ function Docs() {
             <StTitle>문서</StTitle>
             <StContent>프로젝트 관련 일일보고 및 계획 등</StContent>
           </div>
-          <StButton
-            onClick={() => {
-              navigate(`/workspace/main/${id}/docs/write`);
-            }}
-          >
-            글쓰기
-          </StButton>
+          <BlackButton text='글쓰기' onClick={handleClick}></BlackButton>
         </StIntroContainer>
         <div>
           <Board />
@@ -67,21 +66,6 @@ const StIntroContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: solid 1px #c6c6c6;
-`;
-
-const StButton = styled.button`
-  background-color: #000000;
-  margin-left: 3%;
-  width: 20%;
-  height: 35px;
-  border-radius: 8px;
-  border: 0px;
-  color: #fff;
-  text-align: center;
-  font-size: 0.9rem;
-  font-weight: 500;
-  /* letter-spacing: -1px; */
-  cursor: pointer;
 `;
 
 const StTitle = styled.p`

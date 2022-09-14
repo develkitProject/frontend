@@ -20,22 +20,23 @@ export default function Chatting({ title }) {
   const [message, setMessage] = useState('');
   const id = useParams().id;
   const { data, isLoading, refetch, error } = useGetChatMessageQuery(id);
+  console.log(chatMessages);
+
+  const sockJS = new SockJS('https://hosung.shop/stomp/chat');
+  const stompClient = Stomp.over(sockJS);
 
   // let stompClient = Stomp.over(function () {
   //   return new SockJS('http://hosung.shop/stomp/chat');
   // });
 
-  // stompClient.debug = () => {};
+  stompClient.debug = () => {};
 
   const headers = {
     token: getCookieToken(),
   };
-  const sockJS = new SockJS('https://hosung.shop/stomp/chat');
-  const stompClient = Stomp.over(sockJS);
 
   useEffect(() => {
     onConnected();
-    console.log('dd');
     return () => {
       disConnect();
     };
@@ -48,8 +49,8 @@ export default function Chatting({ title }) {
           `/sub/chat/room/${id}`,
           (data) => {
             const newMessage = JSON.parse(data.body);
+            setChatMessages((chatMessages) => [...chatMessages, newMessage]);
             console.log(newMessage);
-            setChatMessages([newMessage, ...chatMessages]);
           },
           headers
         );
@@ -116,11 +117,9 @@ export default function Chatting({ title }) {
         <StChatBox>
           <StChatHeader>{title}</StChatHeader>
           <StChatBody>
-            {chatMessages.message}
-            {/* {chatMessages.map((a, i) => {
-              <div>{a}</div>;
-            })} */}
-            {/* <div>{chatMessages}</div> */}
+            {chatMessages?.map((a, i) => {
+              return <div>{a.message}</div>;
+            })}
           </StChatBody>
           <StChatFooter>
             <StInput
@@ -174,7 +173,7 @@ const StChatFooter = styled.div`
   bottom: 0;
   pointer-events: visible;
   position: absolute;
-  z-index: -999;
+  /* z-index: -999; */
 `;
 
 const StInput = styled.textarea`
