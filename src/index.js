@@ -7,16 +7,18 @@ import { BrowserRouter } from 'react-router-dom';
 import GlobalStyle from './GlobalStyle';
 import store from './redux/config/store';
 import { Provider } from 'react-redux';
+import ScrollToTop from './components/ScrollTop';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <>
-  <Provider store={store}>
-    <GlobalStyle />
-    <BrowserRouter>
+    <Provider store={store}>
+      <GlobalStyle />
+      <BrowserRouter>
+        <ScrollToTop/>
         <App />
-    </BrowserRouter>
-  </Provider>
+      </BrowserRouter>
+    </Provider>
   </>
 );
 

@@ -1,15 +1,20 @@
 import styled from 'styled-components';
-import SideMenu from '../components/SideMenu'
+import SideMenu from '../components/SideMenu';
 import { useParams } from 'react-router-dom';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Board from '../components/Board';
+import Board from './Board';
+import BlackButton from '../common/elements/BlackButton';
 
 function Docs() {
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
+
+  const handleClick = () => {
+    navigate(`/workspace/main/${id}/docs/write`);
+  };
 
   return (
     <StWrapper>
@@ -20,10 +25,10 @@ function Docs() {
             <StTitle>문서</StTitle>
             <StContent>프로젝트 관련 일일보고 및 계획 등</StContent>
           </div>
-          <StButton onClick={()=>{navigate(`/workspace/main/${id}/docs/write`)}}>글쓰기</StButton>
+          <BlackButton text='글쓰기' onClick={handleClick}></BlackButton>
         </StIntroContainer>
         <div>
-            <Board/>
+          <Board />
         </div>
       </Projects>
     </StWrapper>
@@ -42,13 +47,14 @@ const StWrapper = styled.div`
 
 const Projects = styled.div`
   width: 65%;
-  min-height: 90vh;
-  margin-left: 2%;
+  min-height: 50vh;
+  margin-left: 50px;
   margin-top: 4%;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: left;
+  margin-bottom: 40px;
 `;
 
 const StIntroContainer = styled.div`
@@ -60,21 +66,6 @@ const StIntroContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: solid 1px #c6c6c6;
-`;
-
-const StButton = styled.button`
-  background-color: #000000;
-  margin-left: 3%;
-  width: 20%;
-  height: 35px;
-  border-radius: 8px;
-  border: 0px;
-  color: #fff;
-  text-align: center;
-  font-size: 0.9rem;
-  font-weight: 500;
-  /* letter-spacing: -1px; */
-  cursor: pointer;
 `;
 
 const StTitle = styled.p`
@@ -89,7 +80,7 @@ const StContent = styled.p`
   margin-top: 10px;
   color: #333333;
   text-align: left;
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: normal;
   letter-spacing: -1px;
 `;

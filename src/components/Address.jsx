@@ -24,7 +24,7 @@ function Address() {
         <>
           {member?.map((data, i) => {
             return (
-              <StAddressContainer>
+              <StAddressContainer key={data?.user.id}>
                 <StAddress>
                   <StMemberTitle>팀원</StMemberTitle>
                   <StProfileImg src={data?.user.profileImage} />
@@ -60,7 +60,7 @@ const StWrapper = styled.div`
 
 const StAddressContainer = styled.div`
   margin: 1%;
-  width: 45%;
+  width: 30px;
   min-width: 450px;
   height: 180px;
   background-color: #eef8f8;
@@ -75,7 +75,7 @@ const StAddress = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 50px;
+  margin-left: 30px;
 `;
 
 const StMemberTitle = styled.div`

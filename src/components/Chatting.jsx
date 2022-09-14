@@ -1,4 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useMemo,
+  useCallback,
+} from 'react';
 import styled from 'styled-components';
 import SockJS from 'sockjs-client';
 // import { Stomp } from '@stomp/stompjs';
@@ -7,28 +13,34 @@ import { useParams } from 'react-router-dom';
 import { useGetChatMessageQuery } from '../redux/modules/chat';
 import { getCookieToken } from '../Cookie';
 import Draggable from 'react-draggable';
+import ModalContainer from '../common/Modal/ModalContainer';
 
 export default function Chatting({ title }) {
   const [chatMessages, setChatMessages] = useState([]);
+  const [username, setUsername] = useState('');
   const [message, setMessage] = useState('');
   const id = useParams().id;
   const { data, isLoading, refetch, error } = useGetChatMessageQuery(id);
-  console.log(data?.data);
+  console.log(chatMessages);
 
-  const headers = {
-    token: getCookieToken(),
-  };
-  const sockJS = new SockJS('http://hosung.shop/stomp/chat');
+  const sockJS = new SockJS('https://hosung.shop/stomp/chat');
   const stompClient = Stomp.over(sockJS);
+
   // let stompClient = Stomp.over(function () {
   //   return new SockJS('http://hosung.shop/stomp/chat');
   // });
 
-  // stompClient.debug = () => {};
+  stompClient.debug = () => {};
+
+  const headers = {
+    token: getCookieToken(),
+  };
 
   useEffect(() => {
     onConnected();
-    return () => onConnected();
+    return () => {
+      disConnect();
+    };
   }, []);
 
   function onConnected() {
@@ -38,6 +50,7 @@ export default function Chatting({ title }) {
           `/sub/chat/room/${id}`,
           (data) => {
             const newMessage = JSON.parse(data.body);
+            setChatMessages((chatMessages) => [...chatMessages, newMessage]);
             console.log(newMessage);
           },
           headers
@@ -48,10 +61,25 @@ export default function Chatting({ title }) {
       console.log(error);
     }
   }
-
-  const disconnect = () => {
-    stompClient.deactivate();
+  const disConnect = () => {
+    if (stompClient != null) {
+      if (stompClient.connected) stompClient.disconnect();
+    }
   };
+
+  // const handelEnter = () => {
+  //   const newMessage = { username, chatMessages };
+  //   stompClient.send(
+  //     '/pub/chat/enter',
+  //     headers,
+  //     JSON.stringify({ roomId: id, newMessage })
+  //   );
+  //   setMessage('');
+  // };
+
+  // const addMessage = () => {
+  //   setChatMessages((prev) => [...prev, message]);
+  // };
 
   const publish_1 = (message) => {
     if (!stompClient.connected) {
@@ -77,28 +105,53 @@ export default function Chatting({ title }) {
     setMessage('');
   };
 
+  const onChange = useCallback(
+    (e) => {
+      setMessage(e.target.value);
+    },
+    [message]
+  );
+
+  const onKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      console.log(e.key);
+      sendMessage();
+    }
+  };
+
   return (
     <>
-      {/* <Draggable> */}
-      <StChatBox>
-        <StChatHeader>{title}</StChatHeader>
-        <StChatBody></StChatBody>
-        <StChatFooter>
-          <StInput
-            name='message'
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          ></StInput>
-          <StButton
-            onClick={sendMessage}
-            message={message}
-            disabled={message.length === 0}
-          >
-            전송
-          </StButton>
-        </StChatFooter>
-      </StChatBox>
-      {/* </Draggable> */}
+      <Draggable>
+        <ModalContainer>
+          <StChatBox>
+            <StChatHeader>{title}</StChatHeader>
+            <StChatBody>
+              {chatMessages?.map((a, i) => {
+                return (
+                  <>
+                    <MessageBox>{a.message}</MessageBox>
+                  </>
+                );
+              })}
+            </StChatBody>
+            <StChatFooter>
+              <StInput
+                name='message'
+                value={message}
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+              ></StInput>
+              <StButton
+                onClick={sendMessage}
+                message={message}
+                disabled={message.length === 0}
+              >
+                전송
+              </StButton>
+            </StChatFooter>
+          </StChatBox>
+        </ModalContainer>
+      </Draggable>
     </>
   );
 }
@@ -107,11 +160,11 @@ const StChatBox = styled.div`
   width: 350px;
   height: 500px;
   background-color: #f6daa2;
-  position: absolute;
+  position: relative;
   left: 50%;
   top: 50px;
   box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.1), 0 4px 20px 0 rgba(0, 0, 0, 0.2);
-  /* position: relative; */
+  position: absolute;
 `;
 
 const StChatHeader = styled.div`
@@ -134,6 +187,8 @@ const StChatFooter = styled.div`
   display: flex;
   bottom: 0;
   pointer-events: visible;
+  position: absolute;
+  /* z-index: -999; */
 `;
 
 const StInput = styled.textarea`
@@ -173,4 +228,14 @@ const StChatBody = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const MessageBox = styled.div`
+  /* height: 20px; */
+  border-radius: 8px;
+  width: auto;
+  background-color: #e9e9e9;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 `;

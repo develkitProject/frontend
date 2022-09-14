@@ -108,7 +108,7 @@ function SignUp() {
     event.preventDefault();
     if (validation()) {
       try {
-        const res = await axios.post('http://hosung.shop/api/members/signup', {
+        const res = await axios.post('https://hosung.shop/api/members/signup', {
           username,
           password,
           nickname,
@@ -131,7 +131,7 @@ function SignUp() {
       username,
     };
     try {
-      await axios.post('http://hosung.shop/api/members/email', checkDuplicate)
+      await axios.post('https://hosung.shop/api/members/email', checkDuplicate)
         .then(() => {
           alert('닉네임을 사용하실 수 있습니다.');
         });

@@ -1,22 +1,36 @@
 import styled from 'styled-components';
 import SideMenu from '../components/SideMenu';
-import Notice from '../notice/Notice';
-import Schedule from '../components/Schedule';
 import { useLocation, useParams } from 'react-router-dom';
 import Chatting from '../components/Chatting';
-import {
-  useGetMainWorkSpacesQuery,
-  useGetWorkspacesQuery,
-} from '../redux/modules/workspaces';
-import { useEffect } from 'react';
+import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
+import { useEffect, useState } from 'react';
+import { getCookieToken } from '../Cookie';
+import InvitationCodeModal from '../common/Modal/InvitationCodeModal';
+import MyProfileModal from '../common/Modal/MyProfileModal';
+import BlackButton from '../common/elements/BlackButton';
 
 function WorkSpaceDetail() {
+
   const params = useParams();
   const id = Number(params.id);
   const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
   const title = data?.data?.workspaces?.title;
   const content = data?.data.workspaces.content;
   const document = data?.data.documents;
+  const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
+
+  const handleClose = () => {
+    setInvitationCodeOpen(false);
+  };
+  const handleClick = () => {
+    setInvitationCodeOpen(invitationCodeOpen === false ? true : false);
+  };
+
+  // useEffect(() => {
+  //   refetch();
+  // }, [data, refetch]);
 
   return (
     <StWrapper>
@@ -29,8 +43,11 @@ function WorkSpaceDetail() {
             </StTitle>
             <StContent>{content}</StContent>
           </div>
-          <StButton>팀원 초대하기</StButton>
+          <BlackButton text='초대코드 확인' onClick={handleClick}></BlackButton>
         </StIntroContainer>
+        {invitationCodeOpen ? (
+          <InvitationCodeModal onClose={handleClose} />
+        ) : null}
         <div>
           <StNoticeWrapper>
             <StTitle style={{ marginBottom: '15px' }} fc='#333333' fs='20px'>
@@ -49,7 +66,11 @@ function WorkSpaceDetail() {
                   {data?.data.notices && data?.data.notices.title}
                 </StTitle>
                 <StNoticeContent>
-                <div dangerouslySetInnerHTML={{ __html: data?.data.notices && data?.data.notices.content} }/>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: data?.data.notices && data?.data.notices.content,
+                    }}
+                  />
                 </StNoticeContent>
                 <StInfoDiv>
                   <p>
@@ -80,12 +101,12 @@ function WorkSpaceDetail() {
               <StTbody>
                 {document?.map((data, i) => {
                   return (
-                    <StTable key={id}>
-                      <div>{document[i].user.nickname}</div>
-                      <div>{document[i].title}</div>
-                      <div>{document[i].user.nickname}</div>
-                      <div>{document[i].createdAt}</div>
-                      <div>{document[i].modifiedAt}</div>
+                    <StTable key={data.id}>
+                      <div>{data.user.nickname}</div>
+                      <div>{data.title}</div>
+                      <div>{data.user.nickname}</div>
+                      <div>{data.createdAt}</div>
+                      <div>{data.modifiedAt}</div>
                     </StTable>
                   );
                 })}
@@ -103,16 +124,18 @@ export default WorkSpaceDetail;
 
 const StWrapper = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   background-color: #f2f2f2;
   display: flex;
   flex-direction: row;
+  position: relative;
 `;
 
 const Projects = styled.div`
   width: 65%;
-  margin-left: 2%;
-  margin-top: 4%;
+  margin-left: 50px;
+  margin-top: 55px;
+  margin-bottom: 50px;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -128,20 +151,6 @@ const StIntroContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: solid 1px #c6c6c6;
-`;
-
-const StButton = styled.button`
-  background-color: #000000;
-  margin-left: 3%;
-  width: 20%;
-  height: 35px;
-  border-radius: 8px;
-  border: 0px;
-  color: #fff;
-  text-align: center;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
 `;
 
 const StTitle = styled.p`
@@ -192,8 +201,7 @@ const StNoticeBox = styled.div`
 
 const StNoticeContent = styled.div`
   width: 100%;
-  min-height: 5vh;
-  max-height: 20vh;
+  min-height: 50px;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -204,7 +212,7 @@ const StNoticeContent = styled.div`
 `;
 
 const StInfoDiv = styled.div`
-  margin-top: 1%;
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
   align-items: left;

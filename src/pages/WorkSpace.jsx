@@ -18,6 +18,11 @@ function WorkSpace() {
   const cookies = getCookieToken();
   const [createOpen, setCreateOpen] = useState(false);
   const [deleteButton, setDeletebutton] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     refetch();
@@ -26,7 +31,7 @@ function WorkSpace() {
   return (
     <>
       {!cookies ? (
-        <WorkSpaceErrorModal />
+        <WorkSpaceErrorModal onClose={handleClose} open={isOpen} />
       ) : (
         <StWrapper>
           <SpaceHeader />

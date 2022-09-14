@@ -1,48 +1,78 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 import { getCookieToken, removeCookieToken } from '../Cookie';
+import WorkSpaceErrorModal from '../common/Modal/error';
 import alarm from '../asset/img/alarm.svg';
 import logo from '../asset/img/logo.png';
 import Login from '../login';
 import SignupModal from '../signup/SignupModal';
-import useGetUser from '../common/hooks/useGetUser';
 import MyProfileModal from '../common/Modal/MyProfileModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoginModal, setIsSignUpModal } from '../redux/modules/global';
-import { selectIsLoginModal, selectIsSignUpModal } from '../redux/modules/global/selectors';
+import {
+  selectIsLoginModal,
+  selectIsSignUpModal,
+} from '../redux/modules/global/selectors';
 
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const API_URL = `https://hosung.shop/api/members/profile`;
   const cookies = getCookieToken();
-  const location = useLocation().pathname;
-  const modalRef = useRef(null);
 
   const [profileOpen, setProfileOpen] = useState(false);
   const [path, setPath] = useState(1);
+  const [user, setUser] = useState('');
 
-  const isLogin = useSelector(selectIsLoginModal)
-  const isSignUp = useSelector(selectIsSignUpModal)
+  const isLogin = useSelector(selectIsLoginModal);
+  const isSignUp = useSelector(selectIsSignUpModal);
 
-  const { user } = useGetUser();
+  // const { user } = useMemo(() => {
+  //   return useGetUser();
+  // }, []);
+
+  useEffect(() => {
+    console.log('d');
+    readUser();
+  }, []);
+
+  const readUser = useCallback(async () => {
+    if (cookies) {
+      const response = await axios.get(API_URL, {
+        headers: {
+          Authorization: getCookieToken(),
+        },
+      });
+      setUser(response.data.data);
+    }
+  });
 
   const openLoginModal = () => {
-    dispatch(setIsLoginModal(true))
-  }
+    dispatch(setIsLoginModal(true));
+  };
 
   const openSignUpModal = () => {
-    dispatch(setIsSignUpModal(true))
-  }
+    dispatch(setIsSignUpModal(true));
+  };
+
+  const handleClose = () => {
+    setProfileOpen(false);
+  };
 
   const moveMain = () => {
     navigate('/');
     setPath(1);
   };
   const moveProject = () => {
-    navigate('/workspace');
+    // if (cookies) {
     setPath(2);
+    navigate('/workspace');
+    // } else {
+    // alert('로그인해주세요');
+    // navigate('/');
+    // setPath(1);
   };
 
   return (
@@ -103,21 +133,14 @@ function Header() {
                 setProfileOpen(profileOpen === false ? true : false);
               }}
             />
-            {profileOpen === true ? <MyProfileModal /> : null}
+            {profileOpen ? <MyProfileModal onClose={handleClose} /> : null}
           </StDiv>
         )}
       </StHeaderDiv>
       {isLogin && (
-        <Login
-        onSignupButton={openSignUpModal}
-        open={isLogin}
-      ></Login>
+        <Login onSignupButton={openSignUpModal} open={isLogin}></Login>
       )}
-      {isSignUp && (
-        <SignupModal
-        open={isSignUp}
-      ></SignupModal>
-      )}
+      {isSignUp && <SignupModal open={isSignUp}></SignupModal>}
     </>
   );
 }

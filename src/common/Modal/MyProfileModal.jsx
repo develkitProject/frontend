@@ -1,19 +1,33 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import useGetUser from '../hooks/useGetUser';
 import { removeCookieToken } from '../../Cookie';
 import { useNavigate } from 'react-router-dom';
+import useOutSideClick from '../hooks/useOutSideClick';
+import Draggable from 'react-draggable';
 
 const MyProfileModal = ({ onClose }) => {
   const navigate = useNavigate();
   const { user } = useGetUser();
+  const modalRef = useRef(null);
   const logout = () => {
     removeCookieToken();
     window.location.href = '/';
   };
 
+  const handleClose = useCallback(() => {
+    onClose?.();
+  }, [onClose]);
+
+  const moveAndClose = useCallback(() => {
+    navigate('/mypage');
+    handleClose();
+  });
+
+  useOutSideClick(modalRef, handleClose);
+
   return (
-    <ModalWrap>
+    <ModalWrap ref={modalRef}>
       <StProfileWrap>
         <StDiv style={{ borderBottom: '1.2px solid #999999' }}>
           <StProfileImg src={user.profileImageUrl} />
@@ -21,7 +35,14 @@ const MyProfileModal = ({ onClose }) => {
         </StDiv>
 
         <StDiv>
-          <StButton onClick={() => navigate('/mypage')}>마이페이지</StButton>
+          <StButton
+            color='#00A99D'
+            border='none'
+            fontColor='#ffffff'
+            onClick={moveAndClose}
+          >
+            마이페이지
+          </StButton>
           <StButton
             bc='#999999'
             fc='#999999'
@@ -104,4 +125,9 @@ export const StButton = styled.button`
   font-size: 1rem;
   line-height: 23px;
   cursor: pointer;
+  &:hover {
+    background-color: ${(props) => props.color};
+    border: ${(props) => props.border};
+    color: ${(props) => props.fontColor};
+  }
 `;

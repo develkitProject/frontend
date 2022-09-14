@@ -1,60 +1,38 @@
 import styled from 'styled-components';
 import SideMenu from '../components/SideMenu';
 import { useParams } from 'react-router-dom';
-import { useDeleteWorkSpacesMutation } from '../redux/modules/workspaces';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Board from '../document/Board';
-import Address from '../components/Address';
+import CalendarApp from './Calendar';
 import BlackButton from '../common/elements/BlackButton';
 
-function AddressPage() {
+export default function ClaendarPage() {
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
 
-  const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
-
-  const deleteWorkSpace = (id) => {
-    if (window.confirm('정말 지우시겠습니까?')) {
-      deleteWorkSpaces(id);
-      navigate('/workspace');
-    } else {
-      return;
-    }
-  };
-
   return (
     <StWrapper>
       <SideMenu />
+
       <Projects>
+        {' '}
         <StIntroContainer>
           <div>
-            <StTitle>주소록</StTitle>
-            <StContent>주소록입니다</StContent>
+            <StTitle>일정관리</StTitle>
+            <StContent>프로젝트 팀원들의 일정을 관리해보세요.</StContent>
           </div>
           <BlackButton
-            text='워크스페이스 삭제'
+            text='일정만들기'
             onClick={() => {
-              deleteWorkSpace(id);
-            }}
-          ></BlackButton>
-          <BlackButton
-            text='회원초대하기'
-            onClick={() => {
-              alert('모달창 생성여부확인');
+              // navigate(`/workspace/main/${id}/notice/write`);
             }}
           ></BlackButton>
         </StIntroContainer>
-        <div>
-          <Address />
-        </div>
+        <CalendarApp></CalendarApp>
       </Projects>
     </StWrapper>
   );
 }
-
-export default AddressPage;
 
 const StWrapper = styled.div`
   width: 100%;
@@ -66,13 +44,15 @@ const StWrapper = styled.div`
 
 const Projects = styled.div`
   width: 65%;
-  min-height: 90vh;
-  margin-left: 2%;
+  min-height: 50vh;
+  margin-left: 50px;
   margin-top: 4%;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: left;
+  margin-bottom: 40px;
+  justify-content: center;
 `;
 
 const StIntroContainer = styled.div`
@@ -88,13 +68,14 @@ const StIntroContainer = styled.div`
 
 const StButton = styled.button`
   background-color: #000000;
-  width: 150px;
+  margin-left: 30px;
+  width: 20%;
   height: 35px;
   border-radius: 8px;
   border: 0px;
   color: #fff;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 16px;
   font-weight: 500;
   /* letter-spacing: -1px; */
   cursor: pointer;
@@ -103,7 +84,7 @@ const StButton = styled.button`
 const StTitle = styled.p`
   color: #333333;
   text-align: left;
-  font-size: 1.5rem;
+  font-size: 24px;
   font-weight: bold;
   letter-spacing: -1.5px;
 `;
@@ -112,7 +93,7 @@ const StContent = styled.p`
   margin-top: 10px;
   color: #333333;
   text-align: left;
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: normal;
   letter-spacing: -1px;
 `;

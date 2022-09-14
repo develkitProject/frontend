@@ -20,11 +20,13 @@ import { setIsLoginModal, setIsSignUpModal } from '../redux/modules/global';
 
 const Login = () => {
   const dispatch = useDispatch();
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REST_API_KEY}&redirect_uri=${process.env.REDIRECT_URI}&response_type=code`;
+  // const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REST_API_KEY}&redirect_uri=https://d-velkit.com/kakao&response_type=code`;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REST_API_KEY}&redirect_uri=${process.env.REDIRECT_URI}&response_type=code`;
+
   const { onClickLogin, onChangeUserInputs } = useInputLogin();
 
   const modalRef = useRef(null);
-  
+
   const handleClose = () => {
     dispatch(setIsLoginModal(false));
   };
@@ -32,7 +34,7 @@ const Login = () => {
   const goSignUp = useCallback(() => {
     dispatch(setIsLoginModal(false));
     dispatch(setIsSignUpModal(true));
-  }, [dispatch])
+  }, [dispatch]);
 
   const handleLogin = () => {
     window.location.href = KAKAO_AUTH_URL;

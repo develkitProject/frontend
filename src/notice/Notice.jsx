@@ -18,41 +18,48 @@ function Notice() {
 
   return (
     <>
-    {!cookies? (<WorkSpaceErrorModal/>
-    ):(
-      <StWrapper>
-
-      {error ? (
-
-              <>Oh no, there was an error</>
-            ) : isLoading ? (
-              <>Loading...</>
-            ) : data ? (
-              <>
-
-            {notice?.map((data, i) => {
-
-              return(
-                <StNoticeContainer>
-                <StTitle fc="#00a99d">공지사항</StTitle>
-                  <StNoticeBox key={notice.id}>
-                      <StTitle fc="#333333">{data.title}</StTitle>
+      {!cookies ? (
+        <WorkSpaceErrorModal />
+      ) : (
+        <StWrapper>
+          {error ? (
+            <>Oh no, there was an error</>
+          ) : isLoading ? (
+            <>Loading...</>
+          ) : data ? (
+            <>
+              {notice?.map((data, i) => {
+                return (
+                  <StNoticeContainer key={data.id}>
+                    <StTitle fc='#00a99d'>공지사항</StTitle>
+                    <StNoticeBox>
+                      <StTitle fc='#333333'>{data.title}</StTitle>
                       <StContent>
-                        <div dangerouslySetInnerHTML={{ __html: data.content} }/></StContent>   
+                        <div
+                          dangerouslySetInnerHTML={{ __html: data.content }}
+                        />
+                        {/* {data.content} */}
+                        {/* 
+                        {process.browser?(
+                          <div dangerouslySetInnerHTML={{ 
+                          __html: DOMPurify.sanitize(data.content)} }/>
+                          ):(<div/>)} */}
+                      </StContent>
                       <StInfoDiv>
                         <p>{data.nickname} ｜</p>
                         <p>{data.createdAt.slice(0, -13)} ｜</p>
                         <p>읽음 7 </p>
                       </StInfoDiv>
-                  </StNoticeBox>
+                    </StNoticeBox>
                   </StNoticeContainer>
-              )
-              })}</>):null}
-              <div style={{marginTop: "5%"}}></div>
-
-      </StWrapper>
-    )}
-        </>
+                );
+              })}
+            </>
+          ) : null}
+          <div style={{ marginTop: '5%' }}></div>
+        </StWrapper>
+      )}
+    </>
   );
 }
 
@@ -70,11 +77,11 @@ const StWrapper = styled.div`
 `;
 
 const StTitle = styled.p`
- color: ${(props) => props.fc};
- text-align: left;
- font-size: 20px;
- font-weight: bold;
- letter-spacing: -1.2px;
+  color: ${(props) => props.fc};
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: -1.2px;
 `;
 
 const StNoticeContainer = styled.div`
@@ -104,7 +111,7 @@ const StContent = styled.div`
   font-size: 20px;
   line-height: 25px;
   font-weight: 500;
-  white-space:pre-wrap;
+  white-space: pre-wrap;
 `;
 
 const StInfoDiv = styled.div`

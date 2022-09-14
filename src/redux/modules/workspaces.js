@@ -44,19 +44,18 @@ export const workspaceApi = coreApi.injectEndpoints({
         return {
           url: `/api/workspaces/${id}/main`,
           method: 'GET',
-          // body: id,
           headers,
         };
       },
       invalidatesTags: ['Workspaces'],
     }),
 
+    //공지사항
     getNotice: builder.query({
       query: (id) => {
         return {
           url: `/api/workspaces/${id}/notice`,
           method: 'GET',
-          // body: notice,
           headers,
         };
       },
@@ -64,7 +63,7 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
 
     addNotice: builder.mutation({
-      query:(notice) =>{
+      query: (notice) => {
         return {
           url: `/api/workspaces/${notice.id}/notice`,
           method: 'POST',
@@ -75,6 +74,7 @@ export const workspaceApi = coreApi.injectEndpoints({
       invalidatesTags: ['Notice'],
     }),
 
+    //프로젝트 가입 회원 조회
     getMemberList: builder.query({
       query: (id) => {
         return {
@@ -86,7 +86,7 @@ export const workspaceApi = coreApi.injectEndpoints({
       providesTags: ['Notice'],
     }),
 
-
+    //문서
     getDoc: builder.query({
       query: (id) => {
         return {
@@ -98,8 +98,41 @@ export const workspaceApi = coreApi.injectEndpoints({
       providesTags: ['Docs'],
     }),
 
+    getDocDetail: builder.query({
+      query: ({ workspaces, docid }) => {
+        return {
+          url: `/api/workspaces/${workspaces}/docs/${docid}`,
+          method: 'GET',
+          headers,
+        };
+      },
+      providesTags: ['DocsDetail'],
+    }),
 
+    addDoc: builder.mutation({
+      query: (document) => {
+        return {
+          url: `/api/workspaces/${document.id}/docs`,
+          method: 'POST',
+          body: document,
+          headers,
+        };
+      },
 
+      invalidatesTags: ['Docs'],
+    }),
+    //에디터 이미지 업로드
+    addImage: builder.mutation({
+      query:(image) =>{
+        return {
+          url: `/api/images`,
+          method: 'POST',
+          body: image,
+          headers,
+        };
+      },
+      invalidatesTags: ['Image'],
+    }),
   }),
 });
 
@@ -114,6 +147,7 @@ export const {
   useGetNoticeQuery,
   useGetMemberListQuery,
   useGetDocQuery,
+  useGetDocDetailQuery,
+  useAddDocMutation,
+  useAddImageMutation,
 } = workspaceApi;
-
-

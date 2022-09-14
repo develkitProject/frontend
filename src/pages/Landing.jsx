@@ -1,12 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import icon from '../asset/img/icon1.png';
 import scroll from '../asset/img/scroll.svg';
 import 'animate.css';
 import WorkSpaceErrorModal from '../common/Modal/error';
 import { getCookieToken } from '../Cookie';
 import velkit from '../asset/img/velkit.png';
+import twinklestar from '../asset/img/twinklestar.svg';
 
 function Landing() {
   const navigate = useNavigate();
@@ -69,6 +70,7 @@ function Landing() {
                 <StLink>디벨킷 시작하기</StLink>
               </StStart>
             </StIntro>
+            <Twinklestar></Twinklestar>
             <StVelkit></StVelkit>
           </StWrap>
 
@@ -292,32 +294,42 @@ const StCardContent = styled.div`
   line-height: 1.5;
 `;
 
-const StVelkit = styled.div`
-  width: 30%;
-  height: 50%;
-  min-width: 400px;
-  min-height: 300px;
-  background-image: url(${velkit});
-  background-size: 100% 100%;
-  position: absolute;
-  left: 60%;
-  top: 20%;
-  /* animation-iteration-count: infinite;
-  animation-name: bounce;
-  animation-timing-function: linear; */
-
-  @keyframes bounce {
+const move = keyframes`
     0% {
       transform: translateY(0);
     }
     50% {
-      transform: translateY(-15px);
+      transform: translateY(-25px);
     }
     100% {
       transform: translateY(0);
     }
-  }
-  /* @media screen and (max-width: 800px) {
-    width: ;
-  } */
+  `;
+
+const StVelkit = styled.div`
+  width: 15%;
+  height: 35%;
+  min-width: 350px;
+  min-height: 300px;
+  background-image: url(${velkit});
+  background-size: 100% 100%;
+  position: absolute;
+  left: 65%;
+  top: 20%;
+  animation: ${move} 2s 0s infinite;
+  /* animation-iteration-count: infinite;
+  animation-name: bounce;
+  animation-timing-function: linear; */
+`;
+
+const Twinklestar = styled.div`
+  width: 25%;
+  height: 50%;
+  min-width: 400px;
+  min-height: 300px;
+  background-image: url(${twinklestar});
+  background-size: cover;
+  position: absolute;
+  left: 60%;
+  top: 18%;
 `;
