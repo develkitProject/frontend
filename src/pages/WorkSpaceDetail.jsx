@@ -12,6 +12,7 @@ import MyProfileModal from '../common/Modal/MyProfileModal';
 import BlackButton from '../common/elements/BlackButton';
 
 function WorkSpaceDetail() {
+
   const params = useParams();
   const id = Number(params.id);
   const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
@@ -123,7 +124,7 @@ export default WorkSpaceDetail;
 
 const StWrapper = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   background-color: #f2f2f2;
   display: flex;
   flex-direction: row;
@@ -200,8 +201,7 @@ const StNoticeBox = styled.div`
 
 const StNoticeContent = styled.div`
   width: 100%;
-  min-height: 5vh;
-  max-height: 20vh;
+  min-height: 50px;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -212,7 +212,7 @@ const StNoticeContent = styled.div`
 `;
 
 const StInfoDiv = styled.div`
-  margin-top: 1%;
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
   align-items: left;

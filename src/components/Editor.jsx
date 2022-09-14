@@ -5,37 +5,34 @@ import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
 import { useAddImageMutation } from "../redux/modules/workspaces";
 import axios from 'axios';
+import { getCookieToken } from "../Cookie";
 
 const Editor = ({setCon}) =>{
   const QuillRef = useRef();
   const [content, setContent] = useState("");
   setCon(content)
-  const [imgurl, setImgurl] =useState("")
-  const [addImage,{data, isSuccess, isFail, refetch}] = useAddImageMutation();
-  console.log(data?.data?.images[0])
+  // const [imgurl, setImgurl] =useState("")
+  // const [addImage,{data, isSuccess, isFail, refetch}] = useAddImageMutation();
+
+  const Headers = {
+    Authorization: getCookieToken(),
+  };
 
   const imageHandler = () => {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
     input.click(); 
-    console.log(imgurl)
 
     input.onchange = async() => {
       const file = input.files[0];
       const formData = new FormData();
-      if (file !== null) {
-      formData.append('image', file); 
+      if (file) {
+        formData.append('image', file);
+      try {
+        const result = await axios.post('https://hosung.shop/api/images', formData, {headers: Headers});
 
-      const result = await axios.post('')
-
-
-
-
-        addImage(formData)
-        setImgurl(data?.data?.images[0])
-        const IMG_URL = data?.data?.images[0];
-  
+        const IMG_URL = result?.data?.data?.images[0];
         const range = QuillRef.current?.getEditor().getSelection()?.index;
         if (range !== null && range !== undefined) {
           let quill = QuillRef.current?.getEditor();
@@ -45,10 +42,15 @@ const Editor = ({setCon}) =>{
             range,
             `<img src=${IMG_URL} alt="이미지 태그가 삽입됩니다." />`
             );
-          }}      
+          }
+          return { ...result, success: true };
+      } catch(error) {
+        const err = (error)
+        return{...err.response, success:false};        
+      }
+    }}      
     };
-  };
-
+  
     const toolbarOptions =[
       [{ 'header': [1, 2, false] }],
       ['bold','underline','strike', 'blockquote'],
