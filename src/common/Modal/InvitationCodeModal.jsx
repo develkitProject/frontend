@@ -57,7 +57,7 @@ const ModalWrap = styled.div`
   margin-top: 70px;
   margin-left: 20%;
   width: 460px;
-  height: 220px;
+  height: 250px;
   border-radius: 16px;
   background-color: white;
   display: flex;
@@ -66,13 +66,14 @@ const ModalWrap = styled.div`
   align-items: center;
   border: 1px solid #999999;
   z-index: 9999;
+  font-family: 'Noto Sans KR';
   box-shadow: 3px 3px 3px rgba(85, 85, 85, 0.1);
 `;
 
 const StTitle = styled.div`
-  font-weight: 700;
-  font-size: 18px;
-  color: #626262;
+  font-weight: 500;
+  font-size: 16px;
+  color: #212121;
   letter-spacing: -0.05em;
 `;
 
@@ -85,9 +86,9 @@ const StCodeDiv = styled.div`
 
 const StCode = styled.div`
   padding: 13px;
-  font-weight: 700;
-  font-size: 20px;
-  color: #333333;
+  font-weight: 500;
+  font-size: 16px;
+  color: #00A99D;
   letter-spacing: -0.05em;
 `;
 

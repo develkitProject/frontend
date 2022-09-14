@@ -7,6 +7,7 @@ import { useGetDocDetailQuery } from '../redux/modules/workspaces';
 import Board from './Board';
 
 function DocDetail() {
+
   const navigate = useNavigate();
   const params = useParams();
   const workspaces = Number(params.id);
