@@ -34,6 +34,7 @@ function Header() {
   // }, []);
 
   useEffect(() => {
+    console.log('d');
     readUser();
   }, []);
 
