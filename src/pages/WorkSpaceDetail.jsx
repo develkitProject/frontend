@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { getCookieToken } from '../Cookie';
 import InvitationCodeModal from '../common/Modal/InvitationCodeModal';
 import MyProfileModal from '../common/Modal/MyProfileModal';
+import BlackButton from '../common/elements/BlackButton';
 
 
 function WorkSpaceDetail() {
@@ -24,9 +25,10 @@ function WorkSpaceDetail() {
     setInvitationCodeOpen(false);
   };
 
-  useEffect(() => {
-    refetch();
-  }, [data, refetch]);
+
+  // useEffect(() => {
+  //   refetch();
+  // }, [data, refetch]);
 
   return (
     <StWrapper>
@@ -42,6 +44,7 @@ function WorkSpaceDetail() {
             setInvitationCodeOpen(invitationCodeOpen === false ? true : false);
             }}
             >팀원 초대하기</StButton>
+          <BlackButton text='초대코드 확인'></BlackButton>
         </StIntroContainer>
         {invitationCodeOpen ? <InvitationCodeModal onClose={handleClose}/> : null}
         <div>
@@ -147,20 +150,6 @@ const StIntroContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: solid 1px #c6c6c6;
-`;
-
-const StButton = styled.button`
-  background-color: #000000;
-  margin-left: 3%;
-  width: 20%;
-  height: 35px;
-  border-radius: 8px;
-  border: 0px;
-  color: #fff;
-  text-align: center;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
 `;
 
 const StTitle = styled.p`

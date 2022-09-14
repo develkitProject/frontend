@@ -1,15 +1,20 @@
 import styled from 'styled-components';
-import SideMenu from '../components/SideMenu'
+import SideMenu from '../components/SideMenu';
 import Notice from './Notice';
 import { useParams } from 'react-router-dom';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BlackButton from '../common/elements/BlackButton';
 
 function NoticePage() {
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
+
+  const handleClick = () => {
+    navigate(`/workspace/main/${id}/notice/write`);
+  };
 
   return (
     <StWrapper>
@@ -20,7 +25,7 @@ function NoticePage() {
             <StTitle>공지사항</StTitle>
             <StContent>프로젝트 관련 주요 공지사항입니다</StContent>
           </div>
-          <StButton onClick={()=>{navigate(`/workspace/main/${id}/notice/write`)}}>글쓰기</StButton>
+          <BlackButton text='글쓰기' onClick={handleClick}></BlackButton>
         </StIntroContainer>
         <div>
           <Notice />
@@ -61,21 +66,6 @@ const StIntroContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: solid 1px #c6c6c6;
-`;
-
-const StButton = styled.button`
-  background-color: #000000;
-  margin-left: 30px;
-  width: 20%;
-  height: 35px;
-  border-radius: 8px;
-  border: 0px;
-  color: #fff;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 500;
-  /* letter-spacing: -1px; */
-  cursor: pointer;
 `;
 
 const StTitle = styled.p`

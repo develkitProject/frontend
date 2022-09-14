@@ -8,25 +8,32 @@ import { useDispatch } from 'react-redux';
 import { setIsLoginModal, setIsSignUpModal } from '../../redux/modules/global';
 
 const WorkSpaceErrorModal = ({ onClose }) => {
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=https://d-velkit.com/kakao&response_type=code`;
   const modalRef = useRef(null);
 
   const handleClose = useCallback(() => {
     onClose?.();
   }, [onClose]);
 
-  const handleOpenSignUp = useCallback((event) => {
-    onClose()
-    dispatch(setIsSignUpModal(true))
-  }, [dispatch, onClose])
+  const handleOpenSignUp = useCallback(
+    (event) => {
+      onClose?.();
+      dispatch(setIsSignUpModal(true));
+    },
+    [dispatch, onClose]
+  );
 
   const handleOpenLogin = useCallback(() => {
-    onClose();
-    dispatch(setIsLoginModal(true))
-  }, [dispatch, onClose])
+    onClose?.();
+    dispatch(setIsLoginModal(true));
+  }, [dispatch, onClose]);
 
   useOutSideClick(modalRef, handleClose);
+
+  const handleLogin = () => {
+    window.location.href = KAKAO_AUTH_URL;
+  };
 
   return (
     <ModalContainer>
@@ -39,10 +46,7 @@ const WorkSpaceErrorModal = ({ onClose }) => {
           <StAlert fs='16px' fc='#626262'>
             성장하는 사람들을 위한 프로젝트 협업 서비스 디벨킷
           </StAlert>
-          <StButton 
-            type="button"
-            onClick={handleOpenLogin} 
-            bc='#00a99d'>
+          <StButton type='button' onClick={handleOpenLogin} bc='#00a99d'>
             로그인
           </StButton>
           <StMent>
@@ -69,7 +73,11 @@ const WorkSpaceErrorModal = ({ onClose }) => {
             </StAlert>
             <StLine></StLine>
           </StMent>
-          <StButton bc='#ffe502' style={{ color: 'black' }}>
+          <StButton
+            onClick={handleLogin}
+            bc='#ffe502'
+            style={{ color: 'black' }}
+          >
             카카오계정으로 로그인
           </StButton>
         </ModalWrap>
