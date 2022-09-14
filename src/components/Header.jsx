@@ -3,11 +3,11 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import { getCookieToken, removeCookieToken } from '../Cookie';
+import WorkSpaceErrorModal from '../common/Modal/error';
 import alarm from '../asset/img/alarm.svg';
 import logo from '../asset/img/logo.png';
 import Login from '../login';
 import SignupModal from '../signup/SignupModal';
-import useGetUser from '../common/hooks/useGetUser';
 import MyProfileModal from '../common/Modal/MyProfileModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoginModal, setIsSignUpModal } from '../redux/modules/global';
@@ -19,14 +19,12 @@ import {
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const API_URL = 'https://hosung.shop/api/members/profile';
+  const API_URL = `https://hosung.shop/api/members/profile`;
   const cookies = getCookieToken();
 
   const [profileOpen, setProfileOpen] = useState(false);
   const [path, setPath] = useState(1);
   const [user, setUser] = useState('');
-  // const { user } = useGetUser();
-  // console.log(user);
 
   const isLogin = useSelector(selectIsLoginModal);
   const isSignUp = useSelector(selectIsSignUpModal);
@@ -37,16 +35,17 @@ function Header() {
 
   useEffect(() => {
     readUser();
-    console.log(user);
   }, []);
 
   const readUser = useCallback(async () => {
-    const response = await axios.get(API_URL, {
-      headers: {
-        Authorization: getCookieToken(),
-      },
-    });
-    setUser(response.data.data);
+    if (cookies) {
+      const response = await axios.get(API_URL, {
+        headers: {
+          Authorization: getCookieToken(),
+        },
+      });
+      setUser(response.data.data);
+    }
   });
 
   const openLoginModal = () => {
@@ -66,8 +65,13 @@ function Header() {
     setPath(1);
   };
   const moveProject = () => {
-    navigate('/workspace');
+    // if (cookies) {
     setPath(2);
+    navigate('/workspace');
+    // } else {
+    // alert('로그인해주세요');
+    // navigate('/');
+    // setPath(1);
   };
 
   return (

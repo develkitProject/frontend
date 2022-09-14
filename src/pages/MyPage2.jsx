@@ -1,11 +1,13 @@
 import React, { useCallback, useState, useRef } from 'react';
 
 import axios from 'axios';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import useGetUser from '../common/hooks/useGetUser';
+import velkit from '../asset/img/velkit.png';
 
 import { getCookieToken } from '../Cookie';
+import BasicInput from '../components/BasicInput';
 
 function MyPage2() {
   const imgRef = useRef('');
@@ -79,7 +81,29 @@ function MyPage2() {
         <StChange>회원탈퇴</StChange>
       </StProfile>
 
-      <StDetail></StDetail>
+      <StDetail>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginLeft: '50px',
+          }}
+        >
+          <StSpan style={{ marginTop: '80px' }}>프로필 상세보기</StSpan>
+          <BasicInput
+            label='닉네임'
+            marginTop='80px'
+            placeholder={user?.nickname}
+          ></BasicInput>
+          <BasicInput
+            label='이메일'
+            marginTop='40px'
+            placeholder={user?.username}
+          ></BasicInput>
+          <StButton>변경사항 저장</StButton>
+          <StVelkit></StVelkit>
+        </div>
+      </StDetail>
 
       {imageUrl ? <StImgTag src={imageUrl} /> : null}
 
@@ -114,7 +138,7 @@ const StWrapper = styled.div`
 `;
 
 const StProfile = styled.div`
-  width: 40%;
+  width: 25%;
   min-width: 400px;
   max-width: 600px;
   height: 600px;
@@ -170,9 +194,51 @@ const StImgTag = styled.img`
 
 const StDetail = styled.div`
   width: 60%;
-  min-width: 600px;
+  min-width: 700px;
   height: 600px;
   background-color: #ffffff;
   border: none;
   box-shadow: 12px 16px 30px rgba(0, 0, 0, 0.1);
+  margin-left: 20px;
+`;
+
+const StButton = styled.button`
+  background-color: #000000;
+  margin-top: 50px;
+  /* width: ${(props) => props.width}; */
+  width: 200px;
+  height: 50px;
+  border-radius: 8px;
+  border: 0px;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  /* letter-spacing: -1px; */
+  cursor: pointer;
+`;
+
+const move = keyframes`
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-25px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  `;
+
+const StVelkit = styled.div`
+  width: 15%;
+  height: 25%;
+  min-width: 350px;
+  min-height: 300px;
+  background-image: url(${velkit});
+  background-size: 100% 100%;
+  position: absolute;
+  left: 75%;
+  top: 35%;
+  animation: ${move} 2s 0s infinite;
 `;

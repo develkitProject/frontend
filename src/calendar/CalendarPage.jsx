@@ -3,6 +3,7 @@ import SideMenu from '../components/SideMenu';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import CalendarApp from './Calendar';
+import BlackButton from '../common/elements/BlackButton';
 
 export default function ClaendarPage() {
   const navigate = useNavigate();
@@ -20,13 +21,12 @@ export default function ClaendarPage() {
             <StTitle>일정관리</StTitle>
             <StContent>프로젝트 팀원들의 일정을 관리해보세요.</StContent>
           </div>
-          <StButton
+          <BlackButton
+            text='일정만들기'
             onClick={() => {
               // navigate(`/workspace/main/${id}/notice/write`);
             }}
-          >
-            일정만들기
-          </StButton>
+          ></BlackButton>
         </StIntroContainer>
         <CalendarApp></CalendarApp>
       </Projects>
