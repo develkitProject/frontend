@@ -17,35 +17,37 @@ const InvitationCodeModal = ({ onClose }) => {
   useOutSideClick(modalRef, handleClose);
 
   const { data, error, isLoading } = useGetMainWorkSpacesQuery(id);
-  const invite_code = data?.data?.workspaces?.invite_code
+  const invite_code = data?.data?.workspaces?.invite_code;
 
-  const copyCode = async()=>{
-    try{
-        await navigator.clipboard.writeText(invite_code).then(() => {
-        alert("코드를 복사했습니다.");
+  const copyCode = async () => {
+    try {
+      await navigator.clipboard.writeText(invite_code).then(() => {
+        alert('코드를 복사했습니다.');
         handleClose();
-      })} catch(e){
-        alert("코드복사에러: 브라우저(IE지원불가)를 확인해주세요");
-      }}
+      });
+    } catch (e) {
+      alert('코드복사에러: 브라우저(IE지원불가)를 확인해주세요');
+    }
+  };
 
   return (
     <ModalWrap ref={modalRef}>
-        {error ? (
-          <>에러가 발생했습니다.</>
-        ) : isLoading ? (
-          <>초대코드 정보를 불러오는 중입니다.</>
-        ) : data ? (
-          <>
-          (
-            <StTitle>'{data?.data?.workspaces?.title}' 초대코드</StTitle> 
-              <StCodeDiv><StCode>{invite_code}</StCode></StCodeDiv>
-            <StButton onClick={copyCode}>초대코드 복사하기</StButton>
-            <StMent>*코드를 복사하여 초대하고 싶은 팀원에게 전달해주세요</StMent>
-        ) </>) : null}
-     </ModalWrap>
+      {error ? (
+        <>에러가 발생했습니다.</>
+      ) : isLoading ? (
+        <>초대코드 정보를 불러오는 중입니다.</>
+      ) : data ? (
+        <>
+          <StTitle>'{data?.data?.workspaces?.title}' 초대코드</StTitle>
+          <StCodeDiv>
+            <StCode>{invite_code}</StCode>
+          </StCodeDiv>
+          <StButton onClick={copyCode}>초대코드 복사하기</StButton>
+          <StMent>*코드를 복사하여 초대하고 싶은 팀원에게 전달해주세요</StMent>
+        </>
+      ) : null}
+    </ModalWrap>
   );
-
-
 };
 
 export default InvitationCodeModal;
@@ -78,7 +80,7 @@ const StCodeDiv = styled.div`
   margin-top: 10px;
   font-weight: 700;
   font-size: 20px;
-  background-color: #EEF8F8;
+  background-color: #eef8f8;
 `;
 
 const StCode = styled.div`
@@ -93,7 +95,7 @@ export const StButton = styled.button`
   padding: 10px 100px 10px 100px;
   border-radius: 8px;
   border: none;
-  background-color: #00A99D;
+  background-color: #00a99d;
   margin-top: 20px;
   color: white;
   font-weight: 500;
@@ -108,4 +110,3 @@ const StMent = styled.div`
   color: #999999;
   letter-spacing: -0.05em;
 `;
-
