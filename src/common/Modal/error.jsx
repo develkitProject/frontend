@@ -6,6 +6,7 @@ import useOutSideClick from '../hooks/useOutSideClick';
 import error_outline from '../../asset/img/error_outline.svg';
 import { useDispatch } from 'react-redux';
 import { setIsLoginModal, setIsSignUpModal } from '../../redux/modules/global';
+import KakaoIcon from '../../asset/img/kakaoIcon.png';
 
 const WorkSpaceErrorModal = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -78,6 +79,7 @@ const WorkSpaceErrorModal = ({ onClose }) => {
             bc='#ffe502'
             style={{ color: 'black' }}
           >
+            <StIcon src={KakaoIcon} />
             카카오계정으로 로그인
           </StButton>
         </ModalWrap>
@@ -153,4 +155,9 @@ const StLine = styled.hr`
 
 const StErrorImg = styled.img`
   margin-right: 5px;
+`;
+
+const StIcon = styled.img`
+  margin-right: 5px;
+  width: 6.3%;
 `;

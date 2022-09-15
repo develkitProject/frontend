@@ -18,8 +18,8 @@ const XButton = styled.button`
   border: none;
   font-weight: 600;
   font-size: 20px;
-  top: 20px;
-  right: 20px;
+  top: 15px;
+  right: 15px;
   color: #323232;
   cursor: pointer;
   font-family: 'Montserrat';

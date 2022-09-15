@@ -15,7 +15,7 @@ const KakaoLogin = () => {
     <div
       style={{
         width: '100%',
-        marginTop: '30px',
+        marginTop: '10px',
         borderRadius: '35px',
         height: '100%',
       }}
@@ -40,7 +40,7 @@ export default KakaoLogin;
 
 const StKaKaoLoginButton = styled.button`
   width: 100%;
-  height: 68%;
+  height: 50px;
   border-radius: 24px;
   background-color: #ffe502;
   color: #3b1e1e;
@@ -52,5 +52,5 @@ const StKaKaoLoginButton = styled.button`
 
 const StIcon = styled.img`
   margin-right: 5px;
-  width: 6.5%;
+  width: 6.3%;
 `;

@@ -106,7 +106,7 @@ const StNickName = styled.div`
   font-size: 1.5rem;
   font-weight: 500;
   line-height: 2rem;
-  margin-bottom: 1%;
+  margin-bottom: 5px;
 `;
 
 const StUserName = styled.div`

@@ -14,6 +14,7 @@ import {
   StInput,
   ButtonDiv,
   StButton,
+  KakaoDiv
 } from './style';
 import { useDispatch } from 'react-redux';
 import { setIsLoginModal, setIsSignUpModal } from '../redux/modules/global';
@@ -52,24 +53,24 @@ const Login = () => {
                 width: '100%',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginBottom: '30px',
+                marginBottom: '10px',
               }}
             >
               <StMent
-                fc='#00A99D'
+                fontColor='#00A99D'
                 style={{
                   fontSize: '35px',
-                  marginBottom: '20px',
+                  // marginBottom: '8px',
                   fontWeight: '600',
                 }}
               >
                 로그인
               </StMent>
               <StMent
-                fc='#999999'
-                style={{ fontSize: '15px', fontWeight: '600', width: '110%' }}
+                fontColor='#999999'
+                style={{ fontSize: '15px', fontWeight: '500', width: '100%', textAlign:"center" }}
               >
-                성장하는 사람들을 위한 프로젝트 협업 서비스 디벨킷.
+                성장하는 사람들을 위한 프로젝트 협업 서비스 디벨킷
               </StMent>
             </div>
             <StSpan>이메일</StSpan>
@@ -99,10 +100,15 @@ const Login = () => {
                 이메일로 회원가입
               </StButton>
             </ButtonDiv>
+            <KakaoDiv style={{textAlign:"center"}}>
+              ----------------------------------  또는  ----------------------------------
             <KakaoLogin
               onClick={handleLogin}
               style={{ width: '100%' }}
             ></KakaoLogin>
+            <StMent fontColor="#999999" style={{fontSize: "12px"}}>회원가입 시 디벨킷의 서비스 이용 약관과
+             개인정보 보호정책에 동의하게 됩니다.</StMent>
+            </KakaoDiv>
             <CloseButton handleClose={handleClose}></CloseButton>
           </LoginWrap>
         </ModalWrap>

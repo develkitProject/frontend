@@ -4,8 +4,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useAddNoticeMutation } from '../redux/modules/workspaces';
 import { useNavigate, useParams } from 'react-router-dom';
-import Editor from '../components/Editor';
-
+import NoticeEditor from './NoticeEditor'
 
 const NoticeWrite = ()=>{
  const navigate = useNavigate();
@@ -40,7 +39,7 @@ const NoticeWrite = ()=>{
 return(
       <StEditorContainer>
             <StInputTitle onChange={onTitleChange} name='title' placeholder='제목' value={title}/>
-            <Editor setCon={setContent}/>
+            <NoticeEditor setCon={setContent}/>
             <EditorBlock>
               <StButton onClick={handleSubmit}>게시하기</StButton>
             </EditorBlock>

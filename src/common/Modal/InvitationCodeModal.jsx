@@ -1,25 +1,24 @@
 import React, { useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import { useGetMainWorkSpacesQuery } from '../../redux/modules/workspaces';
+import { useGetInviteCodeQuery} from '../../redux/modules/workspaces';
 import useOutSideClick from '../hooks/useOutSideClick';
 
 const InvitationCodeModal = ({ onClose }) => {
   const params = useParams();
   const id = Number(params.id);
-
   const modalRef = useRef(null);
-
   const handleClose = useCallback(() => {
     onClose?.();
   }, [onClose]);
 
   useOutSideClick(modalRef, handleClose);
-
-  const { data, error, isLoading } = useGetMainWorkSpacesQuery(id);
-  const invite_code = data?.data?.workspaces?.invite_code;
+  const { data, error, isLoading } = useGetInviteCodeQuery(id);
+  const invite_code = data?.data?.code;
 
   const copyCode = async () => {
+   
+    
     try {
       await navigator.clipboard.writeText(invite_code).then(() => {
         alert('코드를 복사했습니다.');
@@ -33,12 +32,15 @@ const InvitationCodeModal = ({ onClose }) => {
   return (
     <ModalWrap ref={modalRef}>
       {error ? (
-        <>에러가 발생했습니다.</>
+        <>
+        <div>에러가 발생했습니다.</div>
+        <div>자세한 사항은 관리자에게 문의해주세요</div>
+        </>
       ) : isLoading ? (
         <>초대코드 정보를 불러오는 중입니다.</>
       ) : data ? (
         <>
-          <StTitle>'{data?.data?.workspaces?.title}' 초대코드</StTitle>
+          <StTitle>초대코드</StTitle>
           <StCodeDiv>
             <StCode>{invite_code}</StCode>
           </StCodeDiv>
@@ -64,7 +66,7 @@ const ModalWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid #999999;
+  border: 2px solid #999999;
   z-index: 9999;
   font-family: 'Noto Sans KR';
   box-shadow: 3px 3px 3px rgba(85, 85, 85, 0.1);
@@ -78,9 +80,10 @@ const StTitle = styled.div`
 `;
 
 const StCodeDiv = styled.div`
-  margin-top: 10px;
+  margin-top: 15px;
   font-weight: 700;
   font-size: 20px;
+  padding: 4px;
   background-color: #eef8f8;
 `;
 
@@ -97,7 +100,7 @@ export const StButton = styled.button`
   border-radius: 8px;
   border: none;
   background-color: #00a99d;
-  margin-top: 20px;
+  margin-top: 15px;
   color: white;
   font-weight: 500;
   font-size: 16px;
