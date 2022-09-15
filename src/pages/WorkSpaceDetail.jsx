@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import SideMenu from '../components/SideMenu';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Chatting from '../components/Chatting';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
 import SockJS from 'sockjs-client';
@@ -13,6 +13,7 @@ import BlackButton from '../common/elements/BlackButton';
 
 function WorkSpaceDetail() {
 
+  const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
   const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
@@ -20,6 +21,7 @@ function WorkSpaceDetail() {
   const content = data?.data.workspaces.content;
   const document = data?.data.documents;
   const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
+  const workspaceid = data?.data?.workspaces?.id;
 
   const handleClose = () => {
     setInvitationCodeOpen(false);
@@ -76,7 +78,7 @@ function WorkSpaceDetail() {
                   <p>
                     {data?.data.notices && data?.data.notices.noticeNickname}
                   </p>
-                  <p>{data?.data.notices && data?.data.notices.noticeDate}</p>
+                  <p>{data?.data.notices && data?.data.notices.createdAt.slice(0, -13)}   |   </p>
                   <p>{data?.data.notices && '읽음 7'}</p>
                 </StInfoDiv>
               </StNoticeBox>
@@ -91,7 +93,7 @@ function WorkSpaceDetail() {
               <StThead>
                 <StTable style={{ borderBottom: 'none' }}>
                   <div>담당자</div>
-                  <div>업무명</div>
+                  <div>문서제목</div>
                   <div>작성자</div>
                   <div>등록일</div>
                   <div>수정일</div>
@@ -99,9 +101,11 @@ function WorkSpaceDetail() {
               </StThead>
 
               <StTbody>
-                {document?.map((data, i) => {
+                {document?.map((data) => {
+                  console.log(data?.user)
                   return (
-                    <StTable key={data.id}>
+                    <StTable key={data.id}
+                      onClick={() => {navigate(`/workspace/main/${workspaceid}/docs/${data.id}`);}}>
                       <div>{data.user.nickname}</div>
                       <div>{data.title}</div>
                       <div>{data.user.nickname}</div>
@@ -128,13 +132,13 @@ const StWrapper = styled.div`
   background-color: #f2f2f2;
   display: flex;
   flex-direction: row;
-  position: relative;
 `;
 
 const Projects = styled.div`
   width: 65%;
+  min-height: 90%;
   margin-left: 50px;
-  margin-top: 55px;
+  margin-top: 60px;
   margin-bottom: 50px;
   background-color: white;
   display: flex;
@@ -172,8 +176,8 @@ const StContent = styled.p`
 
 const StNoticeWrapper = styled.div`
   width: 96%;
-  margin-left: 2%;
-  margin-top: 3%;
+  margin-left: 30px;
+  margin-top: 35px;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -226,16 +230,16 @@ const StInfoDiv = styled.div`
 
 const StScheduleWrapper = styled.div`
   width: 96%;
-  min-height: 40vh;
-  margin-left: 2%;
-  margin-top: 3%;
-  margin-bottom: 10vh;
+  min-height: 100px;
+  margin-left: 30px;
+  margin-top: 35px;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: left;
   color: #333333;
   font-size: 16px;
-  letter-spacing: -0.8px;
+  letter-spacing: -0.8px;  
 `;
 
 const StScheduleTitle = styled.p`
@@ -247,9 +251,9 @@ const StScheduleTitle = styled.p`
 `;
 
 const StTableContainer = styled.div`
-  margin-top: 3%;
+  margin-top: 30px;
   width: 100%;
-  min-height: 15vh;
+  min-height: 50px;
   align-items: left;
 `;
 
@@ -272,7 +276,6 @@ const StThead = styled.div`
 `;
 
 const StTbody = styled.div`
-  height: 50px;
   color: #333333;
   align-items: center;
   line-height: 50px;
@@ -280,4 +283,5 @@ const StTbody = styled.div`
   font-weight: normal;
   cursor: pointer;
   text-align: center;
+  margin-bottom: 10px;
 `;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ModalWrap = styled.div`
   width: 464px;
-  height: 756px;
+  height: 650px;
   border-radius: 20px;
   position: absolute;
   top: 50%;
@@ -27,12 +27,20 @@ export const Overlay = styled.div`
   z-index: 9999;
 `;
 
+export const LoginWrap = styled.div`
+  width: 80%;
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
 export const StSpan = styled.span`
   font-weight: 500;
   font-family: 'Noto Sans KR', sans-serif;
   font-size: 18px;
-  margin-top: 30px;
   text-align: left;
+  margin-top: 15px;
 `;
 
 export const StInput = styled.input`
@@ -49,21 +57,21 @@ export const StInput = styled.input`
   }
 `;
 
-export const LoginWrap = styled.div`
-  width: 65%;
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-bottom: 0px;
-`;
+
 
 export const ButtonDiv = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+`;
+
+export const KakaoDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin-top: 10px;
+  color: #D9D9D9;
 `;
 
 export const StButton = styled.button`
@@ -72,17 +80,20 @@ export const StButton = styled.button`
   border-radius: 8px;
   border: none;
   background-color: #00a99d;
-  margin-top: 15px;
+  /* margin-top: 15px; */
   color: white;
   font-weight: 500;
   font-size: 15px;
   cursor: pointer;
+  margin-top: 10px;
 `;
 
 export const StMent = styled.span`
-  color: ${(props) => props.fc};
+  color: ${(props) => props.fontColor};
   font-family: 'Consolas';
   font-size: 22px;
   font-weight: 400;
   font-family: 'Noto Sans KR', sans-serif;
+  margin-top: 10px;
+  letter-spacing: -0.05em;
 `;

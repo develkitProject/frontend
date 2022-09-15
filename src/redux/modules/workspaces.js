@@ -121,18 +121,18 @@ export const workspaceApi = coreApi.injectEndpoints({
 
       invalidatesTags: ['Docs'],
     }),
-    //에디터 이미지 업로드
-    addImage: builder.mutation({
-      query:(image) =>{
+
+    getInviteCode: builder.query({
+      query: (id) => {
         return {
-          url: `/api/images`,
-          method: 'POST',
-          body: image,
+          url: `/api/invitation/${id}`,
+          method: 'GET',
           headers,
         };
       },
-      invalidatesTags: ['Image'],
+      invalidatesTags: ['InviteCode'],
     }),
+
   }),
 });
 
@@ -149,5 +149,5 @@ export const {
   useGetDocQuery,
   useGetDocDetailQuery,
   useAddDocMutation,
-  useAddImageMutation,
+  useGetInviteCodeQuery,
 } = workspaceApi;

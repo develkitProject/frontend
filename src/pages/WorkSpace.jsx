@@ -28,6 +28,8 @@ function WorkSpace() {
     refetch();
   }, [data, refetch]);
 
+  console.log(data)
+
   return (
     <>
       {!cookies ? (
@@ -38,7 +40,7 @@ function WorkSpace() {
           <CardWrapper>
             <CreateCard createOpen={createOpen} setCreateOpen={setCreateOpen} />
             {error ? (
-              <>Oh no, there was an error</>
+              <>에러가 발생하였습니다.</>
             ) : isLoading ? (
               <>Loading...</>
             ) : data ? (
@@ -81,6 +83,7 @@ const StWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 30px;
 `;
 
 const CardWrapper = styled.div`

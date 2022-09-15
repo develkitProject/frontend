@@ -43,7 +43,7 @@ function UserInputForm({ onChange, errorStatus, successStatus }) {
             </div>
             <BasicInput
               marginTop="20px"
-              marginBottom="40px"
+              marginBottom="30px"
               label="비밀번호 확인"
               type='password'
               name='passwordConfirm'

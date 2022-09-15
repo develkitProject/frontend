@@ -34,7 +34,7 @@ function Notice() {
                     <StTitle fc='#00a99d'>공지사항</StTitle>
                     <StNoticeBox>
                       <StTitle fc='#333333'>{data.title}</StTitle>
-                      <StContent>
+                      <StContent className="imgWrapper">
                         <div
                           dangerouslySetInnerHTML={{ __html: data.content }}
                         />
@@ -112,6 +112,7 @@ const StContent = styled.div`
   line-height: 25px;
   font-weight: 500;
   white-space: pre-wrap;
+  overflow: hidden;
 `;
 
 const StInfoDiv = styled.div`
@@ -125,3 +126,5 @@ const StInfoDiv = styled.div`
   font-weight: 500;
   font-size: 16px;
 `;
+
+
