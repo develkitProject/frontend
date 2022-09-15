@@ -10,17 +10,17 @@ import SockJS from 'sockjs-client';
 // import { Stomp } from '@stomp/stompjs';
 import Stomp from 'stompjs';
 import { useParams } from 'react-router-dom';
-import { useGetChatMessageQuery } from '../redux/modules/chat';
 import { getCookieToken } from '../Cookie';
 import Draggable from 'react-draggable';
-import ModalContainer from '../common/Modal/ModalContainer';
 
 export default function Chatting({ title }) {
   const [chatMessages, setChatMessages] = useState([]);
-  const [username, setUsername] = useState('');
+  const textRef = useRef(null);
+  const scrollRef = useRef();
   const [message, setMessage] = useState('');
+  // const [userlist, setUserlist] = useState([]);
   const id = useParams().id;
-  const { data, isLoading, refetch, error } = useGetChatMessageQuery(id);
+  // const { data, isLoading, refetch, error } = useGetChatMessageQuery(id);
   console.log(chatMessages);
 
   const sockJS = new SockJS('https://hosung.shop/stomp/chat');
@@ -38,6 +38,7 @@ export default function Chatting({ title }) {
 
   useEffect(() => {
     onConnected();
+    // scrollToBottom();
     return () => {
       disConnect();
     };
@@ -51,11 +52,11 @@ export default function Chatting({ title }) {
           (data) => {
             const newMessage = JSON.parse(data.body);
             setChatMessages((chatMessages) => [...chatMessages, newMessage]);
+            // setUserlist((userlist) => [...userlist, newMessage?.userList]);
             console.log(newMessage);
           },
           headers
         );
-        publish_1();
       });
     } catch (error) {
       console.log(error);
@@ -67,90 +68,88 @@ export default function Chatting({ title }) {
     }
   };
 
-  // const handelEnter = () => {
-  //   const newMessage = { username, chatMessages };
-  //   stompClient.send(
-  //     '/pub/chat/enter',
-  //     headers,
-  //     JSON.stringify({ roomId: id, newMessage })
-  //   );
-  //   setMessage('');
-  // };
-
-  // const addMessage = () => {
-  //   setChatMessages((prev) => [...prev, message]);
-  // };
-
-  const publish_1 = (message) => {
-    if (!stompClient.connected) {
-      return;
-    }
-    stompClient.send(
-      `/pub/chat/enter`,
-      headers,
-      JSON.stringify({ roomId: id, message })
-    );
-    setMessage('');
-  };
-
   const sendMessage = () => {
-    stompClient.send(
-      `/pub/chat/message`,
-      headers,
-      JSON.stringify({
-        roomId: id,
-        message: message,
-      })
-    );
-    setMessage('');
+    if (textRef.current.value !== '') {
+      stompClient.send(
+        `/pub/chat/message`,
+        headers,
+        JSON.stringify({
+          roomId: id,
+          message: textRef.current.value,
+        })
+      );
+      textRef.current.value = null;
+    } else {
+      console.log('d');
+    }
   };
-
-  const onChange = useCallback(
-    (e) => {
-      setMessage(e.target.value);
-    },
-    [message]
-  );
 
   const onKeyDown = (e) => {
     if (e.key === 'Enter') {
-      console.log(e.key);
-      sendMessage();
+      if (!e.shiftKey) {
+        sendMessage();
+      }
     }
   };
+
+  const scrollToBottom = () => {
+    if (scrollRef.current.value) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  };
+
+  const chatdata = chatMessages?.map((data, i) => {
+    if (data.type === 'TALK') {
+      return (
+        <>
+          <MessageBox key={i}>
+            <span style={{ color: 'grey', marginRight: '20px' }}>
+              {data.writer.split('@')[0]}
+            </span>
+            :
+            <span style={{ color: 'black', marginLeft: '20px' }}>
+              {data.message}
+            </span>
+          </MessageBox>
+        </>
+      );
+    }
+  });
 
   return (
     <>
       <Draggable>
-        <ModalContainer>
-          <StChatBox>
-            <StChatHeader>{title}</StChatHeader>
-            <StChatBody>
-              {chatMessages?.map((a, i) => {
-                return (
-                  <>
-                    <MessageBox>{a.message}</MessageBox>
-                  </>
-                );
-              })}
-            </StChatBody>
-            <StChatFooter>
-              <StInput
-                name='message'
-                value={message}
-                onChange={onChange}
-                onKeyDown={onKeyDown}
-              ></StInput>
-              <StButton
-                onClick={sendMessage}
-                message={message}
-                disabled={message.length === 0}
-              >
-                전송
-              </StButton>
-            </StChatFooter>
-          </StChatBox>
-        </ModalContainer>
+        <StChatBox>
+          {/* <UserList>
+            {userlist?.map((list, i) => {
+              return <>{list}</>;
+            })}
+          </UserList> */}
+          <StChatHeader>{title}</StChatHeader>
+          <StChatBody ref={scrollRef}>{chatdata}</StChatBody>
+          <StChatFooter>
+            <StInput
+              rows='0'
+              cols='0'
+              name='message'
+              // value={textRef.current.value}
+              // onChange={onChange}
+              onKeyDown={onKeyDown}
+              ref={textRef}
+              // autoComplete='off'
+              placeholder='메세지를 입력하세요 (100자 이내)'
+              maxLength={100}
+            ></StInput>
+            <StButton
+              onClick={sendMessage}
+              message={message}
+              textRef={textRef.current}
+              // disabled={textRef.current.value.length === 0}
+            >
+              전송
+            </StButton>
+          </StChatFooter>
+        </StChatBox>
       </Draggable>
     </>
   );
@@ -160,7 +159,7 @@ const StChatBox = styled.div`
   width: 350px;
   height: 500px;
   background-color: #f6daa2;
-  position: relative;
+  /* position: relative; */
   left: 50%;
   top: 50px;
   box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.1), 0 4px 20px 0 rgba(0, 0, 0, 0.2);
@@ -212,30 +211,41 @@ const StButton = styled.button`
   height: 36px;
   font-size: 15px;
   font-weight: 500;
-  background-color: ${({ message }) =>
-    message !== '' ? '#f5d28c' : '#d8d8d8'};
+  background-color: ${({ textRef }) =>
+    textRef !== '' ? '#f5d28c' : '#d8d8d8'};
   border-radius: 8px;
   margin-top: 15px;
   margin-left: 14px;
   border: none;
-  color: ${({ message }) => (message !== '' ? '#262012' : '#a1a1a1')};
-  cursor: ${({ message }) => (message !== '' ? 'pointer' : null)};
+  color: ${({ textRef }) => (textRef !== '' ? '#262012' : '#a1a1a1')};
+  cursor: ${({ textRef }) => (textRef !== '' ? 'pointer' : null)};
 `;
 
 const StChatBody = styled.div`
   height: 390px;
   overflow: auto;
+
   &::-webkit-scrollbar {
     display: none;
   }
 `;
 
 const MessageBox = styled.div`
-  /* height: 20px; */
+  min-height: 30px;
   border-radius: 8px;
   width: auto;
-  background-color: #e9e9e9;
+  background-color: #f9f9f9;
   margin-top: 20px;
   display: flex;
   justify-content: center;
+  text-align: center;
+  align-items: center;
+`;
+
+const UserList = styled.div`
+  width: 100px;
+  height: 100px;
+  background-color: #e9dcc1;
+  position: absolute;
+  left: 100%;
 `;
