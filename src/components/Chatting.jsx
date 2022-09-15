@@ -18,17 +18,10 @@ export default function Chatting({ title }) {
   const textRef = useRef(null);
   const scrollRef = useRef();
   const [message, setMessage] = useState('');
-  // const [userlist, setUserlist] = useState([]);
   const id = useParams().id;
-  // const { data, isLoading, refetch, error } = useGetChatMessageQuery(id);
-  console.log(chatMessages);
 
   const sockJS = new SockJS('https://hosung.shop/stomp/chat');
   const stompClient = Stomp.over(sockJS);
-
-  // let stompClient = Stomp.over(function () {
-  //   return new SockJS('http://hosung.shop/stomp/chat');
-  // });
 
   stompClient.debug = () => {};
 
@@ -38,7 +31,6 @@ export default function Chatting({ title }) {
 
   useEffect(() => {
     onConnected();
-    // scrollToBottom();
     return () => {
       disConnect();
     };
@@ -52,7 +44,6 @@ export default function Chatting({ title }) {
           (data) => {
             const newMessage = JSON.parse(data.body);
             setChatMessages((chatMessages) => [...chatMessages, newMessage]);
-            // setUserlist((userlist) => [...userlist, newMessage?.userList]);
             console.log(newMessage);
           },
           headers
@@ -89,12 +80,6 @@ export default function Chatting({ title }) {
       if (!e.shiftKey) {
         sendMessage();
       }
-    }
-  };
-
-  const scrollToBottom = () => {
-    if (scrollRef.current.value) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   };
 

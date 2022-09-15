@@ -8,7 +8,6 @@ function Address() {
   const id = Number(params.id);
   const { data, error, isLoading, refetch } = useGetMemberListQuery(id);
   const member = data?.data;
-  console.log(member);
 
   useEffect(() => {
     refetch();

@@ -12,7 +12,6 @@ import MyProfileModal from '../common/Modal/MyProfileModal';
 import BlackButton from '../common/elements/BlackButton';
 
 function WorkSpaceDetail() {
-
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
@@ -78,7 +77,11 @@ function WorkSpaceDetail() {
                   <p>
                     {data?.data.notices && data?.data.notices.noticeNickname}
                   </p>
-                  <p>{data?.data.notices && data?.data.notices.createdAt.slice(0, -13)}   |   </p>
+                  <p>
+                    {data?.data.notices &&
+                      data?.data.notices.createdAt.slice(0, -13)}{' '}
+                    |{' '}
+                  </p>
                   <p>{data?.data.notices && '읽음 7'}</p>
                 </StInfoDiv>
               </StNoticeBox>
@@ -102,10 +105,15 @@ function WorkSpaceDetail() {
 
               <StTbody>
                 {document?.map((data) => {
-                  console.log(data?.user)
                   return (
-                    <StTable key={data.id}
-                      onClick={() => {navigate(`/workspace/main/${workspaceid}/docs/${data.id}`);}}>
+                    <StTable
+                      key={data.id}
+                      onClick={() => {
+                        navigate(
+                          `/workspace/main/${workspaceid}/docs/${data.id}`
+                        );
+                      }}
+                    >
                       <div>{data.user.nickname}</div>
                       <div>{data.title}</div>
                       <div>{data.user.nickname}</div>
@@ -239,7 +247,7 @@ const StScheduleWrapper = styled.div`
   align-items: left;
   color: #333333;
   font-size: 16px;
-  letter-spacing: -0.8px;  
+  letter-spacing: -0.8px;
 `;
 
 const StScheduleTitle = styled.p`

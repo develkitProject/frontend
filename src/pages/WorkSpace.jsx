@@ -28,8 +28,6 @@ function WorkSpace() {
     refetch();
   }, [data, refetch]);
 
-  console.log(data)
-
   return (
     <>
       {!cookies ? (
