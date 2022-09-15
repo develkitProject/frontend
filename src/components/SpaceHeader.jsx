@@ -1,15 +1,45 @@
 import styled from 'styled-components';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { getCookieToken } from '../Cookie';
 
 function SpaceHeader() {
+  let [code, setCode] = useState('');
+
+  const Headers = {
+    Authorization: getCookieToken(),
+  };
+
+  const onChange = (e) => {
+    setCode(e.target.value);
+  };
+
+  // const joinHandler = async () => {
+  //   const result = await axios.post(
+  //     'https://hosung.shop/api/workspaces/join/',
+  //     formData,
+  //     { headers: Headers }
+  //   );
+  // };
+
   return (
     <StHeaderDiv>
       <StMent>
-        스마트한 프로젝트 관리의 시작, 
+        스마트한 프로젝트 관리의 시작,
         <StMent style={{ fontWeight: '600' }}> 디벨킷</StMent>
       </StMent>
       <StSearch>
-        <StInput placeholder='초대코드 입력하고 프로젝트 참여하기'></StInput>
-        <StGo>Go.</StGo>
+        <StInput
+          onChange={onChange}
+          placeholder='초대코드 입력하고 프로젝트 참여하기'
+        ></StInput>
+        <StGo
+          onClick={() => {
+            console.log(code);
+          }}
+        >
+          Go.
+        </StGo>
       </StSearch>
     </StHeaderDiv>
   );
@@ -49,20 +79,20 @@ const StInput = styled.input`
   margin-top: 30px;
   border: none;
   box-shadow: 0 0 10px 0 #00a99d;
-  padding: 5px 25px 5px 25px;;
-  font-size:1.2em;
+  padding: 5px 25px 5px 25px;
+  font-size: 1.2em;
   font-weight: 400;
   color: #999999;
   &:focus {
     outline: none;
   }
   box-sizing: border-box;
-  display:inline;
+  display: inline;
 `;
 
 const StGo = styled.button`
   font-family: Montserrat;
-  font-size:1.2em;
+  font-size: 1.2em;
   font-weight: 700;
   color: #00a99d;
   background-color: transparent;
@@ -70,9 +100,9 @@ const StGo = styled.button`
   box-sizing: border-box;
   margin-left: -65px;
   margin-top: 0;
-  display:inline;
+  display: inline;
   cursor: pointer;
   @media screen and (max-width: 800px) {
-  display: none;
+    display: none;
   }
 `;
