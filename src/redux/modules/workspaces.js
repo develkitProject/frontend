@@ -122,6 +122,7 @@ export const workspaceApi = coreApi.injectEndpoints({
       invalidatesTags: ['Docs'],
     }),
 
+    //초대코드
     getInviteCode: builder.query({
       query: (id) => {
         return {
@@ -130,9 +131,20 @@ export const workspaceApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      invalidatesTags: ['InviteCode'],
+      providesTags: ['InviteCode'],
     }),
 
+    getInviteCodeInfo: builder.mutation({
+      query: (code) => {
+        return {
+          url: `/api/invitation/codes`,
+          method: 'POST',
+          body: code,
+          headers,
+        };
+      },
+      invalidatesTags: ['InviteCode'],
+    }),
   }),
 });
 
@@ -150,4 +162,5 @@ export const {
   useGetDocDetailQuery,
   useAddDocMutation,
   useGetInviteCodeQuery,
+  useGetInviteCodeInfoMutation,
 } = workspaceApi;

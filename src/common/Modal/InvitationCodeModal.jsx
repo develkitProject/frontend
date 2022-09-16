@@ -45,7 +45,7 @@ const InvitationCodeModal = ({ onClose }) => {
             <StCode>{invite_code}</StCode>
           </StCodeDiv>
           <StButton onClick={copyCode}>초대코드 복사하기</StButton>
-          <StMent>*코드를 복사하여 초대하고 싶은 팀원에게 전달해주세요</StMent>
+          <StMent>*코드를 복사하여 초대하고 싶은 회원에게 전달해주세요</StMent>
         </>
       ) : null}
     </ModalWrap>
