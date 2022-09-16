@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const ModalWrap = styled.div`
   width: 464px;
@@ -64,6 +64,6 @@ export const Text = styled.pre`
   margin-top: 7px;
 `;
 
-export const SubTitle = styled.h4`
-    color:
-`;
+// export const SubTitle = styled.h4`
+//     color:
+// `;
