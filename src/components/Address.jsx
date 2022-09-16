@@ -59,7 +59,7 @@ const StWrapper = styled.div`
 
 const StAddressContainer = styled.div`
   margin: 1%;
-  width: 30px;
+  width: 45%;
   min-width: 450px;
   height: 180px;
   background-color: #eef8f8;

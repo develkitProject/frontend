@@ -9,7 +9,7 @@ import arrowDown from '../asset/img/arrowDown.svg';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
-function SideMenu(data) {
+function SideMenu() {
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);

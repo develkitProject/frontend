@@ -14,14 +14,6 @@ function SpaceHeader() {
     setCode(e.target.value);
   };
 
-  // const joinHandler = async () => {
-  //   const result = await axios.post(
-  //     'https://hosung.shop/api/workspaces/join/',
-  //     formData,
-  //     { headers: Headers }
-  //   );
-  // };
-
   return (
     <StHeaderDiv>
       <StMent>

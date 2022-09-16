@@ -9,7 +9,7 @@ import { getCookieToken } from '../Cookie';
 import velkit from '../asset/img/velkit.png';
 import twinklestar from '../asset/img/twinklestar.svg';
 
-function Landing() {
+function Landing({ setPath }) {
   const navigate = useNavigate();
   const cookies = getCookieToken();
   const homeRef = useRef(null);
@@ -22,6 +22,15 @@ function Landing() {
 
   const handleClose = () => {
     setIsOpen(false);
+  };
+
+  const onStartSubmit = () => {
+    if (!cookies) {
+      onStartButton();
+    } else {
+      navigate('/workspace');
+      setPath(2);
+    }
   };
 
   const onHomeClick = () => {
@@ -50,15 +59,7 @@ function Landing() {
                   <span style={{ color: '#00A99D' }}>디벨킷</span>
                 </div>
               </StIntroMent>
-              <StStart
-                onClick={() => {
-                  !cookies ? (
-                    <>{onStartButton(true)}</>
-                  ) : (
-                    navigate('/workspace')
-                  );
-                }}
-              >
+              <StStart onClick={onStartSubmit}>
                 {isOpen && (
                   <WorkSpaceErrorModal
                     open={isOpen}
