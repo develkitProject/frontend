@@ -57,7 +57,8 @@ const StFooterDiv = styled.div`
   background-color: #1b1b1b;
   color: #999999;
   width: 100%;
-  height: 170px;
+  /* height: 170px; */
+  height: 20vh;
   left: 0px;
   top: 0px;
   position: relative;
