@@ -73,6 +73,7 @@ const Projects = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
+  margin-bottom: 40px;
 `;
 
 const StIntroContainer = styled.div`
