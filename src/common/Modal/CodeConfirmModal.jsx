@@ -1,7 +1,8 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import useOutSideClick from '../hooks/useOutSideClick';
 import SecondCard1 from '../../asset/img/SecondCard1.png'
+import { useGetInviteCodeInfoMutation } from '../../redux/modules/workspaces';
 
 const CodeConfirmModal = ({ onClose }) => {
   const modalRef = useRef(null);
@@ -11,6 +12,17 @@ const CodeConfirmModal = ({ onClose }) => {
   }, [onClose]);
 
   useOutSideClick(modalRef, handleClose);
+
+  const { data, error, isLoading, refetch } = useGetInviteCodeInfoMutation();
+
+  // useEffect(() => {
+  //   refetch();
+  // }, [data, refetch]);
+
+
+  console.log(data)
+
+
 
   return (
     <ModalWrap ref={modalRef}>

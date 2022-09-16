@@ -6,6 +6,7 @@ import { useGetInviteCodeInfoMutation } from '../redux/modules/workspaces';
 function SpaceHeader() {
 
   const [codeConfirm] = useGetInviteCodeInfoMutation();
+
   const [inviteCodeConfirm, setInviteCodeConfirm] = useState(false)
   let [code, setCode] = useState('');
 
@@ -19,13 +20,15 @@ function SpaceHeader() {
 
   const handleSubmit = () => {    
     if (code) {
-      codeConfirm(code);
-      console.log(code)
+      codeConfirm({code});
       setInviteCodeConfirm(inviteCodeConfirm === false ? true : false);
+
       } else {
            window.alert('코드를 입력해주세요');
          }
        }
+
+
 
   return (
     <StHeaderDiv>
