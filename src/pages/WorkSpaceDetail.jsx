@@ -3,18 +3,18 @@ import SideMenu from '../components/SideMenu';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Chatting from '../components/Chatting';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
-import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
 import { useEffect, useState } from 'react';
-import { getCookieToken } from '../Cookie';
 import InvitationCodeModal from '../common/Modal/InvitationCodeModal';
-import MyProfileModal from '../common/Modal/MyProfileModal';
 import BlackButton from '../common/elements/BlackButton';
+import useGetUser from '../common/hooks/useGetUser';
+import SockJS from 'sockjs-client';
+import { getCookieToken } from '../Cookie';
+import Stomp from 'stompjs';
 
 function WorkSpaceDetail() {
   const navigate = useNavigate();
-  const params = useParams();
-  const id = Number(params.id);
+  const id = Number(useParams().id);
+  const [isOpen, setIsOpen] = useState(true);
   const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
   const title = data?.data?.workspaces?.title;
   const content = data?.data.workspaces.content;
@@ -22,6 +22,7 @@ function WorkSpaceDetail() {
   const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
   const workspaceid = data?.data?.workspaces?.id;
 
+  // ------------------------------------------------------------------------
   const handleClose = () => {
     setInvitationCodeOpen(false);
   };
@@ -29,9 +30,57 @@ function WorkSpaceDetail() {
     setInvitationCodeOpen(invitationCodeOpen === false ? true : false);
   };
 
-  // useEffect(() => {
-  //   refetch();
-  // }, [data, refetch]);
+  const clickHandler = () => {
+    setIsOpen(!isOpen);
+  };
+  // ------------------------------------------------------------------------
+  const [chatMessages, setChatMessages] = useState([]);
+
+  // const scrollRef = useRef();
+  // const { data } = useGetChatMessageQuery();
+  const [message, setMessage] = useState('');
+  // const { user } = useGetUser();
+
+  const sockJS = new SockJS('https://hosung.shop/stomp/chat');
+  const stompClient = Stomp.over(sockJS);
+
+  stompClient.debug = () => {};
+
+  const headers = {
+    token: getCookieToken(),
+  };
+
+  useEffect(() => {
+    onConnected();
+    return () => {
+      disConnect();
+    };
+  }, []);
+
+  function onConnected() {
+    try {
+      stompClient.connect(headers, () => {
+        stompClient.subscribe(
+          `/sub/chat/room/${id}`,
+          (data) => {
+            const newMessage = JSON.parse(data.body);
+            setChatMessages((chatMessages) => [...chatMessages, newMessage]);
+            console.log(newMessage);
+          },
+          headers
+        );
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const disConnect = () => {
+    if (stompClient != null) {
+      if (stompClient.connected) stompClient.disconnect();
+    }
+  };
+
+  // ------------------------------------------------------------------------
 
   return (
     <StWrapper>
@@ -90,7 +139,9 @@ function WorkSpaceDetail() {
         </div>
         <div>
           <StScheduleWrapper>
-            <StScheduleTitle fc='#333333'>문서 및 계획</StScheduleTitle>
+            <StScheduleTitle onClick={clickHandler} fc='#333333'>
+              문서 및 계획
+            </StScheduleTitle>
 
             <StTableContainer>
               <StThead>
@@ -127,7 +178,16 @@ function WorkSpaceDetail() {
           </StScheduleWrapper>
         </div>
       </Projects>
-      <Chatting title={title}></Chatting>
+      {isOpen && (
+        <Chatting
+          id={id}
+          title={title}
+          stompClient={stompClient}
+          chatMessages={chatMessages}
+          headers={headers}
+          message={message}
+        ></Chatting>
+      )}
     </StWrapper>
   );
 }
@@ -136,7 +196,8 @@ export default WorkSpaceDetail;
 
 const StWrapper = styled.div`
   width: 100%;
-  min-height: 100%;
+  height: 100vh;
+  /* min-height: 100%; */
   background-color: #f2f2f2;
   display: flex;
   flex-direction: row;

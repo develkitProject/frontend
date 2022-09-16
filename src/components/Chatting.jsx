@@ -6,58 +6,23 @@ import React, {
   useCallback,
 } from 'react';
 import styled from 'styled-components';
-import SockJS from 'sockjs-client';
-// import { Stomp } from '@stomp/stompjs';
-import Stomp from 'stompjs';
+
 import { useParams } from 'react-router-dom';
 import { getCookieToken } from '../Cookie';
+import { useGetChatMessageQuery } from '../redux/modules/chat';
+import useGetUser from '../common/hooks/useGetUser';
 import Draggable from 'react-draggable';
+import ModalContainer from '../common/Modal/ModalContainer';
 
-export default function Chatting({ title }) {
-  const [chatMessages, setChatMessages] = useState([]);
+export default function Chatting({
+  title,
+  id,
+  stompClient,
+  chatMessages,
+  headers,
+  message,
+}) {
   const textRef = useRef(null);
-  const scrollRef = useRef();
-  const [message, setMessage] = useState('');
-  const id = useParams().id;
-
-  const sockJS = new SockJS('https://hosung.shop/stomp/chat');
-  const stompClient = Stomp.over(sockJS);
-
-  stompClient.debug = () => {};
-
-  const headers = {
-    token: getCookieToken(),
-  };
-
-  useEffect(() => {
-    onConnected();
-    return () => {
-      disConnect();
-    };
-  }, []);
-
-  function onConnected() {
-    try {
-      stompClient.connect(headers, () => {
-        stompClient.subscribe(
-          `/sub/chat/room/${id}`,
-          (data) => {
-            const newMessage = JSON.parse(data.body);
-            setChatMessages((chatMessages) => [...chatMessages, newMessage]);
-            console.log(newMessage);
-          },
-          headers
-        );
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  const disConnect = () => {
-    if (stompClient != null) {
-      if (stompClient.connected) stompClient.disconnect();
-    }
-  };
 
   const sendMessage = () => {
     if (textRef.current.value !== '') {
@@ -70,32 +35,35 @@ export default function Chatting({ title }) {
         })
       );
       textRef.current.value = null;
-    } else {
-      console.log('d');
     }
   };
 
   const onKeyDown = (e) => {
     if (e.key === 'Enter') {
-      if (!e.shiftKey) {
-        sendMessage();
-      }
+      sendMessage();
     }
   };
 
   const chatdata = chatMessages?.map((data, i) => {
     if (data.type === 'TALK') {
+      // if ()
       return (
         <>
-          <MessageBox key={i}>
-            <span style={{ color: 'grey', marginRight: '20px' }}>
+          <div style={{ marginTop: '5px' }}>
+            <span
+              style={{
+                color: 'grey',
+                marginRight: '20px',
+                marginTop: '5px',
+                marginLeft: '10px',
+              }}
+            >
               {data.writer.split('@')[0]}
             </span>
-            :
-            <span style={{ color: 'black', marginLeft: '20px' }}>
-              {data.message}
-            </span>
-          </MessageBox>
+            <MessageBox key={i}>
+              <span style={{ color: 'black' }}>{data.message}</span>
+            </MessageBox>
+          </div>
         </>
       );
     }
@@ -103,39 +71,41 @@ export default function Chatting({ title }) {
 
   return (
     <>
-      <Draggable>
-        <StChatBox>
-          {/* <UserList>
+      <ModalContainer>
+        <Draggable>
+          <StChatBox>
+            {/* <UserList>
             {userlist?.map((list, i) => {
               return <>{list}</>;
             })}
           </UserList> */}
-          <StChatHeader>{title}</StChatHeader>
-          <StChatBody ref={scrollRef}>{chatdata}</StChatBody>
-          <StChatFooter>
-            <StInput
-              rows='0'
-              cols='0'
-              name='message'
-              // value={textRef.current.value}
-              // onChange={onChange}
-              onKeyDown={onKeyDown}
-              ref={textRef}
-              // autoComplete='off'
-              placeholder='메세지를 입력하세요 (100자 이내)'
-              maxLength={100}
-            ></StInput>
-            <StButton
-              onClick={sendMessage}
-              message={message}
-              textRef={textRef.current}
-              // disabled={textRef.current.value.length === 0}
-            >
-              전송
-            </StButton>
-          </StChatFooter>
-        </StChatBox>
-      </Draggable>
+            <StChatHeader>{title}</StChatHeader>
+            <StChatBody>{chatdata}</StChatBody>
+            <StChatFooter>
+              <StInput
+                rows='0'
+                cols='0'
+                name='message'
+                // value={textRef.current.value}
+                // onChange={onChange}
+                onKeyDown={onKeyDown}
+                ref={textRef}
+                // autoComplete='off'
+                placeholder='메세지를 입력하세요 (100자 이내)'
+                maxLength={100}
+              ></StInput>
+              <StButton
+                onClick={sendMessage}
+                message={message}
+                textRef={textRef}
+                // disabled={textRef.current.value.length === 0}
+              >
+                전송
+              </StButton>
+            </StChatFooter>
+          </StChatBox>
+        </Draggable>
+      </ModalContainer>
     </>
   );
 }
@@ -175,11 +145,11 @@ const StChatFooter = styled.div`
   /* z-index: -999; */
 `;
 
-const StInput = styled.textarea`
+const StInput = styled.input`
   width: 70%;
   height: 50%;
   border: 1px solid black;
-  margin-top: 5px;
+  margin-top: 0px;
   padding: 10px;
   resize: none;
   font-size: 15px;
@@ -217,14 +187,16 @@ const StChatBody = styled.div`
 
 const MessageBox = styled.div`
   min-height: 30px;
+  min-width: 30px;
   border-radius: 8px;
-  width: auto;
+  width: 40%;
+  margin-top: 5px;
   background-color: #f9f9f9;
-  margin-top: 20px;
   display: flex;
   justify-content: center;
   text-align: center;
   align-items: center;
+  margin-left: 10px;
 `;
 
 const UserList = styled.div`

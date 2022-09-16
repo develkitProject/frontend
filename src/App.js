@@ -1,5 +1,5 @@
 import './App.css';
-
+import { useState } from 'react';
 import Header from './components/Header';
 import Landing from './pages/Landing';
 import MyPage from './pages/MyPage';
@@ -19,13 +19,16 @@ import Footer from './components/Footer';
 import CalendarPage from './calendar/CalendarPage';
 import DocDetail from './document/DocDetail';
 import SideMenu from './components/SideMenu';
+import useGetUser from './common/hooks/useGetUser';
 
 function App() {
+  const [path, setPath] = useState(1);
+
   return (
     <>
-      <Header />
+      <Header path={path} setPath={setPath} />
       <Routes>
-        <Route path='/' element={<Landing />} />
+        <Route path='/' element={<Landing setPath={setPath} />} />
         {/* <Route path='/signup' element={<SignUp />} /> */}
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/mypage2' element={<MyPage2 />} />
