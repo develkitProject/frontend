@@ -133,6 +133,17 @@ export const workspaceApi = coreApi.injectEndpoints({
       invalidatesTags: ['InviteCode'],
     }),
 
+    // addInviteCode: builder.mutation({
+    //   query: (codes) => {
+    //     return {
+    //       url: `/api/invitation/codes`,
+    //       method: 'POST',
+    //       body: codes,
+    //       headers,
+    //     };
+    //   },
+    //   invalidatesTags: ['InviteCode'],
+    // }),
   }),
 });
 
@@ -150,4 +161,5 @@ export const {
   useGetDocDetailQuery,
   useAddDocMutation,
   useGetInviteCodeQuery,
+  // useAddInviteCodeQuery,
 } = workspaceApi;
