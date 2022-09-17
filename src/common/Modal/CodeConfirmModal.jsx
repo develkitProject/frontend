@@ -1,69 +1,98 @@
 import React, { useRef, useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useOutSideClick from '../hooks/useOutSideClick';
-import SecondCard1 from '../../asset/img/SecondCard1.png'
-import { useGetInviteCodeInfoMutation } from '../../redux/modules/workspaces';
+import axios from 'axios';
+import { getCookieToken } from '../../Cookie';
 
-const CodeConfirmModal = ({ onClose }) => {
+const CodeConfirmModal = ({ onClose, spaceData }) => {
   const modalRef = useRef(null);
-
+  const navigate = useNavigate();
+  const headers = {
+    Authorization: getCookieToken(),
+  };
   const handleClose = useCallback(() => {
     onClose?.();
   }, [onClose]);
 
   useOutSideClick(modalRef, handleClose);
 
-  const { data, error, isLoading, refetch } = useGetInviteCodeInfoMutation();
-
-  // useEffect(() => {
-  //   refetch();
-  // }, [data, refetch]);
-
-
-  console.log(data)
-
-
+  const onConfirm = async () => {
+    const obj = {};
+    try {
+      await axios
+        .post(
+          `https://hosung.shop/api/workspaces/join/${spaceData.id}`,
+          { obj },
+          {
+            headers,
+          }
+        )
+        .then((response) => {
+          alert('가입되었습니다!');
+          navigate(`/workspace/main/${spaceData.id}`);
+        });
+    } catch (error) {
+      alert('이미 가입된 워크스페이스입니다!');
+    }
+  };
 
   return (
-    <ModalWrap ref={modalRef}>
-      {/* {error ? (
-        <>
-        <div>에러가 발생했습니다.</div>
-        <div>자세한 사항은 관리자에게 문의해주세요</div>
-        </>
-      ) : isLoading ? (
-        <>초대코드 정보를 불러오는 중입니다.</>
-      ) : data ? (
-        <> */}
+    <Overlay>
+      <ModalWrap ref={modalRef}>
         <StMentDiv>
-          <StTitle 
-          fontWeight='bold' fontSize='24px' fontColor='#00a99d'>
-            다음 프로젝트에 가입하시겠습니까?</StTitle>
+          <StTitle fontWeight='bold' fontSize='24px' fontColor='#00a99d'>
+            다음 프로젝트에 가입하시겠습니까?
+          </StTitle>
           <StTitle fontSize='14px' fontColor='#626262'>
-            아래 정보를 확인하시어 가입을 희망하시는 프로젝트가 맞는 경우 
-            <span style={{fontWeight: "600"}}> “가입하기” </span>버튼을 눌러주세요</StTitle>
+            아래 정보를 확인하시어 가입을 희망하시는 프로젝트가 맞는 경우
+            <span style={{ fontWeight: '600' }}> “가입하기” </span>버튼을
+            눌러주세요
+          </StTitle>
         </StMentDiv>
         <StInfoDiv>
-            <StImg img={SecondCard1}></StImg>
-            <StInfoDetail>
-              <StInfoMent>디벨킷 프로젝트</StInfoMent>
-              <StInfoMent>하루에 한번씩 4조를 응원해주는 프로젝트</StInfoMent>
-              <StInfoMent>담당자: 갓호성 (개설일: 2022/09/24)</StInfoMent>
-            </StInfoDetail>
-
+          <StImg img={spaceData.imageUrl}></StImg>
+          <StInfoDetail>
+            <StInfoMent>{spaceData.title}</StInfoMent>
+            <StInfoMent>{spaceData.content}</StInfoMent>
+            <StInfoMent>
+              담당자: {spaceData.createdBy.nickname} (
+              {spaceData.createdAt.split(' ')[0]})
+            </StInfoMent>
+          </StInfoDetail>
         </StInfoDiv>
         <StButtonBox>
-          <StButton fontColor="white" buttonColor="#00a99d">가입하기</StButton>
-          <StButton fontColor="#424242" buttonColor="#D9D9D9"
-           onClick={handleClose}>취소</StButton>
+          <StButton fontColor='white' buttonColor='#00a99d' onClick={onConfirm}>
+            가입하기
+          </StButton>
+          <StButton
+            fontColor='#424242'
+            buttonColor='#D9D9D9'
+            onClick={handleClose}
+          >
+            취소
+          </StButton>
         </StButtonBox>
         {/* </>
       ) : null} */}
-    </ModalWrap>
+      </ModalWrap>
+    </Overlay>
   );
 };
 
 export default CodeConfirmModal;
+
+const Overlay = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+`;
 
 const ModalWrap = styled.div`
   width: 600px;
@@ -78,7 +107,7 @@ const ModalWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1.5px solid #00A99D;
+  border: 1.5px solid #00a99d;
   z-index: 9999;
   font-family: 'Noto Sans KR';
   box-shadow: 3px 3px 3px rgba(85, 85, 85, 0.1);
@@ -112,6 +141,7 @@ const StImg = styled.div`
   width: 150px;
   height: 125px;
   background-image: url(${(props) => props.img});
+  background-size: 100% 100%;
   border-radius: 20px;
 `;
 
@@ -127,7 +157,7 @@ const StInfoMent = styled.div`
   width: 300px;
   margin-top: 5px;
   margin-bottom: 5px;
-  background-color: #EEF8F8;
+  background-color: #eef8f8;
   font-weight: 500;
   font-size: 16px;
   color: #424242;

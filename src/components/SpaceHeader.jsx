@@ -2,14 +2,18 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 import CodeConfirmModal from '../common/Modal/CodeConfirmModal';
 import { useGetInviteCodeInfoMutation } from '../redux/modules/workspaces';
+import { getCookieToken } from '../Cookie';
+import axios from 'axios';
 
 function SpaceHeader() {
-
+  const headers = {
+    Authorization: getCookieToken(),
+  };
   const [codeConfirm] = useGetInviteCodeInfoMutation();
+  const [spaceData, setSpaceData] = useState(null);
 
-  const [inviteCodeConfirm, setInviteCodeConfirm] = useState(false)
+  const [inviteCodeConfirm, setInviteCodeConfirm] = useState(false);
   let [code, setCode] = useState('');
-
 
   const onChange = (e) => {
     setCode(e.target.value);
@@ -19,15 +23,25 @@ function SpaceHeader() {
     setInviteCodeConfirm(false);
   };
 
-  const handleSubmit = () => {    
+  const handleSubmit = async () => {
+    const codes = {
+      code,
+    };
     if (code) {
-      codeConfirm({code});
-      setInviteCodeConfirm(inviteCodeConfirm === false ? true : false);
-
-      } else {
-           window.alert('코드를 입력해주세요');
-         }
-       }
+      try {
+        await axios
+          .post('https://hosung.shop/api/invitation/codes', codes, { headers })
+          .then((response) => {
+            setInviteCodeConfirm(true);
+            setSpaceData(response?.data?.data.workspaces);
+          });
+      } catch (error) {
+        alert('없는 코드입니다!');
+      }
+    } else {
+      window.alert('코드를 입력해주세요!');
+    }
+  };
 
   return (
     <StHeaderDiv>
@@ -40,18 +54,16 @@ function SpaceHeader() {
           onChange={onChange}
           placeholder='초대코드 입력하고 프로젝트 참여하기'
         ></StInput>
-        <StGo
-          onClick={handleSubmit}
-        >
-          Go.
-        </StGo>
+        <StGo onClick={handleSubmit}>Go.</StGo>
       </StSearch>
       {inviteCodeConfirm ? (
-          <CodeConfirmModal onClose={handleClose} />
-        ) : null}
-
+        <CodeConfirmModal
+          onClose={handleClose}
+          spaceData={spaceData}
+          headers={headers}
+        />
+      ) : null}
     </StHeaderDiv>
-
   );
 }
 

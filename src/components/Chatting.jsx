@@ -71,41 +71,41 @@ export default function Chatting({
 
   return (
     <>
-      <ModalContainer>
-        <Draggable>
-          <StChatBox>
-            {/* <UserList>
+      {/* <ModalContainer> */}
+      <Draggable>
+        <StChatBox>
+          {/* <UserList>
             {userlist?.map((list, i) => {
               return <>{list}</>;
             })}
           </UserList> */}
-            <StChatHeader>{title}</StChatHeader>
-            <StChatBody>{chatdata}</StChatBody>
-            <StChatFooter>
-              <StInput
-                rows='0'
-                cols='0'
-                name='message'
-                // value={textRef.current.value}
-                // onChange={onChange}
-                onKeyDown={onKeyDown}
-                ref={textRef}
-                // autoComplete='off'
-                placeholder='메세지를 입력하세요 (100자 이내)'
-                maxLength={100}
-              ></StInput>
-              <StButton
-                onClick={sendMessage}
-                message={message}
-                textRef={textRef}
-                // disabled={textRef.current.value.length === 0}
-              >
-                전송
-              </StButton>
-            </StChatFooter>
-          </StChatBox>
-        </Draggable>
-      </ModalContainer>
+          <StChatHeader>{title}</StChatHeader>
+          <StChatBody>{chatdata}</StChatBody>
+          <StChatFooter>
+            <StInput
+              rows='0'
+              cols='0'
+              name='message'
+              // value={textRef.current.value}
+              // onChange={onChange}
+              onKeyPress={onKeyDown}
+              ref={textRef}
+              // autoComplete='off'
+              placeholder='메세지를 입력하세요 (100자 이내)'
+              maxLength={100}
+            ></StInput>
+            <StButton
+              onClick={sendMessage}
+              message={message}
+              textRef={textRef}
+              // disabled={textRef.current.value.length === 0}
+            >
+              전송
+            </StButton>
+          </StChatFooter>
+        </StChatBox>
+      </Draggable>
+      {/* </ModalContainer> */}
     </>
   );
 }

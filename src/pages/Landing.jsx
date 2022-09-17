@@ -10,14 +10,14 @@ import velkit from '../asset/img/velkit.png';
 import velkit2 from '../asset/img/velkit2.png';
 import velkit3 from '../asset/img/velkit3.png';
 import twinklestar from '../asset/img/twinklestar.svg';
-import SecondCard1 from '../asset/img/SecondCard1.png'
-import SecondCard2 from '../asset/img/SecondCard2.png'
-import SecondCard3 from '../asset/img/SecondCard3.png'
-import SecondCard4 from '../asset/img/SecondCard4.png'
-import ThirdBackground from '../asset/img/ThirdBackground.png'
-import ThirdImg from '../asset/img/ThirdImg.png'
-import Fourth1 from '../asset/img/Fourth1.png'
-import Fourth2 from '../asset/img/Fourth2.png'
+import SecondCard1 from '../asset/img/SecondCard1.png';
+import SecondCard2 from '../asset/img/SecondCard2.png';
+import SecondCard3 from '../asset/img/SecondCard3.png';
+import SecondCard4 from '../asset/img/SecondCard4.png';
+import ThirdBackground from '../asset/img/ThirdBackground.png';
+import ThirdImg from '../asset/img/ThirdImg.png';
+import Fourth1 from '../asset/img/Fourth1.png';
+import Fourth2 from '../asset/img/Fourth2.png';
 
 function Landing({ setPath }) {
   const navigate = useNavigate();
@@ -94,76 +94,127 @@ function Landing({ setPath }) {
       </StWrapper>
 
       <StWrapper height={'100vh'}>
-        <StMain style={{alginItems: "center"}}>
+        <StMain style={{ alginItems: 'center' }}>
           <StSecondIntroDiv>
-               <div>프로젝트 협업툴, 더 꼼꼼히 따져봐야 합니다.</div>
-               <StSecondMent>
-                <div style={{marginBottom: "1%"}}>웹기반 프로젝트 협업 서비스라고 다 똑같지 않습니다.</div>
-                <div>디벨킷은 100% 무료 서비스로 높은 퀄리티의 맞춤 서비스를 제공합니다.</div>
-               </StSecondMent>
+            <div>프로젝트 협업툴, 더 꼼꼼히 따져봐야 합니다.</div>
+            <StSecondMent>
+              <div style={{ marginBottom: '1%' }}>
+                웹기반 프로젝트 협업 서비스라고 다 똑같지 않습니다.
+              </div>
+              <div>
+                디벨킷은 100% 무료 서비스로 높은 퀄리티의 맞춤 서비스를
+                제공합니다.
+              </div>
+            </StSecondMent>
           </StSecondIntroDiv>
 
           <StSecondBodyDiv>
             <StSecondBodyMent>
-              <StMent>let</StMent> <StMent fontColor='#00A99D'>D.Velkit</StMent><StMent> = </StMent><StMent fontColor='#F5D28C'>“Point!”</StMent><StMent>;</StMent>
+              <StMent>let</StMent> <StMent fontColor='#00A99D'>D.Velkit</StMent>
+              <StMent> = </StMent>
+              <StMent fontColor='#F5D28C'>“Point!”</StMent>
+              <StMent>;</StMent>
               <StSecondBodyMentTwo>
                 <div>프로젝트 협업의 새로운 시작</div>
-                <div style={{marginTop: "1%", fontWeight: "700"}}>업무관리가 더욱 쉽고 간편해집니다</div>
+                <div style={{ marginTop: '1%', fontWeight: '700' }}>
+                  업무관리가 더욱 쉽고 간편해집니다
+                </div>
               </StSecondBodyMentTwo>
             </StSecondBodyMent>
             <StCardContainer>
               <StCardElement>
-                  <StImgContainer img={SecondCard1}></StImgContainer>
-                  <StCardMentContainer>
-                    <StSecondBodyMentTwo style={{marginTop: "2%", fontWeight: "700"}}>프로젝트 관리</StSecondBodyMentTwo >
-                    <StCardMentContent>간편로그인과 함께 프로젝트 생성 후 문서를 쉽게 작성하고 원활한 관리로 성장하는 협업을 경험해보세요</StCardMentContent>
-                  </StCardMentContainer>
-                </StCardElement>
+                <StImgContainer img={SecondCard1}></StImgContainer>
+                <StCardMentContainer>
+                  <StSecondBodyMentTwo
+                    style={{ marginTop: '2%', fontWeight: '700' }}
+                  >
+                    프로젝트 관리
+                  </StSecondBodyMentTwo>
+                  <StCardMentContent>
+                    간편로그인과 함께 프로젝트 생성 후 문서를 쉽게 작성하고
+                    원활한 관리로 성장하는 협업을 경험해보세요
+                  </StCardMentContent>
+                </StCardMentContainer>
+              </StCardElement>
 
-                <StCardElement>
-                  <StImgContainer img={SecondCard2}></StImgContainer>
-                  <StCardMentContainer>
-                    <StSecondBodyMentTwo style={{marginTop: "2%", fontWeight: "700"}}>문서 아카이빙</StSecondBodyMentTwo >
-                    <StCardMentContent>데이터를 효과적으로 보관할 수 있는 아카이빙 기능을 제공하여 별도 솔루션을 도입하지 않아도 됩니다.</StCardMentContent>
-                  </StCardMentContainer>
-                </StCardElement>
+              <StCardElement>
+                <StImgContainer img={SecondCard2}></StImgContainer>
+                <StCardMentContainer>
+                  <StSecondBodyMentTwo
+                    style={{ marginTop: '2%', fontWeight: '700' }}
+                  >
+                    문서 아카이빙
+                  </StSecondBodyMentTwo>
+                  <StCardMentContent>
+                    데이터를 효과적으로 보관할 수 있는 아카이빙 기능을 제공하여
+                    별도 솔루션을 도입하지 않아도 됩니다.
+                  </StCardMentContent>
+                </StCardMentContainer>
+              </StCardElement>
 
-                <StCardElement>
-                  <StImgContainer img={SecondCard3}></StImgContainer>
-                  <StCardMentContainer>
-                    <StSecondBodyMentTwo style={{marginTop: "2%", fontWeight: "700"}}>일정 관리</StSecondBodyMentTwo >
-                    <StCardMentContent>디벨킷 유저들의 불필요한 학습 과정을 단축하고자 쉽고, 친화적인 UI/UX로 사용성을 높였습니다.</StCardMentContent>
-                  </StCardMentContainer>
-                </StCardElement>
-              </StCardContainer>
-            </StSecondBodyDiv>
+              <StCardElement>
+                <StImgContainer img={SecondCard3}></StImgContainer>
+                <StCardMentContainer>
+                  <StSecondBodyMentTwo
+                    style={{ marginTop: '2%', fontWeight: '700' }}
+                  >
+                    일정 관리
+                  </StSecondBodyMentTwo>
+                  <StCardMentContent>
+                    디벨킷 유저들의 불필요한 학습 과정을 단축하고자 쉽고,
+                    친화적인 UI/UX로 사용성을 높였습니다.
+                  </StCardMentContent>
+                </StCardMentContainer>
+              </StCardElement>
+            </StCardContainer>
+          </StSecondBodyDiv>
         </StMain>
       </StWrapper>
 
       <StWrapper height={'100vh'}>
         <StImgWrapper img={ThirdBackground}>
-        <StMain>
-          <StThirdBody>
-            <StImgBox>
-              <StThirdImg img={ThirdImg}/>
-            </StImgBox>
-            <StThirdMent>
-              <MentContainer>
-              <StMent>let</StMent> <StMent fontColor='#00A99D'>D.Velkit</StMent><StMent> = </StMent><StMent fontColor='#F5D28C'>“growth”</StMent><StMent>;</StMent>
-              </MentContainer>
-              <StSecondBodyMentTwo>
-                <div>더 완벽한 프로젝트를 위해,</div>
-                <div style={{marginTop: "10px", fontWeight: "700"}}>커뮤니티에서 프로젝트 후기와 제안까지</div>
-              </StSecondBodyMentTwo>
-              <StCardMentContainer>
-                <StCardMentContent style={{marginTop: "25px", color: "#BCBCBC", fontWeight: "500"}}>프로젝트 협업이 완료된 후, 후기를 작성하여</StCardMentContent>
-                <StCardMentContent style={{color: "#BCBCBC", fontWeight: "500"}}>디벨킷에서 사이드 프로젝트 제안을 받을 수도 있습니다.</StCardMentContent>
-              </StCardMentContainer>
-              <StLink style={{marginTop: "60px", marginLeft: "0"}}>커뮤니티 바로가기 >  </StLink>
-            </StThirdMent>
-            <StVelkit2></StVelkit2>
-          </StThirdBody>
-        </StMain>
+          <StMain>
+            <StThirdBody>
+              <StImgBox>
+                <StThirdImg img={ThirdImg} />
+              </StImgBox>
+              <StThirdMent>
+                <MentContainer>
+                  <StMent>let</StMent>{' '}
+                  <StMent fontColor='#00A99D'>D.Velkit</StMent>
+                  <StMent> = </StMent>
+                  <StMent fontColor='#F5D28C'>“growth”</StMent>
+                  <StMent>;</StMent>
+                </MentContainer>
+                <StSecondBodyMentTwo>
+                  <div>더 완벽한 프로젝트를 위해,</div>
+                  <div style={{ marginTop: '10px', fontWeight: '700' }}>
+                    커뮤니티에서 프로젝트 후기와 제안까지
+                  </div>
+                </StSecondBodyMentTwo>
+                <StCardMentContainer>
+                  <StCardMentContent
+                    style={{
+                      marginTop: '25px',
+                      color: '#BCBCBC',
+                      fontWeight: '500',
+                    }}
+                  >
+                    프로젝트 협업이 완료된 후, 후기를 작성하여
+                  </StCardMentContent>
+                  <StCardMentContent
+                    style={{ color: '#BCBCBC', fontWeight: '500' }}
+                  >
+                    디벨킷에서 사이드 프로젝트 제안을 받을 수도 있습니다.
+                  </StCardMentContent>
+                </StCardMentContainer>
+                <StLink style={{ marginTop: '60px', marginLeft: '0' }}>
+                  커뮤니티 바로가기{' '}
+                </StLink>
+              </StThirdMent>
+              <StVelkit2></StVelkit2>
+            </StThirdBody>
+          </StMain>
         </StImgWrapper>
       </StWrapper>
 
@@ -172,28 +223,39 @@ function Landing({ setPath }) {
           <StThirdBody>
             <StImgBox>
               <StFourthImg img={Fourth1}>
-              <StSecondBodyMentTwo style={{marginTop: "40px", marginLeft: "40px"}}>
-                <div>협업의 새로운 시작</div>
-                <div style={{marginTop: "10px", fontWeight: "700"}}>더 완벽한 프로젝트를 위해,</div>
-                <StLink style={{marginTop: "100px", marginLeft: "0"}}>회원가입 바로가기 >  </StLink>
-              </StSecondBodyMentTwo>
+                <StSecondBodyMentTwo
+                  style={{ marginTop: '40px', marginLeft: '40px' }}
+                >
+                  <div>협업의 새로운 시작</div>
+                  <div style={{ marginTop: '10px', fontWeight: '700' }}>
+                    더 완벽한 프로젝트를 위해,
+                  </div>
+                  <StLink style={{ marginTop: '100px', marginLeft: '0' }}>
+                    회원가입 바로가기{' '}
+                  </StLink>
+                </StSecondBodyMentTwo>
               </StFourthImg>
             </StImgBox>
 
             <StImgBox>
               <StFourthImg img={Fourth2}>
-              <StSecondBodyMentTwo style={{marginTop: "40px", marginLeft: "40px"}}>
-                <div>디벨킷의</div>
-                <div style={{marginTop: "10px", fontWeight: "700"}}>힙한 EVENT,</div>
-                <StLink style={{marginTop: "100px", marginLeft: "0"}}>EVENT 바로가기 >  </StLink>
-              </StSecondBodyMentTwo>
+                <StSecondBodyMentTwo
+                  style={{ marginTop: '40px', marginLeft: '40px' }}
+                >
+                  <div>디벨킷의</div>
+                  <div style={{ marginTop: '10px', fontWeight: '700' }}>
+                    힙한 EVENT,
+                  </div>
+                  <StLink style={{ marginTop: '100px', marginLeft: '0' }}>
+                    EVENT 바로가기{' '}
+                  </StLink>
+                </StSecondBodyMentTwo>
               </StFourthImg>
             </StImgBox>
             <StVelkit3></StVelkit3>
           </StThirdBody>
-
         </StMain>
-</StWrapper>
+      </StWrapper>
     </>
   );
 }
@@ -206,7 +268,7 @@ const StWrapper = styled.div`
   height: ${(props) => props.height};
   display: flex;
   background: #000000;
-  overflow: hidden;
+  overflow-x: hidden;
 `;
 
 const StMain = styled.div`
@@ -276,7 +338,7 @@ const StLink = styled.div`
   line-height: -2;
   padding-bottom: 17px;
   letter-spacing: 0.01em;
-  text-decoration:underline;
+  text-decoration: underline;
 `;
 
 const StScroll = styled.div`
@@ -385,7 +447,7 @@ const StSecondIntroDiv = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  border: 2px solid #00A99D;
+  border: 2px solid #00a99d;
   font-weight: 600;
   font-size: 1.8rem;
   letter-spacing: -0.07em;
@@ -393,7 +455,7 @@ const StSecondIntroDiv = styled.div`
 
 const StSecondMent = styled.div`
   margin-top: 2%;
-  color: #00A99D;
+  color: #00a99d;
   font-weight: 300;
   font-size: 1.1rem;
   letter-spacing: -0.07em;
@@ -456,7 +518,7 @@ const StImgContainer = styled.div`
   border-radius: 15px;
   border: none;
   background: url(${(props) => props.img}) no-repeat;
-  background-size : cover;
+  background-size: cover;
 `;
 
 const StCardMentContainer = styled.div`
@@ -477,10 +539,9 @@ const StCardMentContent = styled.div`
 const StImgWrapper = styled.div`
   width: 100vw;
   height: 100vh;
-  background: 
-  linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), 
-  url(${(props) => props.img}) no-repeat;
-  background-size : cover;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)),
+    url(${(props) => props.img}) no-repeat;
+  background-size: cover;
   display: flex;
   overflow: hidden;
 `;
@@ -495,7 +556,7 @@ const StThirdBody = styled.div`
 `;
 
 const StImgBox = styled.div`
-  background-size : cover;
+  background-size: cover;
   width: 45%;
   display: flex;
   flex-direction: row;
@@ -508,10 +569,9 @@ const StThirdImg = styled.div`
   width: 450px;
   height: 420px;
   border: none;
-  background: 
-  linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
-  url(${(props) => props.img}) no-repeat;
-  background-size : cover;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+    url(${(props) => props.img}) no-repeat;
+  background-size: cover;
   border-radius: 20px;
 `;
 
@@ -531,8 +591,6 @@ const StFourthImg = styled.div`
   height: 40vh;
   border: none;
   background: url(${(props) => props.img}) no-repeat;
-  background-size : cover;
+  background-size: cover;
   border-radius: 20px;
 `;
-
-

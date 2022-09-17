@@ -135,6 +135,7 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
     getInviteCodeInfo: builder.mutation({
       query: (code) => {
+        console.log(code);
         return {
           url: `/api/invitation/codes`,
           method: 'POST',
