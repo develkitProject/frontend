@@ -50,7 +50,7 @@ const Projects = styled.div`
   min-height: 90vh;
   margin-left: 50px;
   margin-top: 60px;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
   background-color: white;
   display: flex;
   flex-direction: column;

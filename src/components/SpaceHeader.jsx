@@ -1,41 +1,33 @@
 import styled from 'styled-components';
-import axios from 'axios';
 import React, { useState } from 'react';
-import { getCookieToken } from '../Cookie';
-import JoinSpaceModal from '../common/Modal/JoinSpaceModal';
+import CodeConfirmModal from '../common/Modal/CodeConfirmModal';
+import { useGetInviteCodeInfoMutation } from '../redux/modules/workspaces';
 
 function SpaceHeader() {
+
+  const [codeConfirm] = useGetInviteCodeInfoMutation();
+
+  const [inviteCodeConfirm, setInviteCodeConfirm] = useState(false)
   let [code, setCode] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  const headers = {
-    Authorization: getCookieToken(),
-  };
+
 
   const onChange = (e) => {
     setCode(e.target.value);
   };
 
-  // const addpost = async (newList) => {
-  //   const response = await axios.post(
-  //     'https://hosung.shop/api/members/profile',
-  //     newList,
-  //     {
-  //       headers: {
-  //         Authorization: getCookieToken(),
-  //       },
-  //     }
-  //   );
-
-  //   return response.data;
-  // };
-
-  const onSubmitCode = async () => {
-    // const codes = { code: code };
-    // await axios.post('https://hosung.shop/api/invitation/codes'),
-    //   codes,
-    //   headers,
-    setIsOpen(true);
+  const handleClose = () => {
+    setInviteCodeConfirm(false);
   };
+
+  const handleSubmit = () => {    
+    if (code) {
+      codeConfirm({code});
+      setInviteCodeConfirm(inviteCodeConfirm === false ? true : false);
+
+      } else {
+           window.alert('코드를 입력해주세요');
+         }
+       }
 
   return (
     <StHeaderDiv>
@@ -48,16 +40,18 @@ function SpaceHeader() {
           onChange={onChange}
           placeholder='초대코드 입력하고 프로젝트 참여하기'
         ></StInput>
-        <StGo onClick={onSubmitCode}>Go.</StGo>
+        <StGo
+          onClick={handleSubmit}
+        >
+          Go.
+        </StGo>
       </StSearch>
-      {isOpen && (
-        <JoinSpaceModal
-          onClose={() => {
-            setIsOpen(false);
-          }}
-        ></JoinSpaceModal>
-      )}
+      {inviteCodeConfirm ? (
+          <CodeConfirmModal onClose={handleClose} />
+        ) : null}
+
     </StHeaderDiv>
+
   );
 }
 
@@ -118,7 +112,7 @@ const StGo = styled.button`
   margin-top: 0;
   display: inline;
   cursor: pointer;
-  @media screen and (max-width: 800px) {
+  /* @media screen and (max-width: 800px) {
     display: none;
-  }
+  } */
 `;

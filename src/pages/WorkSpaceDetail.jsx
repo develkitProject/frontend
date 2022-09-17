@@ -144,7 +144,7 @@ function WorkSpaceDetail() {
 
             <StTableContainer>
               <StThead>
-                <StTable style={{ borderBottom: 'none' }}>
+                <StTable style={{ height: "50px", borderBottom: 'none' }}>
                   <div>담당자</div>
                   <div>문서제목</div>
                   <div>작성자</div>
@@ -195,8 +195,7 @@ export default WorkSpaceDetail;
 
 const StWrapper = styled.div`
   width: 100%;
-  height: 100vh;
-  /* min-height: 100%; */
+  min-height: 100%;
   background-color: #f2f2f2;
   display: flex;
   flex-direction: row;
@@ -204,7 +203,7 @@ const StWrapper = styled.div`
 
 const Projects = styled.div`
   width: 65%;
-  min-height: 90%;
+  min-height: 90vh;
   margin-left: 50px;
   margin-top: 60px;
   margin-bottom: 50px;
@@ -237,13 +236,13 @@ const StContent = styled.p`
   margin-top: 10px;
   color: #333333;
   text-align: left;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: normal;
   letter-spacing: -1px;
 `;
 
 const StNoticeWrapper = styled.div`
-  width: 96%;
+  width: 94%;
   margin-left: 30px;
   margin-top: 35px;
   display: flex;
@@ -297,8 +296,8 @@ const StInfoDiv = styled.div`
 `;
 
 const StScheduleWrapper = styled.div`
-  width: 96%;
-  min-height: 100px;
+  width: 94%;
+  /* min-height: 100px; */
   margin-left: 30px;
   margin-top: 35px;
   margin-bottom: 20px;
@@ -334,7 +333,6 @@ const StTable = styled.div`
 const StThead = styled.div`
   background-color: #00a99d;
   border-radius: 8px;
-  height: 50px;
   color: white;
   align-items: center;
   line-height: 50px;
