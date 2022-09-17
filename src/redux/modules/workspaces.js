@@ -133,7 +133,6 @@ export const workspaceApi = coreApi.injectEndpoints({
       },
       providesTags: ['InviteCode'],
     }),
-
     getInviteCodeInfo: builder.mutation({
       query: (code) => {
         return {

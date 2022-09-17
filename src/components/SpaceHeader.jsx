@@ -10,6 +10,7 @@ function SpaceHeader() {
   const [inviteCodeConfirm, setInviteCodeConfirm] = useState(false)
   let [code, setCode] = useState('');
 
+
   const onChange = (e) => {
     setCode(e.target.value);
   };
@@ -27,8 +28,6 @@ function SpaceHeader() {
            window.alert('코드를 입력해주세요');
          }
        }
-
-
 
   return (
     <StHeaderDiv>
@@ -50,6 +49,7 @@ function SpaceHeader() {
       {inviteCodeConfirm ? (
           <CodeConfirmModal onClose={handleClose} />
         ) : null}
+
     </StHeaderDiv>
 
   );
