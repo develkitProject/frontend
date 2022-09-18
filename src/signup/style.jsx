@@ -56,9 +56,9 @@ export const Button = styled.button`
 `;
 
 export const Text = styled.pre`
-  color: ${(props) => props.color};
-  font-size: ${(props) => props.size}px;
-  font-weight: ${(props) => props.bold};
+  color: ${props => props.color};
+  font-size: ${props => props.size}px;
+  font-weight: ${props => props.bold};
   font-family: 'Noto Sans KR', sans-serif;
   letter-spacing: -0.05em;
   margin-top: 7px;
