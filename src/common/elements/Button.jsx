@@ -2,20 +2,30 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-export default function Button1() {
+export default function Button1(props) {
   return (
     <>
-      <StButton type='button'>워크스페이스생성</StButton>
+      <StButton
+        type='button'
+        width={props.width}
+        onClick={() => {
+          props.onClick();
+        }}
+      >
+        {props.text}
+      </StButton>
     </>
   );
 }
 
 const StButton = styled.button`
-  width: 200px;
-  height: 30px;
+  width: ${(props) => props.width};
+  height: 50px;
   background-color: rgb(0, 169, 157);
-  font-size: 20px;
+  font-size: 17px;
   cursor: pointer;
   border: none;
   color: white;
+  border-radius: 10px;
+  margin-top: 20px;
 `;

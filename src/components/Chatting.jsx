@@ -1,18 +1,9 @@
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useMemo,
-  useCallback,
-} from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 
-import { useParams } from 'react-router-dom';
-import { getCookieToken } from '../Cookie';
-import { useGetChatMessageQuery } from '../redux/modules/chat';
-import useGetUser from '../common/hooks/useGetUser';
 import Draggable from 'react-draggable';
-import ModalContainer from '../common/Modal/ModalContainer';
+import useGetUser from '../common/hooks/useGetUser';
+import { useEffect } from 'react';
 
 export default function Chatting({
   title,
@@ -23,6 +14,13 @@ export default function Chatting({
   message,
 }) {
   const textRef = useRef(null);
+  const messageBoxRef = useRef();
+  const { user } = useGetUser();
+  const [state, setState] = useState(false);
+
+  useEffect(() => {
+    messageBoxRef.current.scrollTop = messageBoxRef.current.scroppHeight;
+  }, [message]);
 
   const sendMessage = () => {
     if (textRef.current.value !== '') {
@@ -44,18 +42,22 @@ export default function Chatting({
     }
   };
 
+  // eslint-disable-next-line array-callback-return
   const chatdata = chatMessages?.map((data, i) => {
     if (data.type === 'TALK') {
-      // if ()
       return (
         <>
-          <div style={{ marginTop: '5px' }}>
+          <Stdiv
+            key={i}
+            style={
+              data.writer === user.username
+                ? { alignItems: 'flex-end' }
+                : { alignItems: 'flex-start' }
+            }
+          >
             <span
               style={{
                 color: 'grey',
-                marginRight: '20px',
-                marginTop: '5px',
-                marginLeft: '10px',
               }}
             >
               {data.writer.split('@')[0]}
@@ -63,7 +65,7 @@ export default function Chatting({
             <MessageBox key={i}>
               <span style={{ color: 'black' }}>{data.message}</span>
             </MessageBox>
-          </div>
+          </Stdiv>
         </>
       );
     }
@@ -79,8 +81,13 @@ export default function Chatting({
               return <>{list}</>;
             })}
           </UserList> */}
-          <StChatHeader>{title}</StChatHeader>
-          <StChatBody>{chatdata}</StChatBody>
+          <StChatHeader>
+            <span style={{ marginLeft: '10px', fontSize: '15px' }}>
+              {title}
+            </span>
+            <span style={{ marginRight: '10px', cursor: 'pointer' }}>+</span>
+          </StChatHeader>
+          <StChatBody ref={messageBoxRef}>{chatdata}</StChatBody>
           <StChatFooter>
             <StInput
               rows='0'
@@ -112,7 +119,7 @@ export default function Chatting({
 
 const StChatBox = styled.div`
   width: 350px;
-  height: 500px;
+  height: 560px;
   background-color: #f6daa2;
   /* position: relative; */
   left: 50%;
@@ -126,22 +133,23 @@ const StChatHeader = styled.div`
   height: 30px;
   background-color: #f5d28c;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   color: #776540;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 17px;
   letter-spacing: -0.8px;
 `;
 
 const StChatFooter = styled.div`
   width: 100%;
-  height: 80px;
+  height: 60px;
   background-color: #ffffff;
   display: flex;
   bottom: 0;
   pointer-events: visible;
   position: absolute;
+  align-items: center;
   /* z-index: -999; */
 `;
 
@@ -169,7 +177,6 @@ const StButton = styled.button`
   background-color: ${({ textRef }) =>
     textRef !== '' ? '#f5d28c' : '#d8d8d8'};
   border-radius: 8px;
-  margin-top: 15px;
   margin-left: 14px;
   border: none;
   color: ${({ textRef }) => (textRef !== '' ? '#262012' : '#a1a1a1')};
@@ -177,9 +184,12 @@ const StButton = styled.button`
 `;
 
 const StChatBody = styled.div`
-  height: 390px;
+  height: 470px;
   overflow: auto;
-
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -187,22 +197,23 @@ const StChatBody = styled.div`
 
 const MessageBox = styled.div`
   min-height: 30px;
-  min-width: 30px;
+  min-width: 100px;
+  max-width: 200px;
   border-radius: 8px;
-  width: 40%;
-  margin-top: 5px;
+  margin-top: 10px;
   background-color: #f9f9f9;
   display: flex;
   justify-content: center;
   text-align: center;
   align-items: center;
-  margin-left: 10px;
+  padding: 0px 5px 0px 5px;
+  /* margin-left: 10px; */
+  /* float: right; */
 `;
 
-const UserList = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: #e9dcc1;
-  position: absolute;
-  left: 100%;
+const Stdiv = styled.div`
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  padding-right: 10px;
 `;

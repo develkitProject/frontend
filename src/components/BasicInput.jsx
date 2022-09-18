@@ -4,52 +4,43 @@ import styled from 'styled-components';
 import Icon from './Icon';
 
 export default function BasicInput({
-    placeholder,
-    type,
-    marginTop,
-    marginBottom,
-    onChange,
-    name,
-    label,
-    isError,
-    isSuccess,
-    errorText,
+  placeholder,
+  type,
+  marginTop,
+  marginBottom,
+  onChange,
+  name,
+  label,
+  isError,
+  isSuccess,
+  errorText,
 }) {
-    const setBorderStyle = useCallback(() => {
-        if(isSuccess) return '1px solid #00A99D'
-        if(isError) return '1px solid #E75E5E'
-        return '1px solid #999999'
-    }, [isError, isSuccess])
-    
-    return (
-        <Spacer
-            marginTop={marginTop}
-            marginBottom={marginBottom}
-        >
-            {label && (
-                <LabelText>{label}</LabelText>
-            )}
-            <InputWrapper
-                borderStyle={setBorderStyle()}
-            >
-                <StInput 
-                    name={name}
-                    type={type}
-                    placeholder={placeholder}
-                    onChange={onChange}
-                    borderStyle={setBorderStyle()}
-                />
-                {isSuccess && (
-                    <Icon.CheckSuccess />
-                )}
-            </InputWrapper>
-            {isError && (
-                <div>
-                    <ErrorText>{errorText}</ErrorText>
-                </div>
-            )}
-        </Spacer>
-    )
+  const setBorderStyle = useCallback(() => {
+    if (isSuccess) return '1px solid #00A99D';
+    if (isError) return '1px solid #E75E5E';
+    return '1px solid #999999';
+  }, [isError, isSuccess]);
+
+  return (
+    <Spacer marginTop={marginTop} marginBottom={marginBottom}>
+      {label && <LabelText>{label}</LabelText>}
+      <InputWrapper borderStyle={setBorderStyle()}>
+        <StInput
+          name={name}
+          type={type}
+          placeholder={placeholder}
+          onChange={onChange}
+          borderStyle={setBorderStyle()}
+        />
+        {isSuccess && <Icon.CheckSuccess />}
+      </InputWrapper>
+      {isError && (
+        <div>
+          <ErrorText>{errorText}</ErrorText>
+        </div>
+      )}
+    </Spacer>
+  );
 }
 
 const Spacer = styled.div`
@@ -81,8 +72,8 @@ const StInput = styled.input`
   font-size: 16px;
   margin: auto 0;
   width: 310px;
-  border:none;
-    outline: none;
+  border: none;
+  outline: none;
 `;
 
 const ErrorText = styled.span`

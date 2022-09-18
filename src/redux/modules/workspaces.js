@@ -145,6 +145,27 @@ export const workspaceApi = coreApi.injectEndpoints({
       },
       invalidatesTags: ['InviteCode'],
     }),
+    getSchedules: builder.query({
+      query: (id) => {
+        return {
+          url: `/api/workspaces/${id}/schedules`,
+          method: 'GET',
+          headers,
+        };
+      },
+      providesTags: ['Schedules'],
+    }),
+    addSchedules: builder.mutation({
+      query: (schedules) => {
+        return {
+          url: `/api/workspaces/${schedules.id}/schedules`,
+          method: 'POST',
+          body: schedules,
+          headers,
+        };
+      },
+      invalidatesTags: ['Schedules'],
+    }),
   }),
 });
 
@@ -163,4 +184,6 @@ export const {
   useAddDocMutation,
   useGetInviteCodeQuery,
   useGetInviteCodeInfoMutation,
+  useGetSchedulesQuery,
+  useAddSchedulesMutation,
 } = workspaceApi;
