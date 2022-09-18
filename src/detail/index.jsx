@@ -9,6 +9,8 @@ import Schedule from './workspaces/Schedule';
 import Contacts from './workspaces/Contacts';
 import ProjectInfo from './workspaces/ProjectInfo';
 
+import * as S from './style';
+
 export default function WorkspaceDetailPage() {
     const { onClickMenu, menu } = useChangeMenu();
 
@@ -22,32 +24,11 @@ export default function WorkspaceDetailPage() {
     }[menu]
 
     return (
-        <StWrapper>
+        <S.Wrapper>
             <Sidebar onClickMenu={onClickMenu} />
-            <Projects>
+            <S.Projects>
                 <SelectWorkspaceMenu />
-            </Projects>
-        </StWrapper>
+            </S.Projects>
+        </S.Wrapper>
     )
 }
-
-const StWrapper = styled.section`
-  width: 100%;
-  height: 100vh;
-  /* min-height: 100%; */
-  background-color: #f2f2f2;
-  display: flex;
-  flex-direction: row;
-`;
-
-const Projects = styled.div`
-  width: 65%;
-  min-height: 90%;
-  margin-left: 50px;
-  margin-top: 60px;
-  margin-bottom: 50px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-`;
