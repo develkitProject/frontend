@@ -1,26 +1,63 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useParams } from 'react';
 import styled from 'styled-components';
-
+import { getCookieToken } from '../Cookie';
 import Draggable from 'react-draggable';
-import useGetUser from '../common/hooks/useGetUser';
+
 import { useEffect } from 'react';
 import ModalContainer from '../common/Modal/ModalContainer';
 import noteBook from '../asset/img/notebook.png';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
 
-export default function Chatting({
-  title,
-  id,
-  stompClient,
-  chatMessages,
-  headers,
-  users,
-}) {
+export default function Chatting({ title, id, user }) {
   const textRef = useRef(null);
   const messageBoxRef = useRef();
-  const { user } = useGetUser();
+
   const [isOpen, setIsOpen] = useState(false);
   const [Opacity, setOpacity] = useState(false);
+  // ------------------------------------------------------------------------
+  const [chatMessages, setChatMessages] = useState([]);
+  const [users, setUsers] = useState(null);
+  const sockJS = new SockJS('https://hosung.shop/stomp/chat');
+  const stompClient = Stomp.over(sockJS);
   const userArray = [...new Set(users)];
+  stompClient.debug = () => {};
+
+  const headers = {
+    token: getCookieToken(),
+  };
+
+  useEffect(() => {
+    onConnected();
+    return () => {
+      disConnect();
+    };
+  }, []);
+
+  function onConnected() {
+    try {
+      stompClient.connect(headers, () => {
+        stompClient.subscribe(
+          `/sub/chat/room/${id}`,
+          (data) => {
+            const newMessage = JSON.parse(data.body);
+            setChatMessages((chatMessages) => [...chatMessages, newMessage]);
+            if (newMessage.type !== 'TALK') {
+              setUsers(newMessage.userList);
+            }
+          },
+          headers
+        );
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const disConnect = () => {
+    if (stompClient != null) {
+      if (stompClient.connected) stompClient.disconnect();
+    }
+  };
 
   const handleStart = () => {
     setOpacity(true);

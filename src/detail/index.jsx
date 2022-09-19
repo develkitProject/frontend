@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Sidebar from './components/Sidebar';
 import useChangeMenu from './hooks/useChangeMenu';
@@ -8,11 +10,12 @@ import Document from './workspaces/Document';
 import Schedule from './workspaces/Schedule';
 import Contacts from './workspaces/Contacts';
 import ProjectInfo from './workspaces/ProjectInfo';
-
+import Chatting from '../components/Chatting';
 import * as S from './style';
 
 export default function WorkspaceDetailPage() {
   const { onClickMenu, menu } = useChangeMenu();
+  const id = Number(useParams().id);
 
   const SelectWorkspaceMenu = {
     home: Home,
@@ -27,8 +30,9 @@ export default function WorkspaceDetailPage() {
     <S.Wrapper>
       <Sidebar onClickMenu={onClickMenu} />
       <S.Projects>
-        <SelectWorkspaceMenu />
+        <SelectWorkspaceMenu id={id} />
       </S.Projects>
+      <Chatting id={id}></Chatting>
     </S.Wrapper>
   );
 }

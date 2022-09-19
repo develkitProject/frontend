@@ -35,8 +35,8 @@ function App() {
         <Route path='/editor' element={<PostEditor />} />
         <Route path='/kakao' element={<Kakao />} />
 
-        <Route path='/detail' element={<WorkspaceDetailPage />} />
-        <Route path='/workspace/main/:id' element={<WorkSpaceDetail />} />
+        <Route path='/workspace/main/:id' element={<WorkspaceDetailPage />} />
+        {/* <Route path='/workspace/main/:id' element={<WorkSpaceDetail />} /> */}
         <Route path='/workspace/main/:id/notice' element={<NoticePage />} />
         <Route
           path='/workspace/main/:id/notice/write'
