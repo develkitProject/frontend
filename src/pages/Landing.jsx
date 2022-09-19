@@ -19,10 +19,11 @@ import ThirdImg from '../asset/img/ThirdImg.png';
 import Fourth1 from '../asset/img/Fourth1.png';
 import Fourth2 from '../asset/img/Fourth2.png';
 
-function Landing({ setPath }) {
+function Landing() {
   const navigate = useNavigate();
   const cookies = getCookieToken();
   const homeRef = useRef(null);
+  const [path, setPath] = useState(1);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -264,7 +265,7 @@ export default Landing;
 
 const StWrapper = styled.div`
   color: white;
-  width: 100vw;
+  width: 100%;
   height: ${(props) => props.height};
   display: flex;
   background: #000000;

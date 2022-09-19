@@ -39,7 +39,7 @@ function WorkSpaceDetail() {
   // const scrollRef = useRef();
   // const { data } = useGetChatMessageQuery();
   const [message, setMessage] = useState('');
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(null);
   // const { user } = useGetUser();
 
   const sockJS = new SockJS('https://hosung.shop/stomp/chat');
@@ -66,7 +66,9 @@ function WorkSpaceDetail() {
           (data) => {
             const newMessage = JSON.parse(data.body);
             setChatMessages((chatMessages) => [...chatMessages, newMessage]);
-            console.log(newMessage);
+            if (newMessage.type !== 'TALK') {
+              setUsers(newMessage.userList);
+            }
           },
           headers
         );
@@ -185,7 +187,7 @@ function WorkSpaceDetail() {
           stompClient={stompClient}
           chatMessages={chatMessages}
           headers={headers}
-          message={message}
+          users={users}
         ></Chatting>
       )}
     </StWrapper>

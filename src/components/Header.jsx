@@ -16,7 +16,8 @@ import {
   selectIsSignUpModal,
 } from '../redux/modules/global/selectors';
 
-function Header({ path, setPath }) {
+function Header() {
+  const [path, setPath] = useState(1);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const API_URL = `https://hosung.shop/api/members/profile`;
@@ -37,7 +38,7 @@ function Header({ path, setPath }) {
     readUser();
   }, []);
 
-  const readUser = useCallback(async () => {
+  const readUser = async () => {
     if (cookies) {
       const response = await axios.get(API_URL, {
         headers: {
@@ -46,7 +47,7 @@ function Header({ path, setPath }) {
       });
       setUser(response.data.data);
     }
-  });
+  };
 
   const openLoginModal = () => {
     dispatch(setIsLoginModal(true));

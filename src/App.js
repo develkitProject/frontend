@@ -22,13 +22,11 @@ import SideMenu from './components/SideMenu';
 import useGetUser from './common/hooks/useGetUser';
 
 function App() {
-  const [path, setPath] = useState(1);
-
   return (
     <>
-      <Header path={path} setPath={setPath} />
+      <Header />
       <Routes>
-        <Route path='/' element={<Landing setPath={setPath} />} />
+        <Route path='/' element={<Landing />} />
         {/* <Route path='/signup' element={<SignUp />} /> */}
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/mypage2' element={<MyPage2 />} />
