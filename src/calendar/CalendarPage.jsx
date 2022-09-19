@@ -1,14 +1,28 @@
 import styled from 'styled-components';
+import React, { useState } from 'react';
 import SideMenu from '../components/SideMenu';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import CalendarApp from './Calendar';
+import CalendarApp from './CalendarApp';
 import BlackButton from '../common/elements/BlackButton';
+import { useGetSchedulesQuery } from '../redux/modules/workspaces';
+import CalendarModal from '../common/Modal/CalendarModal';
+import { useEffect } from 'react';
 
 export default function ClaendarPage() {
   const navigate = useNavigate();
   const params = useParams();
+  const [date, setDate] = useState([]);
   const id = Number(params.id);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onOpenModal = () => {
+    setIsOpen(true);
+  };
+
+  const onCloseModal = () => {
+    setIsOpen(false);
+  };
 
   return (
     <StWrapper>
@@ -21,14 +35,12 @@ export default function ClaendarPage() {
             <StTitle>일정관리</StTitle>
             <StContent>프로젝트 팀원들의 일정을 관리해보세요.</StContent>
           </div>
-          <BlackButton
-            text='일정만들기'
-            onClick={() => {
-              // navigate(`/workspace/main/${id}/notice/write`);
-            }}
-          ></BlackButton>
+          <BlackButton text='일정만들기' onClick={onOpenModal}></BlackButton>
         </StIntroContainer>
-        <CalendarApp></CalendarApp>
+        <CalendarApp id={id}></CalendarApp>
+        {isOpen && (
+          <CalendarModal onClose={onCloseModal} id={id}></CalendarModal>
+        )}
       </Projects>
     </StWrapper>
   );
@@ -44,13 +56,12 @@ const StWrapper = styled.div`
 
 const Projects = styled.div`
   width: 65%;
-  min-height: 50vh;
+  height: 100%;
   margin-left: 50px;
   margin-top: 4%;
   background-color: white;
   display: flex;
   flex-direction: column;
-  align-items: left;
   margin-bottom: 40px;
   justify-content: center;
 `;

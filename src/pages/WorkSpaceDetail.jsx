@@ -39,6 +39,7 @@ function WorkSpaceDetail() {
   // const scrollRef = useRef();
   // const { data } = useGetChatMessageQuery();
   const [message, setMessage] = useState('');
+  const [users, setUsers] = useState(null);
   // const { user } = useGetUser();
 
   const sockJS = new SockJS('https://hosung.shop/stomp/chat');
@@ -65,7 +66,9 @@ function WorkSpaceDetail() {
           (data) => {
             const newMessage = JSON.parse(data.body);
             setChatMessages((chatMessages) => [...chatMessages, newMessage]);
-            console.log(newMessage);
+            if (newMessage.type !== 'TALK') {
+              setUsers(newMessage.userList);
+            }
           },
           headers
         );
@@ -130,7 +133,6 @@ function WorkSpaceDetail() {
                     {data?.data.notices &&
                       data?.data.notices.createdAt.slice(0, -13)}{' '}
                   </p>
-                  <p>{data?.data.notices && '읽음 7'}</p>
                 </StInfoDiv>
               </StNoticeBox>
             </StNoticeContainer>
@@ -144,7 +146,7 @@ function WorkSpaceDetail() {
 
             <StTableContainer>
               <StThead>
-                <StTable style={{ height: "50px", borderBottom: 'none' }}>
+                <StTable style={{ height: '50px', borderBottom: 'none' }}>
                   <div>담당자</div>
                   <div>문서제목</div>
                   <div>작성자</div>
@@ -167,8 +169,8 @@ function WorkSpaceDetail() {
                       <div>{data.user.nickname}</div>
                       <div>{data.title}</div>
                       <div>{data.user.nickname}</div>
-                      <div>{data.createdAt}</div>
-                      <div>{data.modifiedAt}</div>
+                      <div>{data.createdAt.split(' ')[0]}</div>
+                      <div>{data.modifiedAt.split(' ')[0]}</div>
                     </StTable>
                   );
                 })}
@@ -184,7 +186,7 @@ function WorkSpaceDetail() {
           stompClient={stompClient}
           chatMessages={chatMessages}
           headers={headers}
-          message={message}
+          users={users}
         ></Chatting>
       )}
     </StWrapper>

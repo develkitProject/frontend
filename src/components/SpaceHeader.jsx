@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import CodeConfirmModal from '../common/Modal/CodeConfirmModal';
-import { useGetInviteCodeInfoMutation } from '../redux/modules/workspaces';
 import { getCookieToken } from '../Cookie';
 import axios from 'axios';
 
@@ -9,7 +8,6 @@ function SpaceHeader() {
   const headers = {
     Authorization: getCookieToken(),
   };
-  const [codeConfirm] = useGetInviteCodeInfoMutation();
   const [spaceData, setSpaceData] = useState(null);
 
   const [inviteCodeConfirm, setInviteCodeConfirm] = useState(false);

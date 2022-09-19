@@ -20,24 +20,23 @@ import CalendarPage from './calendar/CalendarPage';
 import DocDetail from './document/DocDetail';
 import SideMenu from './components/SideMenu';
 import useGetUser from './common/hooks/useGetUser';
+import WorkspaceDetailPage from './detail';
 
 function App() {
-  const [path, setPath] = useState(1);
-
   return (
     <>
-      <Header path={path} setPath={setPath} />
+      <Header />
       <Routes>
-        <Route path="/" element={<Landing setPath={setPath} />} />
+        <Route path='/' element={<Landing />} />
         {/* <Route path='/signup' element={<SignUp />} /> */}
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage2" element={<MyPage2 />} />
         <Route path="/workspace" element={<WorkSpace />} />
         <Route path="/editor" element={<PostEditor />} />
         <Route path="/kakao" element={<Kakao />} />
-
-        <Route path="/workspace/main/:id" element={<WorkSpaceDetail />} />
-        <Route path="/workspace/main/:id/notice" element={<NoticePage />} />
+        <Route path='/detail' element={<WorkspaceDetailPage />} />
+        <Route path='/workspace/main/:id' element={<WorkSpaceDetail />} />
+        <Route path='/workspace/main/:id/notice' element={<NoticePage />} />
         <Route
           path="/workspace/main/:id/notice/write"
           element={<NoticeWritePage />}
