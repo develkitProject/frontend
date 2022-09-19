@@ -1,9 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 
 import Draggable from 'react-draggable';
 import useGetUser from '../common/hooks/useGetUser';
 import { useEffect } from 'react';
+import ModalContainer from '../common/Modal/ModalContainer';
+import noteBook from '../asset/img/notebook.png';
 
 export default function Chatting({
   title,
@@ -11,16 +13,25 @@ export default function Chatting({
   stompClient,
   chatMessages,
   headers,
-  message,
+  users,
 }) {
   const textRef = useRef(null);
   const messageBoxRef = useRef();
   const { user } = useGetUser();
-  const [state, setState] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [Opacity, setOpacity] = useState(false);
+  const userArray = [...new Set(users)];
+
+  const handleStart = () => {
+    setOpacity(true);
+  };
+  const handleEnd = () => {
+    setOpacity(false);
+  };
 
   useEffect(() => {
-    messageBoxRef.current.scrollTop = messageBoxRef.current.scroppHeight;
-  }, [message]);
+    messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
+  }, [chatMessages]);
 
   const sendMessage = () => {
     if (textRef.current.value !== '') {
@@ -73,46 +84,75 @@ export default function Chatting({
 
   return (
     <>
-      {/* <ModalContainer> */}
-      <Draggable>
-        <StChatBox>
-          {/* <UserList>
+      <ModalContainer>
+        <Draggable
+          cancel='input, button, span'
+          onStart={handleStart}
+          onStop={handleEnd}
+        >
+          <StChatBox style={{ opacity: Opacity ? '0.85' : '1' }}>
+            {/* <UserList>
             {userlist?.map((list, i) => {
               return <>{list}</>;
             })}
           </UserList> */}
-          <StChatHeader>
-            <span style={{ marginLeft: '10px', fontSize: '15px' }}>
-              {title}
-            </span>
-            <span style={{ marginRight: '10px', cursor: 'pointer' }}>+</span>
-          </StChatHeader>
-          <StChatBody ref={messageBoxRef}>{chatdata}</StChatBody>
-          <StChatFooter>
-            <StInput
-              rows='0'
-              cols='0'
-              name='message'
-              // value={textRef.current.value}
-              // onChange={onChange}
-              onKeyPress={onKeyDown}
-              ref={textRef}
-              // autoComplete='off'
-              placeholder='메세지를 입력하세요 (100자 이내)'
-              maxLength={100}
-            ></StInput>
-            <StButton
-              onClick={sendMessage}
-              message={message}
-              textRef={textRef}
-              // disabled={textRef.current.value.length === 0}
-            >
-              전송
-            </StButton>
-          </StChatFooter>
-        </StChatBox>
-      </Draggable>
-      {/* </ModalContainer> */}
+            <StChatHeader>
+              <span style={{ marginLeft: '15px', fontSize: '15px' }}>
+                {title}
+              </span>
+              <span
+                style={{
+                  marginRight: '13px',
+                  cursor: 'pointer',
+                  fontSize: '20px',
+                }}
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                }}
+              >
+                +
+              </span>
+            </StChatHeader>
+            <StChatBody ref={messageBoxRef}>{chatdata}</StChatBody>
+            <StChatFooter>
+              <StInput
+                rows='0'
+                cols='0'
+                name='message'
+                // value={textRef.current.value}
+                // onChange={onChange}
+                onKeyPress={onKeyDown}
+                ref={textRef}
+                // autoComplete='off'
+                placeholder='메세지를 입력하세요 (100자 이내)'
+                maxLength={100}
+              ></StInput>
+              <StButton
+                onClick={sendMessage}
+                // message={message}
+                textRef={textRef}
+                // disabled={textRef.current.value.length === 0}
+              >
+                전송
+              </StButton>
+            </StChatFooter>
+            {isOpen && (
+              <StListDiv>
+                <GreySpan fontWeight='500'>디벨킷</GreySpan>
+                <NoteBook></NoteBook>
+                <GreySpan fontWeight='400'>현재 접속 인원</GreySpan>
+                <UserListDiv>
+                  {userArray?.map((user, i) => {
+                    return (
+                      <GreySpan padding='10px'>{user.split('@')[0]}</GreySpan>
+                    );
+                  })}
+                </UserListDiv>
+              </StListDiv>
+            )}
+          </StChatBox>
+        </Draggable>
+      </ModalContainer>
     </>
   );
 }
@@ -130,7 +170,7 @@ const StChatBox = styled.div`
 
 const StChatHeader = styled.div`
   width: 100%;
-  height: 30px;
+  height: 40px;
   background-color: #f5d28c;
   display: flex;
   justify-content: space-between;
@@ -151,6 +191,7 @@ const StChatFooter = styled.div`
   position: absolute;
   align-items: center;
   /* z-index: -999; */
+  /* pointer-events: none; */
 `;
 
 const StInput = styled.input`
@@ -174,8 +215,8 @@ const StButton = styled.button`
   height: 36px;
   font-size: 15px;
   font-weight: 500;
-  background-color: ${({ textRef }) =>
-    textRef !== '' ? '#f5d28c' : '#d8d8d8'};
+  background-color: ${(props) =>
+    props.textRef?.current?.value !== null ? '#f5d28c' : '#d8d8d8'};
   border-radius: 8px;
   margin-left: 14px;
   border: none;
@@ -184,7 +225,7 @@ const StButton = styled.button`
 `;
 
 const StChatBody = styled.div`
-  height: 470px;
+  height: 460px;
   overflow: auto;
   width: 100%;
   display: flex;
@@ -216,4 +257,48 @@ const Stdiv = styled.div`
   display: flex;
   flex-direction: column;
   padding-right: 10px;
+`;
+
+const StListDiv = styled.div`
+  width: 250px;
+  height: 350px;
+  background-color: white;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  border: 1px solid #999999;
+  margin-left: 10px;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.1);
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const GreySpan = styled.span`
+  color: grey;
+  font-size: 17px;
+  padding: ${(props) => (props.padding ? props.padding : '20px')};
+  font-weight: ${(props) => props.fontWeight};
+  letter-spacing: -0.7px;
+`;
+
+const NoteBook = styled.div`
+  width: 80%;
+  height: 60px;
+  background-image: url(${noteBook});
+  background-size: 100% 100%;
+  border-radius: 8px;
+  margin: 0 auto;
+`;
+
+const UserListDiv = styled.div`
+  width: 90%;
+  height: 50%;
+  margin: 0 auto;
+  border-top: 1px solid #999999;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  overflow: auto;
 `;

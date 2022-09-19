@@ -10,6 +10,7 @@ export default function CalendarApp({ id }) {
   const mark = ['2022-09-10', '2022-09-15', '2022-09-17'];
   const { data, error, isLoading } = useGetSchedulesQuery(id);
   const dataArr = data?.data;
+  console.log(dataArr);
 
   return (
     <div
@@ -38,12 +39,14 @@ export default function CalendarApp({ id }) {
           ) {
             return (
               <>
-                <StMark>
-                  {dataArr[0].content}
-                  {/* {dataArr?.map((a, i) => {
-                    return <>{a.content}</>;
-                  })} */}
-                </StMark>
+                {dataArr
+                  .filter(
+                    (data) =>
+                      data?.eventDate === moment(date).format('YYYY-MM-DD')
+                  )
+                  .map((a) => {
+                    return <StMark key={a.id}>{a.content}</StMark>;
+                  })}
               </>
             );
           }
@@ -72,7 +75,6 @@ const StMark = styled.div`
   width: 100%;
   border-radius: 5px;
   top: 30px;
-
   min-height: 22px;
   background-color: #00a99d;
   color: white;
@@ -80,4 +82,5 @@ const StMark = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 15px;
+  text-align: center;
 `;
