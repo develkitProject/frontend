@@ -6,28 +6,39 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Editor from '../components/Editor';
 import { useAddDocMutation } from '../redux/modules/workspaces';
 
-
-
 const DocsWrite = ()=>{
  const navigate = useNavigate();
  const params = useParams();
  const id = Number(params.id);
 
  const [addDoc] = useAddDocMutation();
- const [title, setTitle] = useState('')
- const [content, setContent] = useState('')
+ const [title, setTitle] = useState('');
+ const [content, setContent] = useState('');
+ const [newFile, setNewFile] = useState([]);
     
  const onTitleChange = (e) => {
       setTitle(e.target.value);
  };
 
+ const onFileChange = (e) => {
+  const file = e.target.files[0]
+  setNewFile(file)
+  console.log(newFile)
+};
+
  const handleSubmit = () => {
-      
+
  if (title !== '' && content !== '') {
+
+  const formData = new FormData();
+  formData.append('fileKey',newFile[0])
+  console.log(formData)
+
     const document = {
           id,
           title,
           content,
+          formData
     };
       addDoc(document);
       window.alert('문서가 등록되었습니다');
@@ -43,6 +54,11 @@ return(
             <StInputTitle onChange={onTitleChange} name='title' placeholder='제목' value={title}/>
             <Editor setCon={setContent}/>
             <EditorBlock>
+             <div>
+              <input type="file" name="file" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/msword,application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf, .hwp"
+              onChange={onFileChange}
+              ></input>
+             </div>
               <StButton onClick={handleSubmit}>게시하기</StButton>
             </EditorBlock>
         </StEditorContainer>
@@ -73,6 +89,7 @@ const StInputTitle = styled.input`
 `;
 
 const EditorBlock = styled.div`
+ margin-top: 60px; 
  align-items: center;
  text-align: center;
 `;
@@ -89,6 +106,6 @@ const StButton = styled.button`
  font-size: 0.9rem;
  font-weight: 500;
  cursor: pointer;
- margin-top: 60px;
+ margin-top: 20px; 
 `;
 
