@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 
+import { useDispatch } from 'react-redux';
 import ModalContainer from '../common/Modal/ModalContainer';
 import useOutSideClick from '../common/hooks/useOutSideClick';
 
@@ -9,10 +10,9 @@ import useInputStatus from './hooks/useInputStatus';
 import CloseButton from '../common/elements/CloseButton';
 
 import * as St from './style';
-import { useDispatch } from 'react-redux';
 import { setIsSignUpModal } from '../redux/modules/global';
 
-const SignupModal = ({ onClose }) => {
+function SignupModal({ onClose }) {
   const dispatch = useDispatch();
 
   const { signUpInputs, onChangeSignUpInputs, handleSignUp } = useInputSignUp();
@@ -20,7 +20,7 @@ const SignupModal = ({ onClose }) => {
   const { successStatus, errorStatus } = useInputStatus({ signUpInputs });
 
   const modalRef = useRef(null);
-  
+
   const handleClose = useCallback(() => {
     dispatch(setIsSignUpModal(false));
   }, [dispatch]);
@@ -28,6 +28,7 @@ const SignupModal = ({ onClose }) => {
   useEffect(() => {
     const $body = document.querySelector('body');
     $body.style.overflow = 'hidden';
+    // eslint-disable-next-line no-return-assign
     return () => ($body.style.overflow = 'auto');
   }, []);
 
@@ -45,16 +46,16 @@ const SignupModal = ({ onClose }) => {
               }}
             >
               <St.Text
-                color='#00A99D'
-                size='35'
-                bold='600'
+                color="#00A99D"
+                size="35"
+                bold="600"
                 style={{
                   marginBottom: '10px',
                 }}
               >
                 회원가입
               </St.Text>
-              <St.Text color='#999999' size='16' bold='400'>
+              <St.Text color="#999999" size="16" bold="400">
                 성장하는 사람들을 위한 프로젝트 협업 서비스 디벨킷
               </St.Text>
             </div>
@@ -71,11 +72,11 @@ const SignupModal = ({ onClose }) => {
               </St.Text>
             </St.ButtonDiv>
           </St.LoginWrap>
-          <CloseButton handleClose={handleClose}></CloseButton>
+          <CloseButton handleClose={handleClose} />
         </St.ModalWrap>
       </St.Overlay>
     </ModalContainer>
   );
-};
+}
 
 export default SignupModal;
