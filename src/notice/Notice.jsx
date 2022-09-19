@@ -34,7 +34,7 @@ function Notice() {
                     <StTitle fc='#00a99d'>공지사항</StTitle>
                     <StNoticeBox>
                       <StTitle fc='#333333'>{data.title}</StTitle>
-                      <StContent className="imgWrapper">
+                      <StContent className='imgWrapper'>
                         <div
                           dangerouslySetInnerHTML={{ __html: data.content }}
                         />
@@ -48,7 +48,6 @@ function Notice() {
                       <StInfoDiv>
                         <p>{data.nickname} ｜</p>
                         <p>{data.createdAt.slice(0, -13)} ｜</p>
-                        <p>읽음 7 </p>
                       </StInfoDiv>
                     </StNoticeBox>
                   </StNoticeContainer>
@@ -126,5 +125,3 @@ const StInfoDiv = styled.div`
   font-weight: 500;
   font-size: 16px;
 `;
-
-

@@ -133,7 +133,6 @@ function WorkSpaceDetail() {
                     {data?.data.notices &&
                       data?.data.notices.createdAt.slice(0, -13)}{' '}
                   </p>
-                  <p>{data?.data.notices && '읽음 7'}</p>
                 </StInfoDiv>
               </StNoticeBox>
             </StNoticeContainer>
