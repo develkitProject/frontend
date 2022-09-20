@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { useGetDocQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
+import { useGetDocQuery } from '../../../redux/modules/workspaces';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function Board() {
