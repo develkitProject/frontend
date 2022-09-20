@@ -122,7 +122,7 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
 
     updateDoc: builder.mutation({
-      query: ({workspaces, docid}) => {
+      query: ({ workspaces, docid }) => {
         return {
           url: `/api/workspaces/${workspaces}/docs/${docid}`,
           method: 'PATCH',
@@ -134,7 +134,7 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
 
     deleteDoc: builder.mutation({
-      query: ({workspaces, docid}) => {
+      query: ({ workspaces, docid }) => {
         return {
           url: `/api/workspaces/${workspaces}/docs/${docid}`,
           method: 'DELETE',
@@ -188,6 +188,16 @@ export const workspaceApi = coreApi.injectEndpoints({
       },
       invalidatesTags: ['Schedules'],
     }),
+    getChatMessages: builder.query({
+      query: (id) => {
+        return {
+          url: `/api/chats/${id}`,
+          method: 'POST',
+          headers,
+        };
+      },
+      providesTags: ['Messages'],
+    }),
   }),
 });
 
@@ -210,4 +220,5 @@ export const {
   useGetSchedulesQuery,
   useAddSchedulesMutation,
   useUpdateDocMutation,
+  useGetChatMessagesQuery,
 } = workspaceApi;

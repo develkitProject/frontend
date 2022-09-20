@@ -7,6 +7,7 @@ export const Wrapper = styled.section`
   background-color: #f2f2f2;
   display: flex;
   flex-direction: row;
+  position: relative;
 `;
 
 export const Projects = styled.div`
