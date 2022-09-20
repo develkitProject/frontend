@@ -3,7 +3,7 @@ import Calendar from 'react-calendar';
 import './Calendar.css'; // css import
 import moment from 'moment/moment';
 import styled from 'styled-components';
-import { useGetSchedulesQuery } from '../redux/modules/workspaces';
+import { useGetSchedulesQuery } from '../../../redux/modules/workspaces';
 
 export default function CalendarApp({ id }) {
   const [value, onChange] = useState(new Date());

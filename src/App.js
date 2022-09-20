@@ -14,7 +14,7 @@ import Docs from './document/Docs';
 import DocsWritePage from './document/DocsWritePage';
 import AddressPage from './pages/AddressPage';
 import Footer from './components/Footer';
-import CalendarPage from './calendar/CalendarPage';
+import ClaendarPage from './detail/workspaces/calendar/CalendarPage';
 import DocDetail from './document/DocDetail';
 import SideMenu from './components/SideMenu';
 import useGetUser from './common/hooks/useGetUser';
@@ -42,10 +42,6 @@ function App() {
         />
         <Route path='/workspace/main/:id/address' element={<AddressPage />} />
         <Route path='/workspace/main/:id/docs/:docid' element={<DocDetail />} />
-        <Route
-          path='/workspace/main/:id/schedules'
-          element={<CalendarPage />}
-        />
       </Routes>
       <Footer />
     </>

@@ -160,7 +160,9 @@ function Chatting({
                 <UserListDiv>
                   {userArray?.map((user, i) => {
                     return (
-                      <GreySpan padding='10px'>{user.split('@')[0]}</GreySpan>
+                      <GreySpan padding='10px' key={i}>
+                        {user.split('@')[0]}
+                      </GreySpan>
                     );
                   })}
                 </UserListDiv>
