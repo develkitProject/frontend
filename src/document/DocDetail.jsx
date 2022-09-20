@@ -3,7 +3,7 @@ import SideMenu from '../components/SideMenu';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGetDocDetailQuery } from '../redux/modules/workspaces';
+import { useDeleteDocMutation, useGetDocDetailQuery } from '../redux/modules/workspaces';
 import Board from './Board';
 
 function DocDetail() {
@@ -17,7 +17,18 @@ function DocDetail() {
     docid,
   });
   const document = data?.data;
-  console.log(data)
+
+  const [deleteDocument] = useDeleteDocMutation({workspaces, docid});
+
+  const deleteDoc = () => {
+    if (window.confirm('정말 지우시겠습니까?')) {
+      deleteDocument({workspaces, docid});
+      navigate(-1);
+      console.log(workspaces, docid)
+    } else {
+      return;
+    }
+  };
 
   useEffect(() => {
     refetch();
@@ -37,9 +48,9 @@ function DocDetail() {
               <StVerticalBar>|</StVerticalBar>
               <StDetail>{document?.createdAt.slice(0, -7)}</StDetail>
               <StVerticalBar>|</StVerticalBar>
-              <StDetail>수정</StDetail>
+              <StDetail style={{cursor: "pointer"}}>수정</StDetail>
               <StVerticalBar>|</StVerticalBar>
-              <StDetail>삭제</StDetail>
+              <StDetail onClick={deleteDoc} style={{cursor: "pointer"}}>삭제</StDetail>
             </StInfoContainer>
           </StIntroContainer>
           <StContentContainer>
@@ -47,7 +58,23 @@ function DocDetail() {
               <div dangerouslySetInnerHTML={{ __html: document?.content }} />
             </StContent>
           </StContentContainer>
-          <StFooterContainer></StFooterContainer>
+          <StFooterContainer>
+              <StInfoContainer style={{justifyContent: "space-between"}}>
+                <StDetail>
+                최종 수정일:{document?.modifiedAt.slice(0, -7)}(수정자: 꼬부기)
+                </StDetail>
+                <StSideMent>
+                  <StDetail style={{color: "#00A99D", fontWeight: "500"}}>수정</StDetail>
+                  <StVerticalBar>|</StVerticalBar>
+                  <StDetail onClick={deleteDoc} style={{ fontWeight: "500"}}>삭제</StDetail>
+                </StSideMent>
+              </StInfoContainer>
+              <div style={{width: "100%"}}>
+                <StDetail style={{alignSelf: "left"}}>
+                읽음: 피카츄, 파이리, 꼬부기, 라이츄, 피존투, 또가스, 버터풀, 야도란, 이상해풀, 이상해씨, 이상해꽃, ㅇㅇ(222.36) +
+                </StDetail>
+              </div>
+          </StFooterContainer>
         </Projects>
         <BoardContainer>
           <Board />
@@ -181,4 +208,14 @@ const StFooterContainer = styled.div`
   flex-direction: column;
   align-items: center;
   border-top: solid 1px #c6c6c6;
+`;
+
+const StSideMent = styled.div`
+display: flex;
+flex-direction: row;
+align-items: right; 
+justify-content: flex-end;
+font-weight: 600;
+cursor: pointer;
+
 `;
