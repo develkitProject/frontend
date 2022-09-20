@@ -1,31 +1,36 @@
-import React, { useState, useRef, useCallback, useParams } from 'react';
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useParams,
+  useMemo,
+} from 'react';
 import styled from 'styled-components';
 import { getCookieToken } from '../Cookie';
 import Draggable from 'react-draggable';
-
+import useGetUser from '../common/hooks/useGetUser';
 import { useEffect } from 'react';
-import ModalContainer from '../common/Modal/ModalContainer';
+import ChattingContainer from '../common/Modal/ChattingContainer';
 import noteBook from '../asset/img/notebook.png';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 
-export default function Chatting({ title, id, user }) {
+function Chatting({
+  title,
+  id,
+  stompClient,
+  chatMessages,
+  headers,
+  users,
+  onConnected,
+  disConnect,
+  messageBoxRef,
+}) {
   const textRef = useRef(null);
-  const messageBoxRef = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
   const [Opacity, setOpacity] = useState(false);
   // ------------------------------------------------------------------------
-  const [chatMessages, setChatMessages] = useState([]);
-  const [users, setUsers] = useState(null);
-  const sockJS = new SockJS('https://hosung.shop/stomp/chat');
-  const stompClient = Stomp.over(sockJS);
-  const userArray = [...new Set(users)];
-  stompClient.debug = () => {};
-
-  const headers = {
-    token: getCookieToken(),
-  };
 
   useEffect(() => {
     onConnected();
@@ -33,31 +38,9 @@ export default function Chatting({ title, id, user }) {
       disConnect();
     };
   }, []);
-
-  function onConnected() {
-    try {
-      stompClient.connect(headers, () => {
-        stompClient.subscribe(
-          `/sub/chat/room/${id}`,
-          (data) => {
-            const newMessage = JSON.parse(data.body);
-            setChatMessages((chatMessages) => [...chatMessages, newMessage]);
-            if (newMessage.type !== 'TALK') {
-              setUsers(newMessage.userList);
-            }
-          },
-          headers
-        );
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  const disConnect = () => {
-    if (stompClient != null) {
-      if (stompClient.connected) stompClient.disconnect();
-    }
-  };
+  const userArray = [...new Set(users)];
+  stompClient.debug = () => {};
+  const { user } = useGetUser();
 
   const handleStart = () => {
     setOpacity(true);
@@ -65,10 +48,6 @@ export default function Chatting({ title, id, user }) {
   const handleEnd = () => {
     setOpacity(false);
   };
-
-  useEffect(() => {
-    messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
-  }, [chatMessages]);
 
   const sendMessage = () => {
     if (textRef.current.value !== '') {
@@ -98,7 +77,7 @@ export default function Chatting({ title, id, user }) {
           <Stdiv
             key={i}
             style={
-              data.writer === user.username
+              data.writer == user?.username
                 ? { alignItems: 'flex-end' }
                 : { alignItems: 'flex-start' }
             }
@@ -121,7 +100,7 @@ export default function Chatting({ title, id, user }) {
 
   return (
     <>
-      <ModalContainer>
+      <ChattingContainer>
         <Draggable
           cancel='input, button, span'
           onStart={handleStart}
@@ -189,10 +168,12 @@ export default function Chatting({ title, id, user }) {
             )}
           </StChatBox>
         </Draggable>
-      </ModalContainer>
+      </ChattingContainer>
     </>
   );
 }
+
+export default React.memo(Chatting);
 
 const StChatBox = styled.div`
   width: 350px;

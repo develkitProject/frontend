@@ -10,76 +10,84 @@ import Icon from './Icon';
 
 import * as S from '../style';
 
-const menuData = [{
+const menuData = [
+  {
     key: 'home',
     icon: home,
-    title: '홈'
-},{
+    title: '홈',
+  },
+  {
     key: 'board',
     icon: document,
     title: '게시판',
-    subItem: [{
+    subItem: [
+      {
         key: 'notice',
-        subTitle: '공지사항'
-    },{
+        subTitle: '공지사항',
+      },
+      {
         key: 'document',
-        subTitle: '문서'
-    }]
-},{
+        subTitle: '문서',
+      },
+    ],
+  },
+  {
     key: 'schedule',
     icon: schedule,
-    title: '일정 관리'
-},{
+    title: '일정 관리',
+  },
+  {
     key: 'contacts',
     icon: contacts,
-    title: '주소록'
-},{
+    title: '주소록',
+  },
+  {
     key: 'projectInfo',
     icon: laptop,
-    title: '프로젝트 정보'
-}]
+    title: '프로젝트 정보',
+  },
+];
 
-export default function Sidebar({ onClickMenu }) {
-
+export default function Sidebar({ onClickMenu, handleClick }) {
   return (
     <S.StWrapper>
-        {menuData.map(({key, title, subItem, icon}) => (
+      {menuData.map(({ key, title, subItem, icon }) => (
+        <>
+          {!subItem ? (
+            <S.StLabel
+              role='presentation'
+              onClick={onClickMenu({ key })}
+              key={key}
+            >
+              <S.MenuIcon src={icon} />
+              {title}
+            </S.StLabel>
+          ) : (
             <>
-            {!subItem ? (
-                <S.StLabel
-                    role="presentation"
-                    onClick={onClickMenu({key})}
-                    key={key}
-                >
-                    <S.MenuIcon src={icon}/>
-                    {title}
-                </S.StLabel>
-            ) : (
-                <>
-                <S.StLabel
-                    role="presentation"
-                    key={key}
-                    style={{borderBottom: 'none'}}
-                >
-                    <S.MenuIcon src={icon}/>
-                    {title}
-                    <Icon.ArrowDown />
-                </S.StLabel>
-                <S.StMenuInDiv>
-                {subItem.map(({key, subTitle}) => (
-                    <S.StMenuIn 
-                        onClick={onClickMenu({key})}
-                        key={key}
-                    >{subTitle}</S.StMenuIn>
+              <S.StLabel
+                role='presentation'
+                key={key}
+                style={{ borderBottom: 'none' }}
+              >
+                <S.MenuIcon src={icon} />
+                {title}
+                <Icon.ArrowDown />
+              </S.StLabel>
+              <S.StMenuInDiv>
+                {subItem.map(({ key, subTitle }) => (
+                  <S.StMenuIn onClick={onClickMenu({ key })} key={key}>
+                    {subTitle}
+                  </S.StMenuIn>
                 ))}
-                </S.StMenuInDiv>
-                </>
-            )}
+              </S.StMenuInDiv>
             </>
-        ))}
+          )}
+        </>
+      ))}
       <div>
-        <S.StButton>
-          <S.MenuIcon src={chat} />채팅하기
+        <S.StButton onClick={handleClick}>
+          <S.MenuIcon src={chat} />
+          채팅하기
         </S.StButton>
       </div>
     </S.StWrapper>

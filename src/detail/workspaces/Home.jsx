@@ -5,10 +5,10 @@ import React, { useState } from 'react';
 import BlackButton from '../../common/elements/BlackButton';
 import InvitationCodeModal from '../../common/Modal/InvitationCodeModal';
 
-export default function Home({ id }) {
+export default function Home({ id, data }) {
   const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
-  const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
+
   const title = data?.data?.workspaces?.title;
   const content = data?.data.workspaces.content;
   const document = data?.data.documents;
