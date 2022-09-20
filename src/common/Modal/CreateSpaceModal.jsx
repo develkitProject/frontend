@@ -5,7 +5,6 @@ import { StButton } from '../../login/style';
 import imgupload from '../../asset/img/imgupload.svg';
 import CloseButton from '../elements/CloseButton';
 import Draggable from 'react-draggable';
-
 import { useAddWorkSpacesMutation } from '../../redux/modules/workspaces';
 
 const reducer = (state, action) => {

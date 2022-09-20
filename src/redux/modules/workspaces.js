@@ -118,7 +118,29 @@ export const workspaceApi = coreApi.injectEndpoints({
           headers,
         };
       },
+      invalidatesTags: ['Docs'],
+    }),
 
+    updateDoc: builder.mutation({
+      query: ({workspaces, docid}) => {
+        return {
+          url: `/api/workspaces/${workspaces}/docs/${docid}`,
+          method: 'PATCH',
+          body: document,
+          headers,
+        };
+      },
+      invalidatesTags: ['Docs'],
+    }),
+
+    deleteDoc: builder.mutation({
+      query: ({workspaces, docid}) => {
+        return {
+          url: `/api/workspaces/${workspaces}/docs/${docid}`,
+          method: 'DELETE',
+          headers,
+        };
+      },
       invalidatesTags: ['Docs'],
     }),
 
@@ -182,8 +204,10 @@ export const {
   useGetDocQuery,
   useGetDocDetailQuery,
   useAddDocMutation,
+  useDeleteDocMutation,
   useGetInviteCodeQuery,
   useGetInviteCodeInfoMutation,
   useGetSchedulesQuery,
   useAddSchedulesMutation,
+  useUpdateDocMutation,
 } = workspaceApi;
