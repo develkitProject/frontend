@@ -57,6 +57,7 @@
   text-align: center;
   /* min-width:350px; */
   border:none;
+  height: 70px;
 }
 
 .react-calendar__navigation button {

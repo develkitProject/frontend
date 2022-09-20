@@ -9,9 +9,9 @@ function Address() {
   const { data, error, isLoading, refetch } = useGetMemberListQuery(id);
   const member = data?.data;
 
-  useEffect(() => {
-    refetch();
-  }, [data, refetch]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [data, refetch]);
 
   return (
     <StWrapper>

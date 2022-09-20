@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import WorkSpaceErrorModal from '../../../common/Modal/error';
 
 function NoticeList({ error, isLoading, data, notice }) {
+  console.log(data?.data);
   return (
     <>
       <StWrapper>
@@ -32,7 +33,8 @@ function NoticeList({ error, isLoading, data, notice }) {
                     </StContent>
                     <StInfoDiv>
                       <p>{data.nickname} ｜</p>
-                      <p>{data.createdAt.slice(0, -13)} </p>
+                      <p>{data.createdAt.slice(0, -13)} ｜</p>
+                      <p>{data.createdAt.slice(10, -4)} </p>
                     </StInfoDiv>
                   </StNoticeBox>
                 </StNoticeContainer>

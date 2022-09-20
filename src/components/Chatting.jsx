@@ -10,6 +10,7 @@ import { getCookieToken } from '../Cookie';
 import Draggable from 'react-draggable';
 import useGetUser from '../common/hooks/useGetUser';
 import { useEffect } from 'react';
+import { useGetChatMessagesQuery } from '../redux/modules/workspaces';
 import ChattingContainer from '../common/Modal/ChattingContainer';
 import noteBook from '../asset/img/notebook.png';
 import SockJS from 'sockjs-client';
@@ -27,10 +28,11 @@ function Chatting({
   messageBoxRef,
 }) {
   const textRef = useRef(null);
-
+  const { data } = useGetChatMessagesQuery(id);
   const [isOpen, setIsOpen] = useState(false);
   const [Opacity, setOpacity] = useState(false);
   // ------------------------------------------------------------------------
+  // console.log(data?.data);
 
   useEffect(() => {
     onConnected();
@@ -77,7 +79,7 @@ function Chatting({
           <Stdiv
             key={i}
             style={
-              data.writer == user?.username
+              data.writer === user?.username
                 ? { alignItems: 'flex-end' }
                 : { alignItems: 'flex-start' }
             }
@@ -100,75 +102,78 @@ function Chatting({
 
   return (
     <>
-      <ChattingContainer>
-        <Draggable
-          cancel='input, button, span'
-          onStart={handleStart}
-          onStop={handleEnd}
-        >
-          <StChatBox style={{ opacity: Opacity ? '0.85' : '1' }}>
-            {/* <UserList>
+      {/* <ChattingContainer> */}
+      <Draggable
+        cancel='input, button, span'
+        onStart={handleStart}
+        onStop={handleEnd}
+        // position='{x:50}'
+      >
+        <StChatBox style={{ opacity: Opacity ? '0.85' : '1' }}>
+          {/* <UserList>
             {userlist?.map((list, i) => {
               return <>{list}</>;
             })}
           </UserList> */}
-            <StChatHeader>
-              <span style={{ marginLeft: '15px', fontSize: '15px' }}>
-                {title}
-              </span>
-              <span
-                style={{
-                  marginRight: '13px',
-                  cursor: 'pointer',
-                  fontSize: '20px',
-                }}
-                onClick={() => {
-                  setIsOpen(!isOpen);
-                }}
-              >
-                +
-              </span>
-            </StChatHeader>
-            <StChatBody ref={messageBoxRef}>{chatdata}</StChatBody>
-            <StChatFooter>
-              <StInput
-                rows='0'
-                cols='0'
-                name='message'
-                // value={textRef.current.value}
-                // onChange={onChange}
-                onKeyPress={onKeyDown}
-                ref={textRef}
-                // autoComplete='off'
-                placeholder='메세지를 입력하세요 (100자 이내)'
-                maxLength={100}
-              ></StInput>
-              <StButton
-                onClick={sendMessage}
-                // message={message}
-                textRef={textRef}
-                // disabled={textRef.current.value.length === 0}
-              >
-                전송
-              </StButton>
-            </StChatFooter>
-            {isOpen && (
-              <StListDiv>
-                <GreySpan fontWeight='500'>디벨킷</GreySpan>
-                <NoteBook></NoteBook>
-                <GreySpan fontWeight='400'>현재 접속 인원</GreySpan>
-                <UserListDiv>
-                  {userArray?.map((user, i) => {
-                    return (
-                      <GreySpan padding='10px'>{user.split('@')[0]}</GreySpan>
-                    );
-                  })}
-                </UserListDiv>
-              </StListDiv>
-            )}
-          </StChatBox>
-        </Draggable>
-      </ChattingContainer>
+          <StChatHeader>
+            <span style={{ marginLeft: '15px', fontSize: '15px' }}>
+              {title}
+            </span>
+            <span
+              style={{
+                marginRight: '13px',
+                cursor: 'pointer',
+                fontSize: '20px',
+              }}
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+            >
+              +
+            </span>
+          </StChatHeader>
+          <StChatBody ref={messageBoxRef}>{chatdata}</StChatBody>
+          <StChatFooter>
+            <StInput
+              rows='0'
+              cols='0'
+              name='message'
+              // value={textRef.current.value}
+              // onChange={onChange}
+              onKeyPress={onKeyDown}
+              ref={textRef}
+              // autoComplete='off'
+              placeholder='메세지를 입력하세요 (100자 이내)'
+              maxLength={100}
+            ></StInput>
+            <StButton
+              onClick={sendMessage}
+              // message={message}
+              textRef={textRef}
+              // disabled={textRef.current.value.length === 0}
+            >
+              전송
+            </StButton>
+          </StChatFooter>
+          {isOpen && (
+            <StListDiv>
+              <GreySpan fontWeight='500'>디벨킷</GreySpan>
+              <NoteBook></NoteBook>
+              <GreySpan fontWeight='400'>현재 접속 인원</GreySpan>
+              <UserListDiv>
+                {userArray?.map((user, i) => {
+                  return (
+                    <GreySpan padding='10px' key={i}>
+                      {user.split('@')[0]}
+                    </GreySpan>
+                  );
+                })}
+              </UserListDiv>
+            </StListDiv>
+          )}
+        </StChatBox>
+      </Draggable>
+      {/* </ChattingContainer> */}
     </>
   );
 }
@@ -180,10 +185,10 @@ const StChatBox = styled.div`
   height: 560px;
   background-color: #f6daa2;
   /* position: relative; */
-  left: 50%;
-  top: 50px;
+  left: 0%;
+  top: 50%;
   box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.1), 0 4px 20px 0 rgba(0, 0, 0, 0.2);
-  position: absolute;
+  position: fixed;
 `;
 
 const StChatHeader = styled.div`

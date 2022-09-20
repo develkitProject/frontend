@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import SideMenu from '../components/SideMenu';
+import SideMenu from '../../../components/SideMenu';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import CalendarApp from './CalendarApp';
-import BlackButton from '../common/elements/BlackButton';
-import { useGetSchedulesQuery } from '../redux/modules/workspaces';
-import CalendarModal from '../common/Modal/CalendarModal';
+import BlackButton from '../../../common/elements/BlackButton';
+import { useGetSchedulesQuery } from '../../../redux/modules/workspaces';
+import CalendarModal from '../../../common/Modal/CalendarModal';
 import { useEffect } from 'react';
 
 export default function ClaendarPage() {

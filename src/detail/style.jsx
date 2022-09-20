@@ -2,16 +2,17 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.section`
   width: 100%;
-  height: 100vh;
-  /* min-height: 100%; */
+  min-height: 100vh;
+  /* min-height: 100vh; */
   background-color: #f2f2f2;
   display: flex;
   flex-direction: row;
+  position: relative;
 `;
 
 export const Projects = styled.div`
   width: 65%;
-  min-height: 90%;
+  /* height: 90vh; */
   margin-left: 50px;
   margin-top: 60px;
   margin-bottom: 50px;
