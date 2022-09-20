@@ -10,8 +10,6 @@ import { Routes, Route } from 'react-router-dom';
 import PostEditor from './components/PostEditor';
 import MyPage2 from './pages/MyPage2';
 import WorkSpaceDetail from './pages/WorkSpaceDetail';
-import NoticePage from './notice/NoticePage';
-import NoticeWritePage from './notice/NoticeWritePage';
 import Docs from './document/Docs';
 import DocsWritePage from './document/DocsWritePage';
 import AddressPage from './pages/AddressPage';
@@ -35,13 +33,8 @@ function App() {
         <Route path='/editor' element={<PostEditor />} />
         <Route path='/kakao' element={<Kakao />} />
 
-        <Route path='/detail' element={<WorkspaceDetailPage />} />
-        <Route path='/workspace/main/:id' element={<WorkSpaceDetail />} />
-        <Route path='/workspace/main/:id/notice' element={<NoticePage />} />
-        <Route
-          path='/workspace/main/:id/notice/write'
-          element={<NoticeWritePage />}
-        />
+        <Route path='/workspace/main/:id' element={<WorkspaceDetailPage />} />
+        {/* <Route path='/workspace/main/:id' element={<WorkSpaceDetail />} /> */}
         <Route path='/workspace/main/:id/docs' element={<Docs />} />
         <Route
           path='/workspace/main/:id/docs/write'

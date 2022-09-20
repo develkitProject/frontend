@@ -1,26 +1,46 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useParams,
+  useMemo,
+} from 'react';
 import styled from 'styled-components';
-
+import { getCookieToken } from '../Cookie';
 import Draggable from 'react-draggable';
 import useGetUser from '../common/hooks/useGetUser';
 import { useEffect } from 'react';
-import ModalContainer from '../common/Modal/ModalContainer';
+import ChattingContainer from '../common/Modal/ChattingContainer';
 import noteBook from '../asset/img/notebook.png';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
 
-export default function Chatting({
+function Chatting({
   title,
   id,
   stompClient,
   chatMessages,
   headers,
   users,
+  onConnected,
+  disConnect,
+  messageBoxRef,
 }) {
   const textRef = useRef(null);
-  const messageBoxRef = useRef();
-  const { user } = useGetUser();
+
   const [isOpen, setIsOpen] = useState(false);
   const [Opacity, setOpacity] = useState(false);
+  // ------------------------------------------------------------------------
+
+  useEffect(() => {
+    onConnected();
+    return () => {
+      disConnect();
+    };
+  }, []);
   const userArray = [...new Set(users)];
+  stompClient.debug = () => {};
+  const { user } = useGetUser();
 
   const handleStart = () => {
     setOpacity(true);
@@ -28,10 +48,6 @@ export default function Chatting({
   const handleEnd = () => {
     setOpacity(false);
   };
-
-  useEffect(() => {
-    messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
-  }, [chatMessages]);
 
   const sendMessage = () => {
     if (textRef.current.value !== '') {
@@ -61,7 +77,7 @@ export default function Chatting({
           <Stdiv
             key={i}
             style={
-              data.writer === user.username
+              data.writer == user?.username
                 ? { alignItems: 'flex-end' }
                 : { alignItems: 'flex-start' }
             }
@@ -84,7 +100,7 @@ export default function Chatting({
 
   return (
     <>
-      <ModalContainer>
+      <ChattingContainer>
         <Draggable
           cancel='input, button, span'
           onStart={handleStart}
@@ -152,10 +168,12 @@ export default function Chatting({
             )}
           </StChatBox>
         </Draggable>
-      </ModalContainer>
+      </ChattingContainer>
     </>
   );
 }
+
+export default React.memo(Chatting);
 
 const StChatBox = styled.div`
   width: 350px;

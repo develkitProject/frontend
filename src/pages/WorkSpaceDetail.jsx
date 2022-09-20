@@ -7,13 +7,11 @@ import { useEffect, useState } from 'react';
 import InvitationCodeModal from '../common/Modal/InvitationCodeModal';
 import BlackButton from '../common/elements/BlackButton';
 import useGetUser from '../common/hooks/useGetUser';
-import SockJS from 'sockjs-client';
-import { getCookieToken } from '../Cookie';
-import Stomp from 'stompjs';
 
 function WorkSpaceDetail() {
   const navigate = useNavigate();
   const id = Number(useParams().id);
+  const { user } = useGetUser();
   const [isOpen, setIsOpen] = useState(true);
   const { data, error, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
   const title = data?.data?.workspaces?.title;
@@ -32,55 +30,6 @@ function WorkSpaceDetail() {
 
   const clickHandler = () => {
     setIsOpen(!isOpen);
-  };
-  // ------------------------------------------------------------------------
-  const [chatMessages, setChatMessages] = useState([]);
-
-  // const scrollRef = useRef();
-  // const { data } = useGetChatMessageQuery();
-  const [message, setMessage] = useState('');
-  const [users, setUsers] = useState(null);
-  // const { user } = useGetUser();
-
-  const sockJS = new SockJS('https://hosung.shop/stomp/chat');
-  const stompClient = Stomp.over(sockJS);
-
-  stompClient.debug = () => {};
-
-  const headers = {
-    token: getCookieToken(),
-  };
-
-  useEffect(() => {
-    onConnected();
-    return () => {
-      disConnect();
-    };
-  }, []);
-
-  function onConnected() {
-    try {
-      stompClient.connect(headers, () => {
-        stompClient.subscribe(
-          `/sub/chat/room/${id}`,
-          (data) => {
-            const newMessage = JSON.parse(data.body);
-            setChatMessages((chatMessages) => [...chatMessages, newMessage]);
-            if (newMessage.type !== 'TALK') {
-              setUsers(newMessage.userList);
-            }
-          },
-          headers
-        );
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  const disConnect = () => {
-    if (stompClient != null) {
-      if (stompClient.connected) stompClient.disconnect();
-    }
   };
 
   // ------------------------------------------------------------------------
@@ -179,16 +128,7 @@ function WorkSpaceDetail() {
           </StScheduleWrapper>
         </div>
       </Projects>
-      {isOpen && (
-        <Chatting
-          id={id}
-          title={title}
-          stompClient={stompClient}
-          chatMessages={chatMessages}
-          headers={headers}
-          users={users}
-        ></Chatting>
-      )}
+      {/* {isOpen && <Chatting id={id} title={title} user={user}></Chatting>} */}
     </StWrapper>
   );
 }
