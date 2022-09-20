@@ -3,8 +3,11 @@ import React, { useState, useReducer } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import Editor from '../components/Editor';
-import { useAddDocMutation } from '../redux/modules/workspaces';
+import Editor from '../../../components/Editor';
+import { useAddDocMutation } from '../../../redux/modules/workspaces';
+
+
+
 
 const DocsWrite = ()=>{
  const navigate = useNavigate();
