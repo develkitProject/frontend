@@ -13,6 +13,8 @@ export default function Home({ id, data }) {
   const content = data?.data.workspaces.content;
   const document = data?.data.documents;
   const navigate = useNavigate();
+
+  console.log(data?.data);
   const handleClose = () => {
     setInvitationCodeOpen(false);
   };
@@ -25,7 +27,7 @@ export default function Home({ id, data }) {
   return (
     <>
       <StIntroContainer>
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           <StTitle fc='#333333' fs='1.5rem'>
             {title}
           </StTitle>
@@ -47,7 +49,11 @@ export default function Home({ id, data }) {
             </StTitle>
             <StNoticeBox>
               <StTitle style={{ marginBottom: '15px' }} fc='#333333' fs='20px'>
-                {data?.data.notices && data?.data.notices.title}
+                {data?.data.notices !== null ? (
+                  data?.data.notices.title
+                ) : (
+                  <div>전달할 공지사항이 없습니다! 입력해보세요</div>
+                )}
               </StTitle>
               <StNoticeContent>
                 <div
@@ -57,11 +63,13 @@ export default function Home({ id, data }) {
                 />
               </StNoticeContent>
               <StInfoDiv>
-                <p>{data?.data.notices && data?.data.notices.noticeNickname}</p>
-                <p>
+                <span>
+                  {data?.data.notices && data?.data.notices.noticeNickname}
+                </span>
+                <span>
                   {data?.data.notices &&
                     data?.data.notices.createdAt.slice(0, -13)}{' '}
-                </p>
+                </span>
               </StInfoDiv>
             </StNoticeBox>
           </StNoticeContainer>
@@ -85,22 +93,26 @@ export default function Home({ id, data }) {
             </StThead>
 
             <StTbody>
-              {document?.map((data) => {
-                return (
-                  <StTable
-                    key={data.id}
-                    onClick={() => {
-                      navigate(`/workspace/main/${id}/docs/${data.id}`);
-                    }}
-                  >
-                    <div>{data.user.nickname}</div>
-                    <div>{data.title}</div>
-                    <div>{data.user.nickname}</div>
-                    <div>{data.createdAt.split(' ')[0]}</div>
-                    <div>{data.modifiedAt.split(' ')[0]}</div>
-                  </StTable>
-                );
-              })}
+              {document?.length !== 0 ? (
+                document?.map((data) => {
+                  return (
+                    <StTable
+                      key={data.id}
+                      onClick={() => {
+                        navigate(`/workspace/main/${id}/docs/${data.id}`);
+                      }}
+                    >
+                      <div>{data.user.nickname}</div>
+                      <div>{data.title}</div>
+                      <div>{data.user.nickname}</div>
+                      <div>{data.createdAt.split(' ')[0]}</div>
+                      <div>{data.modifiedAt.split(' ')[0]}</div>
+                    </StTable>
+                  );
+                })
+              ) : (
+                <span style={{ fontSize: '20px' }}>문서를 입력해보세요</span>
+              )}
             </StTbody>
           </StTableContainer>
         </StScheduleWrapper>
@@ -141,7 +153,7 @@ const StIntroContainer = styled.div`
   border-bottom: solid 1px #c6c6c6;
 `;
 
-const StTitle = styled.p`
+const StTitle = styled.span`
   color: ${(props) => props.fc};
   text-align: left;
   font-size: ${(props) => props.fs};
@@ -149,7 +161,7 @@ const StTitle = styled.p`
   letter-spacing: -1.5px;
 `;
 
-const StContent = styled.p`
+const StContent = styled.span`
   margin-top: 10px;
   color: #333333;
   text-align: left;
@@ -226,7 +238,7 @@ const StScheduleWrapper = styled.div`
   letter-spacing: -0.8px;
 `;
 
-const StScheduleTitle = styled.p`
+const StScheduleTitle = styled.span`
   color: ${(props) => props.fc};
   text-align: left;
   font-size: 20px;

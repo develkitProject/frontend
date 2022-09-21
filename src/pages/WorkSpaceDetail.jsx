@@ -36,7 +36,7 @@ function WorkSpaceDetail() {
 
   return (
     <StWrapper>
-      <SideMenu />
+      {/* <SideMenu /> */}
       <Projects>
         <StIntroContainer>
           <div>

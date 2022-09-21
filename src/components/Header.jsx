@@ -16,8 +16,7 @@ import {
   selectIsSignUpModal,
 } from '../redux/modules/global/selectors';
 
-function Header() {
-  const [path, setPath] = useState(1);
+function Header({ path, setPath }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const API_URL = `https://hosung.shop/api/members/profile`;

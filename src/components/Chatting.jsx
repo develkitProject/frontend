@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Draggable from 'react-draggable';
-
+import velkit from '../asset/img/velkit.png';
 import { useEffect } from 'react';
 import { useGetChatMessagesQuery } from '../redux/modules/workspaces';
 import noteBook from '../asset/img/notebook.png';
@@ -10,16 +10,16 @@ import { textAlign } from '@mui/system';
 function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const [users, setUsers] = useState(null);
   const textRef = useRef(null);
-  const { data } = useGetChatMessagesQuery(id);
+  const { data, isLoading, error, refetch } = useGetChatMessagesQuery(id);
   const [isOpen, setIsOpen] = useState(false);
   const [Opacity, setOpacity] = useState(false);
   // ------------------------------------------------------------------------
   const messageList = data?.data;
   const [chatMessages, setChatMessages] = useState([]);
-  console.log(messageList);
 
   useEffect(() => {
     onConnected();
+    refetch();
     return () => {
       disConnect();
     };
@@ -96,39 +96,38 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
     .map((data, i) => {
       // if (data.type === 'TALK') {
       return (
-        <>
-          <Stdiv
-            key={i}
-            style={
-              data.writer === user?.username
-                ? {
-                    flexDirection: 'row-reverse',
-                    marginTop: '-2px',
-                  }
-                : { justifyContent: 'flex-start' }
-            }
-          >
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <NameSpan
-                style={
-                  data.writer === user?.username
-                    ? {
-                        display: 'none',
-                      }
-                    : null
+        <Stdiv
+          key={i}
+          style={
+            data.writer === user?.username
+              ? {
+                  flexDirection: 'row-reverse',
+                  marginTop: '-2px',
                 }
-              >
-                {data.writer.split('@')[0]}
-              </NameSpan>
-              <MessageBox key={i}>
-                <span style={{ color: 'black' }}>{data.message}</span>
-              </MessageBox>
-            </div>
-            <TimeSpan>{data.createdAt.split(' ')[1].slice(0, -7)}</TimeSpan>
-          </Stdiv>
-        </>
+              : { justifyContent: 'flex-start' }
+          }
+        >
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <NameSpan
+              style={
+                data.writer === user?.username
+                  ? {
+                      display: 'none',
+                    }
+                  : null
+              }
+            >
+              {data.writer.split('@')[0]}
+            </NameSpan>
+            <MessageBox key={i}>
+              <span style={{ color: 'black' }}>{data.message}</span>
+            </MessageBox>
+          </div>
+          <TimeSpan>{data.createdAt.split(' ')[1].slice(0, -7)}</TimeSpan>
+        </Stdiv>
       );
     });
+  // console.log(chatData?.length);
 
   return (
     <>
@@ -163,7 +162,26 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
               +
             </span>
           </StChatHeader>
-          <StChatBody ref={messageBoxRef}>{chatData}</StChatBody>
+          <StChatBody ref={messageBoxRef}>
+            {chatData?.length !== 0 ? (
+              chatData
+            ) : (
+              <>
+                <span
+                  style={{
+                    textAlign: 'center',
+                    marginTop: '20px',
+                    letterSpacing: '-0.5px',
+                    color: '#636363',
+                    width: '100%',
+                  }}
+                >
+                  스페이스 내 멤버들과 채팅해보세요
+                </span>
+                <StVelkit></StVelkit>
+              </>
+            )}
+          </StChatBody>
           <StChatFooter>
             <StInput
               rows='0'
@@ -381,4 +399,27 @@ const TimeSpan = styled.div`
 const NameSpan = styled.span`
   color: grey;
   padding: 1px 3px;
+`;
+
+const move = keyframes`
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-25px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  `;
+
+const StVelkit = styled.div`
+  width: 20%;
+  height: 10%;
+  background-image: url(${velkit});
+  background-size: 100% 100%;
+  position: absolute;
+  left: 40%;
+  top: 20%;
+  animation: ${move} 2s 0s infinite;
 `;
