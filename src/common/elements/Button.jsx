@@ -6,7 +6,7 @@ export default function Button1(props) {
   return (
     <>
       <StButton
-        type='button'
+        type="button"
         width={props.width}
         onClick={() => {
           props.onClick();
@@ -19,7 +19,7 @@ export default function Button1(props) {
 }
 
 const StButton = styled.button`
-  width: ${(props) => props.width};
+  width: ${props => props.width};
   height: 50px;
   background-color: rgb(0, 169, 157);
   font-size: 17px;

@@ -7,10 +7,10 @@ const initialState = {
   nickname: '',
 };
 
-export const addUserAsync = createAsyncThunk('ADD_USER', async (user) => {
+export const addUserAsync = createAsyncThunk('ADD_USER', async user => {
   const response = await axios.post(
     'https://hosung.shop/api/members/signup',
-    user
+    user,
   );
   return response.data;
 });
@@ -19,7 +19,7 @@ const { actions, reducer } = createSlice({
   name: 'user',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {},
+  extraReducers: builder => {},
 });
 
 export default reducer;

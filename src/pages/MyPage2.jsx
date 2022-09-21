@@ -38,13 +38,13 @@ function MyPage2() {
   };
 
   const [nickname, setNickname] = useState('');
-  const onChange = useCallback((e) => {
+  const onChange = useCallback(e => {
     // let { value } = {...e.target}
     // setNickname(value)
     setNickname(e.target.value);
   }, []);
 
-  const addpost = async (newList) => {
+  const addpost = async newList => {
     const response = await axios.post(
       'https://hosung.shop/api/members/profile',
       newList,
@@ -52,7 +52,7 @@ function MyPage2() {
         headers: {
           Authorization: getCookieToken(),
         },
-      }
+      },
     );
 
     return response.data;
@@ -71,10 +71,10 @@ function MyPage2() {
             width: '100%',
           }}
         >
-          <StEmail fs={'20px'} fc={'#000000'} fw={'500'}>
+          <StEmail fs="20px" fc="#000000" fw="500">
             {user?.nickname}
           </StEmail>
-          <StEmail fs={'18px'} fc={'#999999'} fw={'400'}>
+          <StEmail fs="18px" fc="#999999" fw="400">
             {user?.username}
           </StEmail>
         </div>
@@ -91,17 +91,17 @@ function MyPage2() {
         >
           <StSpan style={{ marginTop: '80px' }}>프로필 상세보기</StSpan>
           <BasicInput
-            label='닉네임'
-            marginTop='80px'
+            label="닉네임"
+            marginTop="80px"
             placeholder={user?.nickname}
-          ></BasicInput>
+          />
           <BasicInput
-            label='이메일'
-            marginTop='40px'
+            label="이메일"
+            marginTop="40px"
             placeholder={user?.username}
-          ></BasicInput>
+          />
           <StButton>변경사항 저장</StButton>
-          <StVelkit></StVelkit>
+          <StVelkit />
         </div>
       </StDetail>
 
@@ -109,10 +109,10 @@ function MyPage2() {
 
       <input
         style={{ display: 'none' }}
-        accept='image/*'
-        id='upload-photo'
-        name='upload-photo'
-        type='file'
+        accept="image/*"
+        id="upload-photo"
+        name="upload-photo"
+        type="file"
         onChange={onChangeImage}
         ref={imgRef}
       />
@@ -163,14 +163,14 @@ const StImage = styled.div`
   height: 180px;
   border-radius: 100px;
   background-size: 100% 100%;
-  background-image: url(${(props) => props.profileImageUrl});
+  background-image: url(${props => props.profileImageUrl});
   margin-top: 30px;
 `;
 
 const StEmail = styled.span`
-  font-weight: ${(props) => props.fw};
-  font-size: ${(props) => props.fs};
-  color: ${(props) => props.fc};
+  font-weight: ${props => props.fw};
+  font-size: ${props => props.fs};
+  color: ${props => props.fc};
   margin-top: 15px;
   letter-spacing: -0.8px;
 `;
@@ -205,7 +205,7 @@ const StDetail = styled.div`
 const StButton = styled.button`
   background-color: #000000;
   margin-top: 50px;
-  /* width: ${(props) => props.width}; */
+  /* width: ${props => props.width}; */
   width: 200px;
   height: 50px;
   border-radius: 8px;

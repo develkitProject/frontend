@@ -12,16 +12,17 @@ export default function useInputLogin() {
   });
 
   const onChangeUserInputs = useCallback(
-    (e) => {
+    e => {
       const { name, value } = e.target;
       setInputs({
         ...inputs,
         [name]: value,
       });
     },
-    [inputs]
+    [inputs],
   );
 
+  // eslint-disable-next-line consistent-return
   const onClickLogin = useCallback(() => {
     const { username, password } = inputs;
     if (username === '') {
@@ -31,7 +32,7 @@ export default function useInputLogin() {
       return window.alert('비밀번호를 입력하세요.');
     }
     loginApi({ username, password })
-      .then((res) => {
+      .then(res => {
         if (res.data.success === false) {
           alert('아이디 또는 비밀번호를 확인해주세요.');
         } else {
@@ -41,7 +42,7 @@ export default function useInputLogin() {
           window.location.reload();
         }
       })
-      .catch((err) => {
+      .catch(err => {
         alert('아이디 또는 비밀번호를 확인해주세요!');
       });
   }, [inputs, navigate]);

@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import SideMenu from '../components/SideMenu';
-import { useParams } from 'react-router-dom';
-import { useDeleteWorkSpacesMutation } from '../redux/modules/workspaces';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useDeleteWorkSpacesMutation } from '../redux/modules/workspaces';
+import SideMenu from '../components/SideMenu';
 import Board from '../document/Board';
 import Address from '../components/Address';
 import BlackButton from '../common/elements/BlackButton';
@@ -15,12 +14,12 @@ function AddressPage() {
 
   const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
 
-  const deleteWorkSpace = (id) => {
+  const deleteWorkSpace = id => {
     if (window.confirm('정말 지우시겠습니까?')) {
       deleteWorkSpaces(id);
       navigate('/workspace');
     } else {
-      return;
+      console.log('test');
     }
   };
 
@@ -34,17 +33,17 @@ function AddressPage() {
             <StContent>주소록입니다</StContent>
           </div>
           <BlackButton
-            text='워크스페이스 삭제'
+            text="워크스페이스 삭제"
             onClick={() => {
               deleteWorkSpace(id);
             }}
-          ></BlackButton>
+          />
           <BlackButton
-            text='회원초대하기'
+            text="회원초대하기"
             onClick={() => {
               alert('모달창 생성여부확인');
             }}
-          ></BlackButton>
+          />
         </StIntroContainer>
         <div>
           <Address />

@@ -7,7 +7,7 @@ const headers = {
 };
 
 export const workspaceApi = coreApi.injectEndpoints({
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getWorkspaces: builder.query({
       query: () => ({
         url: '/api/workspaces',
@@ -17,7 +17,7 @@ export const workspaceApi = coreApi.injectEndpoints({
       providesTags: ['Workspaces'],
     }),
     addWorkSpaces: builder.mutation({
-      query: (workspace) => {
+      query: workspace => {
         return {
           url: '/api/workspaces',
           method: 'POST',
@@ -28,7 +28,7 @@ export const workspaceApi = coreApi.injectEndpoints({
       invalidatesTags: ['Workspaces'],
     }),
     deleteWorkSpaces: builder.mutation({
-      query: (id) => {
+      query: id => {
         return {
           url: `/api/workspaces/${id}`,
           method: 'DELETE',
@@ -40,7 +40,7 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
 
     getMainWorkSpaces: builder.query({
-      query: (id) => {
+      query: id => {
         return {
           url: `/api/workspaces/${id}/main`,
           method: 'GET',
@@ -50,9 +50,9 @@ export const workspaceApi = coreApi.injectEndpoints({
       invalidatesTags: ['Workspaces'],
     }),
 
-    //공지사항
+    // 공지사항
     getNotice: builder.query({
-      query: (id) => {
+      query: id => {
         return {
           url: `/api/workspaces/${id}/notice`,
           method: 'GET',
@@ -63,7 +63,7 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
 
     addNotice: builder.mutation({
-      query: (notice) => {
+      query: notice => {
         return {
           url: `/api/workspaces/${notice.id}/notice`,
           method: 'POST',
@@ -74,9 +74,9 @@ export const workspaceApi = coreApi.injectEndpoints({
       invalidatesTags: ['Notice'],
     }),
 
-    //프로젝트 가입 회원 조회
+    // 프로젝트 가입 회원 조회
     getMemberList: builder.query({
-      query: (id) => {
+      query: id => {
         return {
           url: `/api/workspaces/${id}`,
           method: 'GET',
@@ -86,9 +86,9 @@ export const workspaceApi = coreApi.injectEndpoints({
       providesTags: ['Notice'],
     }),
 
-    //문서
+    // 문서
     getDoc: builder.query({
-      query: (id) => {
+      query: id => {
         return {
           url: `/api/workspaces/${id}/docs`,
           method: 'GET',
@@ -110,7 +110,7 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
 
     addDoc: builder.mutation({
-      query: (document) => {
+      query: document => {
         return {
           url: `/api/workspaces/${document.id}/docs`,
           method: 'POST',
@@ -122,9 +122,9 @@ export const workspaceApi = coreApi.injectEndpoints({
       invalidatesTags: ['Docs'],
     }),
 
-    //초대코드
+    // 초대코드
     getInviteCode: builder.query({
-      query: (id) => {
+      query: id => {
         return {
           url: `/api/invitation/${id}`,
           method: 'GET',
@@ -134,7 +134,7 @@ export const workspaceApi = coreApi.injectEndpoints({
       providesTags: ['InviteCode'],
     }),
     getInviteCodeInfo: builder.mutation({
-      query: (code) => {
+      query: code => {
         console.log(code);
         return {
           url: `/api/invitation/codes`,
@@ -146,7 +146,7 @@ export const workspaceApi = coreApi.injectEndpoints({
       invalidatesTags: ['InviteCode'],
     }),
     getSchedules: builder.query({
-      query: (id) => {
+      query: id => {
         return {
           url: `/api/workspaces/${id}/schedules`,
           method: 'GET',
@@ -156,7 +156,7 @@ export const workspaceApi = coreApi.injectEndpoints({
       providesTags: ['Schedules'],
     }),
     addSchedules: builder.mutation({
-      query: (schedules) => {
+      query: schedules => {
         return {
           url: `/api/workspaces/${schedules.id}/schedules`,
           method: 'POST',

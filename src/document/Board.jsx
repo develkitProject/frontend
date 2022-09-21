@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetDocQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
+import { useGetDocQuery } from '../redux/modules/workspaces';
 
 function Board() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ function Board() {
 
   return (
     <StWrapper>
-      <StTitle fc='#333333'>문서관리</StTitle>
+      <StTitle fc="#333333">문서관리</StTitle>
       <StTableContainer>
         <StThead>
           <StTable style={{ borderBottom: 'none' }}>
@@ -77,7 +77,7 @@ const StWrapper = styled.div`
 `;
 
 const StTitle = styled.p`
-  color: ${(props) => props.fc};
+  color: ${props => props.fc};
   text-align: left;
   font-size: 20px;
   font-weight: bold;
@@ -135,5 +135,5 @@ const StBtnStatus = styled.button`
   border-radius: 16px;
   border: none;
   letter-spacing: -0.8px;
-  background-color: ${(props) => props.fc};
+  background-color: ${props => props.fc};
 `;

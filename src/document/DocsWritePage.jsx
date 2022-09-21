@@ -1,18 +1,16 @@
 import styled from 'styled-components';
-import SideMenu from '../components/SideMenu';
-import { useParams } from 'react-router-dom';
-import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
+import SideMenu from '../components/SideMenu';
 import DocsWrite from './DocsWrite';
 
 function DocsWritePage() {
-
   return (
     <StWrapper>
       <SideMenu />
       <Projects>
-        <DocsWrite/>
+        <DocsWrite />
       </Projects>
     </StWrapper>
   );
@@ -38,4 +36,3 @@ const Projects = styled.div`
   flex-direction: column;
   align-items: left;
 `;
-

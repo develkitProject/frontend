@@ -34,24 +34,24 @@ export default function CalendarApp({ id }) {
         tileContent={({ date, view }) => {
           if (
             dataArr?.find(
-              (x) => x?.eventDate === moment(date).format('YYYY-MM-DD')
+              x => x?.eventDate === moment(date).format('YYYY-MM-DD'),
             )
           ) {
             return (
               <>
                 {dataArr
                   .filter(
-                    (data) =>
-                      data?.eventDate === moment(date).format('YYYY-MM-DD')
+                    data =>
+                      data?.eventDate === moment(date).format('YYYY-MM-DD'),
                   )
-                  .map((a) => {
+                  .map(a => {
                     return <StMark key={a.id}>{a.content}</StMark>;
                   })}
               </>
             );
           }
         }}
-      ></Calendar>
+      />
 
       <div
         style={{
@@ -62,7 +62,7 @@ export default function CalendarApp({ id }) {
           fontSize: '20px',
           bottom: '50px',
         }}
-        className='text-gray-500 mt-4'
+        className="text-gray-500 mt-4"
       >
         {moment(value).format('YYYY년 MM월 DD일')}
       </div>

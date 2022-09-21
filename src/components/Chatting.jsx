@@ -1,9 +1,8 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Draggable from 'react-draggable';
 import useGetUser from '../common/hooks/useGetUser';
-import { useEffect } from 'react';
 import ModalContainer from '../common/Modal/ModalContainer';
 import noteBook from '../asset/img/notebook.png';
 
@@ -41,13 +40,13 @@ export default function Chatting({
         JSON.stringify({
           roomId: id,
           message: textRef.current.value,
-        })
+        }),
       );
       textRef.current.value = null;
     }
   };
 
-  const onKeyDown = (e) => {
+  const onKeyDown = e => {
     if (e.key === 'Enter') {
       sendMessage();
     }
@@ -86,7 +85,7 @@ export default function Chatting({
     <>
       <ModalContainer>
         <Draggable
-          cancel='input, button, span'
+          cancel="input, button, span"
           onStart={handleStart}
           onStop={handleEnd}
         >
@@ -116,17 +115,17 @@ export default function Chatting({
             <StChatBody ref={messageBoxRef}>{chatdata}</StChatBody>
             <StChatFooter>
               <StInput
-                rows='0'
-                cols='0'
-                name='message'
+                rows="0"
+                cols="0"
+                name="message"
                 // value={textRef.current.value}
                 // onChange={onChange}
                 onKeyPress={onKeyDown}
                 ref={textRef}
                 // autoComplete='off'
-                placeholder='메세지를 입력하세요 (100자 이내)'
+                placeholder="메세지를 입력하세요 (100자 이내)"
                 maxLength={100}
-              ></StInput>
+              />
               <StButton
                 onClick={sendMessage}
                 // message={message}
@@ -138,13 +137,13 @@ export default function Chatting({
             </StChatFooter>
             {isOpen && (
               <StListDiv>
-                <GreySpan fontWeight='500'>디벨킷</GreySpan>
-                <NoteBook></NoteBook>
-                <GreySpan fontWeight='400'>현재 접속 인원</GreySpan>
+                <GreySpan fontWeight="500">디벨킷</GreySpan>
+                <NoteBook />
+                <GreySpan fontWeight="400">현재 접속 인원</GreySpan>
                 <UserListDiv>
                   {userArray?.map((user, i) => {
                     return (
-                      <GreySpan padding='10px'>{user.split('@')[0]}</GreySpan>
+                      <GreySpan padding="10px">{user.split('@')[0]}</GreySpan>
                     );
                   })}
                 </UserListDiv>
@@ -215,7 +214,7 @@ const StButton = styled.button`
   height: 36px;
   font-size: 15px;
   font-weight: 500;
-  background-color: ${(props) =>
+  background-color: ${props =>
     props.textRef?.current?.value !== null ? '#f5d28c' : '#d8d8d8'};
   border-radius: 8px;
   margin-left: 14px;
@@ -278,8 +277,8 @@ const StListDiv = styled.div`
 const GreySpan = styled.span`
   color: grey;
   font-size: 17px;
-  padding: ${(props) => (props.padding ? props.padding : '20px')};
-  font-weight: ${(props) => props.fontWeight};
+  padding: ${props => (props.padding ? props.padding : '20px')};
+  font-weight: ${props => props.fontWeight};
   letter-spacing: -0.7px;
 `;
 

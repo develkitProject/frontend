@@ -92,7 +92,7 @@ function MyPage() {
                   {workspaces?.map((data, i) => {
                     return (
                       <div style={{ width: '100%' }} key={data.workspaces.id}>
-                        <SpaceCard data={data} width='100%' />
+                        <SpaceCard data={data} width="100%" />
                       </div>
                     );
                   })}
@@ -101,7 +101,7 @@ function MyPage() {
             </>
           ) : (
             <>
-              <MyPage2></MyPage2>
+              <MyPage2 />
             </>
           )}
         </TabDiv2>

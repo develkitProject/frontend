@@ -2,12 +2,12 @@ import React from 'react';
 
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import CardProfile from '../common/elements/CardProfile.jsx';
+import CardProfile from '../common/elements/CardProfile';
 
 function SpaceCard({ data, width, deleteButton, deleteWorkSpaces }) {
   const navigate = useNavigate();
   return (
-    <StSpaceCard direction='row' width={width} key={data.workspaces.id}>
+    <StSpaceCard direction="row" width={width} key={data.workspaces.id}>
       <StCardImage
         data={data.workspaces}
         onClick={() => {
@@ -23,10 +23,10 @@ function SpaceCard({ data, width, deleteButton, deleteWorkSpaces }) {
           <StFooter>
             <SpaceName>{data.workspaces.title}</SpaceName>
             <SpaceDate>2022.08.20</SpaceDate>
-            <SpaceGoal weight='500'>
+            <SpaceGoal weight="500">
               목표{' '}
               <SpaceGoal
-                weight='200'
+                weight="200"
                 style={{ marginLeft: '10px', fontWeight: '400' }}
               >
                 {data.workspaces.content}
@@ -74,9 +74,9 @@ export default SpaceCard;
 
 const StSpaceCard = styled.div`
   display: flex;
-  flex-direction: ${(props) => props.direction};
+  flex-direction: ${props => props.direction};
   margin: 10px 10px 10px 10px;
-  width: ${(props) => props.width};
+  width: ${props => props.width};
   height: 300px;
   border-radius: 16px;
   /* margin-left: 20px; */
@@ -89,7 +89,7 @@ const StCardImage = styled.div`
   width: 40%;
   height: 100%;
   border-radius: 16px 16px 16px 16px;
-  background-image: url(${(props) => props.data.imageUrl});
+  background-image: url(${props => props.data.imageUrl});
   background-size: 100% 100%;
   position: relative;
   background-blend-mode: multiply;
@@ -151,7 +151,7 @@ const SpaceGoal = styled.span`
   margin-top: 35px;
   font-size: 16px;
   height: 23px;
-  font-weight: ${(props) => props.weight};
+  font-weight: ${props => props.weight};
   font-family: 'Noto Sans KR', sans-serif;
   color: #999;
 `;

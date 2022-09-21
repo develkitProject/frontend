@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCookieToken, removeCookieToken } from '../Cookie';
 import WorkSpaceErrorModal from '../common/Modal/error';
 import alarm from '../asset/img/alarm.svg';
@@ -9,7 +10,6 @@ import logo from '../asset/img/logo.png';
 import Login from '../login';
 import SignupModal from '../signup/SignupModal';
 import MyProfileModal from '../common/Modal/MyProfileModal';
-import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoginModal, setIsSignUpModal } from '../redux/modules/global';
 import {
   selectIsLoginModal,
@@ -87,7 +87,7 @@ function Header() {
             alignItems: 'center',
           }}
         >
-          <StLogo alt='logo' src={logo} onClick={moveMain} />
+          <StLogo alt="logo" src={logo} onClick={moveMain} />
 
           {/* <StDiv style={!matches ? { display: 'none' } : null}> */}
           <StMenuDiv>
@@ -111,12 +111,12 @@ function Header() {
 
         {!cookies ? (
           <StDiv>
-            <StLogJoin fc='#00A99D' onClick={openLoginModal}>
+            <StLogJoin fc="#00A99D" onClick={openLoginModal}>
               LOGIN
             </StLogJoin>
-            <StLogJoin fc='white'>·</StLogJoin>
+            <StLogJoin fc="white">·</StLogJoin>
             <StLogJoin
-              fc='white'
+              fc="white"
               onClick={openSignUpModal}
               SignupButton={openSignUpModal}
             >
@@ -130,17 +130,15 @@ function Header() {
             <StProfileImg
               src={user.profileImageUrl}
               onClick={() => {
-                setProfileOpen(profileOpen === false ? true : false);
+                setProfileOpen(profileOpen === false);
               }}
             />
             {profileOpen ? <MyProfileModal onClose={handleClose} /> : null}
           </StDiv>
         )}
       </StHeaderDiv>
-      {isLogin && (
-        <Login onSignupButton={openSignUpModal} open={isLogin}></Login>
-      )}
-      {isSignUp && <SignupModal open={isSignUp}></SignupModal>}
+      {isLogin && <Login onSignupButton={openSignUpModal} open={isLogin} />}
+      {isSignUp && <SignupModal open={isSignUp} />}
     </>
   );
 }
@@ -195,7 +193,7 @@ const StMenuName = styled.span`
 `;
 
 const StLogJoin = styled.p`
-  color: ${(props) => props.fc};
+  color: ${props => props.fc};
   padding-left: 5px;
   padding-right: 5px;
   font-family: 'Montserrat';

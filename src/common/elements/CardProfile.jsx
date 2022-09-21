@@ -11,7 +11,7 @@ export default CardProfile;
 const StDiv = styled.div`
   width: 40px;
   height: 40px;
-  background-image: url(${(props) => props.data.createdBy.profileImage});
+  background-image: url(${props => props.data.createdBy.profileImage});
   background-size: cover;
   right: 0;
   bottom: 0;

@@ -49,6 +49,7 @@
     "lint": "eslint ."
   },
   "eslintConfig": {
+    "parser": "@babel/eslint-parser",
     "extends": [
       "react-app",
       "react-app/jest"
@@ -67,9 +68,12 @@
     ]
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.19.1",
     "@types/dompurify": "^2.3.4",
+    "babel-eslint": "^10.1.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",

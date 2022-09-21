@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
@@ -50,13 +51,13 @@ function Landing() {
 
   return (
     <>
-      <StWrapper height={'90vh'}>
+      <StWrapper height="90vh">
         <StMain>
-          <StWrap dp='flex'>
+          <StWrap dp="flex">
             <StIntro>
               <StMent>
-                let <StMent fontColor='#00A99D'>D_Velkit</StMent> ={' '}
-                <StMent fontColor='#F5D28C'>
+                let <StMent fontColor="#00A99D">D_Velkit</StMent> ={' '}
+                <StMent fontColor="#F5D28C">
                   “Devlop Your Teamwork through D.VelKit!”;
                 </StMent>
               </StMent>
@@ -72,29 +73,26 @@ function Landing() {
               </StIntroMent>
               <StStart onClick={onStartSubmit}>
                 {isOpen && (
-                  <WorkSpaceErrorModal
-                    open={isOpen}
-                    onClose={handleClose}
-                  ></WorkSpaceErrorModal>
+                  <WorkSpaceErrorModal open={isOpen} onClose={handleClose} />
                 )}
 
                 <StIcon src={icon} />
                 <StLink>디벨킷 시작하기</StLink>
               </StStart>
             </StIntro>
-            <Twinklestar></Twinklestar>
-            <StVelkit></StVelkit>
+            <Twinklestar />
+            <StVelkit />
           </StWrap>
           <StScroll>
-            <StScrollImg alt='scroll' src={scroll} onClick={onHomeClick} />
-            <div onClick={onHomeClick} className='animate__shakeY'>
+            <StScrollImg alt="scroll" src={scroll} onClick={onHomeClick} />
+            <div onClick={onHomeClick} className="animate__shakeY">
               scroll down
             </div>
           </StScroll>
         </StMain>
       </StWrapper>
 
-      <StWrapper height={'100vh'}>
+      <StWrapper height="100vh">
         <StMain style={{ alginItems: 'center' }}>
           <StSecondIntroDiv>
             <div>프로젝트 협업툴, 더 꼼꼼히 따져봐야 합니다.</div>
@@ -111,9 +109,9 @@ function Landing() {
 
           <StSecondBodyDiv>
             <StSecondBodyMent>
-              <StMent>let</StMent> <StMent fontColor='#00A99D'>D.Velkit</StMent>
+              <StMent>let</StMent> <StMent fontColor="#00A99D">D.Velkit</StMent>
               <StMent> = </StMent>
-              <StMent fontColor='#F5D28C'>“Point!”</StMent>
+              <StMent fontColor="#F5D28C">“Point!”</StMent>
               <StMent>;</StMent>
               <StSecondBodyMentTwo>
                 <div>프로젝트 협업의 새로운 시작</div>
@@ -124,7 +122,7 @@ function Landing() {
             </StSecondBodyMent>
             <StCardContainer>
               <StCardElement>
-                <StImgContainer img={SecondCard1}></StImgContainer>
+                <StImgContainer img={SecondCard1} />
                 <StCardMentContainer>
                   <StSecondBodyMentTwo
                     style={{ marginTop: '2%', fontWeight: '700' }}
@@ -139,7 +137,7 @@ function Landing() {
               </StCardElement>
 
               <StCardElement>
-                <StImgContainer img={SecondCard2}></StImgContainer>
+                <StImgContainer img={SecondCard2} />
                 <StCardMentContainer>
                   <StSecondBodyMentTwo
                     style={{ marginTop: '2%', fontWeight: '700' }}
@@ -154,7 +152,7 @@ function Landing() {
               </StCardElement>
 
               <StCardElement>
-                <StImgContainer img={SecondCard3}></StImgContainer>
+                <StImgContainer img={SecondCard3} />
                 <StCardMentContainer>
                   <StSecondBodyMentTwo
                     style={{ marginTop: '2%', fontWeight: '700' }}
@@ -172,7 +170,7 @@ function Landing() {
         </StMain>
       </StWrapper>
 
-      <StWrapper height={'100vh'}>
+      <StWrapper height="100vh">
         <StImgWrapper img={ThirdBackground}>
           <StMain>
             <StThirdBody>
@@ -182,9 +180,9 @@ function Landing() {
               <StThirdMent>
                 <MentContainer>
                   <StMent>let</StMent>{' '}
-                  <StMent fontColor='#00A99D'>D.Velkit</StMent>
+                  <StMent fontColor="#00A99D">D.Velkit</StMent>
                   <StMent> = </StMent>
-                  <StMent fontColor='#F5D28C'>“growth”</StMent>
+                  <StMent fontColor="#F5D28C">“growth”</StMent>
                   <StMent>;</StMent>
                 </MentContainer>
                 <StSecondBodyMentTwo>
@@ -213,13 +211,13 @@ function Landing() {
                   커뮤니티 바로가기{' '}
                 </StLink>
               </StThirdMent>
-              <StVelkit2></StVelkit2>
+              <StVelkit2 />
             </StThirdBody>
           </StMain>
         </StImgWrapper>
       </StWrapper>
 
-      <StWrapper height={'80vh'}>
+      <StWrapper height="80vh">
         <StMain>
           <StThirdBody>
             <StImgBox>
@@ -253,7 +251,7 @@ function Landing() {
                 </StSecondBodyMentTwo>
               </StFourthImg>
             </StImgBox>
-            <StVelkit3></StVelkit3>
+            <StVelkit3 />
           </StThirdBody>
         </StMain>
       </StWrapper>
@@ -266,7 +264,7 @@ export default Landing;
 const StWrapper = styled.div`
   color: white;
   width: 100%;
-  height: ${(props) => props.height};
+  height: ${props => props.height};
   display: flex;
   background: #000000;
   overflow-x: hidden;
@@ -289,7 +287,7 @@ const StWrap = styled.div`
   justify-content: left;
   align-items: left;
   flex-direction: row;
-  display: ${(props) => props.dp};
+  display: ${props => props.dp};
 `;
 
 const StIntro = styled.div`
@@ -300,7 +298,7 @@ const StIntro = styled.div`
 `;
 
 const StMent = styled.span`
-  color: ${(props) => props.fontColor};
+  color: ${props => props.fontColor};
   font-family: 'Consolas';
   font-size: 1.4rem;
   font-weight: 400;
@@ -308,7 +306,7 @@ const StMent = styled.span`
 `;
 
 const StIntroMent = styled.div`
-  color: ${(props) => props.fontColor};
+  color: ${props => props.fontColor};
   margin-top: 4%;
   font-size: 54px;
   font-weight: 500;
@@ -518,7 +516,7 @@ const StImgContainer = styled.div`
   height: 230px;
   border-radius: 15px;
   border: none;
-  background: url(${(props) => props.img}) no-repeat;
+  background: url(${props => props.img}) no-repeat;
   background-size: cover;
 `;
 
@@ -541,7 +539,7 @@ const StImgWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)),
-    url(${(props) => props.img}) no-repeat;
+    url(${props => props.img}) no-repeat;
   background-size: cover;
   display: flex;
   overflow: hidden;
@@ -571,7 +569,7 @@ const StThirdImg = styled.div`
   height: 420px;
   border: none;
   background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
-    url(${(props) => props.img}) no-repeat;
+    url(${props => props.img}) no-repeat;
   background-size: cover;
   border-radius: 20px;
 `;
@@ -591,7 +589,7 @@ const StFourthImg = styled.div`
   width: 33vw;
   height: 40vh;
   border: none;
-  background: url(${(props) => props.img}) no-repeat;
+  background: url(${props => props.img}) no-repeat;
   background-size: cover;
   border-radius: 20px;
 `;

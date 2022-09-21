@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import logo from '../asset/img/logo.png';
 import { useNavigate } from 'react-router-dom';
+import logo from '../asset/img/logo.png';
 
 function Footer() {
   const navigate = useNavigate();
@@ -26,23 +26,21 @@ function Footer() {
 
           <StInfoDiv>
             <StInfoDetail>
-              <StInfoName cs='pointer'>개인정보 처리 방침</StInfoName>
+              <StInfoName cs="pointer">개인정보 처리 방침</StInfoName>
               <StInfoName>|</StInfoName>
-              <StInfoName cs='pointer'>이용약관</StInfoName>
+              <StInfoName cs="pointer">이용약관</StInfoName>
               <StInfoName>|</StInfoName>
-              <StInfoName cs='pointer'>법적고지</StInfoName>
+              <StInfoName cs="pointer">법적고지</StInfoName>
               <StInfoName>|</StInfoName>
-              <StInfoName cs='pointer'>이메일무단수집거부</StInfoName>
+              <StInfoName cs="pointer">이메일무단수집거부</StInfoName>
             </StInfoDetail>
 
-            <StCopyright>
-              Copyright, D.vel kit.All rights reserved.
-            </StCopyright>
+            <StCopyright>Copyright, D.vel kit.All rights reserved.</StCopyright>
           </StInfoDiv>
         </StDivLeft>
 
         <StDivRight>
-          <StLogo alt='logo' src={logo} />
+          <StLogo alt="logo" src={logo} />
         </StDivRight>
       </StFooterWrapper>
     </StFooterDiv>
@@ -113,7 +111,7 @@ const StInfoDetail = styled.div`
 
 const StInfoName = styled.div`
   margin-right: 8px;
-  cursor: ${(props) => props.cs}; ;
+  cursor: ${props => props.cs}; ;
 `;
 
 const StCopyright = styled.div`

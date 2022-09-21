@@ -27,16 +27,16 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path='/' element={<Landing />} />
+        <Route path="/" element={<Landing />} />
         {/* <Route path='/signup' element={<SignUp />} /> */}
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage2" element={<MyPage2 />} />
         <Route path="/workspace" element={<WorkSpace />} />
         <Route path="/editor" element={<PostEditor />} />
         <Route path="/kakao" element={<Kakao />} />
-        <Route path='/detail' element={<WorkspaceDetailPage />} />
-        <Route path='/workspace/main/:id' element={<WorkSpaceDetail />} />
-        <Route path='/workspace/main/:id/notice' element={<NoticePage />} />
+        <Route path="/detail" element={<WorkspaceDetailPage />} />
+        <Route path="/workspace/main/:id" element={<WorkSpaceDetail />} />
+        <Route path="/workspace/main/:id/notice" element={<NoticePage />} />
         <Route
           path="/workspace/main/:id/notice/write"
           element={<NoticeWritePage />}

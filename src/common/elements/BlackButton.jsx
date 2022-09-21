@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export default function BlackButton(props) {
   return (
     <StButton
-      type='button'
+      type="button"
       onClick={() => {
         props.onClick();
       }}
@@ -18,7 +18,7 @@ export default function BlackButton(props) {
 const StButton = styled.button`
   background-color: #000000;
   margin-left: 30px;
-  /* width: ${(props) => props.width}; */
+  /* width: ${props => props.width}; */
   width: 200px;
   height: 35px;
   border-radius: 8px;

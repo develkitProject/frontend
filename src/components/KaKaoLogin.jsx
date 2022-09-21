@@ -10,7 +10,7 @@ const loginWithKakao = () => {
   });
 };
 
-const KakaoLogin = () => {
+function KakaoLogin() {
   return (
     <div
       style={{
@@ -34,7 +34,7 @@ const KakaoLogin = () => {
       </a>
     </div>
   );
-};
+}
 
 export default KakaoLogin;
 

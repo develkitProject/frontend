@@ -1,15 +1,15 @@
 import styled from 'styled-components';
-import SideMenu from '../components/SideMenu';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
+import SideMenu from '../components/SideMenu';
 import Chatting from '../components/Chatting';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
-import { useEffect, useState } from 'react';
 import InvitationCodeModal from '../common/Modal/InvitationCodeModal';
 import BlackButton from '../common/elements/BlackButton';
 import useGetUser from '../common/hooks/useGetUser';
-import SockJS from 'sockjs-client';
 import { getCookieToken } from '../Cookie';
-import Stomp from 'stompjs';
 
 function WorkSpaceDetail() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ function WorkSpaceDetail() {
     setInvitationCodeOpen(false);
   };
   const handleClick = () => {
-    setInvitationCodeOpen(invitationCodeOpen === false ? true : false);
+    setInvitationCodeOpen(invitationCodeOpen === false);
   };
 
   const clickHandler = () => {
@@ -63,14 +63,14 @@ function WorkSpaceDetail() {
       stompClient.connect(headers, () => {
         stompClient.subscribe(
           `/sub/chat/room/${id}`,
-          (data) => {
+          data => {
             const newMessage = JSON.parse(data.body);
-            setChatMessages((chatMessages) => [...chatMessages, newMessage]);
+            setChatMessages(chatMessages => [...chatMessages, newMessage]);
             if (newMessage.type !== 'TALK') {
               setUsers(newMessage.userList);
             }
           },
-          headers
+          headers,
         );
       });
     } catch (error) {
@@ -91,30 +91,30 @@ function WorkSpaceDetail() {
       <Projects>
         <StIntroContainer>
           <div>
-            <StTitle fc='#333333' fs='1.5rem'>
+            <StTitle fc="#333333" fs="1.5rem">
               {title}
             </StTitle>
             <StContent>{content}</StContent>
           </div>
-          <BlackButton text='초대코드 확인' onClick={handleClick}></BlackButton>
+          <BlackButton text="초대코드 확인" onClick={handleClick} />
         </StIntroContainer>
         {invitationCodeOpen ? (
           <InvitationCodeModal onClose={handleClose} />
         ) : null}
         <div>
           <StNoticeWrapper>
-            <StTitle style={{ marginBottom: '15px' }} fc='#333333' fs='20px'>
+            <StTitle style={{ marginBottom: '15px' }} fc="#333333" fs="20px">
               필독
             </StTitle>
             <StNoticeContainer>
-              <StTitle style={{ marginBottom: '15px' }} fc='#00a99d' fs='20px'>
+              <StTitle style={{ marginBottom: '15px' }} fc="#00a99d" fs="20px">
                 공지사항
               </StTitle>
               <StNoticeBox>
                 <StTitle
                   style={{ marginBottom: '15px' }}
-                  fc='#333333'
-                  fs='20px'
+                  fc="#333333"
+                  fs="20px"
                 >
                   {data?.data.notices && data?.data.notices.title}
                 </StTitle>
@@ -140,7 +140,7 @@ function WorkSpaceDetail() {
         </div>
         <div>
           <StScheduleWrapper>
-            <StScheduleTitle onClick={clickHandler} fc='#333333'>
+            <StScheduleTitle onClick={clickHandler} fc="#333333">
               문서 및 계획
             </StScheduleTitle>
 
@@ -156,13 +156,13 @@ function WorkSpaceDetail() {
               </StThead>
 
               <StTbody>
-                {document?.map((data) => {
+                {document?.map(data => {
                   return (
                     <StTable
                       key={data.id}
                       onClick={() => {
                         navigate(
-                          `/workspace/main/${workspaceid}/docs/${data.id}`
+                          `/workspace/main/${workspaceid}/docs/${data.id}`,
                         );
                       }}
                     >
@@ -187,7 +187,7 @@ function WorkSpaceDetail() {
           chatMessages={chatMessages}
           headers={headers}
           users={users}
-        ></Chatting>
+        />
       )}
     </StWrapper>
   );
@@ -227,9 +227,9 @@ const StIntroContainer = styled.div`
 `;
 
 const StTitle = styled.p`
-  color: ${(props) => props.fc};
+  color: ${props => props.fc};
   text-align: left;
-  font-size: ${(props) => props.fs};
+  font-size: ${props => props.fs};
   font-weight: bold;
   letter-spacing: -1.5px;
 `;
@@ -312,7 +312,7 @@ const StScheduleWrapper = styled.div`
 `;
 
 const StScheduleTitle = styled.p`
-  color: ${(props) => props.fc};
+  color: ${props => props.fc};
   text-align: left;
   font-size: 20px;
   font-weight: bold;

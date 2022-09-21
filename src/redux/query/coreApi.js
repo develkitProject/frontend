@@ -4,4 +4,3 @@ export const coreApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://hosung.shop/' }),
   endpoints: () => ({}),
 });
-

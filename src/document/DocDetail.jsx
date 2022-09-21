@@ -1,13 +1,11 @@
 import styled from 'styled-components';
-import SideMenu from '../components/SideMenu';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import SideMenu from '../components/SideMenu';
 import { useGetDocDetailQuery } from '../redux/modules/workspaces';
 import Board from './Board';
 
 function DocDetail() {
-
   const navigate = useNavigate();
   const params = useParams();
   const workspaces = Number(params.id);
@@ -17,7 +15,7 @@ function DocDetail() {
     docid,
   });
   const document = data?.data;
-  console.log(data)
+  console.log(data);
 
   useEffect(() => {
     refetch();
@@ -47,7 +45,7 @@ function DocDetail() {
               <div dangerouslySetInnerHTML={{ __html: document?.content }} />
             </StContent>
           </StContentContainer>
-          <StFooterContainer></StFooterContainer>
+          <StFooterContainer />
         </Projects>
         <BoardContainer>
           <Board />

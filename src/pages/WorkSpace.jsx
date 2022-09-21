@@ -1,15 +1,15 @@
 import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
 import { getCookieToken } from '../Cookie';
 import {
   useGetWorkspacesQuery,
   useDeleteWorkSpacesMutation,
 } from '../redux/modules/workspaces';
 import CreateCard from '../components/CreateCard';
-import SpaceCard from '../components/SpaceCard.jsx';
+import SpaceCard from '../components/SpaceCard';
 import SpaceHeader from '../components/SpaceHeader';
 import WorkSpaceErrorModal from '../common/Modal/error';
 import CreateSpaceModal from '../common/Modal/CreateSpaceModal';
-import React, { useEffect, useState } from 'react';
 
 function WorkSpace() {
   const { data, error, isLoading, refetch } = useGetWorkspacesQuery();
@@ -48,7 +48,7 @@ function WorkSpace() {
                     <div style={{ width: '70%' }} key={data.workspaces.id}>
                       <SpaceCard
                         data={data}
-                        width='100%'
+                        width="100%"
                         deleteButton={deleteButton}
                         deleteWorkSpaces={deleteWorkSpaces}
                       />
@@ -66,7 +66,7 @@ function WorkSpace() {
           onClose={() => {
             setCreateOpen(false);
           }}
-        ></CreateSpaceModal>
+        />
       )}
     </>
   );

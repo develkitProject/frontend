@@ -30,7 +30,7 @@ function SignUp() {
   const [passwordMsg, setPasswordMsg] = useState('');
   const [passwordConfirmMsg, setPasswordConfirmMsg] = useState('');
 
-  const onChangeUsername = (event) => {
+  const onChangeUsername = event => {
     const usernameRegex =
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (event.target.value && usernameRegex.test(event.target.value)) {
@@ -43,7 +43,7 @@ function SignUp() {
     setUsername(event.target.value);
   };
 
-  const onChangeNickname = (event) => {
+  const onChangeNickname = event => {
     if (event.target.value.length < 2 || event.target.value.length > 8) {
       setIsNickname(false);
       setNicknameMsg('2~8글자 내외(한글, 영어, 숫자)로 입력해주세요.');
@@ -54,7 +54,7 @@ function SignUp() {
     setNickname(event.target.value);
   };
 
-  const onChangePassword = (event) => {
+  const onChangePassword = event => {
     const passwordRegex =
       /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
     if (
@@ -72,7 +72,7 @@ function SignUp() {
     setPassword(event.target.value);
   };
 
-  const onChangePasswordConfirm = (event) => {
+  const onChangePasswordConfirm = event => {
     if (password === event.target.value) {
       setIsPasswordConfirm(true);
       setPasswordConfirmMsg('동일한 비밀번호입니다.');
@@ -104,7 +104,7 @@ function SignUp() {
     return false;
   };
 
-  const onSubmit = async (event) => {
+  const onSubmit = async event => {
     event.preventDefault();
     if (validation()) {
       try {
@@ -131,7 +131,8 @@ function SignUp() {
       username,
     };
     try {
-      await axios.post('https://hosung.shop/api/members/email', checkDuplicate)
+      await axios
+        .post('https://hosung.shop/api/members/email', checkDuplicate)
         .then(() => {
           alert('닉네임을 사용하실 수 있습니다.');
         });
@@ -150,7 +151,7 @@ function SignUp() {
             <b>D.Velkit</b>
             으로 한번에
           </p>
-          <img alt={profile} src={profile} width='7%' />
+          <img alt={profile} src={profile} width="7%" />
         </div>
         <div>
           <div>
@@ -158,9 +159,9 @@ function SignUp() {
             <div>
               <input
                 onChange={onChangeUsername}
-                name='username'
-                type='email'
-                placeholder='E-mail Address'
+                name="username"
+                type="email"
+                placeholder="E-mail Address"
               />
               <StMsg>
                 {username.length > 0 && (
@@ -171,7 +172,9 @@ function SignUp() {
                   </span>
                 )}
               </StMsg>
-              <button onClick={emailCheck} type='button'>중복확인</button>
+              <button onClick={emailCheck} type="button">
+                중복확인
+              </button>
             </div>
           </div>
 
@@ -180,9 +183,9 @@ function SignUp() {
             <div>
               <input
                 onChange={onChangeNickname}
-                name='nickname'
-                type='text'
-                placeholder='nickname'
+                name="nickname"
+                type="text"
+                placeholder="nickname"
               />
             </div>
             <StMsg>
@@ -199,10 +202,10 @@ function SignUp() {
             <div>
               <input
                 onChange={onChangePassword}
-                name='password'
-                type='password'
-                placeholder='password'
-                autoComplete='off'
+                name="password"
+                type="password"
+                placeholder="password"
+                autoComplete="off"
               />
             </div>
             <StMsg>
@@ -219,10 +222,10 @@ function SignUp() {
             <div>
               <input
                 onChange={onChangePasswordConfirm}
-                name='passwordConfirm'
-                type='password'
-                autoComplete='off'
-                placeholder='password confirm'
+                name="passwordConfirm"
+                type="password"
+                autoComplete="off"
+                placeholder="password confirm"
               />
             </div>
             <StMsg>
@@ -239,12 +242,12 @@ function SignUp() {
           </div>
 
           <div>
-            <button type='button' onClick={onSubmit}>
+            <button type="button" onClick={onSubmit}>
               회원가입하기
             </button>
           </div>
           <div>----------or----------</div>
-          <button type='button'>카카오톡으로 로그인</button>
+          <button type="button">카카오톡으로 로그인</button>
         </div>
       </div>
     </StWrapper>

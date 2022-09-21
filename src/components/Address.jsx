@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import { useGetMemberListQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
+import { useGetMemberListQuery } from '../redux/modules/workspaces';
 
 function Address() {
   const params = useParams();

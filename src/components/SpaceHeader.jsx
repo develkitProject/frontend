@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
+import axios from 'axios';
 import CodeConfirmModal from '../common/Modal/CodeConfirmModal';
 import { getCookieToken } from '../Cookie';
-import axios from 'axios';
 
 function SpaceHeader() {
   const headers = {
@@ -11,9 +11,9 @@ function SpaceHeader() {
   const [spaceData, setSpaceData] = useState(null);
 
   const [inviteCodeConfirm, setInviteCodeConfirm] = useState(false);
-  let [code, setCode] = useState('');
+  const [code, setCode] = useState('');
 
-  const onChange = (e) => {
+  const onChange = e => {
     setCode(e.target.value);
   };
 
@@ -29,7 +29,7 @@ function SpaceHeader() {
       try {
         await axios
           .post('https://hosung.shop/api/invitation/codes', codes, { headers })
-          .then((response) => {
+          .then(response => {
             setInviteCodeConfirm(true);
             setSpaceData(response?.data?.data.workspaces);
           });
@@ -50,8 +50,8 @@ function SpaceHeader() {
       <StSearch>
         <StInput
           onChange={onChange}
-          placeholder='초대코드 입력하고 프로젝트 참여하기'
-        ></StInput>
+          placeholder="초대코드 입력하고 프로젝트 참여하기"
+        />
         <StGo onClick={handleSubmit}>Go.</StGo>
       </StSearch>
       {inviteCodeConfirm ? (

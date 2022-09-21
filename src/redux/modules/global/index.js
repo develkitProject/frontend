@@ -5,18 +5,18 @@ const initialState = {
   isSignUpModal: false,
 };
 
-const { actions, reducer} = createSlice({
+const { actions, reducer } = createSlice({
   name: 'user',
   initialState,
   reducers: {
-      setIsLoginModal: (state, {payload}) => ({
-          ...state,
-          isLoginModal: payload,
-      }),
-      setIsSignUpModal: (state, {payload}) => ({
-          ...state,
-          isSignUpModal: payload
-      })
+    setIsLoginModal: (state, { payload }) => ({
+      ...state,
+      isLoginModal: payload,
+    }),
+    setIsSignUpModal: (state, { payload }) => ({
+      ...state,
+      isSignUpModal: payload,
+    }),
   },
   extraReducers: {},
 });

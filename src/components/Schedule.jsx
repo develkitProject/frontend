@@ -3,7 +3,7 @@ import styled from 'styled-components';
 function Schedule() {
   return (
     <StWrapper>
-      <StTitle fc='#333333'>일정관리</StTitle>
+      <StTitle fc="#333333">일정관리</StTitle>
 
       <StTableContainer>
         <StThead>
@@ -16,7 +16,6 @@ function Schedule() {
           </StTable>
         </StThead>
         <StTbody>
-          
           <StTable>
             <div>신짱구</div>
             <div>제목_업무요청_20220906</div>
@@ -24,8 +23,6 @@ function Schedule() {
             <div>2022.09.13</div>
             <div>2022.09.20</div>
           </StTable>
-
-          
         </StTbody>
       </StTableContainer>
     </StWrapper>
@@ -49,7 +46,7 @@ const StWrapper = styled.div`
 `;
 
 const StTitle = styled.p`
-  color: ${(props) => props.fc};
+  color: ${props => props.fc};
   text-align: left;
   font-size: 20px;
   font-weight: bold;
