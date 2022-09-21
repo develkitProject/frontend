@@ -8,65 +8,100 @@ import chat from '../asset/img/chat.svg';
 import arrowDown from '../asset/img/arrowDown.svg';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import Icon from '../detail/components/Icon';
+import { useState } from 'react';
+import { useCallback } from 'react';
 
-function SideMenu() {
+const menuData = [
+  {
+    key: 'home',
+    icon: home,
+    title: '홈',
+  },
+  {
+    key: 'board',
+    icon: document,
+    title: '게시판',
+    subItem: [
+      {
+        key: 'notice',
+        subTitle: '공지사항',
+      },
+      {
+        key: 'document',
+        subTitle: '문서',
+      },
+    ],
+  },
+  {
+    key: 'schedule',
+    icon: schedule,
+    title: '일정 관리',
+  },
+  {
+    key: 'contacts',
+    icon: contacts,
+    title: '주소록',
+  },
+  {
+    key: 'projectInfo',
+    icon: laptop,
+    title: '프로젝트 정보',
+  },
+];
+
+function SideMenu({ handleClick }) {
+
+  const [menu, setMenu] = useState('home');
+
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
 
+  const onClickMenu = useCallback(({ key }) =>
+    () => {
+      setMenu(key);
+    },
+  []
+);
   return (
     <StWrapper>
-      <StLabel
-        onClick={() => {
-          navigate(`/workspace/main/${id}`);
-        }}
-      >
-        <StIcon src={home} />홈
-      </StLabel>
-      <StLabel style={{ borderBottom: 'none' }}>
-        <StIcon src={document} />
-        게시판
-        <StIcon src={arrowDown} />
-      </StLabel>
-      <StMenuInDiv>
-        <StMenuIn
-          onClick={() => {
-            navigate(`/workspace/main/${id}/notice`);
-          }}
-        >
-          공지사항
-        </StMenuIn>
-        <StMenuIn
-          onClick={() => {
-            navigate(`/workspace/main/${id}/docs`);
-          }}
-        >
-          문서
-        </StMenuIn>
-      </StMenuInDiv>
-      <StLabel
-        style={{ borderTop: 'solid 1px #c6c6c6' }}
-        onClick={() => {
-          navigate(`/workspace/main/${id}/schedules`);
-        }}
-      >
-        <StIcon src={schedule} />
-        일정 관리
-      </StLabel>
-      <StLabel
-        onClick={() => {
-          navigate(`/workspace/main/${id}/address`);
-        }}
-      >
-        <StIcon src={contacts} />
-        주소록
-      </StLabel>
-      <StLabel>
-        <StIcon src={laptop} />
-        프로젝트 정보
-      </StLabel>
+      {menuData.map(({ key, title, subItem, icon }) => (
+        <>
+      {!subItem ? (
+            <StLabel
+              role='presentation'
+              onClick={() => {navigate(`/workspace/main/${id}`);}}
+              key={key}
+            >
+              <StIcon src={icon} />
+              {title}
+            </StLabel>
+          ) : (
+            <>
+              <StLabel
+                role='presentation'
+                key={key}
+                style={{ borderBottom: 'none' }}
+              >
+                <StIcon src={icon} />
+                {title}
+                <Icon.ArrowDown />
+              </StLabel>
+              <StMenuInDiv>
+                {subItem.map(({ key, subTitle }) => (
+                  <StMenuIn onClick={() => {navigate(`/workspace/main/${id}`);}} key={key}>
+                    {subTitle}
+                  </StMenuIn>
+                ))}
+              </StMenuInDiv>
+            </>
+          )}
+        </>
+))}
+
       <div>
-        <StButton>
+        <StButton onClick={handleClick}>
           <StIcon src={chat} />
           채팅하기
         </StButton>
