@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
+import useGetUser from '../common/hooks/useGetUser';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Stomp from 'stompjs';
@@ -22,10 +23,10 @@ export default function WorkspaceDetailPage() {
   const { data, isLoading, error } = useGetMainWorkSpacesQuery(id);
   const title = data?.data?.workspaces?.title;
   const [isOpen, setIsOpen] = useState(true);
+  const { user } = useGetUser();
 
   //---------------------------------------------------------------
-  const [chatMessages, setChatMessages] = useState([]);
-  const [users, setUsers] = useState(null);
+
   const sockJS = new SockJS('https://hosung.shop/stomp/chat');
   const stompClient = Stomp.over(sockJS);
   const messageBoxRef = useRef();
@@ -34,37 +35,8 @@ export default function WorkspaceDetailPage() {
     token: getCookieToken(),
   };
 
-  useEffect(() => {
-    messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
-  }, [chatMessages]);
-
   const handleClick = () => {
     setIsOpen(!isOpen);
-  };
-
-  function onConnected() {
-    try {
-      stompClient.connect(headers, () => {
-        stompClient.subscribe(
-          `/sub/chat/room/${id}`,
-          (data) => {
-            const newMessage = JSON.parse(data.body);
-            setChatMessages((chatMessages) => [...chatMessages, newMessage]);
-            if (newMessage.type !== 'TALK') {
-              setUsers(newMessage.userList);
-            }
-          },
-          headers
-        );
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  const disConnect = () => {
-    if (stompClient != null) {
-      if (stompClient.connected) stompClient.disconnect();
-    }
   };
 
   //---------------------------------------------------------------
@@ -90,12 +62,9 @@ export default function WorkspaceDetailPage() {
           id={id}
           title={title}
           stompClient={stompClient}
-          chatMessages={chatMessages}
           headers={headers}
-          users={users}
-          onConnected={onConnected}
-          disConnect={disConnect}
           messageBoxRef={messageBoxRef}
+          user={user}
         ></Chatting>
       )}
     </S.Wrapper>

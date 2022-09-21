@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import WorkSpaceErrorModal from '../../../common/Modal/error';
 
 function NoticeList({ error, isLoading, data, notice }) {
-  console.log(data?.data);
+  // console.log(data?.data);
   return (
     <>
       <StWrapper>

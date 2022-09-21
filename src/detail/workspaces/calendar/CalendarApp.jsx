@@ -7,10 +7,8 @@ import { useGetSchedulesQuery } from '../../../redux/modules/workspaces';
 
 export default function CalendarApp({ id }) {
   const [value, onChange] = useState(new Date());
-  const mark = ['2022-09-10', '2022-09-15', '2022-09-17'];
   const { data, error, isLoading } = useGetSchedulesQuery(id);
   const dataArr = data?.data;
-  console.log(dataArr);
 
   return (
     <div

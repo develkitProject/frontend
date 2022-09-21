@@ -52,7 +52,7 @@ export default function Sidebar({ onClickMenu, handleClick }) {
   return (
     <S.StWrapper>
       {menuData.map(({ key, title, subItem, icon }) => (
-        <>
+        <div key={key}>
           {!subItem ? (
             <S.StLabel
               role='presentation'
@@ -82,7 +82,7 @@ export default function Sidebar({ onClickMenu, handleClick }) {
               </S.StMenuInDiv>
             </>
           )}
-        </>
+        </div>
       ))}
       <div>
         <S.StButton onClick={handleClick}>
