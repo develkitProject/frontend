@@ -66,7 +66,7 @@ const ModalWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid #999999;
+  border: 1.5px solid #999999;
   z-index: 9999;
   font-family: 'Noto Sans KR';
   box-shadow: 3px 3px 3px rgba(85, 85, 85, 0.1);

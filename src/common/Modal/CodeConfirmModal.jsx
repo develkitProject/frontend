@@ -139,7 +139,7 @@ const StInfoDiv = styled.div`
 const StImg = styled.div`
   margin-top: 8px;
   width: 150px;
-  height: 125px;
+  height: 135px;
   background-image: url(${(props) => props.img});
   background-size: 100% 100%;
   border-radius: 20px;
@@ -155,8 +155,8 @@ const StInfoDetail = styled.div`
 
 const StInfoMent = styled.div`
   width: 300px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   background-color: #eef8f8;
   font-weight: 500;
   font-size: 16px;
