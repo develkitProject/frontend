@@ -4,16 +4,30 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import Editor from '../../../components/Editor';
-import { useAddDocMutation } from '../../../redux/modules/workspaces';
+import {useGetDocDetailQuery, useUpdateDocMutation } from '../../../redux/modules/workspaces';
 
-const DocsWrite = ({onListHandle})=>{
+const DocsEdit = ()=>{
  const navigate = useNavigate();
  const params = useParams();
  const id = Number(params.id);
+ const workspaces = Number(params.id);
+ const docid = Number(params.docid);
 
- const [addDoc] = useAddDocMutation();
- const [title, setTitle] = useState('');
- const [content, setContent] = useState('');
+ const [editInfo, setEditInfo] = useState({
+  title: "",
+  content: "",
+});
+
+const { data, error, isLoading, refetch } = useGetDocDetailQuery({
+  workspaces,
+  docid,
+});
+const document = data?.data;
+
+const [title, setTitle] = useState(document?.title);
+const [content, setContent] = useState(document?.content);
+
+ const [editDoc] = useUpdateDocMutation();
  const [newFile, setNewFile] = useState([]);
     
  const onTitleChange = (e) => {
@@ -40,9 +54,10 @@ const DocsWrite = ({onListHandle})=>{
           content,
           formData
     };
-      addDoc(document);
+      editDoc(document);
       window.alert('문서가 등록되었습니다');
-      onListHandle()
+      navigate(`/workspace/main/${id}/docs/${docid}`);
+
       } else {
         window.alert('제목과 내용을 모두 채워주세요!');
       }
@@ -51,18 +66,18 @@ const DocsWrite = ({onListHandle})=>{
 return(
       <StEditorContainer>
             <StInputTitle onChange={onTitleChange} name='title' placeholder='제목' value={title}/>
-            <Editor value={content} setCon={setContent}/>
+            <Editor value = {content} setCon={setContent}/>
             <EditorBlock>
              <div>
               <input type="file" name="file" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/msword,application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf, .hwp"
               onChange={onFileChange}
               ></input>
              </div>
-              <StButton onClick={handleSubmit}>게시하기</StButton>
+              <StButton onClick={handleSubmit}>수정하기</StButton>
             </EditorBlock>
         </StEditorContainer>
     )}
-export default DocsWrite
+export default DocsEdit
 
 
 const StEditorContainer = styled.div`

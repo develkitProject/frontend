@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useEffect } from 'react';
 import { useGetDocQuery } from '../../../redux/modules/workspaces';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -9,10 +8,6 @@ function Board() {
   const id = Number(params.id);
   const { data, error, isLoading, refetch } = useGetDocQuery(id);
   const doc = data?.data;
-
-  // useEffect(() => {
-  //   refetch();
-  // }, [doc, refetch]);
 
   return (
     <StWrapper>

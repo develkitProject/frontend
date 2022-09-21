@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useDeleteWorkSpacesMutation } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Board from '../document/Board';
 import Address from '../components/Address';
 import BlackButton from '../common/elements/BlackButton';
 

@@ -1,10 +1,13 @@
 import styled from 'styled-components';
-import SideMenu from '../components/SideMenu';
+import SideMenu from '../../../components/SideMenu';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDeleteDocMutation, useGetDocDetailQuery } from '../redux/modules/workspaces';
+import { useDeleteDocMutation, useGetDocDetailQuery } from '../../../redux/modules/workspaces';
 import Board from './Board';
+import BlackButton from '../../../common/elements/BlackButton';
+import DocsEdit from './DocsEdit';
+
 
 function DocDetail() {
 
@@ -30,29 +33,39 @@ function DocDetail() {
     }
   };
 
-  useEffect(() => {
-    refetch();
-  }, [data, refetch]);
+  const [tab, setTab] = useState(1);
+
+  const onDetailHandle = () => {
+    setTab(1);
+  };
+
+  const onEditHandle = () => {
+    setTab(2);
+  };
+
 
   return (
     <StWrapper>
-      <SideMenu />
-      <DocContainer>
+    <SideMenu />
+     <DocContainer>
+
+      {tab === 1 ? (
+       <>
         <Projects>
-          <StIntroContainer>
-            <StIntroMent>프로젝트 관련 주요 문서 및 파일</StIntroMent>
-            <StTitle>{document?.title}</StTitle>
-            <StInfoContainer>
-              <StProfileImg>{document?.profileImg}</StProfileImg>
-              <StNickname>{document?.nickname} </StNickname>
-              <StVerticalBar>|</StVerticalBar>
-              <StDetail>{document?.createdAt.slice(0, -7)}</StDetail>
-              <StVerticalBar>|</StVerticalBar>
-              <StDetail style={{cursor: "pointer"}}>수정</StDetail>
-              <StVerticalBar>|</StVerticalBar>
-              <StDetail onClick={deleteDoc} style={{cursor: "pointer"}}>삭제</StDetail>
-            </StInfoContainer>
-          </StIntroContainer>
+        <StIntroContainer>
+              <StIntroMent>프로젝트 관련 주요 문서 및 파일</StIntroMent>
+              <StTitle>{document?.title}</StTitle>
+              <StInfoContainer>
+                <StProfileImg>{document?.profileImg}</StProfileImg>
+                <StNickname>{document?.nickname} </StNickname>
+                <StVerticalBar>|</StVerticalBar>
+                <StDetail>{document?.createdAt.slice(0, -7)}</StDetail>
+                <StVerticalBar>|</StVerticalBar>
+                <StDetail onClick={onEditHandle} style={{cursor: "pointer"}}>수정</StDetail>
+                <StVerticalBar>|</StVerticalBar>
+                <StDetail onClick={deleteDoc} style={{cursor: "pointer"}}>삭제</StDetail>
+              </StInfoContainer>
+              </StIntroContainer>
           <StContentContainer>
             <StContent>
               <div dangerouslySetInnerHTML={{ __html: document?.content }} />
@@ -64,7 +77,7 @@ function DocDetail() {
                 최종 수정일:{document?.modifiedAt.slice(0, -7)}(수정자: 꼬부기)
                 </StDetail>
                 <StSideMent>
-                  <StDetail style={{color: "#00A99D", fontWeight: "500"}}>수정</StDetail>
+                  <StDetail onClick={onEditHandle} style={{color: "#00A99D", fontWeight: "500"}}>수정</StDetail>
                   <StVerticalBar>|</StVerticalBar>
                   <StDetail onClick={deleteDoc} style={{ fontWeight: "500"}}>삭제</StDetail>
                 </StSideMent>
@@ -75,10 +88,28 @@ function DocDetail() {
                 </StDetail>
               </div>
           </StFooterContainer>
-        </Projects>
+          </Projects>
         <BoardContainer>
           <Board />
         </BoardContainer>
+      </>
+            ) : tab === 2 ? (
+              <div>
+              <Projects>
+              <StEditIntroContainer>
+              <div>
+              <StTitle>문서 수정</StTitle>
+              <StContent>게시글 및 파일 수정</StContent>
+            </div>
+                <BlackButton
+                  text='게시글로 돌아가기'
+                  onClick={onDetailHandle}
+                ></BlackButton>
+                </StEditIntroContainer>
+              <DocsEdit></DocsEdit>
+              </Projects>
+            </div>
+          ) : null}
       </DocContainer>
     </StWrapper>
   );
@@ -101,7 +132,7 @@ const DocContainer = styled.div`
 
 const Projects = styled.div`
   width: 100%;
-  min-height: 90vh;
+  min-height: 60vh;
   margin-left: 50px;
   margin-top: 45px;
   background-color: white;
@@ -217,5 +248,14 @@ align-items: right;
 justify-content: flex-end;
 font-weight: 600;
 cursor: pointer;
+`;
 
+const StEditIntroContainer = styled.div`
+margin-left: 20px;
+margin-right: 20px;
+min-height: 12vh;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: space-between;
 `;
