@@ -37,7 +37,7 @@ export const StWrapper = styled.div`
 `;
 
 export const StLabel = styled.div`
-  width: 100%;
+  width: 200px;
   border-bottom: solid 1px #c6c6c6;
   display: table-cell;
   /* align-items: center; */

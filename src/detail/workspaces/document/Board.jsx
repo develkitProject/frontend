@@ -10,9 +10,9 @@ function Board() {
   const { data, error, isLoading, refetch } = useGetDocQuery(id);
   const doc = data?.data;
 
-  useEffect(() => {
-    refetch();
-  }, [doc, refetch]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [doc, refetch]);
 
   return (
     <StWrapper>

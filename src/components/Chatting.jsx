@@ -1,38 +1,22 @@
-import React, {
-  useState,
-  useRef,
-  useCallback,
-  useParams,
-  useMemo,
-} from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import { getCookieToken } from '../Cookie';
 import Draggable from 'react-draggable';
-import useGetUser from '../common/hooks/useGetUser';
+
 import { useEffect } from 'react';
 import { useGetChatMessagesQuery } from '../redux/modules/workspaces';
-import ChattingContainer from '../common/Modal/ChattingContainer';
 import noteBook from '../asset/img/notebook.png';
-import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
+import { textAlign } from '@mui/system';
 
-function Chatting({
-  title,
-  id,
-  stompClient,
-  chatMessages,
-  headers,
-  users,
-  onConnected,
-  disConnect,
-  messageBoxRef,
-}) {
+function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
+  const [users, setUsers] = useState(null);
   const textRef = useRef(null);
   const { data } = useGetChatMessagesQuery(id);
   const [isOpen, setIsOpen] = useState(false);
   const [Opacity, setOpacity] = useState(false);
   // ------------------------------------------------------------------------
-  // console.log(data?.data);
+  const messageList = data?.data;
+  const [chatMessages, setChatMessages] = useState([]);
+  console.log(messageList);
 
   useEffect(() => {
     onConnected();
@@ -40,15 +24,49 @@ function Chatting({
       disConnect();
     };
   }, []);
+
+  useEffect(() => {
+    messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
+  }, [chatMessages]);
+
+  useEffect(() => {
+    setChatMessages(messageList);
+  }, [messageList]);
+
   const userArray = [...new Set(users)];
   stompClient.debug = () => {};
-  const { user } = useGetUser();
 
   const handleStart = () => {
     setOpacity(true);
   };
   const handleEnd = () => {
     setOpacity(false);
+  };
+
+  function onConnected() {
+    try {
+      stompClient.connect(headers, () => {
+        stompClient.subscribe(
+          `/sub/chat/room/${id}`,
+          (data) => {
+            const newMessage = JSON.parse(data.body);
+            if (newMessage.type !== 'TALK') {
+              setUsers(newMessage.userList);
+            } else {
+              setChatMessages((chatMessages) => [newMessage, ...chatMessages]);
+            }
+          },
+          headers
+        );
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const disConnect = () => {
+    if (stompClient != null) {
+      if (stompClient.connected) stompClient.disconnect();
+    }
   };
 
   const sendMessage = () => {
@@ -72,33 +90,45 @@ function Chatting({
   };
 
   // eslint-disable-next-line array-callback-return
-  const chatdata = chatMessages?.map((data, i) => {
-    if (data.type === 'TALK') {
+  const chatData = chatMessages
+    ?.slice(0)
+    .reverse()
+    .map((data, i) => {
+      // if (data.type === 'TALK') {
       return (
         <>
           <Stdiv
             key={i}
             style={
               data.writer === user?.username
-                ? { alignItems: 'flex-end' }
-                : { alignItems: 'flex-start' }
+                ? {
+                    flexDirection: 'row-reverse',
+                    marginTop: '-2px',
+                  }
+                : { justifyContent: 'flex-start' }
             }
           >
-            <span
-              style={{
-                color: 'grey',
-              }}
-            >
-              {data.writer.split('@')[0]}
-            </span>
-            <MessageBox key={i}>
-              <span style={{ color: 'black' }}>{data.message}</span>
-            </MessageBox>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <NameSpan
+                style={
+                  data.writer === user?.username
+                    ? {
+                        display: 'none',
+                      }
+                    : null
+                }
+              >
+                {data.writer.split('@')[0]}
+              </NameSpan>
+              <MessageBox key={i}>
+                <span style={{ color: 'black' }}>{data.message}</span>
+              </MessageBox>
+            </div>
+            <TimeSpan>{data.createdAt.split(' ')[1].slice(0, -7)}</TimeSpan>
           </Stdiv>
         </>
       );
-    }
-  });
+    });
 
   return (
     <>
@@ -107,6 +137,7 @@ function Chatting({
         cancel='input, button, span'
         onStart={handleStart}
         onStop={handleEnd}
+
         // position='{x:50}'
       >
         <StChatBox style={{ opacity: Opacity ? '0.85' : '1' }}>
@@ -132,7 +163,7 @@ function Chatting({
               +
             </span>
           </StChatHeader>
-          <StChatBody ref={messageBoxRef}>{chatdata}</StChatBody>
+          <StChatBody ref={messageBoxRef}>{chatData}</StChatBody>
           <StChatFooter>
             <StInput
               rows='0'
@@ -185,10 +216,10 @@ const StChatBox = styled.div`
   height: 560px;
   background-color: #f6daa2;
   /* position: relative; */
-  left: 0%;
-  top: 50%;
+  left: 50%;
+  top: 10%;
   box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.1), 0 4px 20px 0 rgba(0, 0, 0, 0.2);
-  position: fixed;
+  position: absolute;
 `;
 
 const StChatHeader = styled.div`
@@ -213,8 +244,6 @@ const StChatFooter = styled.div`
   pointer-events: visible;
   position: absolute;
   align-items: center;
-  /* z-index: -999; */
-  /* pointer-events: none; */
 `;
 
 const StInput = styled.input`
@@ -255,7 +284,19 @@ const StChatBody = styled.div`
   flex-direction: column;
   justify-content: right;
   &::-webkit-scrollbar {
+    width: 5px;
     display: none;
+  }
+  &::-webkit-scrollbar-thunb {
+    /* background-color: #2f3542; */
+    border-radius: 10px;
+    background-clip: padding-box;
+    /* border: 2px solid transparent; */
+  }
+  &::-webkit-scrollbar-track {
+    background-color: grey;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
   }
 `;
 
@@ -276,10 +317,12 @@ const MessageBox = styled.div`
 `;
 
 const Stdiv = styled.div`
-  margin: 5px;
+  margin: 3px;
   display: flex;
-  flex-direction: column;
-  padding-right: 10px;
+  /* flex-direction: column; */
+  padding: 0px 10px;
+  align-items: flex-end;
+  margin-bottom: 7px;
 `;
 
 const StListDiv = styled.div`
@@ -324,4 +367,18 @@ const UserListDiv = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   overflow: auto;
+`;
+
+const TimeSpan = styled.div`
+  color: grey;
+  letter-spacing: -0.9px;
+  font-size: 13px;
+  padding: 0px 9px;
+  /* margin-top: 38px; */
+  /* align-items: flex-start; */
+`;
+
+const NameSpan = styled.span`
+  color: grey;
+  padding: 1px 3px;
 `;
