@@ -19,11 +19,10 @@ import ThirdImg from '../asset/img/ThirdImg.png';
 import Fourth1 from '../asset/img/Fourth1.png';
 import Fourth2 from '../asset/img/Fourth2.png';
 
-function Landing() {
+function Landing({ path, setPath }) {
   const navigate = useNavigate();
   const cookies = getCookieToken();
   const homeRef = useRef(null);
-  const [path, setPath] = useState(1);
 
   const [isOpen, setIsOpen] = useState(false);
 

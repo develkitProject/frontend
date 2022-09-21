@@ -19,11 +19,12 @@ import useGetUser from './common/hooks/useGetUser';
 import WorkspaceDetailPage from './detail';
 
 function App() {
+  const [path, setPath] = useState(1);
   return (
     <>
-      <Header />
+      <Header setPath={setPath} path={path} />
       <Routes>
-        <Route path='/' element={<Landing />} />
+        <Route path='/' element={<Landing setPath={setPath} path={path} />} />
         {/* <Route path='/signup' element={<SignUp />} /> */}
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/mypage2' element={<MyPage2 />} />
@@ -32,7 +33,7 @@ function App() {
         <Route path='/kakao' element={<Kakao />} />
         <Route path='/workspace/main/:id' element={<WorkspaceDetailPage />} />
         {/* <Route path='/workspace/main/:id' element={<WorkSpaceDetail />} /> */}
-        <Route path='/workspace/main/:id/address' element={<AddressPage />} />
+        {/* <Route path='/workspace/main/:id/address' element={<AddressPage />} /> */}
         <Route path='/workspace/main/:id/docs/:docid' element={<DocDetail />} />
       </Routes>
       <Footer />

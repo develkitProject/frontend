@@ -3,31 +3,38 @@ import SideMenu from '../../../components/SideMenu';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDeleteDocMutation, useGetDocDetailQuery } from '../../../redux/modules/workspaces';
+import Sidebar from '../../components/Sidebar';
+import {
+  useDeleteDocMutation,
+  useGetDocDetailQuery,
+} from '../../../redux/modules/workspaces';
 import Board from './Board';
 import BlackButton from '../../../common/elements/BlackButton';
 import DocsEdit from './DocsEdit';
+import { useEffect } from 'react';
 
-
-function DocDetail() {
-
+function DocDetail({ stateId, onEditHandle }) {
   const navigate = useNavigate();
   const params = useParams();
   const workspaces = Number(params.id);
-  const docid = Number(params.docid);
+  const docid = stateId;
   const { data, error, isLoading, refetch } = useGetDocDetailQuery({
     workspaces,
     docid,
   });
   const document = data?.data;
 
-  const [deleteDocument] = useDeleteDocMutation({workspaces, docid});
+  useEffect(() => {
+    refetch();
+  }, [data]);
+
+  const [deleteDocument] = useDeleteDocMutation({ workspaces, docid });
 
   const deleteDoc = () => {
     if (window.confirm('정말 지우시겠습니까?')) {
-      deleteDocument({workspaces, docid});
-      navigate(-1);
-      console.log(workspaces, docid)
+      deleteDocument({ workspaces, docid });
+      // navigate(-1);
+      console.log(workspaces, docid);
     } else {
       return;
     }
@@ -39,77 +46,92 @@ function DocDetail() {
     setTab(1);
   };
 
-  const onEditHandle = () => {
-    setTab(2);
-  };
-
-
   return (
     <StWrapper>
-    <SideMenu />
-     <DocContainer>
-
-      {tab === 1 ? (
-       <>
-        <Projects>
-        <StIntroContainer>
-              <StIntroMent>프로젝트 관련 주요 문서 및 파일</StIntroMent>
-              <StTitle>{document?.title}</StTitle>
-              <StInfoContainer>
-                <StProfileImg>{document?.profileImg}</StProfileImg>
-                <StNickname>{document?.nickname} </StNickname>
-                <StVerticalBar>|</StVerticalBar>
-                <StDetail>{document?.createdAt.slice(0, -7)}</StDetail>
-                <StVerticalBar>|</StVerticalBar>
-                <StDetail onClick={onEditHandle} style={{cursor: "pointer"}}>수정</StDetail>
-                <StVerticalBar>|</StVerticalBar>
-                <StDetail onClick={deleteDoc} style={{cursor: "pointer"}}>삭제</StDetail>
-              </StInfoContainer>
-              </StIntroContainer>
-          <StContentContainer>
-            <StContent>
-              <div dangerouslySetInnerHTML={{ __html: document?.content }} />
-            </StContent>
-          </StContentContainer>
-          <StFooterContainer>
-              <StInfoContainer style={{justifyContent: "space-between"}}>
-                <StDetail>
-                최종 수정일:{document?.modifiedAt.slice(0, -7)}(수정자: 꼬부기)
-                </StDetail>
-                <StSideMent>
-                  <StDetail onClick={onEditHandle} style={{color: "#00A99D", fontWeight: "500"}}>수정</StDetail>
+      <DocContainer>
+        {tab === 1 ? (
+          <>
+            <Projects>
+              <StIntroContainer>
+                {/* <StIntroMent>프로젝트 관련 주요 문서 및 파일</StIntroMent> */}
+                <StTitle>{document?.title}</StTitle>
+                <StInfoContainer>
+                  {/* <StProfileImg>{document?.profileImg}</StProfileImg> */}
+                  <StNickname>{document?.nickname} </StNickname>
                   <StVerticalBar>|</StVerticalBar>
-                  <StDetail onClick={deleteDoc} style={{ fontWeight: "500"}}>삭제</StDetail>
-                </StSideMent>
-              </StInfoContainer>
-              <div style={{width: "100%"}}>
-                <StDetail style={{alignSelf: "left"}}>
-                읽음: 피카츄, 파이리, 꼬부기, 라이츄, 피존투, 또가스, 버터풀, 야도란, 이상해풀, 이상해씨, 이상해꽃, ㅇㅇ(222.36) +
-                </StDetail>
-              </div>
-          </StFooterContainer>
-          </Projects>
-        <BoardContainer>
-          <Board />
-        </BoardContainer>
-      </>
-            ) : tab === 2 ? (
-              <div>
-              <Projects>
+                  <StDetail>{document?.createdAt.slice(0, -7)}</StDetail>
+                  <StVerticalBar>|</StVerticalBar>
+                  <StDetail
+                    onClick={() => {
+                      onEditHandle(docid);
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    수정
+                  </StDetail>
+                  <StVerticalBar>|</StVerticalBar>
+                  <StDetail onClick={deleteDoc} style={{ cursor: 'pointer' }}>
+                    삭제
+                  </StDetail>
+                </StInfoContainer>
+              </StIntroContainer>
+              <StContentContainer>
+                <StContent>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: document?.content }}
+                  />
+                </StContent>
+              </StContentContainer>
+              <StFooterContainer>
+                <StInfoContainer style={{ justifyContent: 'space-between' }}>
+                  <StDetail>
+                    최종 수정일:{document?.modifiedAt.slice(0, -7)}(수정자:
+                    꼬부기)
+                  </StDetail>
+                  <StSideMent>
+                    <StDetail
+                      onClick={() => {
+                        onEditHandle(docid);
+                      }}
+                      style={{ color: '#00A99D', fontWeight: '500' }}
+                    >
+                      수정
+                    </StDetail>
+                    <StVerticalBar>|</StVerticalBar>
+                    <StDetail onClick={deleteDoc} style={{ fontWeight: '500' }}>
+                      삭제
+                    </StDetail>
+                  </StSideMent>
+                </StInfoContainer>
+                <div style={{ width: '100%' }}>
+                  <StDetail style={{ alignSelf: 'left' }}>
+                    읽음: 피카츄, 파이리, 꼬부기, 라이츄, 피존투, 또가스,
+                    버터풀, 야도란, 이상해풀, 이상해씨, 이상해꽃, ㅇㅇ(222.36) +
+                  </StDetail>
+                </div>
+              </StFooterContainer>
+            </Projects>
+            {/* <BoardContainer>
+              <Board />
+            </BoardContainer> */}
+          </>
+        ) : tab === 2 ? (
+          <div>
+            <Projects>
               <StEditIntroContainer>
-              <div>
-              <StTitle>문서 수정</StTitle>
-              <StContent>게시글 및 파일 수정</StContent>
-            </div>
+                <div>
+                  <StTitle>문서 수정</StTitle>
+                  <StContent>게시글 및 파일 수정</StContent>
+                </div>
                 <BlackButton
                   text='게시글로 돌아가기'
                   onClick={onDetailHandle}
                 ></BlackButton>
-                </StEditIntroContainer>
+              </StEditIntroContainer>
               <DocsEdit></DocsEdit>
-              </Projects>
-            </div>
-          ) : null}
+            </Projects>
+          </div>
+        ) : null}
       </DocContainer>
     </StWrapper>
   );
@@ -118,14 +140,14 @@ function DocDetail() {
 export default DocDetail;
 
 const StWrapper = styled.div`
-  width: 100%;
+  width: 96%;
   background-color: #f2f2f2;
   display: flex;
   flex-direction: row;
 `;
 
 const DocContainer = styled.div`
-  width: 65%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
@@ -133,21 +155,21 @@ const DocContainer = styled.div`
 const Projects = styled.div`
   width: 100%;
   min-height: 60vh;
-  margin-left: 50px;
-  margin-top: 45px;
+  /* margin-left: 50px; */
+  /* margin-top: 45px; */
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: left;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 `;
 
 const StIntroContainer = styled.div`
-  margin: 20px;
+  margin: 60px 40px;
   min-height: 12vh;
   display: flex;
   flex-direction: column;
-  border-bottom: solid 1px #c6c6c6;
+  /* border-bottom: solid 1px #c6c6c6; */
 `;
 
 const StIntroMent = styled.div`
@@ -158,12 +180,13 @@ const StIntroMent = styled.div`
   align-self: center;
 `;
 
-const StTitle = styled.p`
+const StTitle = styled.span`
   margin: 20px;
   color: #000000;
   align-self: left;
-  font-size: 28px;
-  font-weight: 400;
+  font-size: 30px;
+  text-align: center;
+  font-weight: 500;
   letter-spacing: -0.05em;
 `;
 
@@ -172,7 +195,7 @@ const StInfoContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: flex-end;
   margin: 10px;
 `;
 
@@ -242,20 +265,20 @@ const StFooterContainer = styled.div`
 `;
 
 const StSideMent = styled.div`
-display: flex;
-flex-direction: row;
-align-items: right; 
-justify-content: flex-end;
-font-weight: 600;
-cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: right;
+  justify-content: flex-end;
+  font-weight: 600;
+  cursor: pointer;
 `;
 
 const StEditIntroContainer = styled.div`
-margin-left: 20px;
-margin-right: 20px;
-min-height: 12vh;
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: space-between;
+  margin-left: 20px;
+  margin-right: 20px;
+  min-height: 12vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;

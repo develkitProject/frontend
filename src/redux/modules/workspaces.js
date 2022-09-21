@@ -122,10 +122,10 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
 
     updateDoc: builder.mutation({
-      query: ({ workspaces, docid }) => {
+      query: (document) => {
         return {
-          url: `/api/workspaces/${workspaces}/docs/${docid}`,
-          method: 'PATCH',
+          url: `/api/workspaces/${document.id}/docs/${document.docid}`,
+          method: 'PUT',
           body: document,
           headers,
         };

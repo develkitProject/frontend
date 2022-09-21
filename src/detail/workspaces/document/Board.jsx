@@ -2,12 +2,15 @@ import styled from 'styled-components';
 import { useGetDocQuery } from '../../../redux/modules/workspaces';
 import { useNavigate, useParams } from 'react-router-dom';
 
-function Board() {
+function Board({ onDetailHandle, error, isLoading, data }) {
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
-  const { data, error, isLoading, refetch } = useGetDocQuery(id);
   const doc = data?.data;
+
+  const onMoveDetail = (stateId) => {
+    onDetailHandle(stateId);
+  };
 
   return (
     <StWrapper>
@@ -34,7 +37,7 @@ function Board() {
                   <StTable
                     key={data.id}
                     onClick={() => {
-                      navigate(`/workspace/main/${id}/docs/${data.id}`);
+                      onMoveDetail(data.id);
                     }}
                   >
                     <div>{data.id}</div>
