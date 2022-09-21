@@ -189,7 +189,7 @@ function Landing({ path, setPath }) {
                 <StSecondBodyMentTwo>
                   <div>더 완벽한 프로젝트를 위해,</div>
                   <div style={{ marginTop: '10px', fontWeight: '700' }}>
-                    커뮤니티에서 프로젝트 후기와 제안까지
+                    프로젝트 후기와 제안까지
                   </div>
                 </StSecondBodyMentTwo>
                 <StCardMentContainer>
