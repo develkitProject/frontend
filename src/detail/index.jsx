@@ -66,7 +66,7 @@ export default function WorkspaceDetailPage() {
   // };
 
   useEffect(() => {
-    checkMember();
+    // checkMember();
   }, []);
 
   //---------------------------------------------------------------
