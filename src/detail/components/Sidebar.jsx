@@ -49,7 +49,6 @@ const menuData = [
 ];
 
 export default function Sidebar({ onClickMenu, handleClick, menu }) {
-  console.log(menu);
   return (
     <S.StWrapper>
       {menuData.map(({ key, title, subItem, icon }) => (

@@ -3,11 +3,11 @@ import { useParams } from 'react-router-dom';
 import { useGetMemberListQuery } from '../redux/modules/workspaces';
 import { useEffect } from 'react';
 
-function Address() {
+function Address({ id, data_1, error_1, isLoading_1 }) {
   const params = useParams();
-  const id = Number(params.id);
-  const { data, error, isLoading, refetch } = useGetMemberListQuery(id);
-  const member = data?.data;
+  // const id = Number(params.id);
+  // const { data, error, isLoading, refetch } = useGetMemberListQuery(id);
+  const member = data_1?.data;
 
   // useEffect(() => {
   //   refetch();
@@ -15,11 +15,11 @@ function Address() {
 
   return (
     <StWrapper>
-      {error ? (
+      {error_1 ? (
         <>에러가 발생했습니다.</>
-      ) : isLoading ? (
+      ) : isLoading_1 ? (
         <>회원 정보를 불러오는 중입니다.</>
-      ) : data ? (
+      ) : data_1 ? (
         <>
           {member?.map((data, i) => {
             return (

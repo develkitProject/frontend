@@ -34,7 +34,6 @@ function DocDetail({ stateId, onEditHandle }) {
     if (window.confirm('정말 지우시겠습니까?')) {
       deleteDocument({ workspaces, docid });
       // navigate(-1);
-      console.log(workspaces, docid);
     } else {
       return;
     }

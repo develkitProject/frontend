@@ -136,7 +136,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
         cancel='input, button, span'
         onStart={handleStart}
         onStop={handleEnd}
-
+        bounds='parent'
         // position='{x:50}'
       >
         <StChatBox style={{ opacity: Opacity ? '0.85' : '1' }}>
@@ -330,6 +330,7 @@ const MessageBox = styled.div`
   text-align: center;
   align-items: center;
   padding: 0px 5px 0px 5px;
+  white-space: pre-wrap;
   /* margin-left: 10px; */
   /* float: right; */
 `;

@@ -6,19 +6,20 @@ import MyPage from './pages/MyPage';
 // import SignUp from './pages/SignUp';
 import WorkSpace from './pages/WorkSpace';
 import Kakao from './pages/KaKao';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import PostEditor from './components/PostEditor';
 import MyPage2 from './pages/MyPage2';
-import WorkSpaceDetail from './pages/WorkSpaceDetail';
 import Footer from './components/Footer';
 import ClaendarPage from './detail/workspaces/calendar/CalendarPage';
 import DocDetail from './detail/workspaces/document/DocDetail';
-import SideMenu from './components/SideMenu';
-import useGetUser from './common/hooks/useGetUser';
 import WorkspaceDetailPage from './detail';
+import { getCookieToken } from './Cookie';
+import useGetUser from './common/hooks/useGetUser';
 
 function App() {
   const [path, setPath] = useState(1);
+  const cookie = getCookieToken();
+  const navigate = useNavigate();
   return (
     <>
       <Header setPath={setPath} path={path} />
@@ -30,7 +31,10 @@ function App() {
         <Route path='/workspace' element={<WorkSpace />} />
         <Route path='/editor' element={<PostEditor />} />
         <Route path='/kakao' element={<Kakao />} />
-        <Route path='/workspace/main/:id' element={<WorkspaceDetailPage />} />
+        <Route
+          path='/workspace/main/:id'
+          element={cookie ? <WorkspaceDetailPage /> : <Landing />}
+        />
         {/* <Route path='/workspace/main/:id' element={<WorkSpaceDetail />} /> */}
         {/* <Route path='/workspace/main/:id/address' element={<AddressPage />} /> */}
         <Route path='/workspace/main/:id/docs/:docid' element={<DocDetail />} />

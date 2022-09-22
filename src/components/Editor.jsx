@@ -22,7 +22,6 @@ const Editor = ({ value, setCon }) => {
 
   const onChange = (e) => {
     setContent(e.target);
-    console.log(content);
   };
 
   const imageHandler = () => {

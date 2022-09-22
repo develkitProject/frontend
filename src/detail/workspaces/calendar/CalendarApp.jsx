@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import './Calendar.css'; // css import
+import CalendarDetail from './CalendarDetail';
 import moment from 'moment/moment';
 import styled from 'styled-components';
 import { useGetSchedulesQuery } from '../../../redux/modules/workspaces';
@@ -9,6 +10,19 @@ export default function CalendarApp({ id }) {
   const [value, onChange] = useState(new Date());
   const { data, error, isLoading } = useGetSchedulesQuery(id);
   const dataArr = data?.data;
+  const [isOpen, setIsOpen] = useState(false);
+  const [detailData, setDetailData] = useState('');
+
+  const openDetail = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const saveStateDetail = (content) => {
+    setDetailData(content);
+    openDetail();
+  };
+
+  // console.log(detailData);
 
   return (
     <div
@@ -42,15 +56,32 @@ export default function CalendarApp({ id }) {
                     (data) =>
                       data?.eventDate === moment(date).format('YYYY-MM-DD')
                   )
-                  .map((a) => {
-                    return <StMark key={a.id}>{a.content}</StMark>;
+                  .map((data) => {
+                    return (
+                      <StMark
+                        key={data.id}
+                        onClick={() => {
+                          saveStateDetail(data.content);
+                        }}
+                      >
+                        {data.content}
+                      </StMark>
+                    );
                   })}
               </>
             );
           }
         }}
-      ></Calendar>
+      >
+        {' '}
+      </Calendar>
 
+      {isOpen && (
+        <StDetail>
+          {detailData}
+          <StDeleteButton>X</StDeleteButton>
+        </StDetail>
+      )}
       <div
         style={{
           position: 'absolute',
@@ -81,4 +112,27 @@ const StMark = styled.div`
   align-items: center;
   font-size: 15px;
   text-align: center;
+`;
+
+const StDetail = styled.div`
+  width: 20%;
+  max-width: 350px;
+  height: 100px;
+  border: solid 2px #00a99d;
+  border-radius: 20px;
+  position: absolute;
+  top: 3%;
+  right: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 20px;
+  letter-spacing: -0.5px;
+`;
+
+const StDeleteButton = styled.span`
+  position: absolute;
+  top: 10px;
+  right: 20px;
 `;
