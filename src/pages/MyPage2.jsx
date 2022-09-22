@@ -1,31 +1,40 @@
-import React, { useCallback, useState, useRef } from 'react';
-
-import axios from 'axios';
+import React, { useCallback, useState, useRef, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
-
 import useGetUser from '../common/hooks/useGetUser';
 import velkit from '../asset/img/velkit.png';
-
-import { getCookieToken } from '../Cookie';
 import BasicInput from '../components/BasicInput';
+import { useUpdateUserInfoMutation } from '../redux/modules/workspaces';
 
 function MyPage2() {
+  const [updateUserInfo] = useUpdateUserInfoMutation();
+
+  const { user } = useGetUser();
+  const userNickname = user?.nickname;
+  const userImg = user?.profileImageUrl;
+
   const imgRef = useRef('');
   const [imageUrl, setImageUrl] = useState(null);
   const [imgFile, setImgFile] = useState('');
+  const [nickname, setNickname] = useState(user?.nickname);
 
-  const { user } = useGetUser();
-  // let objcopy:userType= {};
+  console.log(imageUrl)
 
-  // objcopy = { ...user };
+  const onChange = useCallback((e) => {
+    setNickname(e.target.value);
+  }, []);
 
-  // if (objcopy === undefined) {
-  //   return (
-  //     <div>
-  //       d
-  //     </div>
-  //   );
-  // }
+  const handleSubmit = () => {
+    if (nickname.length >= 2 && nickname.length <= 8){
+      const updateInfo = {
+        image: imageUrl,
+        nickname,
+      };
+      updateUserInfo(updateInfo);
+      window.alert('회원정보가 수정되었습니다!');
+    } else {
+      window.alert('닉네임은 2~8글자여야합니다.');
+    }
+  };
 
   const onChangeImage = () => {
     const reader = new FileReader();
@@ -37,32 +46,13 @@ function MyPage2() {
     };
   };
 
-  const [nickname, setNickname] = useState('');
-  const onChange = useCallback((e) => {
-    // let { value } = {...e.target}
-    // setNickname(value)
-    setNickname(e.target.value);
-  }, []);
-
-  const addpost = async (newList) => {
-    const response = await axios.post(
-      'https://hosung.shop/api/members/profile',
-      newList,
-      {
-        headers: {
-          Authorization: getCookieToken(),
-        },
-      }
-    );
-
-    return response.data;
-  };
-
   return (
     <StWrapper>
       <StProfile>
         <StSpan>나의 프로필</StSpan>
-        <StImage profileImageUrl={user?.profileImageUrl} />
+        <StImage 
+          profileImageUrl={imageUrl? imageUrl : userImg} 
+          onClick={() => imgRef.current.click()}/>
         <div
           style={{
             display: 'flex',
@@ -72,7 +62,7 @@ function MyPage2() {
           }}
         >
           <StEmail fs={'20px'} fc={'#000000'} fw={'500'}>
-            {user?.nickname}
+            {nickname === undefined ? userNickname : nickname}
           </StEmail>
           <StEmail fs={'18px'} fc={'#999999'} fw={'400'}>
             {user?.username}
@@ -90,22 +80,29 @@ function MyPage2() {
           }}
         >
           <StSpan style={{ marginTop: '80px' }}>프로필 상세보기</StSpan>
-          <BasicInput
+          <BasicInput type="text"
             label='닉네임'
             marginTop='80px'
             placeholder={user?.nickname}
+            onChange={onChange}
+            name='nickname'
+            value={nickname}
           ></BasicInput>
+
+          <fieldset disabled>
           <BasicInput
             label='이메일'
             marginTop='40px'
             placeholder={user?.username}
           ></BasicInput>
-          <StButton>변경사항 저장</StButton>
+          </fieldset>
+
+          <StButton onClick={handleSubmit}>변경사항 저장</StButton>
           <StVelkit></StVelkit>
         </div>
       </StDetail>
 
-      {imageUrl ? <StImgTag src={imageUrl} /> : null}
+      {/* {imageUrl ? <StImgTag src={imageUrl} /> : null} */}
 
       <input
         style={{ display: 'none' }}
@@ -138,9 +135,10 @@ const StWrapper = styled.div`
 `;
 
 const StProfile = styled.div`
-  width: 25%;
-  min-width: 400px;
+  width: 30%;
+  min-width: 350px;
   max-width: 600px;
+  margin-left: 50px;
   height: 600px;
   display: flex;
   flex-direction: column;
@@ -194,7 +192,7 @@ const StImgTag = styled.img`
 
 const StDetail = styled.div`
   width: 60%;
-  min-width: 700px;
+  min-width: 680px;
   height: 600px;
   background-color: #ffffff;
   border: none;
