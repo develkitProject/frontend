@@ -65,13 +65,8 @@ function Header({ path, setPath }) {
     setPath(1);
   };
   const moveProject = () => {
-    // if (cookies) {
     setPath(2);
     navigate('/workspace');
-    // } else {
-    // alert('로그인해주세요');
-    // navigate('/');
-    // setPath(1);
   };
 
   return (

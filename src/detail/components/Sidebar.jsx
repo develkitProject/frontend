@@ -48,7 +48,8 @@ const menuData = [
   },
 ];
 
-export default function Sidebar({ onClickMenu, handleClick }) {
+export default function Sidebar({ onClickMenu, handleClick, menu }) {
+  console.log(menu);
   return (
     <S.StWrapper>
       {menuData.map(({ key, title, subItem, icon }) => (
@@ -58,6 +59,15 @@ export default function Sidebar({ onClickMenu, handleClick }) {
               role='presentation'
               onClick={onClickMenu({ key })}
               key={key}
+              style={
+                key === menu
+                  ? {
+                      color: '#00A99D',
+                      backgroundColor: '#EEF8F8',
+                      borderRadius: '10px',
+                    }
+                  : null
+              }
             >
               <S.MenuIcon src={icon} />
               {title}
@@ -75,7 +85,19 @@ export default function Sidebar({ onClickMenu, handleClick }) {
               </S.StLabel>
               <S.StMenuInDiv>
                 {subItem.map(({ key, subTitle }) => (
-                  <S.StMenuIn onClick={onClickMenu({ key })} key={key}>
+                  <S.StMenuIn
+                    onClick={onClickMenu({ key })}
+                    key={key}
+                    style={
+                      key === menu
+                        ? {
+                            color: '#00A99D',
+                            backgroundColor: '#EEF8F8',
+                            borderRadius: '10px',
+                          }
+                        : null
+                    }
+                  >
                     {subTitle}
                   </S.StMenuIn>
                 ))}

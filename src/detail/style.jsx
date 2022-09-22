@@ -43,20 +43,20 @@ export const StLabel = styled.div`
   /* align-items: center; */
   height: 35px;
   line-height: 35px;
-  vertical-align: middle;
+  /* vertical-align: middle; */
   cursor: pointer;
 `;
 
 export const StMenuInDiv = styled.div`
+  width: 180px;
   display: flex;
   flex-direction: column;
   margin-left: 20px;
-
   cursor: pointer;
 `;
 
 export const StMenuIn = styled.div`
-  width: 100%;
+  width: 180px;
   height: 35px;
   line-height: 35px;
   color: #6a6a6a;

@@ -14,12 +14,11 @@ export default function Home({ id, data }) {
   const document = data?.data.documents;
   const navigate = useNavigate();
 
-  console.log(data?.data);
   const handleClose = () => {
     setInvitationCodeOpen(false);
   };
   const handleClick = () => {
-    setInvitationCodeOpen(invitationCodeOpen === false ? true : false);
+    setInvitationCodeOpen(!invitationCodeOpen);
   };
   const clickHandler = () => {
     setIsOpen(!isOpen);
