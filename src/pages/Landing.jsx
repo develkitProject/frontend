@@ -18,6 +18,7 @@ import ThirdBackground from '../asset/img/ThirdBackground.png';
 import ThirdImg from '../asset/img/ThirdImg.png';
 import Fourth1 from '../asset/img/Fourth1.png';
 import Fourth2 from '../asset/img/Fourth2.png';
+import circle from '../asset/img/circle.svg';
 
 function Landing({ path, setPath }) {
   const navigate = useNavigate();
@@ -212,6 +213,7 @@ function Landing({ path, setPath }) {
                   커뮤니티 바로가기{' '}
                 </StLink>
               </StThirdMent>
+              <StCircle></StCircle>
               <StVelkit2></StVelkit2>
             </StThirdBody>
           </StMain>
@@ -378,6 +380,8 @@ const move = keyframes`
     }
   `;
 
+
+
 const StVelkit = styled.div`
   width: 15%;
   height: 35%;
@@ -395,9 +399,9 @@ const StVelkit = styled.div`
 `;
 
 const StVelkit2 = styled.div`
-  width: 30%;
+  width: 25%;
   height: 50%;
-  min-width: 350px;
+  min-width: 205px;
   min-height: 300px;
   background-image: url(${velkit2});
   background-size: 100% 100%;
@@ -409,6 +413,27 @@ const StVelkit2 = styled.div`
   animation-name: bounce;
   animation-timing-function: linear; */
 `;
+
+const rotate = keyframes`
+100% {
+  transform: rotate(360deg);
+}
+`;
+
+const StCircle = styled.div`
+  width: 25%;
+  height: 25%;
+  min-width: 100px;
+  min-height: 100px;
+  background-image: url(${circle});
+  background-size: 100% 100%;
+  position: absolute;
+  left: 70%;
+  top: 287%;
+  animation: ${rotate} 15s linear infinite;
+  transform-origin: 50% 50%;
+`;
+
 
 const StVelkit3 = styled.div`
   width: 6%;

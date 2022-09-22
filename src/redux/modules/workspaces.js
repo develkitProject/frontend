@@ -8,6 +8,8 @@ const headers = {
 
 export const workspaceApi = coreApi.injectEndpoints({
   endpoints: (builder) => ({
+
+    //워크스페이스
     getWorkspaces: builder.query({
       query: () => ({
         url: '/api/workspaces',
@@ -16,7 +18,6 @@ export const workspaceApi = coreApi.injectEndpoints({
       }),
       providesTags: ['Workspaces'],
     }),
-
 
     addWorkSpaces: builder.mutation({
       query: (workspace) => {
@@ -49,11 +50,21 @@ export const workspaceApi = coreApi.injectEndpoints({
       providesTags: ['Workspaces'],
     }),
 
-
     deleteWorkSpaces: builder.mutation({
       query: (id) => {
         return {
           url: `/api/workspaces/${id}`,
+          method: 'DELETE',
+          headers,
+        };
+      },
+      invalidatesTags: ['Workspaces'],
+    }),
+
+    quitWorkSpace: builder.mutation({
+      query: (id) => {
+        return {
+          url: `/api/workspaces/quit/${id}`,
           method: 'DELETE',
           headers,
         };
@@ -231,6 +242,7 @@ export const {
   useGetWorkspaceInfoQuery,
   useUpdateWorkspaceInfoQuery,
   useDeleteWorkSpacesMutation,
+  useQuitWorkSpaceMutation,
   useGetMainWorkSpacesQuery,
   useAddNoticeMutation,
   useGetNoticeQuery,
