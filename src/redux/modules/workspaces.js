@@ -8,7 +8,6 @@ const headers = {
 
 export const workspaceApi = coreApi.injectEndpoints({
   endpoints: (builder) => ({
-
     //회원정보수정
     updateUserInfo: builder.mutation({
       query: (updateInfo) => {
@@ -21,7 +20,6 @@ export const workspaceApi = coreApi.injectEndpoints({
       },
       invalidatesTags: ['User'],
     }),
-
     //워크스페이스
     getWorkspaces: builder.query({
       query: () => ({
@@ -205,7 +203,6 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
     getInviteCodeInfo: builder.mutation({
       query: (code) => {
-        console.log(code);
         return {
           url: `/api/invitation/codes`,
           method: 'POST',

@@ -1,7 +1,14 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useLayoutEffect,
+} from 'react';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
+import { useGetMemberListQuery } from '../redux/modules/workspaces';
 import useGetUser from '../common/hooks/useGetUser';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
@@ -19,11 +26,48 @@ import * as S from './style';
 
 export default function WorkspaceDetailPage() {
   const { onClickMenu, menu } = useChangeMenu();
+  const navigate = useNavigate();
   const id = Number(useParams().id);
   const { data, isLoading, error } = useGetMainWorkSpacesQuery(id);
+  const {
+    data: data_1,
+    isLoading: isLoading_1,
+    error: error_1,
+  } = useGetMemberListQuery(id);
   const title = data?.data?.workspaces?.title;
   const [isOpen, setIsOpen] = useState(true);
   const { user } = useGetUser();
+  const userName = user?.username;
+  const spaceMembers = data_1?.data;
+
+  console.log(userName, spaceMembers);
+
+  const checkMember = () => {
+    try {
+      if (spaceMembers !== undefined && userName !== undefined) {
+        alert('d');
+        // if (spaceMembers?.find((x) => x.username !== userName)) {
+        //   alert('d');
+        // }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // const load = async () => {
+  //   try {
+  //     if (user !== undefined) {
+  //       setCurrentUser(user);
+  //     }
+  //   } catch (error) {
+  //     console.log("하하");
+  //   }
+  // };
+
+  useEffect(() => {
+    checkMember();
+  }, []);
 
   //---------------------------------------------------------------
 
@@ -58,7 +102,14 @@ export default function WorkspaceDetailPage() {
         menu={menu}
       />
       <S.Projects>
-        <SelectWorkspaceMenu id={id} data={data} />
+        <SelectWorkspaceMenu
+          id={id}
+          data={data}
+          user={user}
+          data_1={data_1}
+          error_1={error_1}
+          isLoading_1={isLoading_1}
+        />
       </S.Projects>
 
       {isOpen && (

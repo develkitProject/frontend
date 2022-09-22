@@ -7,43 +7,21 @@ import useGetUser from '../../common/hooks/useGetUser';
 import UpdateSpaceModal from '../../common/Modal/UpdateSpaceModal';
 import CreateSpaceModal from '../../common/Modal/CreateSpaceModal';
 
-export default function ProjectInfo() {
-    const navigate = useNavigate();
-    const params = useParams();
-    const id = Number(params.id);
-    const { user } = useGetUser();
+export default function ProjectInfo({ id, user }) {
+  const navigate = useNavigate();
+  const params = useParams();
 
-    const { data, error, isLoading, refetch } = useGetWorkspaceInfoQuery(id);
-    const info = data?.data;
-    const leaderInfo = data?.data?.createUserEmail;
-    const userInfo = user?.username;
+  const { data, error, isLoading, refetch } = useGetWorkspaceInfoQuery(id);
+  const info = data?.data;
+  const leaderInfo = data?.data?.createUserEmail;
+  const userInfo = user?.username;
+
 
     const [updateOpen, setUpdateOpen] = useState(false);
 
     const handleClose = () => {
       setUpdateOpen(false);
     };
-
-    const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
-    const deleteWorkSpace = (id) => {
-      if (window.confirm('정말 지우시겠습니까?')) {
-        deleteWorkSpaces(id);
-        navigate('/workspace');
-      } else {
-        return;
-      }
-    };
-
-    const [quitWorkSpaces] = useQuitWorkSpaceMutation();
-    const quitWorkSpace = (id) => {
-      if (window.confirm('정말 탈퇴하시겠습니까?')) {
-        quitWorkSpaces(id);
-        navigate('/workspace');
-      } else {
-        return;
-      }
-    };
-    
 
     return (
         <>
@@ -156,28 +134,27 @@ export default function ProjectInfo() {
 `;
 
 const StInfoContainer = styled.div`
-width: 25%;
-margin-left: 20px;
-margin-right: 20px;
-margin-top: 10px;
-display: flex;
-flex-direction: column;
-justify-content: flex-start;
-align-items: flex-start;
+  width: 25%;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 `;
 
-
 const StDelete = styled.p`
-margin-top: 10px;
-color: #999999;
-text-align: right;
-font-size: 16px;
-font-weight: 400;
-letter-spacing: -1px;
-cursor: pointer;
-display: flex;
-margin-top: 100px;
-align-self: right;
-margin-left: 100px;
-text-decoration-line: underline;
+  margin-top: 10px;
+  color: #999999;
+  text-align: right;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -1px;
+  cursor: pointer;
+  display: flex;
+  margin-top: 100px;
+  align-self: right;
+  margin-left: 100px;
+  text-decoration-line: underline;
 `;
