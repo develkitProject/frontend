@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import NoticeList from './notice/NoticeList';
 import BlackButton from '../../common/elements/BlackButton';
 import { useDeleteWorkSpacesMutation, useGetWorkspaceInfoQuery, useQuitWorkSpaceMutation } from '../../redux/modules/workspaces';
 import useGetUser from '../../common/hooks/useGetUser';
+import UpdateSpaceModal from '../../common/Modal/UpdateSpaceModal';
+import CreateSpaceModal from '../../common/Modal/CreateSpaceModal';
 
 export default function ProjectInfo() {
     const navigate = useNavigate();
@@ -17,9 +18,11 @@ export default function ProjectInfo() {
     const leaderInfo = data?.data?.createUserEmail;
     const userInfo = user?.username;
 
-    console.log("팀장정보:", leaderInfo, "userInfo:", userInfo)
+    const [updateOpen, setUpdateOpen] = useState(false);
 
-
+    const handleClose = () => {
+      setUpdateOpen(false);
+    };
 
     const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
     const deleteWorkSpace = (id) => {
@@ -49,10 +52,14 @@ export default function ProjectInfo() {
             <StTitle fontSize="24">프로젝트 정보</StTitle>
             <StContent>프로젝트 정보 확인 및 탈퇴 (팀장의 경우 프로젝트 수정 및 삭제 가능)</StContent>
           </div>
-          {userInfo===leaderInfo?(<BlackButton
+          {userInfo===leaderInfo?(<BlackButton onClick={()=>{setUpdateOpen(true)}}
             text='정보수정하기'
           ></BlackButton>):(null)}
         </StIntroContainer>
+        {updateOpen ? (
+        <UpdateSpaceModal
+          onClose={handleClose}
+        />):null}
         <StBodyContainer>
         {error ? (
             <>에러가 발생했습니다.</>

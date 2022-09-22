@@ -25,7 +25,7 @@ export default function BasicInput({
     <Spacer marginTop={marginTop} marginBottom={marginBottom}>
       {label && <LabelText>{label}</LabelText>}
       <InputWrapper borderStyle={setBorderStyle()}>
-        <StInput
+        <StInput 
           name={name}
           type={type}
           placeholder={placeholder}

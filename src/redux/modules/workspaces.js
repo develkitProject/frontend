@@ -9,10 +9,32 @@ const headers = {
 export const workspaceApi = coreApi.injectEndpoints({
   endpoints: (builder) => ({
 
+    //회원정보수정
+    updateUserInfo: builder.mutation({
+      query: (updateInfo) => {
+        return {
+          url: `/api/members/profile`,
+          method: 'PUT',
+          body: updateInfo,
+          headers,
+        }
+      },
+      invalidatesTags: ['User'],
+    }),
+
     //워크스페이스
     getWorkspaces: builder.query({
       query: () => ({
         url: '/api/workspaces',
+        method: 'GET',
+        headers,
+      }),
+      providesTags: ['Workspaces'],
+    }),
+
+    getWorkspaceInfo: builder.query({
+      query: (id) => ({
+        url: `/api/workspaces/${id}/info`,
         method: 'GET',
         headers,
       }),
@@ -31,23 +53,16 @@ export const workspaceApi = coreApi.injectEndpoints({
       invalidatesTags: ['Workspaces'],
     }),
 
-    getWorkspaceInfo: builder.query({
-      query: (id) => ({
-        url: `/api/workspaces/${id}/info`,
-        method: 'GET',
-        headers,
-      }),
-      providesTags: ['Workspaces'],
-    }),
-
-    updateWorkspaceInfo: builder.query({
-      query: (updateInfo) => ({
-        url: `/api/workspaces/${updateInfo.id}`,
-        method: 'PUT',
-        body: updateInfo,
-        headers,
-      }),
-      providesTags: ['Workspaces'],
+    updateWorkspaceInfo: builder.mutation({
+      query: (updateInfo) => {
+        return {
+          url: `/api/workspaces/${updateInfo.id}`,
+          method: 'PUT',
+          body: updateInfo,
+          headers,
+        }
+      },
+      invalidatesTags: ['Workspaces'],
     }),
 
     deleteWorkSpaces: builder.mutation({
@@ -237,10 +252,11 @@ export const workspaceApi = coreApi.injectEndpoints({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useUpdateUserInfoMutation,
   useGetWorkspacesQuery,
   useAddWorkSpacesMutation,
   useGetWorkspaceInfoQuery,
-  useUpdateWorkspaceInfoQuery,
+  useUpdateWorkspaceInfoMutation,
   useDeleteWorkSpacesMutation,
   useQuitWorkSpaceMutation,
   useGetMainWorkSpacesQuery,

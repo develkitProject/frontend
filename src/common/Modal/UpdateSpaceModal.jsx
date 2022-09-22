@@ -4,8 +4,8 @@ import ModalContainer from './ModalContainer';
 import { StButton } from '../../login/style';
 import imgupload from '../../asset/img/imgupload.svg';
 import CloseButton from '../elements/CloseButton';
-import Draggable from 'react-draggable';
-import { useAddWorkSpacesMutation } from '../../redux/modules/workspaces';
+import { useGetWorkspaceInfoQuery, useUpdateWorkspaceInfoMutation } from '../../redux/modules/workspaces';
+import { useParams } from 'react-router-dom';
 
 const reducer = (state, action) => {
   return {
@@ -14,18 +14,29 @@ const reducer = (state, action) => {
   };
 };
 
-const CreateSpaceModal = ({ onClose }) => {
+const UpdateSpaceModal = ({ onClose }) => {
+
+  const params = useParams();
+  const id = Number(params.id);
+  const { data, error, isLoading} = useGetWorkspaceInfoQuery(id);
+
+  const [updateWorkSpaces] = useUpdateWorkspaceInfoMutation(id);
+
+  const preTitle = data?.data?.title;
+  const preContent = data?.data?.content;
+  const preImg = data?.data?.imageUrl;
+
   const imgRef = useRef('');
-  const [imageUrl, setImageUrl] = useState(null);
+  const [imageUrl, setImageUrl] = useState(preImg);
   const [imgFile, setImgFile] = useState('');
-  const [addWorkSpaces] = useAddWorkSpacesMutation();
 
   const [state, setState] = useReducer(reducer, {
-    title: '',
-    content: '',
+    title: preTitle,
+    content: preContent,
   });
 
   const { title, content } = state;
+  
   const onChange = (e) => {
     setState(e.target);
   };
@@ -37,13 +48,14 @@ const CreateSpaceModal = ({ onClose }) => {
 
   const handleSubmit = () => {
     if (title !== '' && content !== '') {
-      const obj = {
+      const updateInfo = {
+        id,
         image: imageUrl,
         title,
         content,
       };
-      addWorkSpaces(obj);
-      window.alert('프로젝트가 생성되었습니다!');
+      updateWorkSpaces(updateInfo);
+      window.alert('프로젝트가 수정되었습니다!');
       handleClose();
     } else {
       window.alert('프로젝트 제목과 소개를 모두 채워주세요!');
@@ -65,7 +77,7 @@ const CreateSpaceModal = ({ onClose }) => {
       <Overlay>
         <ModalWrap ref={modalRef}>
           <Wrapper>
-            <StProejct>프로젝트 생성하기</StProejct>
+            <StProejct>프로젝트 수정하기</StProejct>
             <StMent>
               프로젝트 생성 후, 프로젝트 홈에서 초대코드를 복사할 수 있습니다.
             </StMent>
@@ -78,13 +90,13 @@ const CreateSpaceModal = ({ onClose }) => {
             <StInput
               onChange={onChange}
               name='title'
-              placeholder='프로젝트명을 입력해주세요'
+              value={title}
             ></StInput>
             <StInputTitle>프로젝트 소개</StInputTitle>
             <StInput
               onChange={onChange}
               name='content'
-              placeholder='프로젝트를 소개해주세요'
+              value={content}
             ></StInput>
             <StButton
               onClick={handleSubmit}
@@ -95,7 +107,7 @@ const CreateSpaceModal = ({ onClose }) => {
                 fontSize: '20px',
               }}
             >
-              프로젝트 생성하기
+              프로젝트 수정하기
             </StButton>
           </Wrapper>
           <CloseButton handleClose={handleClose}>X</CloseButton>
@@ -114,7 +126,7 @@ const CreateSpaceModal = ({ onClose }) => {
   );
 };
 
-export default CreateSpaceModal;
+export default UpdateSpaceModal;
 
 const ModalWrap = styled.div`
   width: 650px;
