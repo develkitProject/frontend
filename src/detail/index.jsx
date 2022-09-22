@@ -52,7 +52,11 @@ export default function WorkspaceDetailPage() {
 
   return (
     <S.Wrapper>
-      <Sidebar onClickMenu={onClickMenu} handleClick={handleClick} />
+      <Sidebar
+        onClickMenu={onClickMenu}
+        handleClick={handleClick}
+        menu={menu}
+      />
       <S.Projects>
         <SelectWorkspaceMenu id={id} data={data} />
       </S.Projects>
