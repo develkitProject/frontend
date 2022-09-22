@@ -1,24 +1,33 @@
 import BlackButton from '../../common/elements/BlackButton';
 import styled from 'styled-components';
 import Address from '../../components/Address';
+import { useState } from 'react';
+import InvitationCodeModal from '../../common/Modal/InvitationCodeModal';
 
 export default function Contacts({ id }) {
+
+  const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
+
+  const handleClose = () => {
+    setInvitationCodeOpen(false);
+  };
+  const handleClick = () => {
+    setInvitationCodeOpen(invitationCodeOpen === false ? true : false);
+  };
 
   return (
     <>
       <StIntroContainer>
         <div>
           <StTitle>주소록</StTitle>
-          <StContent>주소록입니다</StContent>
+          <StContent>프로젝트 전체 회원 정보</StContent>
         </div>
 
-        <BlackButton
-          text='회원초대하기'
-          onClick={() => {
-            alert('모달창 생성여부확인');
-          }}
-        ></BlackButton>
+        <BlackButton text='초대코드 확인' onClick={handleClick}></BlackButton>
       </StIntroContainer>
+      {invitationCodeOpen ? (
+        <InvitationCodeModal onClose={handleClose} />
+      ) : null}
       <div>
         <Address />
       </div>

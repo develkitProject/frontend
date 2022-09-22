@@ -14,7 +14,6 @@ export default function Home({ id, data }) {
   const document = data?.data.documents;
   const navigate = useNavigate();
 
-  console.log(data?.data);
   const handleClose = () => {
     setInvitationCodeOpen(false);
   };

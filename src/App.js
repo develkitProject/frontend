@@ -10,7 +10,6 @@ import { Routes, Route } from 'react-router-dom';
 import PostEditor from './components/PostEditor';
 import MyPage2 from './pages/MyPage2';
 import WorkSpaceDetail from './pages/WorkSpaceDetail';
-import AddressPage from './pages/AddressPage';
 import Footer from './components/Footer';
 import ClaendarPage from './detail/workspaces/calendar/CalendarPage';
 import DocDetail from './detail/workspaces/document/DocDetail';

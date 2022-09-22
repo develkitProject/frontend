@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import NoticeList from './notice/NoticeList';
 import BlackButton from '../../common/elements/BlackButton';
-import { useDeleteWorkSpacesMutation, useGetWorkspaceInfoQuery } from '../../redux/modules/workspaces';
+import { useDeleteWorkSpacesMutation, useGetWorkspaceInfoQuery, useQuitWorkSpaceMutation } from '../../redux/modules/workspaces';
 import useGetUser from '../../common/hooks/useGetUser';
 
 export default function ProjectInfo() {
@@ -19,9 +19,10 @@ export default function ProjectInfo() {
 
     console.log("팀장정보:", leaderInfo, "userInfo:", userInfo)
 
+
+
     const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
     const deleteWorkSpace = (id) => {
-
       if (window.confirm('정말 지우시겠습니까?')) {
         deleteWorkSpaces(id);
         navigate('/workspace');
@@ -30,6 +31,17 @@ export default function ProjectInfo() {
       }
     };
 
+    const [quitWorkSpaces] = useQuitWorkSpaceMutation();
+    const quitWorkSpace = (id) => {
+      if (window.confirm('정말 탈퇴하시겠습니까?')) {
+        quitWorkSpaces(id);
+        navigate('/workspace');
+      } else {
+        return;
+      }
+    };
+    
+
     return (
         <>
         <StIntroContainer>
@@ -37,9 +49,9 @@ export default function ProjectInfo() {
             <StTitle fontSize="24">프로젝트 정보</StTitle>
             <StContent>프로젝트 정보 확인 및 탈퇴 (팀장의 경우 프로젝트 수정 및 삭제 가능)</StContent>
           </div>
-          <BlackButton
+          {userInfo===leaderInfo?(<BlackButton
             text='정보수정하기'
-          ></BlackButton>
+          ></BlackButton>):(null)}
         </StIntroContainer>
         <StBodyContainer>
         {error ? (
@@ -77,8 +89,11 @@ export default function ProjectInfo() {
                     <StContent>
                     {info.userNumInWorkSpace}명
                      </StContent>
-                    <StDelete onClick={() => {deleteWorkSpace(id)}}>
-                    프로젝트 삭제/탈퇴</StDelete>
+                     {userInfo===leaderInfo?(
+                      <StDelete onClick={() => {deleteWorkSpace(id)}}>
+                      프로젝트 삭제</StDelete>
+                     ):(<StDelete onClick={() => {quitWorkSpace(id)}}>
+                     프로젝트 탈퇴</StDelete>)}
                 </StInfoContainer>
                 </>
                 ):null}
@@ -100,7 +115,7 @@ export default function ProjectInfo() {
   
   const StBodyContainer = styled.div`
     margin-top: 30px;
-    margin-left: 20px;
+    margin-left: 40px;
     margin-right: 20px;
     display: flex;
     flex-direction: row;
@@ -137,6 +152,7 @@ const StInfoContainer = styled.div`
 width: 25%;
 margin-left: 20px;
 margin-right: 20px;
+margin-top: 10px;
 display: flex;
 flex-direction: column;
 justify-content: flex-start;
