@@ -4,8 +4,7 @@ import Address from '../../components/Address';
 import { useState } from 'react';
 import InvitationCodeModal from '../../common/Modal/InvitationCodeModal';
 
-export default function Contacts({ id }) {
-
+export default function Contacts({ id, data_1, error_1, isLoading_1 }) {
   const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
 
   const handleClose = () => {
@@ -29,7 +28,7 @@ export default function Contacts({ id }) {
         <InvitationCodeModal onClose={handleClose} />
       ) : null}
       <div>
-        <Address />
+        <Address data_1={data_1} error_1={error_1} isLoading_1={isLoading_1} />
       </div>
     </>
   );

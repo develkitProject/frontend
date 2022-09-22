@@ -39,7 +39,6 @@ const DocsEdit = ({ stateId, onListHandle }) => {
   const onFileChange = (e) => {
     const file = e.target.files[0];
     setNewFile(file);
-    console.log(newFile);
   };
 
   const handleSubmit = () => {
