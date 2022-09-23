@@ -20,6 +20,19 @@ export const workspaceApi = coreApi.injectEndpoints({
       },
       invalidatesTags: ['User'],
     }),
+
+    //회원정보탈퇴
+    deleteUserInfo: builder.mutation({
+      query: () => {
+        return {
+          url: `/api/members/signout`,
+          method: 'DELETE',
+          headers,
+        }
+      },
+      invalidatesTags: ['User'],
+    }),
+
     //워크스페이스
     getWorkspaces: builder.query({
       query: () => ({
@@ -250,6 +263,7 @@ export const workspaceApi = coreApi.injectEndpoints({
 // auto-generated based on the defined endpoints
 export const {
   useUpdateUserInfoMutation,
+  useDeleteUserInfoMutation,
   useGetWorkspacesQuery,
   useAddWorkSpacesMutation,
   useGetWorkspaceInfoQuery,

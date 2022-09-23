@@ -11,6 +11,8 @@ function MyPage() {
   const { data, error, isLoading } = useGetWorkspacesQuery();
   const workspaces = data?.data;
 
+  console.log(user)
+
   return (
     <StWrapper>
       <RowDiv>
@@ -59,12 +61,12 @@ function MyPage() {
                 </IntroBox>
                 <IntroBox>
                   <div>
-                    <BoxSpan>참여한 </BoxSpan>
-                    <BoxSpan style={{ fontWeight: '500' }}>총 일정</BoxSpan>
+                    <BoxSpan style={{ fontWeight: '500' }}>디벨킷</BoxSpan>
+                    <BoxSpan>과 함께</BoxSpan>
                   </div>
                   <div style={{ marginTop: '50px' }}>
-                    <BoxNumSpan>50</BoxNumSpan>
-                    <BoxSpan> 개</BoxSpan>
+                    <BoxNumSpan>+30</BoxNumSpan>
+                    <BoxSpan>일</BoxSpan>
                   </div>
                 </IntroBox>
                 <IntroBox>
@@ -79,7 +81,7 @@ function MyPage() {
                   </div>
                 </IntroBox>
               </div>
-              <Intro style={{ marginTop: '50px', fontWeight: '400' }}>
+              <Intro style={{ marginTop: '50px', fontWeight: '500'}}>
                 프로젝트 관리
               </Intro>
 

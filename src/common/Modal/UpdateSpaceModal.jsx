@@ -27,7 +27,7 @@ const UpdateSpaceModal = ({ onClose }) => {
   const preImg = data?.data?.imageUrl;
 
   const imgRef = useRef('');
-  const [imageUrl, setImageUrl] = useState(preImg);
+  const [imageUrl, setImageUrl] = useState('');
   const [imgFile, setImgFile] = useState('');
 
   const [state, setState] = useReducer(reducer, {
@@ -83,7 +83,7 @@ const UpdateSpaceModal = ({ onClose }) => {
             </StMent>
             <StInputTitle>커버 이미지</StInputTitle>
             <StImageBox
-              src={imageUrl ? imageUrl : imgupload}
+              src={imageUrl ? imageUrl : preImg}
               onClick={() => imgRef.current.click()}
             ></StImageBox>
             <StInputTitle>프로젝트 이름</StInputTitle>

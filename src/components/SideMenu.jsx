@@ -86,7 +86,7 @@ function SideMenu({ handleClick }) {
               >
                 <StIcon src={icon} />
                 {title}
-                <Icon.ArrowDown />
+                {/* <Icon.ArrowDown /> */}
               </StLabel>
               <StMenuInDiv>
                 {subItem.map(({ key, subTitle }) => (

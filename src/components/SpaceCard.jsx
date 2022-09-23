@@ -4,9 +4,20 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import CardProfile from '../common/elements/CardProfile.jsx';
 
-function SpaceCard({ data, width, deleteButton, deleteWorkSpaces }) {
+function SpaceCard({ data, error, isLoading, width, deleteButton, deleteWorkSpaces }) {
   const navigate = useNavigate();
+
   return (
+    <>
+    {error ? (
+        <>
+        <div>에러가 발생했습니다.</div>
+        <div>자세한 사항은 관리자에게 문의해주세요</div>
+        </>
+      ) : isLoading ? (
+        <>정보를 불러오는 중입니다.</>
+      ) : data ? (
+        <>
     <StSpaceCard direction='row' width={width} key={data.workspaces.id}>
       <StCardImage
         data={data.workspaces}
@@ -21,8 +32,8 @@ function SpaceCard({ data, width, deleteButton, deleteWorkSpaces }) {
       <StFooterBox>
         <StFooterDiv>
           <StFooter>
-            <SpaceName>{data.workspaces.title}</SpaceName>
-            <SpaceDate>2022.08.20</SpaceDate>
+            <SpaceName fontSize="24">{data.workspaces.title}</SpaceName>
+            <SpaceDate>{data.workspaces.createdAt.slice(0,-13)}</SpaceDate>
             <SpaceGoal weight='500'>
               목표{' '}
               <SpaceGoal
@@ -40,33 +51,74 @@ function SpaceCard({ data, width, deleteButton, deleteWorkSpaces }) {
         />
         <StFooter>
           <StDiv>
-            <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
+            <SpaceName fontSize="20" style={{ color: '#00a99d', marginRight: '10px' }}>
               공지
             </SpaceName>
-            <SpaceName style={{ color: 'black', fontWeight: '500' }}>
-              프로젝트 명이 정해졌습니다. 다들 화이팅★{' '}
+
+          {data.notices === null ? (
+            <SpaceName fontSize="20"
+            style={{
+              color: '#999999',
+              marginRight: '10px',
+              fontWeight: '500',
+            }}>등록된 공지사항이 없습니다.</SpaceName>)
+          :(<>
+            <SpaceName fontSize="20"
+              style={{
+                color: '#999999',
+                marginRight: '10px',
+                fontWeight: '500',
+              }}>{data.notices.createdAt.slice(0,-13)}
             </SpaceName>
+            <SpaceName fontSize="20" style={{ color: 'black', fontWeight: '500' }}>
+              {data.notices.title}
+              </SpaceName>
+              </>
+            )}
           </StDiv>
+
           <StDiv>
-            <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
+            <SpaceName fontSize="20" style={{ color: '#00a99d', marginRight: '10px' }}>
               일정
             </SpaceName>
-            <SpaceName
+            <SpaceName fontSize="20"
               style={{
                 color: '#999999',
                 marginRight: '10px',
                 fontWeight: '500',
               }}
             >
-              2022.09.22
+              2022/09/22
             </SpaceName>
-            <SpaceName style={{ color: 'black', fontWeight: '500' }}>
+            <SpaceName fontSize="20" style={{ color: 'black', fontWeight: '500' }}>
               프로젝트 주간회의{' '}
             </SpaceName>
           </StDiv>
+
+          <StDiv>
+            <SpaceName fontSize="20" style={{ color: '#00a99d', marginRight: '10px' }}>
+              문서
+            </SpaceName>
+            <SpaceName fontSize="20"
+              style={{
+                color: '#999999',
+                marginRight: '10px',
+                fontWeight: '500',
+              }}
+            >
+              2022/09/20
+            </SpaceName>
+            <SpaceName fontSize="20" style={{ color: 'black', fontWeight: '500' }}>
+              API설계내용{' '}
+            </SpaceName>
+          </StDiv>
+
         </StFooter>
       </StFooterBox>
     </StSpaceCard>
+    </>
+    ) : null}
+    </>
   );
 }
 
@@ -80,8 +132,9 @@ const StSpaceCard = styled.div`
   height: 300px;
   border-radius: 16px;
   /* margin-left: 20px; */
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   background-color: white;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.1);
 `;
 
 const StCardImage = styled.div`
@@ -106,7 +159,8 @@ const StFooterBox = styled.div`
   justify-content: space-between;
   align-items: left;
   flex-direction: column;
-  margin-top: 10px;
+  margin-top: 30px;
+  margin-left: 10px;
 `;
 
 const StFooterDiv = styled.div`
@@ -132,15 +186,15 @@ const StDiv = styled.div`
 `;
 
 const SpaceName = styled.span`
-  margin-top: 10px;
-  font-size: 17px;
+  font-size: ${(props) => props.fontSize}px;
   font-weight: 600;
   font-family: 'Noto Sans KR', sans-serif;
+  letter-spacing: -0.05rem;
 `;
 
 const SpaceDate = styled.span`
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 18px;
   height: 17px;
   font-weight: 500;
   font-family: 'Montserrat';
@@ -149,7 +203,7 @@ const SpaceDate = styled.span`
 
 const SpaceGoal = styled.span`
   margin-top: 35px;
-  font-size: 16px;
+  font-size: 20px;
   height: 23px;
   font-weight: ${(props) => props.weight};
   font-family: 'Noto Sans KR', sans-serif;
