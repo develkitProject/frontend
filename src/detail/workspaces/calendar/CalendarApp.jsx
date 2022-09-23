@@ -4,25 +4,43 @@ import './Calendar.css'; // css import
 import CalendarDetail from './CalendarDetail';
 import moment from 'moment/moment';
 import styled from 'styled-components';
-import { useGetSchedulesQuery } from '../../../redux/modules/workspaces';
+import velkit2 from '../../../asset/img/velkit2.png';
+import velkit3 from '../../../asset/img/velkit3.png';
+import {
+  useGetSchedulesQuery,
+  useDeleteSchedulesMutation,
+} from '../../../redux/modules/workspaces';
 
 export default function CalendarApp({ id }) {
   const [value, onChange] = useState(new Date());
   const { data, error, isLoading } = useGetSchedulesQuery(id);
+  const [deleteSchedules] = useDeleteSchedulesMutation();
   const dataArr = data?.data;
   const [isOpen, setIsOpen] = useState(false);
-  const [detailData, setDetailData] = useState('');
+  const [detailData, setDetailData] = useState([]);
 
   const openDetail = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(true);
   };
 
   const saveStateDetail = (content) => {
     setDetailData(content);
     openDetail();
   };
+  const onDeleteSchedules = (schedulesId) => {
+    const obj = {
+      id,
+      schedulesId,
+    };
 
-  // console.log(detailData);
+    if (window.confirm('일정을 지우시겠습니까?')) {
+      deleteSchedules(obj);
+      alert('일정이 삭제되었습니다!');
+      setIsOpen(false);
+    } else {
+      return;
+    }
+  };
 
   return (
     <div
@@ -61,7 +79,7 @@ export default function CalendarApp({ id }) {
                       <StMark
                         key={data.id}
                         onClick={() => {
-                          saveStateDetail(data.content);
+                          saveStateDetail(data);
                         }}
                       >
                         {data.content}
@@ -75,11 +93,24 @@ export default function CalendarApp({ id }) {
       >
         {' '}
       </Calendar>
-
+      <AlarmDiv>
+        <Velkit2></Velkit2>
+        <StContentBox2>
+          일정을 클릭하면 오른쪽에서 <br /> 일정 확인 및 삭제가 가능합니다.
+        </StContentBox2>
+      </AlarmDiv>
       {isOpen && (
         <StDetail>
-          {detailData}
-          <StDeleteButton>X</StDeleteButton>
+          <StDate>{detailData.eventDate}</StDate>
+          <StContentBox>{detailData.content}</StContentBox>
+          <StDeleteButton
+            onClick={() => {
+              onDeleteSchedules(detailData.id);
+            }}
+          >
+            x
+          </StDeleteButton>
+          <Velkit></Velkit>
         </StDetail>
       )}
       <div
@@ -117,15 +148,15 @@ const StMark = styled.div`
 const StDetail = styled.div`
   width: 20%;
   max-width: 350px;
-  height: 100px;
-  border: solid 2px #00a99d;
+  height: 110px;
+  border: solid 1px #00a99d;
   border-radius: 20px;
   position: absolute;
   top: 3%;
   right: 5%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center; */
+  /* justify-content: center; */
   flex-direction: column;
   font-size: 20px;
   letter-spacing: -0.5px;
@@ -133,6 +164,73 @@ const StDetail = styled.div`
 
 const StDeleteButton = styled.span`
   position: absolute;
+  font-weight: 600;
   top: 10px;
   right: 20px;
+  cursor: pointer;
+`;
+
+const StDate = styled.span`
+  color: #00a99d;
+  margin: 10px 15px;
+  font-size: 17px;
+  font-weight: 600;
+`;
+
+const StContentBox = styled.div`
+  width: 90%;
+  height: 50px;
+  background-color: #eef8f8;
+  margin: 0 auto;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  margin-top: 8px;
+`;
+
+const Velkit = styled.div`
+  width: 50px;
+  height: 70px;
+  background-image: url(${velkit3});
+  background-size: 100% 100%;
+  /* transform: scaleX(-1); */
+  position: absolute;
+  right: -30px;
+  bottom: -20px;
+`;
+
+const Velkit2 = styled.div`
+  width: 100px;
+  height: 130px;
+  background-image: url(${velkit2});
+  background-size: 100% 100%;
+  transform: scaleX(-1);
+  z-index: 0;
+`;
+
+const AlarmDiv = styled.div`
+  position: absolute;
+  left: 50px;
+  top: 30px;
+  display: flex;
+  width: 25%;
+`;
+
+const StContentBox2 = styled.div`
+  width: 90%;
+  height: 60px;
+  background-color: #eef8f8;
+  letter-spacing: -0.4px;
+  display: flex;
+  justify-content: center;
+  /* padding-left: 10px; */
+  border-radius: 10px;
+  align-items: center;
+  font-size: 17px;
+  position: absolute;
+  color: 424242;
+  left: 100px;
+  color: #6c6c6c;
 `;
