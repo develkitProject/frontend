@@ -17,14 +17,12 @@ function MyPage2() {
   const [imgFile, setImgFile] = useState('');
   const [nickname, setNickname] = useState(user?.nickname);
 
-  console.log(imageUrl)
-
   const onChange = useCallback((e) => {
     setNickname(e.target.value);
   }, []);
 
   const handleSubmit = () => {
-    if (nickname.length >= 2 && nickname.length <= 8){
+    if (nickname.length >= 2 && nickname.length <= 8) {
       const updateInfo = {
         image: imageUrl,
         nickname,
@@ -50,9 +48,10 @@ function MyPage2() {
     <StWrapper>
       <StProfile>
         <StSpan>나의 프로필</StSpan>
-        <StImage 
-          profileImageUrl={imageUrl? imageUrl : userImg} 
-          onClick={() => imgRef.current.click()}/>
+        <StImage
+          profileImageUrl={imageUrl ? imageUrl : userImg}
+          onClick={() => imgRef.current.click()}
+        />
         <div
           style={{
             display: 'flex',
@@ -80,7 +79,8 @@ function MyPage2() {
           }}
         >
           <StSpan style={{ marginTop: '80px' }}>프로필 상세보기</StSpan>
-          <BasicInput type="text"
+          <BasicInput
+            type='text'
             label='닉네임'
             marginTop='80px'
             placeholder={user?.nickname}
@@ -90,11 +90,11 @@ function MyPage2() {
           ></BasicInput>
 
           <fieldset disabled>
-          <BasicInput
-            label='이메일'
-            marginTop='40px'
-            placeholder={user?.username}
-          ></BasicInput>
+            <BasicInput
+              label='이메일'
+              marginTop='40px'
+              placeholder={user?.username}
+            ></BasicInput>
           </fieldset>
 
           <StButton onClick={handleSubmit}>변경사항 저장</StButton>
