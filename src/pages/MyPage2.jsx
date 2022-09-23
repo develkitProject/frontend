@@ -3,9 +3,12 @@ import styled, { keyframes } from 'styled-components';
 import useGetUser from '../common/hooks/useGetUser';
 import velkit from '../asset/img/velkit.png';
 import BasicInput from '../components/BasicInput';
-import { useUpdateUserInfoMutation } from '../redux/modules/workspaces';
+import { useDeleteUserInfoMutation, useUpdateUserInfoMutation } from '../redux/modules/workspaces';
+import { useNavigate } from 'react-router-dom';
+import { removeCookieToken } from '../Cookie';
 
 function MyPage2() {
+  const navigate = useNavigate();
   const [updateUserInfo] = useUpdateUserInfoMutation();
 
   const { user } = useGetUser();
@@ -21,10 +24,22 @@ function MyPage2() {
     setNickname(e.target.value);
   }, []);
 
+  
+  const [deleteUserInfos] = useDeleteUserInfoMutation();
+  const deleteUserInfo = () => {
+    if (window.confirm('정말 탈퇴하시겠습니까?')) {
+      deleteUserInfos();
+      removeCookieToken();
+      window.location.href = '/';
+    } else {
+      return;
+    }
+  };
+
   const handleSubmit = () => {
-    if (nickname.length >= 2 && nickname.length <= 8) {
+    if (!nickname || (nickname.length <=8 && nickname.length >=2)){
       const updateInfo = {
-        image: imageUrl,
+        profileImageUrl: imageUrl,
         nickname,
       };
       updateUserInfo(updateInfo);
@@ -61,13 +76,13 @@ function MyPage2() {
           }}
         >
           <StEmail fs={'20px'} fc={'#000000'} fw={'500'}>
-            {nickname === undefined ? userNickname : nickname}
+            {nickname? nickname : userNickname}
           </StEmail>
           <StEmail fs={'18px'} fc={'#999999'} fw={'400'}>
             {user?.username}
           </StEmail>
         </div>
-        <StChange>회원탈퇴</StChange>
+        <StChange onClick={deleteUserInfo}>회원탈퇴</StChange>
       </StProfile>
 
       <StDetail>

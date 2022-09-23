@@ -80,7 +80,7 @@ export default function Sidebar({ onClickMenu, handleClick, menu }) {
               >
                 <S.MenuIcon src={icon} />
                 {title}
-                <Icon.ArrowDown />
+                {/* <Icon.ArrowDown /> */}
               </S.StLabel>
               <S.StMenuInDiv>
                 {subItem.map(({ key, subTitle }) => (
