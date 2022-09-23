@@ -28,10 +28,11 @@ export default function WorkspaceDetailPage() {
   const { onClickMenu, menu } = useChangeMenu();
   const navigate = useNavigate();
   const id = Number(useParams().id);
-  const { data, isLoading, error } = useGetMainWorkSpacesQuery(id);
+  const { data, isLoading, isSuccess, error } = useGetMainWorkSpacesQuery(id);
   const {
     data: data_1,
     isLoading: isLoading_1,
+    isSuccess: isSuccess_1,
     error: error_1,
   } = useGetMemberListQuery(id);
   const title = data?.data?.workspaces?.title;
@@ -39,21 +40,16 @@ export default function WorkspaceDetailPage() {
   const { user } = useGetUser();
   const userName = user?.username;
   const spaceMembers = data_1?.data;
+  const cookie = getCookieToken();
 
-  console.log(userName, spaceMembers);
+  // console.log(userName, spaceMembers); spaceMembers !== undefined && userName !== undefined
+  //
 
-  const checkMember = () => {
-    try {
-      if (spaceMembers !== undefined && userName !== undefined) {
-        alert('d');
-        // if (spaceMembers?.find((x) => x.username !== userName)) {
-        //   alert('d');
-        // }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // if (isSuccess_1) {
+  //   for (let i = 0; i < spaceMembers.length; i++) {
+  //     console.log(spaceMembers);
+  //   }
+  // }
 
   // const load = async () => {
   //   try {
@@ -64,9 +60,13 @@ export default function WorkspaceDetailPage() {
   //     console.log("하하");
   //   }
   // };
+  // console.log(checkMember, user);
 
   useEffect(() => {
-    // checkMember();
+    if (!cookie) {
+      alert('로그인 해주세요!');
+      navigate('/');
+    }
   }, []);
 
   //---------------------------------------------------------------

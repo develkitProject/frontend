@@ -5,6 +5,7 @@ import velkit from '../asset/img/velkit.png';
 import { useEffect } from 'react';
 import { useGetChatMessagesQuery } from '../redux/modules/workspaces';
 import noteBook from '../asset/img/notebook.png';
+import { Resizable } from 'react-resizable';
 import { textAlign } from '@mui/system';
 
 function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
@@ -167,10 +168,11 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
               chatData
             ) : (
               <>
+                <StVelkit></StVelkit>
                 <span
                   style={{
                     textAlign: 'center',
-                    marginTop: '20px',
+                    marginTop: '150px',
                     letterSpacing: '-0.5px',
                     color: '#636363',
                     width: '100%',
@@ -178,7 +180,6 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
                 >
                   스페이스 내 멤버들과 채팅해보세요
                 </span>
-                <StVelkit></StVelkit>
               </>
             )}
           </StChatBody>
@@ -405,13 +406,18 @@ const NameSpan = styled.span`
 const move = keyframes`
     0% {
       transform: translateY(0);
+      transform: translateX(0px);
     }
     50% {
-      transform: translateY(-25px);
+      /* transform: translateY(-25px); */
+      transform: translateX(25px);
     }
     100% {
       transform: translateY(0);
+      transform: translateX(0);
     }
+
+    
   `;
 
 const StVelkit = styled.div`
@@ -422,5 +428,5 @@ const StVelkit = styled.div`
   position: absolute;
   left: 40%;
   top: 20%;
-  animation: ${move} 2s 0s infinite;
+  animation: ${move} 3s 0s infinite;
 `;

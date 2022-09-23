@@ -16,7 +16,7 @@ export const workspaceApi = coreApi.injectEndpoints({
           method: 'PUT',
           body: updateInfo,
           headers,
-        }
+        };
       },
       invalidatesTags: ['User'],
     }),
@@ -71,7 +71,7 @@ export const workspaceApi = coreApi.injectEndpoints({
           method: 'PUT',
           body: updateInfo,
           headers,
-        }
+        };
       },
       invalidatesTags: ['Workspaces'],
     }),
@@ -236,11 +236,22 @@ export const workspaceApi = coreApi.injectEndpoints({
       providesTags: ['Schedules'],
     }),
     addSchedules: builder.mutation({
-      query: (schedules) => {
+      query: (workspace) => {
         return {
-          url: `/api/workspaces/${schedules.id}/schedules`,
+          url: `/api/workspaces/${workspace.id}/schedules`,
           method: 'POST',
-          body: schedules,
+          body: workspace,
+          headers,
+        };
+      },
+      invalidatesTags: ['Schedules'],
+    }),
+    deleteSchedules: builder.mutation({
+      query: (workspace) => {
+        return {
+          url: `/api/workspaces/${workspace.id}/schedules/${workspace.schedulesId}`,
+          method: 'DELETE',
+          body: workspace,
           headers,
         };
       },
@@ -284,4 +295,5 @@ export const {
   useAddSchedulesMutation,
   useUpdateDocMutation,
   useGetChatMessagesQuery,
+  useDeleteSchedulesMutation,
 } = workspaceApi;
