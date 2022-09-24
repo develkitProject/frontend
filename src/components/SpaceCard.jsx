@@ -32,16 +32,17 @@ function SpaceCard({ data, error, isLoading, width, deleteButton, deleteWorkSpac
       <StFooterBox>
         <StFooterDiv>
           <StFooter>
-            <SpaceName fontSize="24">{data.workspaces.title}</SpaceName>
+            <SpaceName fontSize="22">{data.workspaces.title}</SpaceName>
             <SpaceDate>{data.workspaces.createdAt.slice(0,-13)}</SpaceDate>
             <SpaceGoal weight='500'>
-              목표{' '}
-              <SpaceGoal
+            {data.workspaces.content}
+              {/* 목표{' '} */}
+              {/* <SpaceGoal
                 weight='200'
                 style={{ marginLeft: '10px', fontWeight: '400' }}
               >
-                {data.workspaces.content}
-              </SpaceGoal>
+                
+              </SpaceGoal> */}
             </SpaceGoal>
           </StFooter>
           <CardProfile data={data.workspaces} />
@@ -51,26 +52,26 @@ function SpaceCard({ data, error, isLoading, width, deleteButton, deleteWorkSpac
         />
         <StFooter>
           <StDiv>
-            <SpaceName fontSize="20" style={{ color: '#00a99d', marginRight: '10px' }}>
+            <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
               공지
             </SpaceName>
 
           {data.notices === null ? (
-            <SpaceName fontSize="20"
+            <SpaceName
             style={{
               color: '#999999',
               marginRight: '10px',
               fontWeight: '500',
             }}>등록된 공지사항이 없습니다.</SpaceName>)
           :(<>
-            <SpaceName fontSize="20"
+            <SpaceName
               style={{
                 color: '#999999',
                 marginRight: '10px',
                 fontWeight: '500',
               }}>{data.notices.createdAt.slice(0,-13)}
             </SpaceName>
-            <SpaceName fontSize="20" style={{ color: 'black', fontWeight: '500' }}>
+            <SpaceName style={{ color: 'black', fontWeight: '500' }}>
               {data.notices.title}
               </SpaceName>
               </>
@@ -78,10 +79,10 @@ function SpaceCard({ data, error, isLoading, width, deleteButton, deleteWorkSpac
           </StDiv>
 
           <StDiv>
-            <SpaceName fontSize="20" style={{ color: '#00a99d', marginRight: '10px' }}>
+            <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
               일정
             </SpaceName>
-            <SpaceName fontSize="20"
+            <SpaceName
               style={{
                 color: '#999999',
                 marginRight: '10px',
@@ -90,16 +91,16 @@ function SpaceCard({ data, error, isLoading, width, deleteButton, deleteWorkSpac
             >
               2022/09/22
             </SpaceName>
-            <SpaceName fontSize="20" style={{ color: 'black', fontWeight: '500' }}>
+            <SpaceName style={{ color: 'black', fontWeight: '500' }}>
               프로젝트 주간회의{' '}
             </SpaceName>
           </StDiv>
 
           <StDiv>
-            <SpaceName fontSize="20" style={{ color: '#00a99d', marginRight: '10px' }}>
+            <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
               문서
             </SpaceName>
-            <SpaceName fontSize="20"
+            <SpaceName
               style={{
                 color: '#999999',
                 marginRight: '10px',
@@ -108,7 +109,7 @@ function SpaceCard({ data, error, isLoading, width, deleteButton, deleteWorkSpac
             >
               2022/09/20
             </SpaceName>
-            <SpaceName fontSize="20" style={{ color: 'black', fontWeight: '500' }}>
+            <SpaceName style={{ color: 'black', fontWeight: '500' }}>
               API설계내용{' '}
             </SpaceName>
           </StDiv>
@@ -179,6 +180,7 @@ const StFooter = styled.div`
   text-align: left;
   flex-direction: column;
   position: relative;
+  font-size: 17px;
 `;
 
 const StDiv = styled.div`
@@ -187,14 +189,14 @@ const StDiv = styled.div`
 
 const SpaceName = styled.span`
   font-size: ${(props) => props.fontSize}px;
-  font-weight: 600;
+  font-weight: 500;
   font-family: 'Noto Sans KR', sans-serif;
-  letter-spacing: -0.05rem;
+  letter-spacing: -0.05em;
 `;
 
 const SpaceDate = styled.span`
   margin-top: 10px;
-  font-size: 18px;
+  font-size: 16px;
   height: 17px;
   font-weight: 500;
   font-family: 'Montserrat';
@@ -203,7 +205,7 @@ const SpaceDate = styled.span`
 
 const SpaceGoal = styled.span`
   margin-top: 35px;
-  font-size: 20px;
+  font-size: 18px;
   height: 23px;
   font-weight: ${(props) => props.weight};
   font-family: 'Noto Sans KR', sans-serif;

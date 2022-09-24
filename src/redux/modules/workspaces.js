@@ -203,6 +203,17 @@ export const workspaceApi = coreApi.injectEndpoints({
       invalidatesTags: ['Docs'],
     }),
 
+    getDocSearch: builder.query({
+      query: (obj) => {
+        return {
+          url: `/api/workspaces/${obj?.id}/docs/search?${obj.field}=${obj?.keyword}&type=${obj?.type}`,
+          method: 'GET',
+          headers,
+        };
+      },
+      providesTags: ['Docs'],
+    }),
+
     //초대코드
     getInviteCode: builder.query({
       query: (id) => {
@@ -289,6 +300,7 @@ export const {
   useGetDocDetailQuery,
   useAddDocMutation,
   useDeleteDocMutation,
+  useGetDocSearchQuery,
   useGetInviteCodeQuery,
   useGetInviteCodeInfoMutation,
   useGetSchedulesQuery,

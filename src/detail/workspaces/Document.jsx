@@ -7,6 +7,7 @@ import DocsWrite from './document/DocsWrite';
 import DocsEdit from './document/DocsEdit';
 import DocDetail from './document/DocDetail';
 import BlackButton from '../../common/elements/BlackButton';
+import SearchBar from '../../components/SearchBar';
 
 export default function Document() {
   const params = useParams();
@@ -63,7 +64,9 @@ export default function Document() {
             document={doc}
             onDetailHandle={onDetailHandle}
           ></Board>
+          <SearchBar/>
         </div>
+        
       ) : tab === 2 ? (
         <div>
           <DocsWrite onListHandle={onListHandle}></DocsWrite>
