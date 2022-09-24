@@ -7,12 +7,12 @@ import { useAddImageMutation } from '../redux/modules/workspaces';
 import axios from 'axios';
 import { getCookieToken } from '../Cookie';
 
-const Editor = ({ value, setCon }) => {
+const Editor = ({ value, setContent }) => {
   const QuillRef = useRef();
-  const [content, setContent] = useState(value);
+  const [editContent, setEditContent] = useState(value);
   useEffect(() => {
-    setCon(value);
-  }, [setCon, value]);
+    setEditContent(value);
+  }, [setContent, value]);
   // const [imgurl, setImgurl] =useState("")
   // const [addImage,{data, isSuccess, isFail, refetch}] = useAddImageMutation();
 
@@ -21,7 +21,8 @@ const Editor = ({ value, setCon }) => {
   };
 
   const onChange = (e) => {
-    setContent(e.target);
+    setContent(e.target.value);
+    console.log(value);
   };
 
   const imageHandler = () => {
@@ -114,8 +115,9 @@ const Editor = ({ value, setCon }) => {
         name='content'
         modules={modules}
         formats={formats}
-        onChange={setCon}
-        content={content}
+        onChange={setContent}
+        content={editContent}
+        defaultValue={editContent}
         placeholder={value}
       ></ReactQuill>
     </StEditorContainer>

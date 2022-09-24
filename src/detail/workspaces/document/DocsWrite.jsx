@@ -1,20 +1,25 @@
 import styled from 'styled-components';
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useRef } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import Editor from '../../../components/Editor';
 import { useAddDocMutation } from '../../../redux/modules/workspaces';
 
-const DocsWrite = ({ onListHandle }) => {
+const DocsWrite = ({ onDocumentHandle }) => {
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
+  const nameInput = useRef();
 
   const [addDoc] = useAddDocMutation();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [newFile, setNewFile] = useState([]);
+
+  const onClickInput = () => {
+    nameInput.current.click();
+  };
 
   const onTitleChange = (e) => {
     setTitle(e.target.value);
@@ -22,7 +27,8 @@ const DocsWrite = ({ onListHandle }) => {
 
   const onFileChange = (e) => {
     const file = e.target.files[0];
-    setNewFile(file);
+    setNewFile([...newFile, file]);
+    console.log(newFile);
   };
 
   const handleSubmit = () => {
@@ -32,15 +38,18 @@ const DocsWrite = ({ onListHandle }) => {
         title,
         content,
       };
-      formData.append('files', newFile);
+      for (let i = 0; i < newFile.length; i++) {
+        formData.append('files', newFile[i]);
+      }
       formData.append('id', id);
       formData.append(
         'data',
         new Blob([JSON.stringify(data)], { type: 'application/json' })
       );
+      console.log(formData);
       addDoc(formData, id);
       window.alert('문서가 등록되었습니다');
-      onListHandle();
+      onDocumentHandle('list');
     } else {
       window.alert('제목과 내용을 모두 채워주세요!');
     }
@@ -54,16 +63,43 @@ const DocsWrite = ({ onListHandle }) => {
         placeholder='제목'
         value={title}
       />
-      <Editor value={content} setCon={setContent} />
+      <Editor value={content} setContent={setContent} />
       <EditorBlock>
-        <div>
+        <div
+          style={{
+            // width: '50%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <button
+            style={{
+              width: '100px',
+              height: '50px',
+              // border: '1px solid black',
+              fontWeight: '500',
+              marginRight: '50px',
+            }}
+            onClick={onClickInput}
+          >
+            파일업로드
+          </button>
           <input
+            style={{ display: 'none' }}
             type='file'
             name='files'
             multiple='multiple'
             accept='application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/msword,application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf, .hwp'
             onChange={onFileChange}
+            ref={nameInput}
           ></input>
+          <div style={{ display: 'flex' }}>
+            파일 :
+            {newFile.map((a, i) => {
+              return <div key={i}>{a?.name} &nbsp; &nbsp; &nbsp;</div>;
+            })}
+          </div>
         </div>
         <StButton onClick={handleSubmit}>게시하기</StButton>
       </EditorBlock>
