@@ -23,51 +23,41 @@ import ProjectInfo from './workspaces/ProjectInfo';
 import Chatting from '../components/Chatting';
 import { getCookieToken } from '../Cookie';
 import * as S from './style';
+import axios from 'axios';
 
 export default function WorkspaceDetailPage() {
+  const [auth, setAuth] = useState(false);
   const { onClickMenu, menu } = useChangeMenu();
   const navigate = useNavigate();
   const id = Number(useParams().id);
-  const { data, isLoading, isSuccess, error } = useGetMainWorkSpacesQuery(id);
+  const { data, isLoading } = useGetMainWorkSpacesQuery(id);
   const {
     data: data_1,
     isLoading: isLoading_1,
-    isSuccess: isSuccess_1,
     error: error_1,
   } = useGetMemberListQuery(id);
   const title = data?.data?.workspaces?.title;
   const [isOpen, setIsOpen] = useState(true);
   const { user } = useGetUser();
-  const userName = user?.username;
-  const spaceMembers = data_1?.data;
   const cookie = getCookieToken();
-
-  // console.log(userName, spaceMembers); spaceMembers !== undefined && userName !== undefined
-  //
-
-  // if (isSuccess_1) {
-  //   for (let i = 0; i < spaceMembers.length; i++) {
-  //     console.log(spaceMembers);
-  //   }
-  // }
-
-  // const load = async () => {
-  //   try {
-  //     if (user !== undefined) {
-  //       setCurrentUser(user);
-  //     }
-  //   } catch (error) {
-  //     console.log("하하");
-  //   }
-  // };
-  // console.log(checkMember, user);
+  // const spaceMembers = data_1?.data;
+  // const loginUserName = user?.username;
 
   useEffect(() => {
     if (!cookie) {
       alert('로그인 해주세요!');
       navigate('/');
     }
-  }, []);
+  }, [cookie]);
+
+  // useEffect(() => {
+  //   if (spaceMembers && user) {
+  //     const checkMember = spaceMembers?.some(
+  //       (x) => x?.user?.username === loginUserName
+  //     );
+  //     setAuth(checkMember);
+  //   }
+  // }, [loginUserName, spaceMembers, user]);
 
   //---------------------------------------------------------------
 
@@ -109,6 +99,7 @@ export default function WorkspaceDetailPage() {
           data_1={data_1}
           error_1={error_1}
           isLoading_1={isLoading_1}
+          // refetch={refetch}
         />
       </S.Projects>
 

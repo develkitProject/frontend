@@ -77,6 +77,7 @@ export default function Document() {
             doc={doc}
             stateId={stateId}
             onEditHandle={onEditHandle}
+            onListHandle={onListHandle}
           ></DocDetail>
         </>
       ) : tab === 4 ? (

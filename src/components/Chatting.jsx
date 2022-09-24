@@ -5,8 +5,6 @@ import velkit from '../asset/img/velkit.png';
 import { useEffect } from 'react';
 import { useGetChatMessagesQuery } from '../redux/modules/workspaces';
 import noteBook from '../asset/img/notebook.png';
-import { Resizable } from 'react-resizable';
-import { textAlign } from '@mui/system';
 
 function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const [users, setUsers] = useState(null);
@@ -20,7 +18,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
 
   useEffect(() => {
     onConnected();
-    refetch();
+    // refetch();
     return () => {
       disConnect();
     };

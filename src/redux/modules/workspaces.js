@@ -28,7 +28,7 @@ export const workspaceApi = coreApi.injectEndpoints({
           url: `/api/members/signout`,
           method: 'DELETE',
           headers,
-        }
+        };
       },
       invalidatesTags: ['User'],
     }),
@@ -165,7 +165,7 @@ export const workspaceApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      providesTags: ['DocsDetail'],
+      providesTags: ['Docs'],
     }),
 
     addDoc: builder.mutation({

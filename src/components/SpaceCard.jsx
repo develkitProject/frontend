@@ -4,15 +4,22 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import CardProfile from '../common/elements/CardProfile.jsx';
 
-function SpaceCard({ data, error, isLoading, width, deleteButton, deleteWorkSpaces }) {
+function SpaceCard({
+  data,
+  error,
+  isLoading,
+  width,
+  deleteButton,
+  deleteWorkSpaces,
+}) {
   const navigate = useNavigate();
 
   return (
     <>
-    {error ? (
+      {error ? (
         <>
-        <div>에러가 발생했습니다.</div>
-        <div>자세한 사항은 관리자에게 문의해주세요</div>
+          <div>에러가 발생했습니다.</div>
+          <div>자세한 사항은 관리자에게 문의해주세요</div>
         </>
       ) : isLoading ? (
         <>정보를 불러오는 중입니다.</>

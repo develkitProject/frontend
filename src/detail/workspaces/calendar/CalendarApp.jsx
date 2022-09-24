@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import './Calendar.css'; // css import
+import dayjs from 'dayjs';
 import CalendarDetail from './CalendarDetail';
-import moment from 'moment/moment';
 import styled from 'styled-components';
 import velkit2 from '../../../asset/img/velkit2.png';
 import velkit3 from '../../../asset/img/velkit3.png';
@@ -64,7 +64,7 @@ export default function CalendarApp({ id }) {
         tileContent={({ date, view }) => {
           if (
             dataArr?.find(
-              (x) => x?.eventDate === moment(date).format('YYYY-MM-DD')
+              (x) => x?.eventDate === dayjs(date).format('YYYY-MM-DD')
             )
           ) {
             return (
@@ -72,7 +72,7 @@ export default function CalendarApp({ id }) {
                 {dataArr
                   .filter(
                     (data) =>
-                      data?.eventDate === moment(date).format('YYYY-MM-DD')
+                      data?.eventDate === dayjs(date).format('YYYY-MM-DD')
                   )
                   .map((data) => {
                     return (
@@ -124,7 +124,7 @@ export default function CalendarApp({ id }) {
         }}
         className='text-gray-500 mt-4'
       >
-        {moment(value).format('YYYY년 MM월 DD일')}
+        {dayjs(value).format('YYYY년 MM월 DD일')}
       </div>
     </div>
   );

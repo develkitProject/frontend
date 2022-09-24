@@ -1,18 +1,23 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useGetMainWorkSpacesQuery } from '../../redux/modules/workspaces';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BlackButton from '../../common/elements/BlackButton';
 import InvitationCodeModal from '../../common/Modal/InvitationCodeModal';
+import { useGetDocQuery } from '../../redux/modules/workspaces';
+import { useGetNoticeQuery } from '../../redux/modules/workspaces';
 
 export default function Home({ id, data }) {
   const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
 
+  const { data: docdata } = useGetDocQuery(id);
+  const { data: noticedata } = useGetNoticeQuery(id);
+  const firstNotice = noticedata?.data[0];
+  const fourDocuments = docdata?.data?.slice(0, 4);
+
   const title = data?.data?.workspaces?.title;
   const content = data?.data.workspaces.content;
-  const document = data?.data.documents;
-  const navigate = useNavigate();
 
   const handleClose = () => {
     setInvitationCodeOpen(false);
@@ -23,6 +28,7 @@ export default function Home({ id, data }) {
   const clickHandler = () => {
     setIsOpen(!isOpen);
   };
+
   return (
     <>
       <StIntroContainer>
@@ -48,8 +54,8 @@ export default function Home({ id, data }) {
             </StTitle>
             <StNoticeBox>
               <StTitle style={{ marginBottom: '15px' }} fc='#333333' fs='20px'>
-                {data?.data.notices !== null ? (
-                  data?.data.notices.title
+                {firstNotice !== undefined ? (
+                  firstNotice?.title
                 ) : (
                   <div>전달할 공지사항이 없습니다! 입력해보세요</div>
                 )}
@@ -57,17 +63,17 @@ export default function Home({ id, data }) {
               <StNoticeContent>
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: data?.data.notices && data?.data.notices.content,
+                    __html: firstNotice && firstNotice.content,
                   }}
                 />
               </StNoticeContent>
               <StInfoDiv>
                 <span>
-                  {data?.data.notices && data?.data.notices.noticeNickname}
+                  {firstNotice && firstNotice.nickname} &nbsp; &nbsp; &nbsp;
+                  &nbsp;{' '}
                 </span>
                 <span>
-                  {data?.data.notices &&
-                    data?.data.notices.createdAt.slice(0, -13)}{' '}
+                  {firstNotice && firstNotice.createdAt.slice(0, -13)}{' '}
                 </span>
               </StInfoDiv>
             </StNoticeBox>
@@ -92,18 +98,18 @@ export default function Home({ id, data }) {
             </StThead>
 
             <StTbody>
-              {document?.length !== 0 ? (
-                document?.map((data) => {
+              {fourDocuments?.length !== 0 ? (
+                fourDocuments?.map((data) => {
                   return (
                     <StTable
                       key={data.id}
-                      onClick={() => {
-                        navigate(`/workspace/main/${id}/docs/${data.id}`);
-                      }}
+                      // onClick={() => {
+                      //   navigate(`/workspace/main/${id}/docs/${data.id}`);
+                      // }}
                     >
-                      <div>{data.user.nickname}</div>
+                      <div>{data.nickname}</div>
                       <div>{data.title}</div>
-                      <div>{data.user.nickname}</div>
+                      <div>{data.nickname}</div>
                       <div>{data.createdAt.split(' ')[0]}</div>
                       <div>{data.modifiedAt.split(' ')[0]}</div>
                     </StTable>
@@ -121,25 +127,6 @@ export default function Home({ id, data }) {
 }
 
 // 예시
-const StWrapper = styled.div`
-  width: 100%;
-  min-height: 100%;
-  background-color: #f2f2f2;
-  display: flex;
-  flex-direction: row;
-`;
-
-const Projects = styled.div`
-  width: 65%;
-  min-height: 90vh;
-  margin-left: 50px;
-  margin-top: 60px;
-  margin-bottom: 50px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-`;
 
 const StIntroContainer = styled.div`
   margin-left: 20px;
