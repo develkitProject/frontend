@@ -28,15 +28,17 @@ const DocsWrite = ({ onListHandle }) => {
   const handleSubmit = () => {
     if (title !== '' && content !== '') {
       const formData = new FormData();
-      formData.append('fileKey', newFile[0]);
-
-      const document = {
-        id,
+      const data = {
         title,
         content,
-        formData,
       };
-      addDoc(document);
+      formData.append('files', newFile);
+      formData.append('id', id);
+      formData.append(
+        'data',
+        new Blob([JSON.stringify(data)], { type: 'application/json' })
+      );
+      addDoc(formData, id);
       window.alert('문서가 등록되었습니다');
       onListHandle();
     } else {
@@ -57,7 +59,8 @@ const DocsWrite = ({ onListHandle }) => {
         <div>
           <input
             type='file'
-            name='file'
+            name='files'
+            multiple='multiple'
             accept='application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/msword,application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf, .hwp'
             onChange={onFileChange}
           ></input>

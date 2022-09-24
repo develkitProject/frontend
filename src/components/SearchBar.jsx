@@ -4,46 +4,49 @@ import search from '../asset/img/search.png';
 import { useGetDocSearchQuery } from '../redux/modules/workspaces';
 import { useParams } from 'react-router-dom';
 
-function SearchBar() {
+function SearchBar({ id }) {
   const params = useParams();
-  const id = Number(params.id);
+  const [state, setState] = useState(null);
+  const { data, error, isLoading, refetch } = useGetDocSearchQuery(state, {
+    // eslint-disable-next-line no-undef, eqeqeq
+    skip: state == undefined,
+  });
+  const [type, setType] = useState('Writer');
+  const [field, setField] = useState('writer');
 
-  const [type, setType] = useState('Writer')
-  const [field, setField] = useState('writer')
-
-  const handleSelect = (e) =>{
-    setType(e.target.value)
-    if(e.target.value==='Writer'){setField('writer')}
-    else{setField('keyword')}
+  const handleSelect = (e) => {
+    setType(e.target.value);
+    if (e.target.value === 'Writer') {
+      setField('writer');
+    } else {
+      setField('keyword');
+    }
   };
 
-  const [keyword, setKeyword] =useState('')
-  const handleInput = (e) =>{
-    setKeyword(e.target.value)    
-  }
+  const [keyword, setKeyword] = useState('');
+  const handleInput = (e) => {
+    setKeyword(e.target.value);
+  };
 
-  const [state, setState] = useState(null);
-
-  const { data, error, isLoading, refetch } = useGetDocSearchQuery(state);
-
-  const handleClick =()=>{
-    const obj = {id, type, keyword, field}
-    setState(obj)
-  }
+  const handleClick = () => {
+    const obj = { id, type, keyword, field };
+    setState(obj);
+    refetch();
+    console.log(data);
+  };
 
   return (
     <StWrapper>
       <StSearchContainer>
-            <StSelect onChange={handleSelect}>
-              <option value='Writer'>작성자</option>
-              <option value='ContentTitle'>제목+내용</option>
-            </StSelect>
-            <StInput onChange={handleInput}>
-            </StInput>
-            <StImgBox onClick={handleClick}>
-              <StImg alt='search' src={search}/>
-            </StImgBox>
-     </StSearchContainer>
+        <StSelect onChange={handleSelect}>
+          <option value='Writer'>작성자</option>
+          <option value='ContentTitle'>제목+내용</option>
+        </StSelect>
+        <StInput onChange={handleInput}></StInput>
+        <StImgBox onClick={handleClick}>
+          <StImg alt='search' src={search} />
+        </StImgBox>
+      </StSearchContainer>
     </StWrapper>
   );
 }
@@ -68,23 +71,24 @@ const StSearchContainer = styled.div`
   flex-direction: row;
 `;
 
-
 const StSelect = styled.select`
   align-items: center;
-  background-color: #E6E6E6;
-  border: 2px solid #DCDCDC;
+  background-color: #e6e6e6;
+  border: 2px solid #dcdcdc;
   height: 40px;
   color: #424242;
   text-align: center;
   padding: 5px;
   border-radius: 5px 0 0 5px;
   font-size: 14px;
-  :focus {outline: none;}
+  :focus {
+    outline: none;
+  }
 `;
 
 const StInput = styled.input`
   align-items: left;
-  border: 2px solid #DCDCDC;
+  border: 2px solid #dcdcdc;
   border-left: none;
   height: 26px;
   width: 200px;
@@ -92,11 +96,13 @@ const StInput = styled.input`
   text-align: left;
   padding: 5px 10px 5px 10px;
   font-size: 14px;
-  :focus {outline: none;}
+  :focus {
+    outline: none;
+  }
 `;
 
 const StImgBox = styled.div`
-  background-color: #00A99D;
+  background-color: #00a99d;
   width: 55px;
   height: 40px;
   /* border: 1px solid #DCDCDC; */

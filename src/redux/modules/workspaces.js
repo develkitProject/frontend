@@ -169,12 +169,14 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
 
     addDoc: builder.mutation({
-      query: (document) => {
+      query: (formData) => {
         return {
-          url: `/api/workspaces/${document.id}/docs`,
+          url: `/api/workspaces/${formData.get('id')}/docs`,
           method: 'POST',
-          body: document,
-          headers,
+          body: formData,
+          headers: {
+            Authorization: getCookieToken(),
+          },
         };
       },
       invalidatesTags: ['Docs'],
@@ -206,7 +208,7 @@ export const workspaceApi = coreApi.injectEndpoints({
     getDocSearch: builder.query({
       query: (obj) => {
         return {
-          url: `/api/workspaces/${obj?.id}/docs/search?${obj.field}=${obj?.keyword}&type=${obj?.type}`,
+          url: `/api/workspaces/${obj?.id}/docs/search?${obj?.field}=${obj?.keyword}&type=${obj?.type}`,
           method: 'GET',
           headers,
         };

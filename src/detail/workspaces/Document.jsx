@@ -64,9 +64,8 @@ export default function Document() {
             document={doc}
             onDetailHandle={onDetailHandle}
           ></Board>
-          <SearchBar/>
+          <SearchBar id={id} />
         </div>
-        
       ) : tab === 2 ? (
         <div>
           <DocsWrite onListHandle={onListHandle}></DocsWrite>
