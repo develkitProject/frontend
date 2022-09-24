@@ -65,7 +65,7 @@ const StWrapper = styled.div`
   min-height: 400px;
   margin-left: 20px;
   margin-top: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 5px;
   display: flex;
   flex-direction: column;
   align-items: left;
