@@ -13,7 +13,7 @@ import BlackButton from '../../../common/elements/BlackButton';
 import DocsEdit from './DocsEdit';
 import { useEffect } from 'react';
 
-function DocDetail({ stateId, onEditHandle }) {
+function DocDetail({ stateId, onEditHandle, onListHandle }) {
   const navigate = useNavigate();
   const params = useParams();
   const workspaces = Number(params.id);
@@ -24,16 +24,16 @@ function DocDetail({ stateId, onEditHandle }) {
   });
   const document = data?.data;
 
-  useEffect(() => {
-    refetch();
-  }, [data]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [document]);
 
   const [deleteDocument] = useDeleteDocMutation({ workspaces, docid });
 
   const deleteDoc = () => {
     if (window.confirm('정말 지우시겠습니까?')) {
       deleteDocument({ workspaces, docid });
-      // navigate(-1);
+      onListHandle();
     } else {
       return;
     }

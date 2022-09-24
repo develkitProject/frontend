@@ -11,8 +11,6 @@ function MyPage() {
   const { data, error, isLoading } = useGetWorkspacesQuery();
   const workspaces = data?.data;
 
-  console.log(user)
-
   return (
     <StWrapper>
       <RowDiv>
@@ -81,7 +79,7 @@ function MyPage() {
                   </div>
                 </IntroBox>
               </div>
-              <Intro style={{ marginTop: '50px', fontWeight: '500'}}>
+              <Intro style={{ marginTop: '50px', fontWeight: '500' }}>
                 프로젝트 관리
               </Intro>
 
