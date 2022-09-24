@@ -34,19 +34,18 @@ function Header({ path, setPath }) {
   // }, []);
 
   useEffect(() => {
+    const readUser = async () => {
+      if (cookies) {
+        const response = await axios.get(API_URL, {
+          headers: {
+            Authorization: getCookieToken(),
+          },
+        });
+        setUser(response.data.data);
+      }
+    };
     readUser();
   }, []);
-
-  const readUser = async () => {
-    if (cookies) {
-      const response = await axios.get(API_URL, {
-        headers: {
-          Authorization: getCookieToken(),
-        },
-      });
-      setUser(response.data.data);
-    }
-  };
 
   const openLoginModal = () => {
     dispatch(setIsLoginModal(true));

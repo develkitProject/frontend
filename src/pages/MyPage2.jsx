@@ -3,7 +3,10 @@ import styled, { keyframes } from 'styled-components';
 import useGetUser from '../common/hooks/useGetUser';
 import velkit from '../asset/img/velkit.png';
 import BasicInput from '../components/BasicInput';
-import { useDeleteUserInfoMutation, useUpdateUserInfoMutation } from '../redux/modules/workspaces';
+import {
+  useDeleteUserInfoMutation,
+  useUpdateUserInfoMutation,
+} from '../redux/modules/workspaces';
 import { useNavigate } from 'react-router-dom';
 import { removeCookieToken } from '../Cookie';
 
@@ -24,7 +27,6 @@ function MyPage2() {
     setNickname(e.target.value);
   }, []);
 
-  
   const [deleteUserInfos] = useDeleteUserInfoMutation();
   const deleteUserInfo = () => {
     if (window.confirm('정말 탈퇴하시겠습니까?')) {
@@ -37,13 +39,14 @@ function MyPage2() {
   };
 
   const handleSubmit = () => {
-    if (!nickname || (nickname.length <=8 && nickname.length >=2)){
+    if (!nickname || (nickname.length <= 8 && nickname.length >= 2)) {
       const updateInfo = {
         profileImageUrl: imageUrl,
         nickname,
       };
       updateUserInfo(updateInfo);
       window.alert('회원정보가 수정되었습니다!');
+      window.location.reload();
     } else {
       window.alert('닉네임은 2~8글자여야합니다.');
     }
@@ -76,7 +79,7 @@ function MyPage2() {
           }}
         >
           <StEmail fs={'20px'} fc={'#000000'} fw={'500'}>
-            {nickname? nickname : userNickname}
+            {nickname ? nickname : userNickname}
           </StEmail>
           <StEmail fs={'18px'} fc={'#999999'} fw={'400'}>
             {user?.username}
@@ -178,6 +181,7 @@ const StImage = styled.div`
   background-size: 100% 100%;
   background-image: url(${(props) => props.profileImageUrl});
   margin-top: 30px;
+  cursor: pointer;
 `;
 
 const StEmail = styled.span`
