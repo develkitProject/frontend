@@ -22,7 +22,7 @@ const CodeConfirmModal = ({ onClose, spaceData }) => {
     try {
       await axios
         .post(
-          `https://hosung.shop/api/workspaces/join/${spaceData.id}`,
+          `${process.env.REACT_APP_BASE_URL}/api/workspaces/join/${spaceData.id}`,
           { obj },
           {
             headers,

@@ -19,7 +19,6 @@ import { useGetUserInfoQuery } from '../redux/modules/workspaces';
 function Header({ path, setPath }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const API_URL = `https://hosung.shop/api/members/profile`;
   const cookies = getCookieToken();
 
   const [profileOpen, setProfileOpen] = useState(false);

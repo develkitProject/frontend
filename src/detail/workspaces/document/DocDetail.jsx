@@ -1,21 +1,15 @@
 import styled from 'styled-components';
-import SideMenu from '../../../components/SideMenu';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar';
 import {
   useDeleteDocMutation,
   useGetDocDetailQuery,
 } from '../../../redux/modules/workspaces';
-import Board from './Board';
 import BlackButton from '../../../common/elements/BlackButton';
 import DocsEdit from './DocsEdit';
-import { useEffect } from 'react';
 
 function DocDetail({ stateId, onDocumentHandle }) {
-  const navigate = useNavigate();
-  const [arr, setArr] = useState([]);
   const params = useParams();
   const workspaces = Number(params.id);
   const docid = stateId;

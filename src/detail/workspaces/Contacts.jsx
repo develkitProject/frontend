@@ -1,6 +1,6 @@
 import BlackButton from '../../common/elements/BlackButton';
 import styled from 'styled-components';
-import Address from '../../components/Address';
+import Address from './Address';
 import { useState } from 'react';
 import InvitationCodeModal from '../../common/Modal/InvitationCodeModal';
 

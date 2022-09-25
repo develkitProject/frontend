@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import { useGetMemberListQuery } from '../redux/modules/workspaces';
+import { useGetMemberListQuery } from '../../redux/modules/workspaces';
 import { useEffect } from 'react';
 
 function Address({ id, data_1, error_1, isLoading_1 }) {

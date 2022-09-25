@@ -10,16 +10,11 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import PostEditor from './components/PostEditor';
 import MyPage2 from './pages/MyPage2';
 import Footer from './components/Footer';
-import ClaendarPage from './detail/workspaces/calendar/CalendarPage';
 import DocDetail from './detail/workspaces/document/DocDetail';
 import WorkspaceDetailPage from './detail';
-import { getCookieToken } from './Cookie';
-import useGetUser from './common/hooks/useGetUser';
 
 function App() {
   const [path, setPath] = useState(1);
-  const cookie = getCookieToken();
-  const navigate = useNavigate();
   return (
     <>
       <Header setPath={setPath} path={path} />
