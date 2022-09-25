@@ -5,14 +5,13 @@ import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
 import { getCookieToken } from '../../../Cookie';
 
-const NoticeEditor = ({ setCon }) => {
+const NoticeEditor = ({ value, setContent }) => {
   const QuillRef = useRef();
-  const [content, setContent] = useState('');
+  const [editContent, setEditContent] = useState(value);
+
   useEffect(() => {
-    setCon(content);
-  }, [content, setCon]);
-  // const [imgurl, setImgurl] =useState("")
-  // const [addImage,{data, isSuccess, isFail, refetch}] = useAddImageMutation();
+    setEditContent(value);
+  }, [setEditContent, value]);
 
   const toolbarOptions = [
     [{ header: [1, 2, false] }],
@@ -62,13 +61,13 @@ const NoticeEditor = ({ setCon }) => {
           }
         }}
         style={{ height: '500px', width: '96%' }}
-        value={content}
         theme='snow'
         name='content'
         modules={modules}
         formats={formats}
         onChange={setContent}
-        content={content}
+        content={editContent}
+        defaultValue={editContent}
       ></ReactQuill>
     </StEditorContainer>
   );

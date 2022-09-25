@@ -136,7 +136,7 @@ export const workspaceApi = coreApi.injectEndpoints({
     updateNotice: builder.mutation({
       query: (notice) => {
         return {
-          url: `/api/workspaces/${notice.id}/notice/${notice.noticeid}`,
+          url: `/api/workspaces/${notice.id}/notice/${notice.stateId}`,
           method: 'PUT',
           body: notice,
           headers,
