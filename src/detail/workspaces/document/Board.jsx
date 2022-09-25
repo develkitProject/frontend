@@ -2,15 +2,15 @@ import styled from 'styled-components';
 import { useGetDocQuery } from '../../../redux/modules/workspaces';
 import { useNavigate, useParams } from 'react-router-dom';
 
-function Board({ onDetailHandle, error, isLoading, data }) {
+function Board({ onDocumentHandle, error, isLoading, data }) {
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
   const doc = data?.data;
 
-  const onMoveDetail = (stateId) => {
-    onDetailHandle(stateId);
-  };
+  // const onMoveDetail = (stateId) => {
+  //   onDetailHandle(stateId);
+  // };
 
   return (
     <StWrapper>
@@ -37,7 +37,7 @@ function Board({ onDetailHandle, error, isLoading, data }) {
                   <StTable
                     key={data.id}
                     onClick={() => {
-                      onMoveDetail(data.id);
+                      onDocumentHandle('detail', data.id);
                     }}
                   >
                     <div>{data.id}</div>

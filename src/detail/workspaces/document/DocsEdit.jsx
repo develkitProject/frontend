@@ -9,18 +9,13 @@ import {
   useUpdateDocMutation,
 } from '../../../redux/modules/workspaces';
 
-const DocsEdit = ({ stateId, onListHandle }) => {
+const DocsEdit = ({ stateId, onDocumentHandle }) => {
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
   const docid = stateId;
 
-  const [editInfo, setEditInfo] = useState({
-    title: '',
-    content: '',
-  });
-
-  const { data, error, isLoading, refetch } = useGetDocDetailQuery({
+  const { data } = useGetDocDetailQuery({
     workspaces: id,
     docid,
   });
@@ -55,7 +50,7 @@ const DocsEdit = ({ stateId, onListHandle }) => {
       };
       editDoc(document);
       window.alert('문서가 수정되었습니다');
-      onListHandle();
+      onDocumentHandle('list');
     } else {
       window.alert('제목과 내용을 모두 채워주세요!');
     }
@@ -69,7 +64,7 @@ const DocsEdit = ({ stateId, onListHandle }) => {
         placeholder='제목'
         value={title}
       />
-      <Editor value={content} setCon={setContent} />
+      <Editor value={content} setContent={setContent} />
       <EditorBlock>
         <div>
           <input

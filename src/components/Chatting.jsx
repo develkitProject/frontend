@@ -5,6 +5,8 @@ import velkit from '../asset/img/velkit.png';
 import { useEffect } from 'react';
 import { useGetChatMessagesQuery } from '../redux/modules/workspaces';
 import noteBook from '../asset/img/notebook.png';
+import Stomp from 'stompjs';
+import SockJS from 'sockjs-client';
 
 function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const [users, setUsers] = useState(null);
@@ -12,13 +14,14 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const { data, isLoading, error, refetch } = useGetChatMessagesQuery(id);
   const [isOpen, setIsOpen] = useState(false);
   const [Opacity, setOpacity] = useState(false);
+
   // ------------------------------------------------------------------------
   const messageList = data?.data;
   const [chatMessages, setChatMessages] = useState([]);
 
   useEffect(() => {
+    // console.log(stompClient);
     onConnected();
-    // refetch();
     return () => {
       disConnect();
     };
@@ -30,10 +33,10 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
 
   useEffect(() => {
     setChatMessages(messageList);
+    refetch();
   }, [messageList]);
 
   const userArray = [...new Set(users)];
-  stompClient.debug = () => {};
 
   const handleStart = () => {
     setOpacity(true);
@@ -43,30 +46,54 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   };
 
   function onConnected() {
-    try {
-      stompClient.connect(headers, () => {
-        stompClient.subscribe(
-          `/sub/chat/room/${id}`,
-          (data) => {
-            const newMessage = JSON.parse(data.body);
-            if (newMessage.type !== 'TALK') {
-              setUsers(newMessage.userList);
-            } else {
-              setChatMessages((chatMessages) => [newMessage, ...chatMessages]);
-            }
-          },
-          headers
-        );
-      });
-    } catch (error) {
-      console.log(error);
+    // try {
+    if (stompClient.connected) {
+      stompClient.subscribe(
+        `/sub/chat/room/${id}`,
+        (data) => {
+          const newMessage = JSON.parse(data.body);
+          if (newMessage.type !== 'TALK') {
+            setUsers(newMessage.userList);
+          } else {
+            setChatMessages((chatMessages) => [newMessage, ...chatMessages]);
+          }
+        },
+        headers
+      );
+    } else {
+      if (!stompClient.connected) {
+        onSub();
+      }
     }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
+
   const disConnect = () => {
+    // if (stompClient.unconnected)
     if (stompClient != null) {
-      if (stompClient.connected) stompClient.disconnect();
+      console.log(stompClient);
+      if (stompClient.connected) stompClient.unsubscribe('sub-0');
     }
   };
+
+  function onSub() {
+    stompClient.connect(headers, () => {
+      stompClient.subscribe(
+        `/sub/chat/room/${id}`,
+        (data) => {
+          const newMessage = JSON.parse(data.body);
+          if (newMessage.type !== 'TALK') {
+            setUsers(newMessage.userList);
+          } else {
+            setChatMessages((chatMessages) => [newMessage, ...chatMessages]);
+          }
+        },
+        headers
+      );
+    });
+  }
 
   const sendMessage = () => {
     if (textRef.current.value !== '') {
@@ -116,7 +143,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
                   : null
               }
             >
-              {data.writer.split('@')[0]}
+              {data.nickname}
             </NameSpan>
             <MessageBox key={i}>
               <span style={{ color: 'black' }}>{data.message}</span>

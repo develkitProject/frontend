@@ -25,10 +25,21 @@ import { getCookieToken } from '../Cookie';
 import * as S from './style';
 import axios from 'axios';
 
+const headers = {
+  token: getCookieToken(),
+};
+
+const sockJS = new SockJS('https://hosung.shop/stomp/chat');
+const stompClient = Stomp.over(sockJS);
+stompClient.connect(headers, () => {});
+
+stompClient.debug = () => {};
+
 export default function WorkspaceDetailPage() {
-  const [auth, setAuth] = useState(false);
   const { onClickMenu, menu } = useChangeMenu();
   const navigate = useNavigate();
+  const [tab, setTab] = useState('list');
+  const [stateId, setStateId] = useState(0);
   const id = Number(useParams().id);
   const { data, isLoading } = useGetMainWorkSpacesQuery(id);
   const {
@@ -36,38 +47,41 @@ export default function WorkspaceDetailPage() {
     isLoading: isLoading_1,
     error: error_1,
   } = useGetMemberListQuery(id);
-  const title = data?.data?.workspaces?.title;
-  const [isOpen, setIsOpen] = useState(true);
+
   const { user } = useGetUser();
+
+  const title = data?.data.workspaces.title;
+  const [isOpen, setIsOpen] = useState(true);
   const cookie = getCookieToken();
-  // const spaceMembers = data_1?.data;
-  // const loginUserName = user?.username;
 
   useEffect(() => {
     if (!cookie) {
       alert('로그인 해주세요!');
       navigate('/');
     }
-  }, [cookie]);
+    // window.location.reload();
+  }, [cookie, navigate]);
 
   // useEffect(() => {
-  //   if (spaceMembers && user) {
+  //   if (data_1 && user) {
   //     const checkMember = spaceMembers?.some(
   //       (x) => x?.user?.username === loginUserName
   //     );
   //     setAuth(checkMember);
   //   }
-  // }, [loginUserName, spaceMembers, user]);
+  // }, [data_1, loginUserName, spaceMembers, user]);
+
+  // useEffect(() => {
+  //   if (auth === undefined || auth === null) return;
+  //   if (!auth) {
+  //     alert('이 워크스페이스의 회원이 아닙니다!');
+  //     navigate('/');
+  //   }
+  // }, [auth, navigate]);
 
   //---------------------------------------------------------------
 
-  const sockJS = new SockJS('https://hosung.shop/stomp/chat');
-  const stompClient = Stomp.over(sockJS);
   const messageBoxRef = useRef();
-
-  const headers = {
-    token: getCookieToken(),
-  };
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -84,6 +98,7 @@ export default function WorkspaceDetailPage() {
     projectInfo: ProjectInfo,
   }[menu];
 
+  // if (!(data_1 && user)) return null;
   return (
     <S.Wrapper>
       <Sidebar

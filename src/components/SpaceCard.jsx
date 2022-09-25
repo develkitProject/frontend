@@ -25,107 +25,114 @@ function SpaceCard({
         <>정보를 불러오는 중입니다.</>
       ) : data ? (
         <>
-    <StSpaceCard direction='row' width={width} key={data.workspaces.id}>
-      <StCardImage
-        data={data.workspaces}
-        onClick={() => {
-          navigate(`/workspace/main/${data.workspaces.id}`, {
-            state: {
-              code: data,
-            },
-          });
-        }}
-      />
-      <StFooterBox>
-        <StFooterDiv>
-          <StFooter>
-            <SpaceName fontSize="22">{data.workspaces.title}</SpaceName>
-            <SpaceDate>{data.workspaces.createdAt.slice(0,-13)}</SpaceDate>
-            <SpaceGoal weight='500'>
-            {data.workspaces.content}
-              {/* 목표{' '} */}
-              {/* <SpaceGoal
+          <StSpaceCard direction='row' width={width} key={data.workspaces.id}>
+            <StCardImage
+              data={data.workspaces}
+              onClick={() => {
+                navigate(`/workspace/main/${data.workspaces.id}`);
+              }}
+            />
+            <StFooterBox>
+              <StFooterDiv>
+                <StFooter>
+                  <SpaceName fontSize='22'>{data.workspaces.title}</SpaceName>
+                  <SpaceDate>
+                    {data.workspaces.createdAt.slice(0, -13)}
+                  </SpaceDate>
+                  <SpaceGoal weight='500'>
+                    {data.workspaces.content}
+                    {/* 목표{' '} */}
+                    {/* <SpaceGoal
                 weight='200'
                 style={{ marginLeft: '10px', fontWeight: '400' }}
               >
                 
               </SpaceGoal> */}
-            </SpaceGoal>
-          </StFooter>
-          <CardProfile data={data.workspaces} />
-        </StFooterDiv>
-        <hr
-          style={{ width: '95%', height: '0.5px', backgroundColor: '#dddddd' }}
-        />
-        <StFooter>
-          <StDiv>
-            <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
-              공지
-            </SpaceName>
+                  </SpaceGoal>
+                </StFooter>
+                <CardProfile data={data.workspaces} />
+              </StFooterDiv>
+              <hr
+                style={{
+                  width: '95%',
+                  height: '0.5px',
+                  backgroundColor: '#dddddd',
+                }}
+              />
+              <StFooter>
+                <StDiv>
+                  <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
+                    공지
+                  </SpaceName>
 
-          {data.notices === null ? (
-            <SpaceName
-            style={{
-              color: '#999999',
-              marginRight: '10px',
-              fontWeight: '500',
-            }}>등록된 공지사항이 없습니다.</SpaceName>)
-          :(<>
-            <SpaceName
-              style={{
-                color: '#999999',
-                marginRight: '10px',
-                fontWeight: '500',
-              }}>{data.notices.createdAt.slice(0,-13)}
-            </SpaceName>
-            <SpaceName style={{ color: 'black', fontWeight: '500' }}>
-              {data.notices.title}
-              </SpaceName>
-              </>
-            )}
-          </StDiv>
+                  {data.notices === null ? (
+                    <SpaceName
+                      style={{
+                        color: '#999999',
+                        marginRight: '10px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      등록된 공지사항이 없습니다.
+                    </SpaceName>
+                  ) : (
+                    <>
+                      <SpaceName
+                        style={{
+                          color: '#999999',
+                          marginRight: '10px',
+                          fontWeight: '500',
+                        }}
+                      >
+                        {data.notices.createdAt.slice(0, -13)}
+                      </SpaceName>
+                      <SpaceName style={{ color: 'black', fontWeight: '500' }}>
+                        {data.notices.title}
+                      </SpaceName>
+                    </>
+                  )}
+                </StDiv>
 
-          <StDiv>
-            <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
-              일정
-            </SpaceName>
-            <SpaceName
-              style={{
-                color: '#999999',
-                marginRight: '10px',
-                fontWeight: '500',
-              }}
-            >
-              2022/09/22
-            </SpaceName>
-            <SpaceName style={{ color: 'black', fontWeight: '500' }}>
-              프로젝트 주간회의{' '}
-            </SpaceName>
-          </StDiv>
+                <StDiv>
+                  <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
+                    일정
+                  </SpaceName>
+                  <SpaceName
+                    style={{
+                      color: '#999999',
+                      marginRight: '10px',
+                      fontWeight: '500',
+                    }}
+                  >
+                    2022/09/22
+                  </SpaceName>
+                  <SpaceName style={{ color: 'black', fontWeight: '500' }}>
+                    프로젝트 주간회의{' '}
+                  </SpaceName>
+                </StDiv>
 
-          <StDiv>
-            <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
-              문서
-            </SpaceName>
-            <SpaceName
-              style={{
-                color: '#999999',
-                marginRight: '10px',
-                fontWeight: '500',
-              }}
-            >
-              2022/09/20
-            </SpaceName>
-            <SpaceName style={{ color: 'black', fontWeight: '500' }}>
-              API설계내용{' '}
-            </SpaceName>
-          </StDiv>
-
-        </StFooter>
-      </StFooterBox>
-    </StSpaceCard>
-    </>
-    ) : null}
+                <StDiv>
+                  <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
+                    문서
+                  </SpaceName>
+                  <SpaceName
+                    style={{
+                      color: '#999999',
+                      marginRight: '10px',
+                      fontWeight: '500',
+                    }}
+                  >
+                    2022/09/20
+                  </SpaceName>
+                  <SpaceName style={{ color: 'black', fontWeight: '500' }}>
+                    API설계내용{' '}
+                  </SpaceName>
+                </StDiv>
+              </StFooter>
+            </StFooterBox>
+          </StSpaceCard>
+        </>
+      ) : null}
     </>
   );
 }

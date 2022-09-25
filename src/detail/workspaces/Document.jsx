@@ -12,24 +12,13 @@ import SearchBar from '../../components/SearchBar';
 export default function Document() {
   const params = useParams();
   const id = Number(params.id);
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useState('list');
   const [stateId, setStateId] = useState(0);
   const { data, error, isLoading, refetch } = useGetDocQuery(id);
   const doc = data?.data;
 
-  const onListHandle = () => {
-    setTab(1);
-  };
-  const onWriteHandle = () => {
-    setTab(2);
-  };
-  const onDetailHandle = (docsid) => {
-    setTab(3);
-    setStateId(docsid);
-  };
-
-  const onEditHandle = (docsid) => {
-    setTab(4);
+  const onDocumentHandle = (tabpoint, docsid) => {
+    setTab(tabpoint);
     setStateId(docsid);
   };
 
@@ -41,47 +30,56 @@ export default function Document() {
           <StContent>프로젝트 관련 일일보고 및 계획 등</StContent>
         </div>
 
-        {tab === 1 ? (
+        {tab === 'list' ? (
           <>
-            <BlackButton text='글쓰기' onClick={onWriteHandle}></BlackButton>
+            <BlackButton
+              text='글쓰기'
+              onClick={() => {
+                onDocumentHandle('write');
+              }}
+            ></BlackButton>
           </>
-        ) : tab === 2 ? (
+        ) : (
           <>
             <BlackButton
               text='리스트 보기'
-              onClick={onListHandle}
+              onClick={() => {
+                onDocumentHandle('list');
+              }}
             ></BlackButton>
           </>
-        ) : null}
+        )}
       </StIntroContainer>
 
-      {tab === 1 ? (
+      {tab === 'list' ? (
         <div>
           <Board
             error={error}
             isLoading={isLoading}
             data={data}
             document={doc}
-            onDetailHandle={onDetailHandle}
+            onDocumentHandle={onDocumentHandle}
           ></Board>
           <SearchBar id={id} />
         </div>
-      ) : tab === 2 ? (
+      ) : tab === 'write' ? (
         <div>
-          <DocsWrite onListHandle={onListHandle}></DocsWrite>
+          <DocsWrite onDocumentHandle={onDocumentHandle}></DocsWrite>
         </div>
-      ) : tab === 3 ? (
+      ) : tab === 'detail' ? (
         <>
           <DocDetail
             doc={doc}
             stateId={stateId}
-            onEditHandle={onEditHandle}
-            onListHandle={onListHandle}
+            onDocumentHandle={onDocumentHandle}
           ></DocDetail>
         </>
-      ) : tab === 4 ? (
+      ) : tab === 'edit' ? (
         <>
-          <DocsEdit stateId={stateId} onListHandle={onListHandle}></DocsEdit>
+          <DocsEdit
+            stateId={stateId}
+            onDocumentHandle={onDocumentHandle}
+          ></DocsEdit>
         </>
       ) : null}
     </>

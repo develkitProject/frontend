@@ -13,7 +13,7 @@ import BlackButton from '../../../common/elements/BlackButton';
 import DocsEdit from './DocsEdit';
 import { useEffect } from 'react';
 
-function DocDetail({ stateId, onEditHandle, onListHandle }) {
+function DocDetail({ stateId, onDocumentHandle }) {
   const navigate = useNavigate();
   const params = useParams();
   const workspaces = Number(params.id);
@@ -23,7 +23,7 @@ function DocDetail({ stateId, onEditHandle, onListHandle }) {
     docid,
   });
   const document = data?.data;
-
+  const readMember = data?.data.readMember;
   // useEffect(() => {
   //   refetch();
   // }, [document]);
@@ -33,7 +33,7 @@ function DocDetail({ stateId, onEditHandle, onListHandle }) {
   const deleteDoc = () => {
     if (window.confirm('정말 지우시겠습니까?')) {
       deleteDocument({ workspaces, docid });
-      onListHandle();
+      onDocumentHandle('list');
     } else {
       return;
     }
@@ -62,7 +62,7 @@ function DocDetail({ stateId, onEditHandle, onListHandle }) {
                   <StVerticalBar>|</StVerticalBar>
                   <StDetail
                     onClick={() => {
-                      onEditHandle(docid);
+                      onDocumentHandle('edit', docid);
                     }}
                     style={{ cursor: 'pointer' }}
                   >
@@ -83,14 +83,17 @@ function DocDetail({ stateId, onEditHandle, onListHandle }) {
               </StContentContainer>
               <StFooterContainer>
                 <StInfoContainer style={{ justifyContent: 'space-between' }}>
-                  <StDetail>
-                    최종 수정일:{document?.modifiedAt.slice(0, -7)}(수정자:
-                    꼬부기)
+                  <StDetail style={{ marginTop: '10px' }}>
+                    <span>읽음 &nbsp;:</span>
+                    {readMember?.map((members, i) => {
+                      return <span key={i}>&nbsp;{members}&nbsp;</span>;
+                    })}
                   </StDetail>
+
                   <StSideMent>
                     <StDetail
                       onClick={() => {
-                        onEditHandle(docid);
+                        onDocumentHandle('edit', docid);
                       }}
                       style={{ color: '#00A99D', fontWeight: '500' }}
                     >
@@ -102,10 +105,13 @@ function DocDetail({ stateId, onEditHandle, onListHandle }) {
                     </StDetail>
                   </StSideMent>
                 </StInfoContainer>
+
+                <div style={{ height: '20px' }}></div>
                 <div style={{ width: '100%' }}>
-                  <StDetail style={{ alignSelf: 'left' }}>
-                    읽음: 피카츄, 파이리, 꼬부기, 라이츄, 피존투, 또가스,
-                    버터풀, 야도란, 이상해풀, 이상해씨, 이상해꽃, ㅇㅇ(222.36) +
+                  <StDetail>
+                    최종 수정일 &nbsp;:&nbsp; &nbsp;
+                    {document?.modifiedAt.slice(0, -7)}
+                    &nbsp;&nbsp;(수정자: 꼬부기)
                   </StDetail>
                 </div>
               </StFooterContainer>

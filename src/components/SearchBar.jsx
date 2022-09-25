@@ -32,7 +32,6 @@ function SearchBar({ id }) {
     const obj = { id, type, keyword, field };
     setState(obj);
     refetch();
-    console.log(data);
   };
 
   return (
