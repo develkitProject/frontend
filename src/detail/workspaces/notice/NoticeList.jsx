@@ -1,41 +1,65 @@
 import styled from 'styled-components';
-import { useGetNoticeQuery } from '../../../redux/modules/workspaces';
-import React, { useEffect } from 'react';
+import { useDeleteNoticeMutation, useGetNoticeQuery } from '../../../redux/modules/workspaces';
+import React, { useState, useEffect } from 'react';
 import { getCookieToken } from '../../../Cookie';
 import { useParams } from 'react-router-dom';
 import WorkSpaceErrorModal from '../../../common/Modal/error';
 
-function NoticeList({ error, isLoading, data, notice }) {
-  // console.log(data?.data);
+function NoticeList({ error, isLoading, data, notice, user }) {
+  const params = useParams();
+  const id = Number(params.id);
+
+  const [deleteNotices] = useDeleteNoticeMutation();
+  const deleteNotice = (dataId) => {
+    const data = {
+      id,
+      dataId,
+    }
+    if (window.confirm('정말 지우시겠습니까?')) {
+      deleteNotices(data);
+    } else {
+      return;
+    }
+  };
+
   return (
     <>
       <StWrapper>
         {error ? (
-          <>Oh no, there was an error</>
+          <>에러가 발생하였습니다. 관리자에게 문의해주세요</>
         ) : isLoading ? (
-          <>Loading...</>
+          <>데이터를 불러오는 중입니다</>
         ) : data ? (
           <>
             {notice?.map((data, i) => {
               return (
-                <StNoticeContainer key={data.id}>
-                  <StTitle fc='#00a99d'>공지사항</StTitle>
+                <StNoticeContainer key={data.id} noticeId={data.id}>
+                  <StTitle fontColor='#00a99d' style={{marginTop: "30px"}}>공지사항</StTitle>
                   <StNoticeBox>
-                    <StTitle fc='#333333'>{data.title}</StTitle>
-                    <StContent className='imgWrapper'>
-                      <div dangerouslySetInnerHTML={{ __html: data.content }} />
-                      {/* {data.content} */}
-                      {/* 
-                        {process.browser?(
-                          <div dangerouslySetInnerHTML={{ 
-                          __html: DOMPurify.sanitize(data.content)} }/>
-                          ):(<div/>)} */}
-                    </StContent>
                     <StInfoDiv>
-                      <p>{data.nickname} ｜</p>
-                      <p>{data.createdAt.slice(0, -13)} ｜</p>
-                      <p>{data.createdAt.slice(10, -4)} </p>
+                      <StProfileImg/>
+                      <StNameDate>
+                        <span style={{fontWeight: "600"}}>{data.nickname}</span>
+                        <span>{data.createdAt.slice(0, -13)} <span style={{fontSize: "15px"}}>｜</span> {data.createdAt.slice(10, -4)} </span>
+                      </StNameDate>
                     </StInfoDiv>
+                    <StContentBox>
+                      <StTitle fontColor='#333333'>{data.title}</StTitle>
+                      <StContent className='imgWrapper'>
+                        <div dangerouslySetInnerHTML={{ __html: data.content }} />
+                      </StContent>
+                    </StContentBox>
+
+                    <StEditDelete>
+                      <div style={{ color: '#00A99D'}}>
+                       수정
+                      </div>
+                      <StVerticalBar>｜</StVerticalBar>
+                      <div onClick={()=>{deleteNotice(data.id)}}>
+                       삭제
+                      </div>
+                    </StEditDelete>
+
                   </StNoticeBox>
                 </StNoticeContainer>
               );
@@ -61,16 +85,8 @@ const StWrapper = styled.div`
   letter-spacing: -0.8px;
 `;
 
-const StTitle = styled.p`
-  color: ${(props) => props.fc};
-  text-align: left;
-  font-size: 20px;
-  font-weight: bold;
-  letter-spacing: -1.2px;
-`;
-
 const StNoticeContainer = styled.div`
-  padding: 25px;
+  padding: 5px 35px 20px 35px;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -80,24 +96,11 @@ const StNoticeContainer = styled.div`
 `;
 
 const StNoticeBox = styled.div`
-  margin-top: 18px;
+  margin-top: 15px;
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
   align-items: left;
-`;
-
-const StContent = styled.div`
-  margin-top: 10px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  font-size: 20px;
-  line-height: 25px;
-  font-weight: 500;
-  white-space: pre-wrap;
-  overflow: hidden;
 `;
 
 const StInfoDiv = styled.div`
@@ -106,8 +109,75 @@ const StInfoDiv = styled.div`
   flex-direction: row;
   align-items: left;
   color: #999999;
-  font-size: 16px;
-  letter-spacing: -0.8px;
   font-weight: 500;
   font-size: 16px;
+`;
+
+const StProfileImg = styled.div`
+  width: 41px;
+  height: 40px;
+  border-radius: 70%;
+  margin-top: 3px;
+  background-color: black;
+`;
+
+const StNameDate = styled.div`
+  margin-left: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  color: #999999;
+  font-size: 18px;
+  letter-spacing: -0.5px;
+  font-weight: 500;
+  line-height: 22px;
+`;
+
+const StContentBox = styled.div`
+  margin-top: 26px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+`;
+
+const StTitle = styled.p`
+  color: ${(props) => props.fontColor};
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+const StContent = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+  white-space: pre-wrap;
+  overflow: hidden;
+`;
+
+const StEditDelete = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  color: #999999;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+`;
+
+const StVerticalBar = styled.div`
+  margin: 0 2px 0 2px;
+  font-size: 15px;
+  color: #999999;
+  letter-spacing: -0.05em;
+  font-weight: 200;
+  cursor: none;
 `;
