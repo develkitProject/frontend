@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import { getCookieToken, removeCookieToken } from '../Cookie';
-import WorkSpaceErrorModal from '../common/Modal/error';
 import alarm from '../asset/img/alarm.svg';
 import logo from '../asset/img/logo.png';
 import Login from '../login';
@@ -15,6 +14,7 @@ import {
   selectIsLoginModal,
   selectIsSignUpModal,
 } from '../redux/modules/global/selectors';
+import { useGetUserInfoQuery } from '../redux/modules/workspaces';
 
 function Header({ path, setPath }) {
   const navigate = useNavigate();
@@ -29,23 +29,13 @@ function Header({ path, setPath }) {
   const isLogin = useSelector(selectIsLoginModal);
   const isSignUp = useSelector(selectIsSignUpModal);
 
+  const { data } = useGetUserInfoQuery();
+
   // const { user } = useMemo(() => {
   //   return useGetUser();
   // }, []);
 
-  useEffect(() => {
-    const readUser = async () => {
-      if (cookies) {
-        const response = await axios.get(API_URL, {
-          headers: {
-            Authorization: getCookieToken(),
-          },
-        });
-        setUser(response.data.data);
-      }
-    };
-    readUser();
-  }, []);
+  const userData = data?.data;
 
   const openLoginModal = () => {
     dispatch(setIsLoginModal(true));
@@ -121,12 +111,14 @@ function Header({ path, setPath }) {
           <StDiv>
             <StAlarmImg src={alarm} />
             <StProfileImg
-              src={user.profileImageUrl}
+              src={userData?.profileImageUrl}
               onClick={() => {
                 setProfileOpen(profileOpen === false ? true : false);
               }}
             />
-            {profileOpen ? <MyProfileModal onClose={handleClose} /> : null}
+            {profileOpen ? (
+              <MyProfileModal userData={userData} onClose={handleClose} />
+            ) : null}
           </StDiv>
         )}
       </StHeaderDiv>

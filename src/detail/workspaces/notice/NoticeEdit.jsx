@@ -4,13 +4,16 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import NoticeEditor from './NoticeEditor';
-import { useGetNoticeQuery, useUpdateNoticeMutation } from '../../../redux/modules/workspaces';
+import {
+  useGetNoticeQuery,
+  useUpdateNoticeMutation,
+} from '../../../redux/modules/workspaces';
 
-const NoticeEdit = ({stateId}) => {
+const NoticeEdit = ({ stateId, onNoticeHandle }) => {
   const params = useParams();
   const id = Number(params.id);
   const { data, error, isLoading } = useGetNoticeQuery(id);
-  const noticeData = data?.data.filter((x)=>x.id===stateId)
+  const noticeData = data?.data.filter((x) => x.id === stateId);
 
   const [title, setTitle] = useState(noticeData[0].title);
   const [content, setContent] = useState(noticeData[0].content);
@@ -30,8 +33,7 @@ const NoticeEdit = ({stateId}) => {
       };
       editNotice(notice);
       window.alert('공지사항이 수정되었습니다');
-      
-
+      onNoticeHandle('list');
     } else {
       window.alert('제목과 내용을 모두 채워주세요!');
     }
@@ -39,12 +41,8 @@ const NoticeEdit = ({stateId}) => {
 
   return (
     <StEditorContainer>
-      <StInputTitle
-        onChange={onTitleChange}
-        name='title'
-        value={title}
-      />
-      <NoticeEditor value={content} setContent={setContent}/>
+      <StInputTitle onChange={onTitleChange} name='title' value={title} />
+      <NoticeEditor value={content} setContent={setContent} />
       <EditorBlock>
         <StButton onClick={handleSubmit}>수정하기</StButton>
       </EditorBlock>

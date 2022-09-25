@@ -10,16 +10,14 @@ import NoticeEdit from './notice/NoticeEdit';
 export default function Notice() {
   const params = useParams();
   const id = Number(params.id);
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useState('list');
+  const [stateId, setStateId] = useState(0);
   const { data, error, isLoading, refetch } = useGetNoticeQuery(id);
   const notice = data?.data;
-  
-  const onListHandle = () => {
-    setTab(1);
-  };
 
-  const onWriteHandle = () => {
-    setTab(2);
+  const onNoticeHandle = (tabPoint, noticeId) => {
+    setTab(tabPoint);
+    setStateId(noticeId);
   };
 
   return (
@@ -30,37 +28,48 @@ export default function Notice() {
           <StContent>프로젝트 관련 주요 공지사항입니다</StContent>
         </div>
 
-        {tab === 1 ? (
+        {tab === 'list' ? (
           <>
-            <BlackButton text='글쓰기' onClick={onWriteHandle}></BlackButton>
+            <BlackButton
+              text='글쓰기'
+              onClick={() => {
+                onNoticeHandle('write');
+              }}
+            ></BlackButton>
           </>
-        ) : tab === 2 || 3 ? (
+        ) : (
           <>
             <BlackButton
               text='리스트 보기'
-              onClick={onListHandle}
+              onClick={() => {
+                onNoticeHandle('list');
+              }}
             ></BlackButton>
           </>
-        ) : null}
+        )}
       </StIntroContainer>
 
-      {tab === 1 ? (
+      {tab === 'list' ? (
         <div>
           <NoticeList
             error={error}
             isLoading={isLoading}
             data={data}
             notice={notice}
+            onNoticeHandle={onNoticeHandle}
+            id={id}
           ></NoticeList>
         </div>
-      ) : tab === 2 ? (
+      ) : tab === 'write' ? (
         <div>
-          <NoticeWrite onListHandle={onListHandle}></NoticeWrite>
+          <NoticeWrite onNoticeHandle={onNoticeHandle}></NoticeWrite>
         </div>
-
-      ) : tab === 3 ? (
+      ) : tab === 'edit' ? (
         <div>
-          <NoticeEdit onListHandle={onListHandle}></NoticeEdit>
+          <NoticeEdit
+            onNoticeHandle={onNoticeHandle}
+            stateId={stateId}
+          ></NoticeEdit>
         </div>
       ) : null}
     </>

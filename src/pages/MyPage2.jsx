@@ -5,6 +5,7 @@ import velkit from '../asset/img/velkit.png';
 import BasicInput from '../components/BasicInput';
 import {
   useDeleteUserInfoMutation,
+  useDeleteWorkSpacesMutation,
   useUpdateUserInfoMutation,
 } from '../redux/modules/workspaces';
 import { useNavigate } from 'react-router-dom';
@@ -46,7 +47,7 @@ function MyPage2() {
       };
       updateUserInfo(updateInfo);
       window.alert('회원정보가 수정되었습니다!');
-      window.location.reload();
+      // window.location.reload();
     } else {
       window.alert('닉네임은 2~8글자여야합니다.');
     }
@@ -101,10 +102,9 @@ function MyPage2() {
             type='text'
             label='닉네임'
             marginTop='80px'
-            placeholder={user?.nickname}
             onChange={onChange}
             name='nickname'
-            value={nickname}
+            value={user?.nickname}
           ></BasicInput>
 
           <fieldset disabled>

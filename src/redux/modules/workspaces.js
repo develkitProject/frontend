@@ -8,6 +8,16 @@ const headers = {
 
 export const workspaceApi = coreApi.injectEndpoints({
   endpoints: (builder) => ({
+    getUserInfo: builder.query({
+      query: () => {
+        return {
+          url: `/api/members/profile`,
+          method: 'GET',
+          headers,
+        };
+      },
+      providesTags: ['User'],
+    }),
     //회원정보수정
     updateUserInfo: builder.mutation({
       query: (updateInfo) => {
@@ -155,7 +165,6 @@ export const workspaceApi = coreApi.injectEndpoints({
       },
       invalidatesTags: ['Notice'],
     }),
-
 
     //프로젝트 가입 회원 조회
     getMemberList: builder.query({
@@ -310,6 +319,7 @@ export const workspaceApi = coreApi.injectEndpoints({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useGetUserInfoQuery,
   useUpdateUserInfoMutation,
   useDeleteUserInfoMutation,
   useGetWorkspacesQuery,

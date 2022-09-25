@@ -1,30 +1,13 @@
 import styled from 'styled-components';
-import { useDeleteNoticeMutation, useGetNoticeQuery } from '../../../redux/modules/workspaces';
+import {
+  useDeleteNoticeMutation,
+  useGetNoticeQuery,
+} from '../../../redux/modules/workspaces';
 import React, { useState, useEffect } from 'react';
 import { getCookieToken } from '../../../Cookie';
-import { useParams } from 'react-router-dom';
-import WorkSpaceErrorModal from '../../../common/Modal/error';
 import useGetUser from '../../../common/hooks/useGetUser';
-import NoticeEdit from './NoticeEdit';
 
-function NoticeList({ error, isLoading, data, notice}) {
-
-  const [tab, setTab] = useState(1);
-  const [stateId, setStateId] = useState(0);
-
-  const onListHandle = () => {
-    setTab(1);
-  };
-
-  const onEditHandle = (noticeId) => {
-    console.log(noticeId)
-    setStateId(noticeId);
-    setTab(3);
-  };
-
-  const params = useParams();
-  const id = Number(params.id);
-
+function NoticeList({ error, isLoading, data, notice, onNoticeHandle, id }) {
   const { user } = useGetUser();
   const userInfo = user?.nickname;
 
@@ -33,7 +16,7 @@ function NoticeList({ error, isLoading, data, notice}) {
     const data = {
       id,
       dataId,
-    }
+    };
     if (window.confirm('정말 지우시겠습니까?')) {
       deleteNotices(data);
     } else {
@@ -43,8 +26,6 @@ function NoticeList({ error, isLoading, data, notice}) {
 
   return (
     <>
-
-{tab === 1 ? (
       <StWrapper>
         {error ? (
           <>에러가 발생하였습니다. 관리자에게 문의해주세요</>
@@ -53,35 +34,53 @@ function NoticeList({ error, isLoading, data, notice}) {
         ) : data ? (
           <>
             {notice?.map((data, i) => {
-              const writerInfo= data.nickname;
+              const writerInfo = data.nickname;
               return (
                 <StNoticeContainer key={data.id}>
                   {/* <StTitle fontColor='#00a99d' style={{marginTop: "30px"}}>공지사항</StTitle> */}
                   <StNoticeBox>
                     <StInfoDiv>
-                      <StProfileImg/>
+                      <StProfileImg />
                       <StNameDate>
-                        <span style={{fontWeight: "600"}}>{data.nickname}</span>
-                        <span>{data.createdAt.slice(0, -13)} <span style={{fontSize: "15px"}}>｜</span> {data.createdAt.slice(10, -4)} </span>
+                        <span style={{ fontWeight: '600' }}>
+                          {data.nickname}
+                        </span>
+                        <span>
+                          {data.createdAt.slice(0, -13)}{' '}
+                          <span style={{ fontSize: '15px' }}>｜</span>{' '}
+                          {data.createdAt.slice(10, -4)}{' '}
+                        </span>
                       </StNameDate>
                     </StInfoDiv>
                     <StContentBox>
                       <StTitle fontColor='#333333'>{data.title}</StTitle>
-                      <StContent style={{marginTop: "16px"}} className='imgWrapper'>
-                        <div dangerouslySetInnerHTML={{ __html: data.content }} />
+                      <StContent
+                        style={{ marginTop: '16px' }}
+                        className='imgWrapper'
+                      >
+                        <div
+                          dangerouslySetInnerHTML={{ __html: data.content }}
+                        />
                       </StContent>
                     </StContentBox>
                     {userInfo === writerInfo ? (
-                     <StEditDelete>
-                      <div onClick={()=>onEditHandle(data.id)} style={{ color: '#00A99D'}}>
-                       수정
-                      </div>
-                      <StVerticalBar>｜</StVerticalBar>
-                      <div onClick={()=>{deleteNotice(data.id)}}>
-                       삭제
-                      </div>
-                    </StEditDelete>
-                    ):null}
+                      <StEditDelete>
+                        <div
+                          onClick={() => onNoticeHandle('edit', data.id)}
+                          style={{ color: '#00A99D' }}
+                        >
+                          수정
+                        </div>
+                        <StVerticalBar>｜</StVerticalBar>
+                        <div
+                          onClick={() => {
+                            deleteNotice(data.id);
+                          }}
+                        >
+                          삭제
+                        </div>
+                      </StEditDelete>
+                    ) : null}
                   </StNoticeBox>
                 </StNoticeContainer>
               );
@@ -90,9 +89,6 @@ function NoticeList({ error, isLoading, data, notice}) {
         ) : null}
         <div style={{ marginTop: '5%' }}></div>
       </StWrapper>
-):tab === 3?(<NoticeEdit stateId={stateId}/>)
-
-:null}
     </>
   );
 }
