@@ -25,82 +25,6 @@ function Landing({ path, setPath }) {
   const homeRef = useRef(null);
   const outerDivRef = useRef();
 
-  // useEffect(() => {
-  //   const wheelHandler = (e) => {
-  //     e.preventDefault();
-  //       const { deltaY } = e;
-  //       const { scrollTop } = outerDivRef.current;  // 스크롤 위쪽 끝부분 위치
-  //       const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
-    
-  //       if (deltaY > 0) {
-  //         if (scrollTop >= 0 && scrollTop < pageHeight) {
-  //           console.log("현재 1페이지, down");
-  //           outerDivRef.current.scrollTo({
-  //             top: pageHeight,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-  //         } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-  //           console.log("현재 2페이지, down");
-  //           outerDivRef.current.scrollTo({
-  //             top: pageHeight * 2,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-  //         } else if (scrollTop >= pageHeight*2 && scrollTop < pageHeight * 3) {
-  //           console.log("현재 3페이지, down");
-  //           outerDivRef.current.scrollTo({
-  //             top: pageHeight * 3,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-
-  //         } else {
-  //           console.log("현재 4페이지, down");
-  //           outerDivRef.current.scrollTo({
-  //             top: pageHeight * 2,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-  //         }
-  //       } else {
-  //         if (scrollTop >= 0 && scrollTop < pageHeight) {
-  //           console.log("현재 1페이지, up");
-  //           outerDivRef.current.scrollTo({
-  //             top: 0,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-  //         } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-  //           console.log("현재 2페이지, up");
-  //           outerDivRef.current.scrollTo({
-  //             top: 0,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-  //         } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 3) {
-  //           console.log("현재 3페이지, up");
-  //           outerDivRef.current.scrollTo({
-  //             top: 0,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-  //         } else {
-  //           console.log("현재 4페이지, up");
-  //           outerDivRef.current.scrollTo({
-  //             top: pageHeight,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-  //         }
-  //       }};
-  //   const outerDivRefCurrent = outerDivRef.current;
-  //   outerDivRefCurrent.addEventListener("wheel", wheelHandler);
-  //   return () => {
-  //     outerDivRefCurrent.removeEventListener("wheel", wheelHandler);
-  //   };
-  // }, []);
-
   const [isOpen, setIsOpen] = useState(false);
 
   const onStartButton = () => {
@@ -335,7 +259,7 @@ function Landing({ path, setPath }) {
           </StThirdBody>
         </StMain>
       </StWrapper>
-      </>
+    </>
     // {/* </StOuter> */}
   );
 }
@@ -343,15 +267,15 @@ function Landing({ path, setPath }) {
 export default Landing;
 
 const StOuter = styled.div`
-  ::-webkit-scrollbar {display: none;}
+  ::-webkit-scrollbar {
+    display: none;
+  }
   color: white;
   width: 100%;
   height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
 `;
-
-
 
 const StWrapper = styled.div`
   color: white;
@@ -470,8 +394,6 @@ const move = keyframes`
     }
   `;
 
-
-
 const StVelkit = styled.div`
   width: 15%;
   height: 35%;
@@ -523,7 +445,6 @@ const StCircle = styled.div`
   animation: ${rotate} 15s linear infinite;
   transform-origin: 50% 50%;
 `;
-
 
 const StVelkit3 = styled.div`
   width: 6%;

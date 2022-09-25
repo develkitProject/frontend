@@ -38,7 +38,7 @@ const Editor = ({ value, setContent }) => {
         formData.append('image', file);
         try {
           const result = await axios.post(
-            'https://hosung.shop/api/images',
+            `${process.env.REACT_APP_BASE_URL}/api/images`,
             formData,
             { headers: Headers }
           );

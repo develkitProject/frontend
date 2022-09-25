@@ -1,15 +1,13 @@
-import React, { useCallback, useState, useRef, useEffect } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 import useGetUser from '../common/hooks/useGetUser';
 import velkit from '../asset/img/velkit.png';
-import BasicInput from '../components/BasicInput';
+import BasicInput from '../common/elements/BasicInput';
 import {
   useDeleteUserInfoMutation,
   useGetUserInfoQuery,
-  useDeleteWorkSpacesMutation,
   useUpdateUserInfoMutation,
 } from '../redux/modules/workspaces';
-import { useNavigate } from 'react-router-dom';
 import { removeCookieToken } from '../Cookie';
 
 function MyPage2() {

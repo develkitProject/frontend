@@ -29,7 +29,7 @@ const headers = {
   token: getCookieToken(),
 };
 
-const sockJS = new SockJS('https://hosung.shop/stomp/chat');
+const sockJS = new SockJS(`${process.env.REACT_APP_BASE_URL}/stomp/chat`);
 const stompClient = Stomp.over(sockJS);
 stompClient.connect(headers, () => {});
 
