@@ -1,19 +1,10 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import search from '../asset/img/search.png';
-import { useGetDocSearchQuery } from '../redux/modules/workspaces';
-import { useParams } from 'react-router-dom';
 
-function SearchBar({ id }) {
-  const params = useParams();
-  const [state, setState] = useState(null);
-  const { data, error, isLoading, refetch } = useGetDocSearchQuery(state, {
-    // eslint-disable-next-line no-undef, eqeqeq
-    skip: state == undefined,
-  });
-  const [type, setType] = useState('Writer');
-  const [field, setField] = useState('writer');
-
+function SearchBar({ id, onSearchHandle }) {
+  const [type, setType] = useState('ContentTitle');
+  const [field, setField] = useState('keyword');
   const handleSelect = (e) => {
     setType(e.target.value);
     if (e.target.value === 'Writer') {
@@ -27,21 +18,25 @@ function SearchBar({ id }) {
   const handleInput = (e) => {
     setKeyword(e.target.value);
   };
-
   const handleClick = () => {
     const obj = { id, type, keyword, field };
-    setState(obj);
-    refetch();
+    onSearchHandle(obj);
+  };
+
+  const onKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleClick();
+    }
   };
 
   return (
     <StWrapper>
       <StSearchContainer>
         <StSelect onChange={handleSelect}>
-          <option value='Writer'>작성자</option>
           <option value='ContentTitle'>제목+내용</option>
+          <option value='Writer'>작성자</option>
         </StSelect>
-        <StInput onChange={handleInput}></StInput>
+        <StInput onChange={handleInput} onKeyPress={onKeyDown}></StInput>
         <StImgBox onClick={handleClick}>
           <StImg alt='search' src={search} />
         </StImgBox>

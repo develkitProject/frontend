@@ -73,7 +73,6 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const disConnect = () => {
     // if (stompClient.unconnected)
     if (stompClient != null) {
-      console.log(stompClient);
       if (stompClient.connected) stompClient.unsubscribe('sub-0');
     }
   };
