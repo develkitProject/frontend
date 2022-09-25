@@ -1,16 +1,26 @@
 import styled from 'styled-components';
+import React, { useState } from 'react';
 import { useGetDocQuery } from '../../../redux/modules/workspaces';
+import { useGetDocSearchQuery } from '../../../redux/modules/workspaces';
 import { useNavigate, useParams } from 'react-router-dom';
+import SearchBar from '../../../components/SearchBar';
 
 function Board({ onDocumentHandle, error, isLoading, data }) {
-  const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
   const doc = data?.data;
+  const [state, setState] = useState(null);
+  const { data: searchData } = useGetDocSearchQuery(state, {
+    // eslint-disable-next-line eqeqeq
+    skip: state == undefined,
+  });
+  const docs = searchData?.data;
+  const [searchDocs, setSearchDocs] = useState(0);
 
-  // const onMoveDetail = (stateId) => {
-  //   onDetailHandle(stateId);
-  // };
+  const onSearchHandle = (obj) => {
+    setSearchDocs(1);
+    setState(obj);
+  };
 
   return (
     <StWrapper>
@@ -32,28 +42,54 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
             <>문서를 불러오는 중입니다.</>
           ) : data ? (
             <>
-              {doc?.map((data, i) => {
-                return (
-                  <StTable
-                    key={data.id}
-                    onClick={() => {
-                      onDocumentHandle('detail', data.id);
-                    }}
-                  >
-                    <div>{data.id}</div>
-                    <div style={{ textAlign: 'left', overflow: 'hidden' }}>
-                      {data.title}
-                    </div>
-                    <div>{data.nickname}</div>
-                    <div>{data.createdAt.slice(0, -13)}</div>
-                    <div>{data.modifiedAt.slice(0, -13)}</div>
-                  </StTable>
-                );
-              })}
+              {searchDocs === 0 ? (
+                <>
+                  {doc?.map((data, i) => {
+                    return (
+                      <StTable
+                        key={data.id}
+                        onClick={() => {
+                          onDocumentHandle('detail', data.id);
+                        }}
+                      >
+                        <div>{data.id}</div>
+                        <div style={{ textAlign: 'left', overflow: 'hidden' }}>
+                          {data.title}
+                        </div>
+                        <div>{data.nickname}</div>
+                        <div>{data.createdAt.slice(0, -13)}</div>
+                        <div>{data.modifiedAt.slice(0, -13)}</div>
+                      </StTable>
+                    );
+                  })}
+                </>
+              ) : (
+                <>
+                  {docs?.map((data, i) => {
+                    return (
+                      <StTable
+                        key={data.id}
+                        onClick={() => {
+                          onDocumentHandle('detail', data.id);
+                        }}
+                      >
+                        <div>{data.id}</div>
+                        <div style={{ textAlign: 'left', overflow: 'hidden' }}>
+                          {data.title}
+                        </div>
+                        <div>{data.nickname}</div>
+                        <div>{data.createdAt.slice(0, -13)}</div>
+                        <div>{data.modifiedAt.slice(0, -13)}</div>
+                      </StTable>
+                    );
+                  })}
+                </>
+              )}
             </>
           ) : null}
         </StTbody>
       </StTableContainer>
+      <SearchBar id={id} onSearchHandle={onSearchHandle} />
     </StWrapper>
   );
 }
