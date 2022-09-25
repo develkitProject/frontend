@@ -6,7 +6,7 @@ import { useAddNoticeMutation } from '../../../redux/modules/workspaces';
 import { useNavigate, useParams } from 'react-router-dom';
 import NoticeEditor from './NoticeEditor';
 
-const NoticeWrite = ({ onListHandle }) => {
+const NoticeWrite = ({ onNoticeHandle }) => {
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
@@ -28,7 +28,7 @@ const NoticeWrite = ({ onListHandle }) => {
       };
       addNotice(notice);
       window.alert('공지사항이 등록되었습니다');
-      onListHandle();
+      onNoticeHandle('list');
     } else {
       window.alert('제목과 내용을 모두 채워주세요!');
     }
@@ -42,7 +42,7 @@ const NoticeWrite = ({ onListHandle }) => {
         placeholder='제목'
         value={title}
       />
-      <NoticeEditor setCon={setContent} />
+      <NoticeEditor setContent={setContent} />
       <EditorBlock>
         <StButton onClick={handleSubmit}>게시하기</StButton>
       </EditorBlock>

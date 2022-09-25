@@ -6,9 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import useOutSideClick from '../hooks/useOutSideClick';
 import Draggable from 'react-draggable';
 
-const MyProfileModal = ({ onClose }) => {
+const MyProfileModal = ({ onClose, userData }) => {
   const navigate = useNavigate();
-  const { user } = useGetUser();
   const modalRef = useRef(null);
   const logout = () => {
     removeCookieToken();
@@ -30,8 +29,8 @@ const MyProfileModal = ({ onClose }) => {
     <ModalWrap ref={modalRef}>
       <StProfileWrap>
         <StDiv style={{ borderBottom: '1.2px solid #999999' }}>
-          <StProfileImg src={user.profileImageUrl} />
-          <StMent>{user?.nickname}님</StMent>
+          <StProfileImg src={userData?.profileImageUrl} />
+          <StMent>{userData?.nickname}님</StMent>
         </StDiv>
 
         <StDiv>
