@@ -133,6 +133,30 @@ export const workspaceApi = coreApi.injectEndpoints({
       invalidatesTags: ['Notice'],
     }),
 
+    updateNotice: builder.mutation({
+      query: (notice) => {
+        return {
+          url: `/api/workspaces/${notice.id}/notice/${notice.noticeid}`,
+          method: 'PUT',
+          body: notice,
+          headers,
+        };
+      },
+      invalidatesTags: ['Notice'],
+    }),
+
+    deleteNotice: builder.mutation({
+      query: (data) => {
+        return {
+          url: `/api/workspaces/${data.id}/notice/${data.dataId}`,
+          method: 'DELETE',
+          headers,
+        };
+      },
+      invalidatesTags: ['Notice'],
+    }),
+
+
     //프로젝트 가입 회원 조회
     getMemberList: builder.query({
       query: (id) => {
@@ -297,6 +321,8 @@ export const {
   useGetMainWorkSpacesQuery,
   useAddNoticeMutation,
   useGetNoticeQuery,
+  useUpdateNoticeMutation,
+  useDeleteNoticeMutation,
   useGetMemberListQuery,
   useGetDocQuery,
   useGetDocDetailQuery,
