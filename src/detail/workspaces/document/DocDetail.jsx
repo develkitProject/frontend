@@ -24,7 +24,6 @@ function DocDetail({ stateId, onDocumentHandle }) {
   });
   const document = data?.data;
   const readMember = data?.data.readMember;
-  console.log(document);
   // useEffect(() => {
   //   refetch();
   // }, [document]);

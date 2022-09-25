@@ -7,7 +7,7 @@ import InvitationCodeModal from '../../common/Modal/InvitationCodeModal';
 import { useGetDocQuery } from '../../redux/modules/workspaces';
 import { useGetNoticeQuery } from '../../redux/modules/workspaces';
 
-export default function Home({ id, data }) {
+export default function Home({ id, data, onDocumentHandle }) {
   const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
 
@@ -103,9 +103,9 @@ export default function Home({ id, data }) {
                   return (
                     <StTable
                       key={data.id}
-                      // onClick={() => {
-                      //   navigate(`/workspace/main/${id}/docs/${data.id}`);
-                      // }}
+                      onClick={() => {
+                        onDocumentHandle('detail', data.id);
+                      }}
                     >
                       <div>{data.nickname}</div>
                       <div>{data.title}</div>

@@ -9,7 +9,6 @@ import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 
 function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
-  // console.log(stompClient);
   const [users, setUsers] = useState(null);
   const textRef = useRef(null);
   const { data, isLoading, error, refetch } = useGetChatMessagesQuery(id);
@@ -21,6 +20,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const [chatMessages, setChatMessages] = useState([]);
 
   useEffect(() => {
+    // console.log(stompClient);
     onConnected();
     return () => {
       disConnect();
@@ -33,6 +33,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
 
   useEffect(() => {
     setChatMessages(messageList);
+    refetch();
   }, [messageList]);
 
   const userArray = [...new Set(users)];
@@ -45,10 +46,8 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   };
 
   function onConnected() {
-    console.log(stompClient.connected);
     // try {
     if (stompClient.connected) {
-      console.log('두번째 연결');
       stompClient.subscribe(
         `/sub/chat/room/${id}`,
         (data) => {
@@ -62,16 +61,9 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
         headers
       );
     } else {
-      console.log(stompClient);
-      stompClient.connect(
-        headers,
-        () => {
-          onSub();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      if (!stompClient.connected) {
+        onSub();
+      }
     }
     // } catch (error) {
     //   console.log(error);
@@ -81,24 +73,26 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const disConnect = () => {
     // if (stompClient.unconnected)
     if (stompClient != null) {
-      if (stompClient.connected) stompClient.unsubscribe();
+      console.log(stompClient);
+      if (stompClient.connected) stompClient.unsubscribe('sub-0');
     }
   };
 
   function onSub() {
-    console.log('첫 연결', headers, id, stompClient);
-    stompClient.subscribe(
-      `/sub/chat/room/${id}`,
-      (data) => {
-        const newMessage = JSON.parse(data.body);
-        if (newMessage.type !== 'TALK') {
-          setUsers(newMessage.userList);
-        } else {
-          setChatMessages((chatMessages) => [newMessage, ...chatMessages]);
-        }
-      },
-      headers
-    );
+    stompClient.connect(headers, () => {
+      stompClient.subscribe(
+        `/sub/chat/room/${id}`,
+        (data) => {
+          const newMessage = JSON.parse(data.body);
+          if (newMessage.type !== 'TALK') {
+            setUsers(newMessage.userList);
+          } else {
+            setChatMessages((chatMessages) => [newMessage, ...chatMessages]);
+          }
+        },
+        headers
+      );
+    });
   }
 
   const sendMessage = () => {

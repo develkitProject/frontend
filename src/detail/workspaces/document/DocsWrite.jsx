@@ -28,7 +28,6 @@ const DocsWrite = ({ onDocumentHandle }) => {
   const onFileChange = (e) => {
     const file = e.target.files[0];
     setNewFile([...newFile, file]);
-    console.log(newFile);
   };
 
   const handleSubmit = () => {
@@ -46,7 +45,6 @@ const DocsWrite = ({ onDocumentHandle }) => {
         'data',
         new Blob([JSON.stringify(data)], { type: 'application/json' })
       );
-      console.log(formData);
       addDoc(formData, id);
       window.alert('문서가 등록되었습니다');
       onDocumentHandle('list');

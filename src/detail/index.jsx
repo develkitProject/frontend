@@ -25,16 +25,21 @@ import { getCookieToken } from '../Cookie';
 import * as S from './style';
 import axios from 'axios';
 
+const headers = {
+  token: getCookieToken(),
+};
+
 const sockJS = new SockJS('https://hosung.shop/stomp/chat');
 const stompClient = Stomp.over(sockJS);
+stompClient.connect(headers, () => {});
 
-// stompClient.debug = () => {};
+stompClient.debug = () => {};
 
 export default function WorkspaceDetailPage() {
-  const [auth, setAuth] = useState();
   const { onClickMenu, menu } = useChangeMenu();
   const navigate = useNavigate();
-
+  const [tab, setTab] = useState('list');
+  const [stateId, setStateId] = useState(0);
   const id = Number(useParams().id);
   const { data, isLoading } = useGetMainWorkSpacesQuery(id);
   const {
@@ -48,9 +53,6 @@ export default function WorkspaceDetailPage() {
   const title = data?.data.workspaces.title;
   const [isOpen, setIsOpen] = useState(true);
   const cookie = getCookieToken();
-
-  const spaceMembers = data_1?.data;
-  const loginUserName = user?.username;
 
   useEffect(() => {
     if (!cookie) {
@@ -80,10 +82,6 @@ export default function WorkspaceDetailPage() {
   //---------------------------------------------------------------
 
   const messageBoxRef = useRef();
-
-  const headers = {
-    token: getCookieToken(),
-  };
 
   const handleClick = () => {
     setIsOpen(!isOpen);

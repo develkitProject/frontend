@@ -39,7 +39,7 @@ export default function Document() {
               }}
             ></BlackButton>
           </>
-        ) : tab === 'write' ? (
+        ) : (
           <>
             <BlackButton
               text='리스트 보기'
@@ -48,7 +48,7 @@ export default function Document() {
               }}
             ></BlackButton>
           </>
-        ) : null}
+        )}
       </StIntroContainer>
 
       {tab === 'list' ? (
