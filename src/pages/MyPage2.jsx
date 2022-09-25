@@ -5,6 +5,7 @@ import velkit from '../asset/img/velkit.png';
 import BasicInput from '../components/BasicInput';
 import {
   useDeleteUserInfoMutation,
+  useGetUserInfoQuery,
   useDeleteWorkSpacesMutation,
   useUpdateUserInfoMutation,
 } from '../redux/modules/workspaces';
@@ -12,11 +13,11 @@ import { useNavigate } from 'react-router-dom';
 import { removeCookieToken } from '../Cookie';
 
 function MyPage2() {
-  const navigate = useNavigate();
   const [updateUserInfo] = useUpdateUserInfoMutation();
+  const { data } = useGetUserInfoQuery();
 
   const { user } = useGetUser();
-  const userNickname = user?.nickname;
+  const userNickname = data?.data.nickname;
   const userImg = user?.profileImageUrl;
 
   const imgRef = useRef('');
@@ -104,7 +105,8 @@ function MyPage2() {
             marginTop='80px'
             onChange={onChange}
             name='nickname'
-            value={user?.nickname}
+            // value={user?.nickname}
+            placeholder={userNickname}
           ></BasicInput>
 
           <fieldset disabled>

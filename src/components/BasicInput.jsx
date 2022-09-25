@@ -14,6 +14,7 @@ export default function BasicInput({
   isError,
   isSuccess,
   errorText,
+  value,
 }) {
   const setBorderStyle = useCallback(() => {
     if (isSuccess) return '1px solid #00A99D';
@@ -25,11 +26,12 @@ export default function BasicInput({
     <Spacer marginTop={marginTop} marginBottom={marginBottom}>
       {label && <LabelText>{label}</LabelText>}
       <InputWrapper borderStyle={setBorderStyle()}>
-        <StInput 
+        <StInput
           name={name}
           type={type}
           placeholder={placeholder}
           onChange={onChange}
+          value={value}
           borderStyle={setBorderStyle()}
         />
         {isSuccess && <Icon.CheckSuccess />}
