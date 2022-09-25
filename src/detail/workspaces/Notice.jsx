@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import NoticeList from './notice/NoticeList';
 import BlackButton from '../../common/elements/BlackButton';
 import NoticeWrite from './notice/NoticeWrite';
+import NoticeEdit from './notice/NoticeEdit';
 
 export default function Notice() {
   const params = useParams();
@@ -12,6 +13,7 @@ export default function Notice() {
   const [tab, setTab] = useState(1);
   const { data, error, isLoading, refetch } = useGetNoticeQuery(id);
   const notice = data?.data;
+  
   const onListHandle = () => {
     setTab(1);
   };
@@ -32,7 +34,7 @@ export default function Notice() {
           <>
             <BlackButton text='글쓰기' onClick={onWriteHandle}></BlackButton>
           </>
-        ) : tab === 2 ? (
+        ) : tab === 2 || 3 ? (
           <>
             <BlackButton
               text='리스트 보기'
@@ -55,30 +57,15 @@ export default function Notice() {
         <div>
           <NoticeWrite onListHandle={onListHandle}></NoticeWrite>
         </div>
+
+      ) : tab === 3 ? (
+        <div>
+          <NoticeEdit onListHandle={onListHandle}></NoticeEdit>
+        </div>
       ) : null}
     </>
   );
 }
-
-const StWrapper = styled.div`
-  width: 100%;
-  min-height: 100%;
-  background-color: #f2f2f2;
-  display: flex;
-  flex-direction: row;
-`;
-
-const Projects = styled.div`
-  width: 65%;
-  min-height: 90vh;
-  margin-left: 50px;
-  margin-top: 60px;
-  margin-bottom: 50px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-`;
 
 const StIntroContainer = styled.div`
   margin-left: 20px;
