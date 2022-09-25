@@ -71,13 +71,17 @@ const DocsWrite = ({ onDocumentHandle }) => {
             alignItems: 'center',
           }}
         >
+          <span style={{ width: '150px' }}>
+            {' '}
+            파일용량은 총 <br /> 30MB로 제한됩니다
+          </span>
           <button
             style={{
               width: '100px',
               height: '50px',
               // border: '1px solid black',
               fontWeight: '500',
-              marginRight: '50px',
+              marginLeft: '20px',
             }}
             onClick={onClickInput}
           >
@@ -93,9 +97,12 @@ const DocsWrite = ({ onDocumentHandle }) => {
             ref={nameInput}
           ></input>
           <div style={{ display: 'flex' }}>
-            파일 :
             {newFile.map((a, i) => {
-              return <div key={i}>{a?.name} &nbsp; &nbsp; &nbsp;</div>;
+              return (
+                <div key={i} style={{ marginLeft: '20px' }}>
+                  {a?.name}
+                </div>
+              );
             })}
           </div>
         </div>

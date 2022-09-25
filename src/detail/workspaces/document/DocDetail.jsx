@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 
 function DocDetail({ stateId, onDocumentHandle }) {
   const navigate = useNavigate();
+  const [arr, setArr] = useState([]);
   const params = useParams();
   const workspaces = Number(params.id);
   const docid = stateId;
@@ -24,9 +25,8 @@ function DocDetail({ stateId, onDocumentHandle }) {
   });
   const document = data?.data;
   const readMember = data?.data.readMember;
-  // useEffect(() => {
-  //   refetch();
-  // }, [document]);
+  const files = data?.data.fileNames;
+  const urls = data?.data.fileUrls;
 
   const [deleteDocument] = useDeleteDocMutation({ workspaces, docid });
 
@@ -38,6 +38,13 @@ function DocDetail({ stateId, onDocumentHandle }) {
       return;
     }
   };
+
+  // const a = ['a', 'b', 'c', 'd'];
+  // const b = ['e', 'f', 'g', 'h'];
+
+  const nameUrl = files?.map((elem, idx) => {
+    return { key_1: elem, key_2: urls[idx] };
+  });
 
   const [tab, setTab] = useState(1);
 
@@ -52,10 +59,8 @@ function DocDetail({ stateId, onDocumentHandle }) {
           <>
             <Projects>
               <StIntroContainer>
-                {/* <StIntroMent>프로젝트 관련 주요 문서 및 파일</StIntroMent> */}
                 <StTitle>{document?.title}</StTitle>
                 <StInfoContainer>
-                  {/* <StProfileImg>{document?.profileImg}</StProfileImg> */}
                   <StNickname>{document?.nickname} </StNickname>
                   <StVerticalBar>|</StVerticalBar>
                   <StDetail>{document?.createdAt.slice(0, -7)}</StDetail>
@@ -80,6 +85,27 @@ function DocDetail({ stateId, onDocumentHandle }) {
                     dangerouslySetInnerHTML={{ __html: document?.content }}
                   />
                 </StContent>
+                <div
+                  style={{
+                    display: 'flex',
+                    width: '100%',
+                    // justifyContent: 'space-evenly',
+                  }}
+                >
+                  {nameUrl?.map((file, i) => {
+                    return (
+                      <div key={i} style={{ marginLeft: '30px' }}>
+                        <FileName
+                          href={file.key_2}
+                          target='_blank'
+                          download={file.key_1}
+                        >
+                          {file.key_1}
+                        </FileName>
+                      </div>
+                    );
+                  })}
+                </div>
               </StContentContainer>
               <StFooterContainer>
                 <StInfoContainer style={{ justifyContent: 'space-between' }}>
@@ -177,14 +203,6 @@ const StIntroContainer = styled.div`
   /* border-bottom: solid 1px #c6c6c6; */
 `;
 
-const StIntroMent = styled.div`
-  margin: 10px;
-  font-size: 16px;
-  color: #c6c6c6;
-  letter-spacing: -0.05em;
-  align-self: center;
-`;
-
 const StTitle = styled.span`
   margin: 20px;
   color: #000000;
@@ -202,14 +220,6 @@ const StInfoContainer = styled.div`
   align-items: center;
   justify-content: flex-end;
   margin: 10px;
-`;
-
-const StProfileImg = styled.img`
-  width: 38px;
-  height: 38px;
-  border-radius: 70%;
-  margin: 0 10px 0px 20px;
-  background-color: black;
 `;
 
 const StNickname = styled.div`
@@ -256,10 +266,6 @@ const StContent = styled.span`
   min-height: 400px;
 `;
 
-const BoardContainer = styled.div`
-  margin-left: 50px;
-`;
-
 const StFooterContainer = styled.div`
   margin: 20px;
   min-height: 12vh;
@@ -287,3 +293,32 @@ const StEditIntroContainer = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+
+const FileName = styled.a`
+  color: #025f8a;
+  font-size: 18px;
+  cursor: pointer;
+  text-decoration: none;
+`;
+
+// const a = ['a', 'b', 'c', 'd']
+// const b = ['e', 'f', 'g', 'h']
+
+// a배열과 b배열을 합쳐서
+
+// const c = [ {
+//   key_1 : 'a',
+//   key_2 : 'e',
+// },
+// {
+//   key_1 : 'b',
+//   key_2 : 'f',
+// },
+// {
+//   key_1 : 'c',
+//   key_2 : 'g',
+// },
+// {
+//   key_1 : 'd',
+//   key_2 : 'h',
+// }, ]

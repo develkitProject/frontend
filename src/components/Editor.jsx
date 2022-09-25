@@ -118,7 +118,6 @@ const Editor = ({ value, setContent }) => {
         onChange={setContent}
         content={editContent}
         defaultValue={editContent}
-        placeholder={value}
       ></ReactQuill>
     </StEditorContainer>
   );
