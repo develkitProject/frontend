@@ -20,7 +20,6 @@ function Header({ path, setPath }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cookies = getCookieToken();
-  console.log(navigate)
 
   const [profileOpen, setProfileOpen] = useState(false);
 

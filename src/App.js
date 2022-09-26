@@ -17,18 +17,19 @@ import WorkspaceDetailPage from './detail';
 function App() {
   const [path, setPath] = useState(1);
 
-  const cookie = getCookieToken();
+  // const cookie = getCookieToken();
   const navigate = useNavigate();
   const location = useLocation();
   return (
     <>
-    <Routes>
-      <Route path='/' element={<Landing setPath={setPath} path={path} />} />
-    </Routes>
+      {/* <Routes></Routes> */}
 
-    {location.pathname==='/'?(null):<Header setPath={setPath} path={path} />}
+      {location.pathname !== '/' ? (
+        <Header setPath={setPath} path={path} />
+      ) : null}
       <Routes>
         {/* <Route path='/signup' element={<SignUp />} /> */}
+        <Route path='/' element={<Landing setPath={setPath} path={path} />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/mypage2' element={<MyPage2 />} />
         <Route path='/workspace' element={<WorkSpace />} />
@@ -38,8 +39,7 @@ function App() {
         <Route path='/workspace/main/:id/docs/:docid' element={<DocDetail />} />
         <Route path='/faq' element={<FAQPage />} />
       </Routes>
-    {location.pathname==='/'?(null):<Footer />}
-      
+      {location.pathname === '/' ? null : <Footer />}
     </>
   );
 }
