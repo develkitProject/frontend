@@ -71,6 +71,46 @@ function DocDetail({ stateId, onDocumentHandle }) {
                     삭제
                   </StDetail>
                 </StInfoContainer>
+                <div
+                  style={{
+                    display: 'flex',
+                    backgroundColor: '#eef4f2',
+                    borderRadius: '20px',
+                    padding: '10px',
+                    width: '30%',
+                    minWidth: '250px',
+                  }}
+                >
+                  <StDetail
+                    style={{
+                      color: 'black',
+                      verticalAlign: 'middle',
+                      minWidth: '70px',
+                    }}
+                  >
+                    첨부파일{' '}
+                  </StDetail>
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    {nameUrl?.map((file, i) => {
+                      return (
+                        <div key={i} style={{ margin: '0px 0px 5px 20px' }}>
+                          <FileName
+                            href={file.key_2}
+                            target='_blank'
+                            download={file.key_1}
+                          >
+                            {file.key_1}
+                          </FileName>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </StIntroContainer>
               <StContentContainer>
                 <StContent>
@@ -78,27 +118,6 @@ function DocDetail({ stateId, onDocumentHandle }) {
                     dangerouslySetInnerHTML={{ __html: document?.content }}
                   />
                 </StContent>
-                <div
-                  style={{
-                    display: 'flex',
-                    width: '100%',
-                    // justifyContent: 'space-evenly',
-                  }}
-                >
-                  {nameUrl?.map((file, i) => {
-                    return (
-                      <div key={i} style={{ marginLeft: '30px' }}>
-                        <FileName
-                          href={file.key_2}
-                          target='_blank'
-                          download={file.key_1}
-                        >
-                          {file.key_1}
-                        </FileName>
-                      </div>
-                    );
-                  })}
-                </div>
               </StContentContainer>
               <StFooterContainer>
                 <StInfoContainer style={{ justifyContent: 'space-between' }}>

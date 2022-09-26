@@ -85,14 +85,17 @@ const DocsWrite = ({ onDocumentHandle }) => {
           >
             <span style={{ width: '150px' }}>
               {' '}
-              파일용량은 총 <br /> 30MB로 제한됩니다
+              파일용량은 <br /> 총 30MB로 제한됩니다
             </span>
             <button
               style={{
                 width: '150px',
                 height: '50px',
                 fontWeight: '500',
-                marginTop: '10px',
+                marginTop: '20px',
+                border: ' none',
+                background: '#e3e3e3',
+                cursor: 'pointer',
               }}
               onClick={onClickInput}
             >
@@ -124,10 +127,10 @@ const DocsWrite = ({ onDocumentHandle }) => {
                     fontWeight: '500',
                   }}
                 >
-                  {a.name}
+                  {a?.name}
                   <DeleteButton
                     onClick={() => {
-                      onDeleteFile(a.name);
+                      onDeleteFile(a?.name);
                     }}
                   >
                     x

@@ -103,9 +103,9 @@ export default function Home({ id, data, onDocumentHandle }) {
                   return (
                     <StTable
                       key={data.id}
-                      onClick={() => {
-                        onDocumentHandle('detail', data.id);
-                      }}
+                      // onClick={() => {
+                      //   onDocumentHandle('detail', data.id);
+                      // }}
                     >
                       <div>{data.nickname}</div>
                       <div>{data.title}</div>

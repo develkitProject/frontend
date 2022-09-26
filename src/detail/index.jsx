@@ -3,7 +3,6 @@ import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
 import { useGetMemberListQuery } from '../redux/modules/workspaces';
 import useGetUser from '../common/hooks/useGetUser';
 import { useParams, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
 import Sidebar from './components/Sidebar';
@@ -17,7 +16,6 @@ import ProjectInfo from './workspaces/ProjectInfo';
 import Chatting from '../components/Chatting';
 import { getCookieToken } from '../Cookie';
 import * as S from './style';
-import axios from 'axios';
 
 const headers = {
   token: getCookieToken(),
@@ -25,6 +23,8 @@ const headers = {
 
 const sockJS = new SockJS(`${process.env.REACT_APP_BASE_URL}/stomp/chat`);
 const stompClient = Stomp.over(sockJS);
+stompClient.heartbeat.outgoing = 20000;
+stompClient.heartbeat.incoming = 20000;
 stompClient.connect(headers, () => {});
 
 stompClient.debug = () => {};
@@ -32,8 +32,6 @@ stompClient.debug = () => {};
 export default function WorkspaceDetailPage() {
   const { onClickMenu, menu } = useChangeMenu();
   const navigate = useNavigate();
-  const [tab, setTab] = useState('list');
-  const [stateId, setStateId] = useState(0);
   const id = Number(useParams().id);
   const { data, isLoading } = useGetMainWorkSpacesQuery(id);
   const {
