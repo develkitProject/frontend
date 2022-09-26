@@ -9,6 +9,8 @@ function Address({ id, data_1, error_1, isLoading_1 }) {
   // const { data, error, isLoading, refetch } = useGetMemberListQuery(id);
   const member = data_1?.data;
 
+  console.log(member)
+
   // useEffect(() => {
   //   refetch();
   // }, [data, refetch]);
@@ -25,8 +27,11 @@ function Address({ id, data_1, error_1, isLoading_1 }) {
             return (
               <StAddressContainer key={data?.user.id}>
                 <StAddress>
-                  <StMemberTitle>팀원</StMemberTitle>
-                  <StProfileImg src={data?.user.profileImage} />
+                  <StMemberTitle>
+                  {data?.user.username === data?.user.workspaceCreator?
+                  '팀장':'팀원'}
+                  </StMemberTitle>
+                  <StProfileImg src={data?.user.profileImage}/>
                   <StNameContainer>
                     <StNickName>{data?.user.nickname}</StNickName>
                     <StUserName>{data?.user.username}</StUserName>

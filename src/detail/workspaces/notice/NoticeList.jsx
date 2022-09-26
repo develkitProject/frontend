@@ -9,8 +9,7 @@ import useGetUser from '../../../common/hooks/useGetUser';
 
 function NoticeList({ error, isLoading, data, notice, onNoticeHandle, id }) {
   const { user } = useGetUser();
-  const userInfo = user?.nickname;
-
+  const userInfo = user?.username;
   const [deleteNotices] = useDeleteNoticeMutation();
   const deleteNotice = (dataId) => {
     const data = {
@@ -34,13 +33,13 @@ function NoticeList({ error, isLoading, data, notice, onNoticeHandle, id }) {
         ) : data ? (
           <>
             {notice?.map((data, i) => {
-              const writerInfo = data.nickname;
+              const writerInfo = data.username;
               return (
                 <StNoticeContainer key={data.id}>
                   {/* <StTitle fontColor='#00a99d' style={{marginTop: "30px"}}>공지사항</StTitle> */}
                   <StNoticeBox>
                     <StInfoDiv>
-                      <StProfileImg />
+                      <StProfileImg src={data.profileImage}/>
                       <StNameDate>
                         <span style={{ fontWeight: '600' }}>
                           {data.nickname}
@@ -134,12 +133,11 @@ const StInfoDiv = styled.div`
   font-size: 16px;
 `;
 
-const StProfileImg = styled.div`
+const StProfileImg = styled.img`
   width: 41px;
   height: 40px;
   border-radius: 70%;
   margin-top: 3px;
-  background-color: black;
 `;
 
 const StNameDate = styled.div`

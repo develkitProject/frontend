@@ -65,12 +65,12 @@ function SpaceCard({
                     공지
                   </SpaceName>
 
-                  {data.notices === null ? (
+                  {data?.notices === null ? (
                     <SpaceName
                       style={{
                         color: '#999999',
                         marginRight: '10px',
-                        fontWeight: '500',
+                        fontWeight: '400',
                       }}
                     >
                       등록된 공지사항이 없습니다.
@@ -84,19 +84,30 @@ function SpaceCard({
                           fontWeight: '500',
                         }}
                       >
-                        {data.notices.createdAt.slice(0, -13)}
+                        {data?.notices.createdAt.slice(0, -13)}
                       </SpaceName>
-                      <SpaceName style={{ color: 'black', fontWeight: '500' }}>
-                        {data.notices.title}
+                      <SpaceName style={{ color: 'black', fontWeight: '400' }}>
+                        {data?.notices.title}
                       </SpaceName>
                     </>
                   )}
                 </StDiv>
-
                 <StDiv>
                   <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
                     일정
                   </SpaceName>
+                  {data?.workspaces?.documentCreatedAt === null ? (
+                    <SpaceName
+                      style={{
+                        color: '#999999',
+                        marginRight: '10px',
+                        fontWeight: '400',
+                      }}
+                    >
+                      등록된 일정이 없습니다.
+                    </SpaceName>
+                  ) : (
+                    <>
                   <SpaceName
                     style={{
                       color: '#999999',
@@ -104,17 +115,31 @@ function SpaceCard({
                       fontWeight: '500',
                     }}
                   >
-                    2022/09/22
+                    {data?.workspaces?.scheduleCreatedAt.slice(0,-13)}
                   </SpaceName>
-                  <SpaceName style={{ color: 'black', fontWeight: '500' }}>
-                    프로젝트 주간회의{' '}
+                  <SpaceName style={{ color: 'black', fontWeight: '400' }}>
+                    {data?.workspaces?.scheduleContent}
                   </SpaceName>
+                  </>
+                  )}
                 </StDiv>
 
                 <StDiv>
                   <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
                     문서
                   </SpaceName>
+                  {data?.workspaces?.documentCreatedAt === null ? (
+                    <SpaceName
+                      style={{
+                        color: '#999999',
+                        marginRight: '10px',
+                        fontWeight: '400',
+                      }}
+                    >
+                      등록된 문서가 없습니다.
+                    </SpaceName>
+                  ) : (
+                    <>
                   <SpaceName
                     style={{
                       color: '#999999',
@@ -122,12 +147,16 @@ function SpaceCard({
                       fontWeight: '500',
                     }}
                   >
-                    2022/09/20
+                     {data?.workspaces?.documentCreatedAt.slice(0, -13)}
                   </SpaceName>
-                  <SpaceName style={{ color: 'black', fontWeight: '500' }}>
-                    API설계내용{' '}
+                  <SpaceName style={{ color: 'black', fontWeight: '400' }}>
+                    {data?.workspaces?.documentTitle}
                   </SpaceName>
+                  </>
+                  )}
                 </StDiv>
+
+
               </StFooter>
             </StFooterBox>
           </StSpaceCard>
@@ -195,10 +224,14 @@ const StFooter = styled.div`
   flex-direction: column;
   position: relative;
   font-size: 17px;
+  line-height: 18px;
 `;
 
 const StDiv = styled.div`
   margin-top: 10px;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
 `;
 
 const SpaceName = styled.span`

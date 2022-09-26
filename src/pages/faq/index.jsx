@@ -44,6 +44,7 @@ export default function FAQPage() {
           </div>
         ))}
       </S.QuestionBox>
+      <div style={{marginBottom: "100px"}}/>
     </S.Container>
   );
 }

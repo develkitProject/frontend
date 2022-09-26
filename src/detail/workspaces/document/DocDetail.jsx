@@ -146,10 +146,14 @@ function DocDetail({ stateId, onDocumentHandle }) {
 
                 <div style={{ height: '20px' }}></div>
                 <div style={{ width: '100%' }}>
-                  <StDetail>
+                <StDetail>
+                  {document?.modifyMember==null?(null):
+                  (<>
                     최종 수정일 &nbsp;:&nbsp; &nbsp;
                     {document?.modifiedAt.slice(0, -7)}
-                    &nbsp;&nbsp;(수정자: 꼬부기)
+                    &nbsp;&nbsp;(수정자: {document?.modifyMember})
+                    </>
+                  )}
                   </StDetail>
                 </div>
               </StFooterContainer>
