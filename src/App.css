@@ -65,11 +65,20 @@
   src: url('../src//asset/fonts/CONSOLA.TTF') format("truetype")
 }
 
-.outer {
-  height: 100vh;
-  overflow-y: auto;
+.root::-webkit-scrollbar {
+  display: none;
 }
 
-.outer::-webkit-scrollbar {
+.slide-navigation {
+  display: none;
+}
+
+.sc-iIPllB{
+  display: none;
+}
+
+
+
+.sc-jOrMOR {
   display: none;
 }

@@ -18,88 +18,14 @@ import ThirdImg from '../asset/img/ThirdImg.png';
 import Fourth1 from '../asset/img/Fourth1.png';
 import Fourth2 from '../asset/img/Fourth2.png';
 import circle from '../asset/img/circle.svg';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import { FullPage, Slide } from 'react-full-page/lib';
 
 function Landing({ path, setPath }) {
   const navigate = useNavigate();
   const cookies = getCookieToken();
   const homeRef = useRef(null);
-  const outerDivRef = useRef();
-
-  // useEffect(() => {
-  //   const wheelHandler = (e) => {
-  //     e.preventDefault();
-  //       const { deltaY } = e;
-  //       const { scrollTop } = outerDivRef.current;  // 스크롤 위쪽 끝부분 위치
-  //       const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
-    
-  //       if (deltaY > 0) {
-  //         if (scrollTop >= 0 && scrollTop < pageHeight) {
-  //           console.log("현재 1페이지, down");
-  //           outerDivRef.current.scrollTo({
-  //             top: pageHeight,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-  //         } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-  //           console.log("현재 2페이지, down");
-  //           outerDivRef.current.scrollTo({
-  //             top: pageHeight * 2,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-  //         } else if (scrollTop >= pageHeight*2 && scrollTop < pageHeight * 3) {
-  //           console.log("현재 3페이지, down");
-  //           outerDivRef.current.scrollTo({
-  //             top: pageHeight * 3,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-
-  //         } else {
-  //           console.log("현재 4페이지, down");
-  //           outerDivRef.current.scrollTo({
-  //             top: pageHeight * 2,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-  //         }
-  //       } else {
-  //         if (scrollTop >= 0 && scrollTop < pageHeight) {
-  //           console.log("현재 1페이지, up");
-  //           outerDivRef.current.scrollTo({
-  //             top: 0,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-  //         } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-  //           console.log("현재 2페이지, up");
-  //           outerDivRef.current.scrollTo({
-  //             top: 0,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-  //         } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 3) {
-  //           console.log("현재 3페이지, up");
-  //           outerDivRef.current.scrollTo({
-  //             top: 0,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-  //         } else {
-  //           console.log("현재 4페이지, up");
-  //           outerDivRef.current.scrollTo({
-  //             top: pageHeight,
-  //             left: 0,
-  //             behavior: "smooth",
-  //           });
-  //         }
-  //       }};
-  //   const outerDivRefCurrent = outerDivRef.current;
-  //   outerDivRefCurrent.addEventListener("wheel", wheelHandler);
-  //   return () => {
-  //     outerDivRefCurrent.removeEventListener("wheel", wheelHandler);
-  //   };
-  // }, []);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -125,9 +51,11 @@ function Landing({ path, setPath }) {
   };
 
   return (
-    // <StOuter ref={outerDivRef} className="outer">
-    <>
-      <StWrapper height={'90vh'}>
+      <FullPage controls controlsProps={{className: 'slide-navigation'}}>
+      <Slide>
+      <Header setPath={setPath} path={path}/>
+      <StWrapper classNamve='container1' height={'100vh'}>
+
         <StMain>
           <StWrap dp='flex'>
             <StIntro>
@@ -170,8 +98,10 @@ function Landing({ path, setPath }) {
           </StScroll>
         </StMain>
       </StWrapper>
-
-      <StWrapper height={'100vh'}>
+      </Slide>
+      
+      <Slide>
+      <StWrapper classNamve='container2' height={'100vh'}>
         <StMain style={{ alginItems: 'center' }}>
           <StSecondIntroDiv>
             <div>프로젝트 협업툴, 더 꼼꼼히 따져봐야 합니다.</div>
@@ -248,8 +178,10 @@ function Landing({ path, setPath }) {
           </StSecondBodyDiv>
         </StMain>
       </StWrapper>
+      </Slide>
 
-      <StWrapper height={'100vh'}>
+      <Slide>
+      <StWrapper classNamve='container3' height={'100vh'}>
         <StImgWrapper img={ThirdBackground}>
           <StMain>
             <StThirdBody>
@@ -296,8 +228,10 @@ function Landing({ path, setPath }) {
           </StMain>
         </StImgWrapper>
       </StWrapper>
+      </Slide>
 
-      <StWrapper height={'80vh'}>
+      <Slide>
+      <StWrapper classNamve='container4' height={'80vh'}>
         <StMain>
           <StThirdBody>
             <StImgBox>
@@ -335,23 +269,13 @@ function Landing({ path, setPath }) {
           </StThirdBody>
         </StMain>
       </StWrapper>
-      </>
-    // {/* </StOuter> */}
+      <Footer/>
+      </Slide>
+      </FullPage>
   );
 }
 
 export default Landing;
-
-const StOuter = styled.div`
-  ::-webkit-scrollbar {display: none;}
-  color: white;
-  width: 100%;
-  height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
-`;
-
-
 
 const StWrapper = styled.div`
   color: white;
@@ -359,8 +283,10 @@ const StWrapper = styled.div`
   height: ${(props) => props.height};
   display: flex;
   background: #000000;
-  overflow-x: hidden;
-  overflow-y: auto;
+  .container1{ height: 90vh;}
+  .container2{ height: 100vh;}
+  .container3{ height: 100vh;}
+  .container4{ height: 100vh;}
 `;
 
 const StMain = styled.div`
@@ -471,7 +397,6 @@ const move = keyframes`
   `;
 
 
-
 const StVelkit = styled.div`
   width: 15%;
   height: 35%;
@@ -523,7 +448,6 @@ const StCircle = styled.div`
   animation: ${rotate} 15s linear infinite;
   transform-origin: 50% 50%;
 `;
-
 
 const StVelkit3 = styled.div`
   width: 6%;
@@ -709,3 +633,7 @@ const StFourthImg = styled.div`
   background-size: cover;
   border-radius: 20px;
 `;
+
+
+
+

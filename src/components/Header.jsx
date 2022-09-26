@@ -21,6 +21,7 @@ function Header({ path, setPath }) {
   const dispatch = useDispatch();
   const API_URL = `https://hosung.shop/api/members/profile`;
   const cookies = getCookieToken();
+  console.log(navigate)
 
   const [profileOpen, setProfileOpen] = useState(false);
 
