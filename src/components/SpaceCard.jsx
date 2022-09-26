@@ -84,7 +84,7 @@ function SpaceCard({
                           fontWeight: '500',
                         }}
                       >
-                        {data?.notices.createdAt.slice(0, -13)}
+                        {data?.notices?.createdAt.slice(0, -13)}
                       </SpaceName>
                       <SpaceName style={{ color: 'black', fontWeight: '400' }}>
                         {data?.notices.title}
@@ -96,7 +96,7 @@ function SpaceCard({
                   <SpaceName style={{ color: '#00a99d', marginRight: '10px' }}>
                     일정
                   </SpaceName>
-                  {data?.workspaces?.documentCreatedAt === null ? (
+                  {data?.workspaces?.scheduleCreatedAt === null ? (
                     <SpaceName
                       style={{
                         color: '#999999',
@@ -108,19 +108,19 @@ function SpaceCard({
                     </SpaceName>
                   ) : (
                     <>
-                  <SpaceName
-                    style={{
-                      color: '#999999',
-                      marginRight: '10px',
-                      fontWeight: '500',
-                    }}
-                  >
-                    {data?.workspaces?.scheduleCreatedAt.slice(0,-13)}
-                  </SpaceName>
-                  <SpaceName style={{ color: 'black', fontWeight: '400' }}>
-                    {data?.workspaces?.scheduleContent}
-                  </SpaceName>
-                  </>
+                      <SpaceName
+                        style={{
+                          color: '#999999',
+                          marginRight: '10px',
+                          fontWeight: '500',
+                        }}
+                      >
+                        {data?.workspaces?.scheduleCreatedAt.slice(0, -13)}
+                      </SpaceName>
+                      <SpaceName style={{ color: 'black', fontWeight: '400' }}>
+                        {data?.workspaces?.scheduleContent}
+                      </SpaceName>
+                    </>
                   )}
                 </StDiv>
 
@@ -140,23 +140,21 @@ function SpaceCard({
                     </SpaceName>
                   ) : (
                     <>
-                  <SpaceName
-                    style={{
-                      color: '#999999',
-                      marginRight: '10px',
-                      fontWeight: '500',
-                    }}
-                  >
-                     {data?.workspaces?.documentCreatedAt.slice(0, -13)}
-                  </SpaceName>
-                  <SpaceName style={{ color: 'black', fontWeight: '400' }}>
-                    {data?.workspaces?.documentTitle}
-                  </SpaceName>
-                  </>
+                      <SpaceName
+                        style={{
+                          color: '#999999',
+                          marginRight: '10px',
+                          fontWeight: '500',
+                        }}
+                      >
+                        {data?.workspaces?.documentCreatedAt.slice(0, -13)}
+                      </SpaceName>
+                      <SpaceName style={{ color: 'black', fontWeight: '400' }}>
+                        {data?.workspaces?.documentTitle}
+                      </SpaceName>
+                    </>
                   )}
                 </StDiv>
-
-
               </StFooter>
             </StFooterBox>
           </StSpaceCard>
@@ -230,8 +228,8 @@ const StFooter = styled.div`
 const StDiv = styled.div`
   margin-top: 10px;
   overflow: hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const SpaceName = styled.span`
