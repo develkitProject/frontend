@@ -20,6 +20,7 @@ export const Projects = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
+  position: relative;
 `;
 
 export const StWrapper = styled.div`

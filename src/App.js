@@ -11,6 +11,7 @@ import PostEditor from './components/PostEditor';
 import MyPage2 from './pages/MyPage2';
 import Footer from './components/Footer';
 import DocDetail from './detail/workspaces/document/DocDetail';
+import FAQPage from './pages/faq';
 import WorkspaceDetailPage from './detail';
 
 function App() {
@@ -27,9 +28,8 @@ function App() {
         <Route path='/editor' element={<PostEditor />} />
         <Route path='/kakao' element={<Kakao />} />
         <Route path='/workspace/main/:id' element={<WorkspaceDetailPage />} />
-        {/* <Route path='/workspace/main/:id' element={<WorkSpaceDetail />} /> */}
-        {/* <Route path='/workspace/main/:id/address' element={<AddressPage />} /> */}
         <Route path='/workspace/main/:id/docs/:docid' element={<DocDetail />} />
+        <Route path='/faq' element={<FAQPage />} />
       </Routes>
       <Footer />
     </>

@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useMemo,
-  useLayoutEffect,
-} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
 import { useGetMemberListQuery } from '../redux/modules/workspaces';
 import useGetUser from '../common/hooks/useGetUser';
@@ -59,27 +53,7 @@ export default function WorkspaceDetailPage() {
       alert('로그인 해주세요!');
       navigate('/');
     }
-    // window.location.reload();
   }, [cookie, navigate]);
-
-  // useEffect(() => {
-  //   if (data_1 && user) {
-  //     const checkMember = spaceMembers?.some(
-  //       (x) => x?.user?.username === loginUserName
-  //     );
-  //     setAuth(checkMember);
-  //   }
-  // }, [data_1, loginUserName, spaceMembers, user]);
-
-  // useEffect(() => {
-  //   if (auth === undefined || auth === null) return;
-  //   if (!auth) {
-  //     alert('이 워크스페이스의 회원이 아닙니다!');
-  //     navigate('/');
-  //   }
-  // }, [auth, navigate]);
-
-  //---------------------------------------------------------------
 
   const messageBoxRef = useRef();
 

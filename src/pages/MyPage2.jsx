@@ -96,7 +96,7 @@ function MyPage2() {
             marginLeft: '50px',
           }}
         >
-          <StSpan style={{ marginTop: '80px' }}>프로필 상세보기</StSpan>
+          <StSpan style={{ marginTop: '50px' }}>프로필 상세보기</StSpan>
           <BasicInput
             type='text'
             label='닉네임'
@@ -154,17 +154,17 @@ const StWrapper = styled.div`
 
 const StProfile = styled.div`
   width: 30%;
-  min-width: 350px;
+  min-width: 300px;
   max-width: 600px;
   margin-left: 50px;
-  height: 600px;
+  height: 550px;
   display: flex;
   flex-direction: column;
   text-align: center;
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
-  position: relative;
+  /* position: relative; */
   box-shadow: 12px 16px 10px rgba(0, 0, 0, 0.1);
 `;
 
@@ -204,15 +204,10 @@ const StChange = styled.span`
   border-bottom: 1px solid grey;
 `;
 
-const StImgTag = styled.img`
-  width: 300px;
-  height: 350px;
-`;
-
 const StDetail = styled.div`
   width: 60%;
   min-width: 680px;
-  height: 600px;
+  height: 550px;
   background-color: #ffffff;
   border: none;
   box-shadow: 12px 16px 30px rgba(0, 0, 0, 0.1);
@@ -250,8 +245,8 @@ const move = keyframes`
 const StVelkit = styled.div`
   width: 15%;
   height: 25%;
-  min-width: 350px;
-  min-height: 300px;
+  min-width: 250px;
+  min-height: 200px;
   background-image: url(${velkit});
   background-size: 100% 100%;
   position: absolute;
