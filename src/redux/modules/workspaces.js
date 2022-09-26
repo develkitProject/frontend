@@ -217,7 +217,6 @@ export const workspaceApi = coreApi.injectEndpoints({
 
     updateDoc: builder.mutation({
       query: (formData) => {
-        console.log(formData);
         return {
           url: `/api/workspaces/${formData.get('id')}/docs/${formData.get(
             'docid'

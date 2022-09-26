@@ -22,6 +22,8 @@ const DocsEdit = ({ stateId, onDocumentHandle }) => {
   const [content, setContent] = useState(document?.content);
   const [editDoc] = useUpdateDocMutation();
   const [newFile, setNewFile] = useState([]);
+  const files = document.fileNames;
+  const urls = document.fileUrls;
 
   const onTitleChange = (e) => {
     setTitle(e.target.value);
@@ -40,23 +42,35 @@ const DocsEdit = ({ stateId, onDocumentHandle }) => {
     nameInput.current.click();
   };
 
+  const nameUrl = files?.map((elem, idx) => {
+    return { key_1: elem, key_2: urls[idx] };
+  });
+  const [prevFile, setPrevFile] = useState(nameUrl);
+  const onDeleteName = (name) => {
+    setPrevFile(prevFile?.filter((file) => file.key_1 !== name));
+  };
+
   const handleSubmit = () => {
     if (title !== '' && content !== '') {
       const formData = new FormData();
-      const data = {
-        title,
-        content,
-      };
+
       for (let i = 0; i < newFile.length; i++) {
         formData.append('files', newFile[i]);
       }
       formData.append('id', id);
       formData.append('docid', docid);
+      const preFileUrls = prevFile?.map((a) => a.key_2);
+
+      const data = {
+        title,
+        content,
+        preFileUrls,
+      };
       formData.append(
         'data',
         new Blob([JSON.stringify(data)], { type: 'application/json' })
       );
-      editDoc(formData, id);
+      editDoc(formData);
       window.alert('문서가 수정되었습니다');
       onDocumentHandle('list');
     } else {
@@ -122,7 +136,26 @@ const DocsEdit = ({ stateId, onDocumentHandle }) => {
               color: '#00a99d',
             }}
           >
-            {newFile?.map((a, i) => {
+            {prevFile?.map((data, i) => {
+              return (
+                <div
+                  key={i}
+                  style={{
+                    marginLeft: '20px',
+                  }}
+                >
+                  {data.key_1}{' '}
+                  <DeleteButton
+                    onClick={() => {
+                      onDeleteName(data?.key_1);
+                    }}
+                  >
+                    x
+                  </DeleteButton>
+                </div>
+              );
+            })}
+            {newFile?.map((data, i) => {
               return (
                 <div
                   key={i}
@@ -131,10 +164,10 @@ const DocsEdit = ({ stateId, onDocumentHandle }) => {
                     fontWeight: '500',
                   }}
                 >
-                  {a?.name}
+                  {data?.name}
                   <DeleteButton
                     onClick={() => {
-                      onDeleteFile(a?.name);
+                      onDeleteFile(data?.name);
                     }}
                   >
                     x
@@ -144,6 +177,7 @@ const DocsEdit = ({ stateId, onDocumentHandle }) => {
             })}
           </div>
         </div>
+
         <StButton onClick={handleSubmit}>수정하기</StButton>
       </EditorBlock>
     </StEditorContainer>
