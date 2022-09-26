@@ -7,7 +7,6 @@ import Editor from '../../../components/Editor';
 import { useAddDocMutation } from '../../../redux/modules/workspaces';
 
 const DocsWrite = ({ onDocumentHandle }) => {
-  const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
   const nameInput = useRef();
@@ -27,7 +26,11 @@ const DocsWrite = ({ onDocumentHandle }) => {
 
   const onFileChange = (e) => {
     const file = e.target.files[0];
-    setNewFile([...newFile, file]);
+    setNewFile((newFile) => [...newFile, file]);
+  };
+
+  const onDeleteFile = (name) => {
+    setNewFile(newFile?.filter((file) => file.name !== name));
   };
 
   const handleSubmit = () => {
@@ -67,26 +70,35 @@ const DocsWrite = ({ onDocumentHandle }) => {
           style={{
             // width: '50%',
             display: 'flex',
-            justifyContent: 'center',
+            // justifyContent: 'center',
             alignItems: 'center',
           }}
         >
-          <span style={{ width: '150px' }}>
-            {' '}
-            파일용량은 총 <br /> 30MB로 제한됩니다
-          </span>
-          <button
+          <div
             style={{
-              width: '100px',
-              height: '50px',
-              // border: '1px solid black',
-              fontWeight: '500',
-              marginLeft: '20px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              margin: '30px 0px 0px 50px',
             }}
-            onClick={onClickInput}
           >
-            파일업로드
-          </button>
+            <span style={{ width: '150px' }}>
+              {' '}
+              파일용량은 총 <br /> 30MB로 제한됩니다
+            </span>
+            <button
+              style={{
+                width: '150px',
+                height: '50px',
+                fontWeight: '500',
+                marginTop: '10px',
+              }}
+              onClick={onClickInput}
+            >
+              파일업로드하기!
+            </button>
+          </div>
           <input
             style={{ display: 'none' }}
             type='file'
@@ -96,11 +108,30 @@ const DocsWrite = ({ onDocumentHandle }) => {
             onChange={onFileChange}
             ref={nameInput}
           ></input>
-          <div style={{ display: 'flex' }}>
-            {newFile.map((a, i) => {
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              color: '#00a99d',
+            }}
+          >
+            {newFile?.map((a, i) => {
               return (
-                <div key={i} style={{ marginLeft: '20px' }}>
-                  {a?.name}
+                <div
+                  key={i}
+                  style={{
+                    marginLeft: '20px',
+                    fontWeight: '500',
+                  }}
+                >
+                  {a.name}
+                  <DeleteButton
+                    onClick={() => {
+                      onDeleteFile(a.name);
+                    }}
+                  >
+                    x
+                  </DeleteButton>
                 </div>
               );
             })}
@@ -154,4 +185,12 @@ const StButton = styled.button`
   font-weight: 500;
   cursor: pointer;
   margin-top: 20px;
+`;
+
+const DeleteButton = styled.button`
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 15px;
 `;

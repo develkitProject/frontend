@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
         letter-spacing: -1.8px;
         overflow-x: hidden;
         min-height:100%;
-    };
+    }
     /* button{
         display: flex;
         cursor: pointer;

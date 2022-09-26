@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   useDeleteDocMutation,
   useGetDocDetailQuery,
@@ -13,7 +12,7 @@ function DocDetail({ stateId, onDocumentHandle }) {
   const params = useParams();
   const workspaces = Number(params.id);
   const docid = stateId;
-  const { data, error, isLoading, refetch } = useGetDocDetailQuery({
+  const { data } = useGetDocDetailQuery({
     workspaces,
     docid,
   });
