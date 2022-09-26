@@ -15,6 +15,7 @@ const InvitationCodeModal = ({ onClose }) => {
   useOutSideClick(modalRef, handleClose);
   const { data, error, isLoading } = useGetInviteCodeQuery(id);
   const invite_code = data?.data?.code;
+  console.log(data)
 
   const copyCode = async () => {
    
@@ -40,7 +41,7 @@ const InvitationCodeModal = ({ onClose }) => {
         <>초대코드 정보를 불러오는 중입니다.</>
       ) : data ? (
         <>
-          <StTitle>초대코드</StTitle>
+          <StTitle>{data?.data.workspaceTitle} 초대코드</StTitle>
           <StCodeDiv>
             <StCode>{invite_code}</StCode>
           </StCodeDiv>
@@ -74,7 +75,7 @@ const ModalWrap = styled.div`
 
 const StTitle = styled.div`
   font-weight: 500;
-  font-size: 16px;
+  font-size: 18px;
   color: #212121;
   letter-spacing: -0.05em;
 `;
