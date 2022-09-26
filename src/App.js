@@ -6,7 +6,7 @@ import MyPage from './pages/MyPage';
 // import SignUp from './pages/SignUp';
 import WorkSpace from './pages/WorkSpace';
 import Kakao from './pages/KaKao';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import PostEditor from './components/PostEditor';
 import MyPage2 from './pages/MyPage2';
 import Footer from './components/Footer';
@@ -16,11 +16,18 @@ import WorkspaceDetailPage from './detail';
 
 function App() {
   const [path, setPath] = useState(1);
+
+  const cookie = getCookieToken();
+  const navigate = useNavigate();
+  const location = useLocation();
   return (
     <>
-      <Header setPath={setPath} path={path} />
+    <Routes>
+      <Route path='/' element={<Landing setPath={setPath} path={path} />} />
+    </Routes>
+
+    {location.pathname==='/'?(null):<Header setPath={setPath} path={path} />}
       <Routes>
-        <Route path='/' element={<Landing setPath={setPath} path={path} />} />
         {/* <Route path='/signup' element={<SignUp />} /> */}
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/mypage2' element={<MyPage2 />} />
@@ -31,7 +38,8 @@ function App() {
         <Route path='/workspace/main/:id/docs/:docid' element={<DocDetail />} />
         <Route path='/faq' element={<FAQPage />} />
       </Routes>
-      <Footer />
+    {location.pathname==='/'?(null):<Footer />}
+      
     </>
   );
 }

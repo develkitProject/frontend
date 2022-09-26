@@ -18,12 +18,16 @@ import ThirdImg from '../asset/img/ThirdImg.png';
 import Fourth1 from '../asset/img/Fourth1.png';
 import Fourth2 from '../asset/img/Fourth2.png';
 import circle from '../asset/img/circle.svg';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import { FullPage, Slide } from 'react-full-page/lib';
 
 function Landing({ path, setPath }) {
   const navigate = useNavigate();
   const cookies = getCookieToken();
   const homeRef = useRef(null);
   const outerDivRef = useRef();
+
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -49,9 +53,11 @@ function Landing({ path, setPath }) {
   };
 
   return (
-    // <StOuter ref={outerDivRef} className="outer">
-    <>
-      <StWrapper height={'90vh'}>
+      <FullPage controls controlsProps={{className: 'slide-navigation'}}>
+      <Slide>
+      <Header setPath={setPath} path={path}/>
+      <StWrapper classNamve='container1' height={'100vh'}>
+
         <StMain>
           <StWrap dp='flex'>
             <StIntro>
@@ -94,8 +100,10 @@ function Landing({ path, setPath }) {
           </StScroll>
         </StMain>
       </StWrapper>
-
-      <StWrapper height={'100vh'}>
+      </Slide>
+      
+      <Slide>
+      <StWrapper classNamve='container2' height={'100vh'}>
         <StMain style={{ alginItems: 'center' }}>
           <StSecondIntroDiv>
             <div>프로젝트 협업툴, 더 꼼꼼히 따져봐야 합니다.</div>
@@ -172,8 +180,10 @@ function Landing({ path, setPath }) {
           </StSecondBodyDiv>
         </StMain>
       </StWrapper>
+      </Slide>
 
-      <StWrapper height={'100vh'}>
+      <Slide>
+      <StWrapper classNamve='container3' height={'100vh'}>
         <StImgWrapper img={ThirdBackground}>
           <StMain>
             <StThirdBody>
@@ -220,8 +230,10 @@ function Landing({ path, setPath }) {
           </StMain>
         </StImgWrapper>
       </StWrapper>
+      </Slide>
 
-      <StWrapper height={'80vh'}>
+      <Slide>
+      <StWrapper classNamve='container4' height={'80vh'}>
         <StMain>
           <StThirdBody>
             <StImgBox>
@@ -259,12 +271,14 @@ function Landing({ path, setPath }) {
           </StThirdBody>
         </StMain>
       </StWrapper>
-    </>
-    // {/* </StOuter> */}
+      <Footer/>
+      </Slide>
+      </FullPage>
   );
 }
 
 export default Landing;
+
 
 const StOuter = styled.div`
   ::-webkit-scrollbar {
@@ -283,8 +297,10 @@ const StWrapper = styled.div`
   height: ${(props) => props.height};
   display: flex;
   background: #000000;
-  overflow-x: hidden;
-  overflow-y: auto;
+  .container1{ height: 90vh;}
+  .container2{ height: 100vh;}
+  .container3{ height: 100vh;}
+  .container4{ height: 100vh;}
 `;
 
 const StMain = styled.div`
@@ -630,3 +646,7 @@ const StFourthImg = styled.div`
   background-size: cover;
   border-radius: 20px;
 `;
+
+
+
+
