@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 import search from '../asset/img/search.png';
 
-function SearchBar({ id, onSearchHandle }) {
+function SearchBar({ id, onSearchHandle, setSearchDocs }) {
   const [type, setType] = useState('ContentTitle');
   const [field, setField] = useState('keyword');
   const handleSelect = (e) => {
@@ -25,7 +25,11 @@ function SearchBar({ id, onSearchHandle }) {
 
   const onKeyDown = (e) => {
     if (e.key === 'Enter') {
-      handleClick();
+      if (keyword !== '') {
+        handleClick();
+      } else {
+        setSearchDocs(0);
+      }
     }
   };
 
@@ -48,12 +52,13 @@ function SearchBar({ id, onSearchHandle }) {
 export default SearchBar;
 
 const StWrapper = styled.div`
-  margin: 10px;
-  align-items: center;
+  margin: 300px 0px 0px 0px;
   width: 100%;
-  height: 45px;
   display: flex;
   justify-content: center;
+  align-items: flex-end;
+  position: absolute;
+  bottom: 20px;
 `;
 
 const StSearchContainer = styled.div`
@@ -71,7 +76,7 @@ const StSelect = styled.select`
   border: 2px solid #dcdcdc;
   height: 40px;
   color: #424242;
-  text-align: center;
+  display: flex;
   padding: 5px;
   border-radius: 5px 0 0 5px;
   font-size: 14px;

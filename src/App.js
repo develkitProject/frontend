@@ -10,20 +10,16 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import PostEditor from './components/PostEditor';
 import MyPage2 from './pages/MyPage2';
 import Footer from './components/Footer';
-import ClaendarPage from './detail/workspaces/calendar/CalendarPage';
 import DocDetail from './detail/workspaces/document/DocDetail';
+import FAQPage from './pages/faq';
 import WorkspaceDetailPage from './detail';
-import { getCookieToken } from './Cookie';
-import useGetUser from './common/hooks/useGetUser';
 
 function App() {
   const [path, setPath] = useState(1);
+
   const cookie = getCookieToken();
   const navigate = useNavigate();
   const location = useLocation();
-
-  console.log(useLocation())
-
   return (
     <>
     <Routes>
@@ -39,9 +35,8 @@ function App() {
         <Route path='/editor' element={<PostEditor />} />
         <Route path='/kakao' element={<Kakao />} />
         <Route path='/workspace/main/:id' element={<WorkspaceDetailPage />} />
-        {/* <Route path='/workspace/main/:id' element={<WorkSpaceDetail />} /> */}
-        {/* <Route path='/workspace/main/:id/address' element={<AddressPage />} /> */}
         <Route path='/workspace/main/:id/docs/:docid' element={<DocDetail />} />
+        <Route path='/faq' element={<FAQPage />} />
       </Routes>
     {location.pathname==='/'?(null):<Footer />}
       

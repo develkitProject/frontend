@@ -5,8 +5,6 @@ import velkit from '../asset/img/velkit.png';
 import { useEffect } from 'react';
 import { useGetChatMessagesQuery } from '../redux/modules/workspaces';
 import noteBook from '../asset/img/notebook.png';
-import Stomp from 'stompjs';
-import SockJS from 'sockjs-client';
 
 function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const [users, setUsers] = useState(null);
@@ -14,13 +12,16 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const { data, isLoading, error, refetch } = useGetChatMessagesQuery(id);
   const [isOpen, setIsOpen] = useState(false);
   const [Opacity, setOpacity] = useState(false);
+  const [minimum, setMinimum] = useState(false);
 
   // ------------------------------------------------------------------------
   const messageList = data?.data;
   const [chatMessages, setChatMessages] = useState([]);
+  const onMiniMode = () => {
+    setMinimum(!minimum);
+  };
 
   useEffect(() => {
-    // console.log(stompClient);
     onConnected();
     return () => {
       disConnect();
@@ -46,7 +47,6 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   };
 
   function onConnected() {
-    // try {
     if (stompClient.connected) {
       stompClient.subscribe(
         `/sub/chat/room/${id}`,
@@ -65,9 +65,6 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
         onSub();
       }
     }
-    // } catch (error) {
-    //   console.log(error);
-    // }
   }
 
   const disConnect = () => {
@@ -156,23 +153,32 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
 
   return (
     <>
-      {/* <ChattingContainer> */}
       <Draggable
         cancel='input, button, span'
         onStart={handleStart}
         onStop={handleEnd}
         bounds='parent'
-        // position='{x:50}'
       >
-        <StChatBox style={{ opacity: Opacity ? '0.85' : '1' }}>
-          {/* <UserList>
-            {userlist?.map((list, i) => {
-              return <>{list}</>;
-            })}
-          </UserList> */}
+        <StChatBox
+          style={{ opacity: Opacity ? '0.85' : '1' }}
+          minimum={minimum}
+        >
           <StChatHeader>
             <span style={{ marginLeft: '15px', fontSize: '15px' }}>
               {title}
+            </span>
+            <span
+              style={{
+                marginRight: '13px',
+                cursor: 'pointer',
+                fontSize: '20px',
+                position: 'absolute',
+                right: '27px',
+                bottom: '18px',
+              }}
+              onClick={onMiniMode}
+            >
+              _
             </span>
             <span
               style={{
@@ -187,7 +193,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
               +
             </span>
           </StChatHeader>
-          <StChatBody ref={messageBoxRef}>
+          <StChatBody ref={messageBoxRef} minimum={minimum}>
             {chatData?.length !== 0 ? (
               chatData
             ) : (
@@ -207,25 +213,17 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
               </>
             )}
           </StChatBody>
-          <StChatFooter>
+          <StChatFooter minimum={minimum}>
             <StInput
               rows='0'
               cols='0'
               name='message'
-              // value={textRef.current.value}
-              // onChange={onChange}
               onKeyPress={onKeyDown}
               ref={textRef}
-              // autoComplete='off'
               placeholder='메세지를 입력하세요 (100자 이내)'
               maxLength={100}
             ></StInput>
-            <StButton
-              onClick={sendMessage}
-              // message={message}
-              textRef={textRef}
-              // disabled={textRef.current.value.length === 0}
-            >
+            <StButton onClick={sendMessage} textRef={textRef}>
               전송
             </StButton>
           </StChatFooter>
@@ -247,7 +245,6 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
           )}
         </StChatBox>
       </Draggable>
-      {/* </ChattingContainer> */}
     </>
   );
 }
@@ -256,11 +253,10 @@ export default React.memo(Chatting);
 
 const StChatBox = styled.div`
   width: 350px;
-  height: 560px;
+  height: ${(props) => (props.minimum ? '40px' : '560px')};
   background-color: #f6daa2;
   /* position: relative; */
-  left: 50%;
-  top: 10%;
+  right: 20%;
   box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.1), 0 4px 20px 0 rgba(0, 0, 0, 0.2);
   position: absolute;
 `;
@@ -276,6 +272,21 @@ const StChatHeader = styled.div`
   font-weight: 600;
   font-size: 17px;
   letter-spacing: -0.8px;
+  position: relative;
+`;
+
+const StChatBody = styled.div`
+  height: 460px;
+  overflow: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  display: ${(props) => (props.minimum ? 'none' : null)};
+  &::-webkit-scrollbar {
+    width: 5px;
+    display: none;
+  }
 `;
 
 const StChatFooter = styled.div`
@@ -287,6 +298,7 @@ const StChatFooter = styled.div`
   pointer-events: visible;
   position: absolute;
   align-items: center;
+  display: ${(props) => (props.minimum ? 'none' : null)};
 `;
 
 const StInput = styled.input`
@@ -317,30 +329,6 @@ const StButton = styled.button`
   border: none;
   color: ${({ textRef }) => (textRef !== '' ? '#262012' : '#a1a1a1')};
   cursor: ${({ textRef }) => (textRef !== '' ? 'pointer' : null)};
-`;
-
-const StChatBody = styled.div`
-  height: 460px;
-  overflow: auto;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: right;
-  &::-webkit-scrollbar {
-    width: 5px;
-    display: none;
-  }
-  &::-webkit-scrollbar-thunb {
-    /* background-color: #2f3542; */
-    border-radius: 10px;
-    background-clip: padding-box;
-    /* border: 2px solid transparent; */
-  }
-  &::-webkit-scrollbar-track {
-    background-color: grey;
-    border-radius: 10px;
-    box-shadow: inset 0px 0px 5px white;
-  }
 `;
 
 const MessageBox = styled.div`

@@ -1,6 +1,6 @@
 import React, { useRef, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import BasicInput from '../../components/BasicInput';
+import BasicInput from '../elements/BasicInput';
 import CloseButton from '../elements/CloseButton';
 import Button1 from '../elements/Button';
 import ModalContainer from './ModalContainer';

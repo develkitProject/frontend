@@ -26,6 +26,8 @@ function Landing({ path, setPath }) {
   const navigate = useNavigate();
   const cookies = getCookieToken();
   const homeRef = useRef(null);
+  const outerDivRef = useRef();
+
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -277,6 +279,18 @@ function Landing({ path, setPath }) {
 
 export default Landing;
 
+
+const StOuter = styled.div`
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  color: white;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+`;
+
 const StWrapper = styled.div`
   color: white;
   width: 100%;
@@ -395,7 +409,6 @@ const move = keyframes`
       transform: translateY(0);
     }
   `;
-
 
 const StVelkit = styled.div`
   width: 15%;

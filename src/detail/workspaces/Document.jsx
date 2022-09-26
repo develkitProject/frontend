@@ -51,7 +51,7 @@ export default function Document() {
       </StIntroContainer>
 
       {tab === 'list' ? (
-        <div>
+        <>
           <Board
             error={error}
             isLoading={isLoading}
@@ -59,11 +59,11 @@ export default function Document() {
             document={doc}
             onDocumentHandle={onDocumentHandle}
           ></Board>
-        </div>
+        </>
       ) : tab === 'write' ? (
-        <div>
+        <>
           <DocsWrite onDocumentHandle={onDocumentHandle}></DocsWrite>
-        </div>
+        </>
       ) : tab === 'detail' ? (
         <>
           <DocDetail

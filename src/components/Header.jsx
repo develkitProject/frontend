@@ -19,7 +19,6 @@ import { useGetUserInfoQuery } from '../redux/modules/workspaces';
 function Header({ path, setPath }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const API_URL = `https://hosung.shop/api/members/profile`;
   const cookies = getCookieToken();
   console.log(navigate)
 
@@ -58,6 +57,10 @@ function Header({ path, setPath }) {
     setPath(2);
     navigate('/workspace');
   };
+  const moveFAQ = () => {
+    setPath(4);
+    navigate('/faq');
+  };
 
   return (
     <>
@@ -87,8 +90,14 @@ function Header({ path, setPath }) {
             >
               Proejct
             </StMenuName>
-            <StMenuName>Community</StMenuName>
-            <StMenuName>FAQ</StMenuName>
+            <StMenuName
+              onClick={() => {
+                alert('기능 준비중입니다!');
+              }}
+            >
+              Community
+            </StMenuName>
+            <StMenuName onClick={moveFAQ}>FAQ</StMenuName>
             {/* </StDiv> */}
           </StMenuDiv>
         </div>
