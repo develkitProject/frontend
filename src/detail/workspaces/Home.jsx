@@ -107,11 +107,11 @@ export default function Home({ id, data, onDocumentHandle }) {
                       //   onDocumentHandle('detail', data.id);
                       // }}
                     >
-                      <div>{data.nickname}</div>
-                      <div>{data.title}</div>
-                      <div>{data.nickname}</div>
-                      <div>{data.createdAt.split(' ')[0]}</div>
-                      <div>{data.modifiedAt.split(' ')[0]}</div>
+                      <StDataDiv>{data.nickname}</StDataDiv>
+                      <StDataDiv>{data.title}</StDataDiv>
+                      <StDataDiv>{data.nickname}</StDataDiv>
+                      <StDataDiv>{data.createdAt.split(' ')[0]}</StDataDiv>
+                      <StDataDiv>{data.modifiedAt.split(' ')[0]}</StDataDiv>
                     </StTable>
                   );
                 })
@@ -244,6 +244,13 @@ const StTable = styled.div`
   display: grid;
   border-bottom: 1px solid #c6c6c6;
 `;
+
+const StDataDiv = styled.div`
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+`;
+
 
 const StThead = styled.div`
   background-color: #00a99d;

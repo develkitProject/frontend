@@ -55,7 +55,7 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
                         >
                           <div>{data.id}</div>
                           <div
-                            style={{ textAlign: 'left', overflow: 'hidden' }}
+                            style={{ textAlign: 'left', overflow: 'hidden', textOverflow:'ellipsis' }}
                           >
                             {data.title}
                           </div>
@@ -78,7 +78,7 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
                         >
                           <div>{data.id}</div>
                           <div
-                            style={{ textAlign: 'left', overflow: 'hidden' }}
+                            style={{ textAlign: 'left', overflow: 'hidden', textOverflow: 'ellipsis'}}
                           >
                             {data.title}
                           </div>
