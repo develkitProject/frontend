@@ -37,11 +37,14 @@ function Landing({ path, setPath }) {
 
   const guestLogin = async () => {
     const response = await axios.get(API_URL);
+    console.log(response);
     const username = response.data.data.username;
     const password = (username.split('@')[0] += '!');
+    console.log(username, password);
 
     loginApi({ username, password })
       .then((res) => {
+        console.log(res);
         if (res.data.success === false) {
           alert('아이디 또는 비밀번호를 확인해주세요.');
         } else {
@@ -84,7 +87,7 @@ function Landing({ path, setPath }) {
     <FullPage controls controlsProps={{ className: 'slide-navigation' }}>
       <Slide>
         <Header setPath={setPath} path={path} />
-        <StWrapper className='container1' height={'100vh'}>
+        <StWrapper height={'100vh'}>
           <StMain>
             <StWrap dp='flex'>
               <StIntro>
@@ -104,7 +107,6 @@ function Landing({ path, setPath }) {
                     <span style={{ color: '#00A99D' }}>디벨킷</span>
                   </div>
                 </StIntroMent>
-
                 {!cookies && (
                   <StStart style={{ marginTop: '30px', fontWeight: "700", lineHeight:"33px"}}>
                     <StIcon src={icon} />
@@ -230,7 +232,7 @@ function Landing({ path, setPath }) {
       </Slide>
 
       <Slide>
-        <StWrapper className='container3' height={'100vh'}>
+        <StWrapper height={'100vh'}>
           <StImgWrapper img={ThirdBackground}>
             <StMain>
               <StThirdBody>
@@ -282,7 +284,7 @@ function Landing({ path, setPath }) {
       </Slide>
 
       <Slide>
-        <StWrapper className='container4' height={'80vh'}>
+        <StWrapper height={'80vh'}>
           <StMain>
             <StThirdBody>
               <StImgBox>
@@ -495,15 +497,13 @@ const StVelkit = styled.div`
 `;
 
 const StVelkit2 = styled.div`
-  width: 25%;
-  height: 50%;
-  min-width: 205px;
-  min-height: 300px;
+  width: 300px;
+  height: 400px;
   background-image: url(${velkit2});
   background-size: 100% 100%;
   position: absolute;
-  left: 25%;
-  top: 240%;
+  left: 30%;
+  top: 45%;
   animation: ${move} 2s 0s infinite;
   /* animation-iteration-count: infinite;
   animation-name: bounce;
@@ -538,8 +538,8 @@ const StVelkit3 = styled.div`
   background-image: url(${velkit3});
   background-size: 100% 100%;
   position: absolute;
-  left: 75%;
-  top: 340%;
+  left: 80%;
+  top: 50%;
   animation: ${move} 2s 0s infinite;
   /* animation-iteration-count: infinite;
   animation-name: bounce;
@@ -673,6 +673,7 @@ const StThirdBody = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  position: relative;
 `;
 
 const StImgBox = styled.div`
