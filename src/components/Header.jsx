@@ -61,6 +61,10 @@ function Header({ path, setPath }) {
     navigate('/faq');
   };
 
+  const moveEvent = () => {
+    navigate('/event');
+  };
+
   return (
     <>
       <StHeaderDiv>
@@ -96,7 +100,10 @@ function Header({ path, setPath }) {
             >
               Community
             </StMenuName>
+    
             <StMenuName onClick={moveFAQ}>FAQ</StMenuName>
+            <StMenuName onClick={moveEvent}>Event</StMenuName>
+
             {/* </StDiv> */}
           </StMenuDiv>
         </div>

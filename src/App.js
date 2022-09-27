@@ -13,6 +13,7 @@ import Footer from './components/Footer';
 import DocDetail from './detail/workspaces/document/DocDetail';
 import FAQPage from './pages/faq';
 import WorkspaceDetailPage from './detail';
+import EventPage from './pages/Event';
 
 function App() {
   const [path, setPath] = useState(1);
@@ -38,6 +39,7 @@ function App() {
         <Route path='/workspace/main/:id' element={<WorkspaceDetailPage />} />
         <Route path='/workspace/main/:id/docs/:docid' element={<DocDetail />} />
         <Route path='/faq' element={<FAQPage />} />
+        <Route path='/event' element={<EventPage />} />
       </Routes>
       {location.pathname === '/' ? null : <Footer />}
     </>

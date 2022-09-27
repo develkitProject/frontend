@@ -65,7 +65,7 @@ function MyPage() {
                     <BoxSpan>과 함께</BoxSpan>
                   </div>
                   <div style={{ marginTop: '50px' }}>
-                    <BoxNumSpan>+30</BoxNumSpan>
+                    <BoxNumSpan>+1</BoxNumSpan>
                     <BoxSpan>일</BoxSpan>
                   </div>
                 </IntroBox>
