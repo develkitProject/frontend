@@ -20,19 +20,24 @@ function Header({ path, setPath }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cookies = getCookieToken();
+  const location = useLocation().pathname;
 
   const [profileOpen, setProfileOpen] = useState(false);
-
-  const [user, setUser] = useState('');
 
   const isLogin = useSelector(selectIsLoginModal);
   const isSignUp = useSelector(selectIsSignUpModal);
 
   const { data } = useGetUserInfoQuery();
 
-  // const { user } = useMemo(() => {
-  //   return useGetUser();
-  // }, []);
+  useEffect(() => {
+    if (location === '/') {
+      setPath(1);
+    } else if (location === '/faq') {
+      setPath(4);
+    } else {
+      setPath(2);
+    }
+  }, []);
 
   const userData = data?.data;
 
@@ -49,8 +54,8 @@ function Header({ path, setPath }) {
   };
 
   const moveMain = () => {
-    navigate('/');
     setPath(1);
+    navigate('/');
   };
   const moveProject = () => {
     setPath(2);
@@ -96,7 +101,12 @@ function Header({ path, setPath }) {
             >
               Community
             </StMenuName>
-            <StMenuName onClick={moveFAQ}>FAQ</StMenuName>
+            <StMenuName
+              onClick={moveFAQ}
+              style={path === 4 ? { opacity: '1' } : null}
+            >
+              FAQ
+            </StMenuName>
             {/* </StDiv> */}
           </StMenuDiv>
         </div>

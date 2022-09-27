@@ -18,7 +18,6 @@ function App() {
   const [path, setPath] = useState(1);
 
   // const cookie = getCookieToken();
-  const navigate = useNavigate();
   const location = useLocation();
   return (
     <>
