@@ -8,7 +8,7 @@ import {
   useGetUserInfoQuery,
   useUpdateUserInfoMutation,
 } from '../redux/modules/workspaces';
-import { removeCookieToken } from '../Cookie';
+import { removeUser } from '../Cookie';
 
 function MyPage2() {
   const [updateUserInfo] = useUpdateUserInfoMutation();
@@ -31,7 +31,7 @@ function MyPage2() {
   const deleteUserInfo = () => {
     if (window.confirm('정말 탈퇴하시겠습니까?')) {
       deleteUserInfos();
-      removeCookieToken();
+      removeUser();
       window.location.href = '/';
     } else {
       return;

@@ -75,9 +75,9 @@ function Header({ path, setPath }) {
     navigate('/event');
   };
 
-  const handleAlarm = () =>{
-    window.alert('기능구현중입니다.')
-  }
+  const handleAlarm = () => {
+    window.alert('기능구현중입니다.');
+  };
 
   return (
     <>
@@ -107,13 +107,13 @@ function Header({ path, setPath }) {
             >
               Proejct
             </StMenuName>
-            <StMenuName
+            {/* <StMenuName
               onClick={() => {
                 alert('기능 준비중입니다!');
               }}
             >
               Community
-            </StMenuName>
+            </StMenuName> */}
             <StMenuName
               onClick={moveFAQ}
               style={path === 4 ? { opacity: '1' } : null}
@@ -146,7 +146,7 @@ function Header({ path, setPath }) {
           </StDiv>
         ) : (
           <StDiv>
-            <StAlarmImg src={alarm} onClick={handleAlarm}/>
+            <StAlarmImg src={alarm} onClick={handleAlarm} />
             <StProfileImg
               src={userData?.profileImageUrl}
               onClick={() => {

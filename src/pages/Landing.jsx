@@ -24,16 +24,24 @@ import Header from '../components/Header';
 import SignupModal from '../signup/SignupModal';
 import { setAccessToken } from '../Cookie';
 import { loginApi } from '../data/login';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsSignUpModal } from '../redux/modules/global';
+import { selectIsSignUpModal } from '../redux/modules/global/selectors';
 import { FullPage, Slide } from 'react-full-page/lib';
-
 
 function Landing({ path, setPath }) {
   const navigate = useNavigate();
   const cookies = getCookieToken();
   const homeRef = useRef(null);
+  const dispatch = useDispatch();
+  const isSignUp = useSelector(selectIsSignUpModal);
   const API_URL = `${process.env.REACT_APP_BASE_URL}/api/members/guest`;
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const openSignUpModal = () => {
+    dispatch(setIsSignUpModal(true));
+  };
 
   const guestLogin = async () => {
     const response = await axios.get(API_URL);
@@ -42,6 +50,7 @@ function Landing({ path, setPath }) {
 
     loginApi({ username, password })
       .then((res) => {
+        console.log(res);
         if (res.data.success === false) {
           alert('아이디 또는 비밀번호를 확인해주세요.');
         } else {
@@ -74,17 +83,11 @@ function Landing({ path, setPath }) {
     }
   };
 
-
-  const onHomeClick = () => {
-    homeRef.current?.scrollIntoView({ behavior: 'smooth', block:'center'});
-    
-  };
-
   return (
     <FullPage controls controlsProps={{ className: 'slide-navigation' }}>
       <Slide>
         <Header setPath={setPath} path={path} />
-        <StWrapper className='container1' height={'100vh'}>
+        <StWrapper height={'100vh'}>
           <StMain>
             <StWrap dp='flex'>
               <StIntro>
@@ -104,24 +107,6 @@ function Landing({ path, setPath }) {
                     <span style={{ color: '#00A99D' }}>디벨킷</span>
                   </div>
                 </StIntroMent>
-
-                {!cookies && (
-                  <StStart style={{ marginTop: '30px', fontWeight: "700", lineHeight:"33px"}}>
-                    <StIcon src={icon} />
-                    <StLink
-                      style={{
-                        margin: '10px 0px 0px 10px',
-                        color: '#21dccf',
-                        fontSize: '1.6rem'
-                
-                      }}
-                      onClick={guestLogin}
-                    >
-                      임시계정으로 체험하기
-                    </StLink>
-                  </StStart>
-                )}
-
                 <StStart>
                   {isOpen && (
                     <WorkSpaceErrorModal
@@ -130,19 +115,38 @@ function Landing({ path, setPath }) {
                     ></WorkSpaceErrorModal>
                   )}
                   <StIcon src={icon} />
-                  <StLink style={{marginTop: '30px'}}
-                  onClick={onStartSubmit}>디벨킷 시작하기</StLink>
+                  <StLink style={{ marginTop: '70px' }} onClick={onStartSubmit}>
+                    디벨킷 시작하기
+                  </StLink>
                 </StStart>
-
+                {!cookies && (
+                  <StStart
+                    style={{
+                      marginTop: '30px',
+                      fontWeight: '700',
+                      lineHeight: '33px',
+                    }}
+                  >
+                    <StIcon src={icon} />
+                    <StLink
+                      style={{
+                        margin: '30px 0px 0px 10px',
+                        color: '#21dccf',
+                        fontSize: '1.6rem',
+                      }}
+                      onClick={guestLogin}
+                    >
+                      임시계정으로 체험하기
+                    </StLink>
+                  </StStart>
+                )}
               </StIntro>
               <Twinklestar></Twinklestar>
               <StVelkit></StVelkit>
             </StWrap>
             <StScroll>
-              <StScrollImg alt='scroll' src={scroll} onClick={onHomeClick} />
-              <div onClick={onHomeClick} className='animate__shakeY'>
-                scroll down
-              </div>
+              <StScrollImg alt='scroll' src={scroll} />
+              <div className='animate__shakeY'>scroll down</div>
             </StScroll>
           </StMain>
         </StWrapper>
@@ -230,7 +234,7 @@ function Landing({ path, setPath }) {
       </Slide>
 
       <Slide>
-        <StWrapper className='container3' height={'100vh'}>
+        <StWrapper height={'100vh'}>
           <StImgWrapper img={ThirdBackground}>
             <StMain>
               <StThirdBody>
@@ -267,9 +271,16 @@ function Landing({ path, setPath }) {
                       디벨킷에서 사이드 프로젝트 제안을 받을 수도 있습니다.
                     </StCardMentContent>
                   </StCardMentContainer>
-                  <StLink 
-                    onClick={() => {alert('기능 준비중입니다!');}}
-                    style={{ marginTop: '60px', marginLeft: '0', textDecoration:'underline'}}>
+                  <StLink
+                    onClick={() => {
+                      alert('기능 준비중입니다!');
+                    }}
+                    style={{
+                      marginTop: '60px',
+                      marginLeft: '0',
+                      textDecoration: 'underline',
+                    }}
+                  >
                     커뮤니티 바로가기{' '}
                   </StLink>
                 </StThirdMent>
@@ -282,7 +293,7 @@ function Landing({ path, setPath }) {
       </Slide>
 
       <Slide>
-        <StWrapper className='container4' height={'80vh'}>
+        <StWrapper height={'80vh'}>
           <StMain>
             <StThirdBody>
               <StImgBox>
@@ -294,16 +305,23 @@ function Landing({ path, setPath }) {
                     <div style={{ marginTop: '10px', fontWeight: '700' }}>
                       더 완벽한 프로젝트를 위해,
                     </div>
-                    <StLink onClick={()=>{setIsOpen(true)}} style={{ marginTop: '100px', marginLeft: '0', textDecoration:'underline' }}>
+                    <StLink
+                      onClick={() => {
+                        openSignUpModal();
+                      }}
+                      style={{
+                        marginTop: '100px',
+                        marginLeft: '0',
+                        textDecoration: 'underline',
+                      }}
+                    >
                       회원가입 바로가기{' '}
-                      {isOpen && (
-                    <SignupModal
-                      open={isOpen}
-                      onClose={handleClose}
-                    ></SignupModal>
-                  )}
-
-
+                      {/* {isOpen && (
+                        <SignupModal
+                          open={isOpen}
+                          onClose={handleClose}
+                        ></SignupModal>
+                      )} */}
                     </StLink>
                   </StSecondBodyMentTwo>
                 </StFourthImg>
@@ -318,8 +336,16 @@ function Landing({ path, setPath }) {
                     <div style={{ marginTop: '10px', fontWeight: '700' }}>
                       힙한 EVENT,
                     </div>
-                    <StLink style={{ marginTop: '100px', marginLeft: '0', textDecoration:'underline'}}
-                      onClick={() => {navigate('/event')}}>
+                    <StLink
+                      style={{
+                        marginTop: '100px',
+                        marginLeft: '0',
+                        textDecoration: 'underline',
+                      }}
+                      onClick={() => {
+                        navigate('/event');
+                      }}
+                    >
                       EVENT 바로가기{' '}
                     </StLink>
                   </StSecondBodyMentTwo>
@@ -331,6 +357,7 @@ function Landing({ path, setPath }) {
         </StWrapper>
         <Footer />
       </Slide>
+      {isSignUp && <SignupModal open={isSignUp}></SignupModal>}
     </FullPage>
   );
 }
@@ -389,7 +416,7 @@ const StWrap = styled.div`
 `;
 
 const StIntro = styled.div`
-  margin-top: 10%;
+  margin-top: 50px;
   justify-content: left;
   align-items: left;
   flex-direction: column;
@@ -449,7 +476,6 @@ const StScroll = styled.div`
   align-items: center;
   flex-direction: column;
   text-align: center;
-  cursor: pointer;
   font-family: 'Montserrat';
   position: absolute;
   bottom: 50px;
@@ -495,15 +521,13 @@ const StVelkit = styled.div`
 `;
 
 const StVelkit2 = styled.div`
-  width: 25%;
-  height: 50%;
-  min-width: 205px;
-  min-height: 300px;
+  width: 300px;
+  height: 400px;
   background-image: url(${velkit2});
   background-size: 100% 100%;
   position: absolute;
-  left: 25%;
-  top: 240%;
+  left: 30%;
+  top: 45%;
   animation: ${move} 2s 0s infinite;
   /* animation-iteration-count: infinite;
   animation-name: bounce;
@@ -538,8 +562,8 @@ const StVelkit3 = styled.div`
   background-image: url(${velkit3});
   background-size: 100% 100%;
   position: absolute;
-  left: 75%;
-  top: 340%;
+  left: 80%;
+  top: 50%;
   animation: ${move} 2s 0s infinite;
   /* animation-iteration-count: infinite;
   animation-name: bounce;
@@ -673,6 +697,7 @@ const StThirdBody = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  position: relative;
 `;
 
 const StImgBox = styled.div`
