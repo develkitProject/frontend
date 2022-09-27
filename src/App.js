@@ -3,7 +3,6 @@ import { useState } from 'react';
 import Header from './components/Header';
 import Landing from './pages/Landing';
 import MyPage from './pages/MyPage';
-// import SignUp from './pages/SignUp';
 import WorkSpace from './pages/WorkSpace';
 import Kakao from './pages/KaKao';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
@@ -17,18 +16,13 @@ import EventPage from './pages/Event';
 
 function App() {
   const [path, setPath] = useState(1);
-
-  // const cookie = getCookieToken();
   const location = useLocation();
   return (
     <>
-      {/* <Routes></Routes> */}
-
       {location.pathname !== '/' ? (
         <Header setPath={setPath} path={path} />
       ) : null}
       <Routes>
-        {/* <Route path='/signup' element={<SignUp />} /> */}
         <Route path='/' element={<Landing setPath={setPath} path={path} />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/mypage2' element={<MyPage2 />} />

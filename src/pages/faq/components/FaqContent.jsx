@@ -1,6 +1,6 @@
 const FaqContents = {
   First: () => <span>
-    디벨킷은 회원가입 없이 서비스를 체험할 수 있는<br/> 
+    디벨킷은 별도의 회원가입 없이 임시계정으로 서비스를 체험할 수 있는<br/> 
     "체험하기" 기능을 제공하고 있습니다.<br/>
     <div style={{fontWeight: "500"}}>( 체험하기 방법 - 메인 페이지  <span style={{color:"#00A99D"}}>&nbsp;"임시계정으로 체험하기" </span>)</div>
     <br/>
