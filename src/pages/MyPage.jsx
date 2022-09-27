@@ -11,8 +11,6 @@ function MyPage() {
   const { data, error, isLoading } = useGetWorkspacesQuery();
   const workspaces = data?.data;
 
-  console.log(data)
-
   return (
     <StWrapper>
       <RowDiv>

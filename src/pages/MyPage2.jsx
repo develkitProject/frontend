@@ -11,12 +11,8 @@ import {
 import { removeCookieToken } from '../Cookie';
 
 function MyPage2() {
-
   const [updateUserInfo] = useUpdateUserInfoMutation();
   const { data } = useGetUserInfoQuery();
-
-  const userData = data?.data;
-  console.log(userData)
 
   const { user } = useGetUser();
   const userNickname = data?.data.nickname;
