@@ -1,5 +1,5 @@
 import React, { useRef, useCallback } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ModalContainer from './ModalContainer';
 import useOutSideClick from '../hooks/useOutSideClick';
@@ -12,6 +12,7 @@ const WorkSpaceErrorModal = ({ onClose }) => {
   const dispatch = useDispatch();
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=https://d-velkit.com/kakao&response_type=code`;
   const modalRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleClose = useCallback(() => {
     onClose?.();
@@ -82,6 +83,23 @@ const WorkSpaceErrorModal = ({ onClose }) => {
             <StIcon src={KakaoIcon} />
             카카오계정으로 로그인
           </StButton>
+          <button
+            style={{
+              backgroundColor: 'white',
+              border: 'none',
+              cursor: 'pointer',
+              position: 'absolute',
+              top: '0',
+              fontSize: '27px',
+              right: '20px',
+            }}
+            onClick={() => {
+              handleClose();
+              navigate('/');
+            }}
+          >
+            x
+          </button>
         </ModalWrap>
       </Overlay>
     </ModalContainer>
