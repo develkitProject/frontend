@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import useGetUser from '../common/hooks/useGetUser';
 import { useGetWorkspacesQuery } from '../redux/modules/workspaces';
 import SpaceCard from '../components/SpaceCard';
+import { useGetUserInfoQuery } from '../redux/modules/workspaces';
 import MyPage2 from './MyPage2';
 
 function MyPage() {
@@ -10,6 +11,21 @@ function MyPage() {
   const [tab, setTab] = useState(false);
   const { data, error, isLoading } = useGetWorkspacesQuery();
   const workspaces = data?.data;
+  const { data: userData } = useGetUserInfoQuery();
+  let now = new Date();
+  const createdData = userData?.data.createdAt.split(' ')[0];
+  const stYear = Number(createdData?.split('/')[0]);
+  const stMonth = Number(createdData?.split('/')[1]);
+  const stDay = Number(createdData?.split('/')[2]);
+
+  let stDate = new Date(stYear, stMonth, stDay);
+  let year = now.getFullYear();
+  let month = now.getMonth() + 1;
+  let day = now.getDate();
+  let endDate = new Date(year, month, day);
+
+  let btMs = endDate.getTime() - stDate?.getTime();
+  let btDay = btMs / (1000 * 60 * 60 * 24);
 
   return (
     <StWrapper>
@@ -63,7 +79,7 @@ function MyPage() {
                     <BoxSpan>과 함께</BoxSpan>
                   </div>
                   <div style={{ marginTop: '50px' }}>
-                    <BoxNumSpan>+1</BoxNumSpan>
+                    <BoxNumSpan>{btDay}</BoxNumSpan>
                     <BoxSpan>일</BoxSpan>
                   </div>
                 </IntroBox>
@@ -74,7 +90,7 @@ function MyPage() {
                     <BoxSpan>작성 수</BoxSpan>
                   </div>
                   <div style={{ marginTop: '50px' }}>
-                    <BoxNumSpan>120</BoxNumSpan>
+                    <BoxNumSpan>{userData?.data.documentNum}</BoxNumSpan>
                     <BoxSpan> 건</BoxSpan>
                   </div>
                 </IntroBox>
@@ -101,7 +117,7 @@ function MyPage() {
             </>
           ) : (
             <>
-              <MyPage2></MyPage2>
+              <MyPage2 data={userData}></MyPage2>
             </>
           )}
         </TabDiv2>

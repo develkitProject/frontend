@@ -10,9 +10,8 @@ import {
 } from '../redux/modules/workspaces';
 import { removeUser } from '../Cookie';
 
-function MyPage2() {
+function MyPage2({ data }) {
   const [updateUserInfo] = useUpdateUserInfoMutation();
-  const { data } = useGetUserInfoQuery();
 
   const { user } = useGetUser();
   const userNickname = data?.data.nickname;
