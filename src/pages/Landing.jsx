@@ -83,10 +83,6 @@ function Landing({ path, setPath }) {
     }
   };
 
-  const onHomeClick = () => {
-    homeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  };
-
   return (
     <FullPage controls controlsProps={{ className: 'slide-navigation' }}>
       <Slide>
@@ -111,6 +107,18 @@ function Landing({ path, setPath }) {
                     <span style={{ color: '#00A99D' }}>디벨킷</span>
                   </div>
                 </StIntroMent>
+                <StStart>
+                  {isOpen && (
+                    <WorkSpaceErrorModal
+                      open={isOpen}
+                      onClose={handleClose}
+                    ></WorkSpaceErrorModal>
+                  )}
+                  <StIcon src={icon} />
+                  <StLink style={{ marginTop: '70px' }} onClick={onStartSubmit}>
+                    디벨킷 시작하기
+                  </StLink>
+                </StStart>
                 {!cookies && (
                   <StStart
                     style={{
@@ -122,7 +130,7 @@ function Landing({ path, setPath }) {
                     <StIcon src={icon} />
                     <StLink
                       style={{
-                        margin: '50px 0px 0px 10px',
+                        margin: '30px 0px 0px 10px',
                         color: '#21dccf',
                         fontSize: '1.6rem',
                       }}
@@ -132,19 +140,6 @@ function Landing({ path, setPath }) {
                     </StLink>
                   </StStart>
                 )}
-
-                <StStart>
-                  {isOpen && (
-                    <WorkSpaceErrorModal
-                      open={isOpen}
-                      onClose={handleClose}
-                    ></WorkSpaceErrorModal>
-                  )}
-                  <StIcon src={icon} />
-                  <StLink style={{ marginTop: '30px' }} onClick={onStartSubmit}>
-                    디벨킷 시작하기
-                  </StLink>
-                </StStart>
               </StIntro>
               <Twinklestar></Twinklestar>
               <StVelkit></StVelkit>
