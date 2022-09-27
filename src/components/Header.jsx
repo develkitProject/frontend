@@ -59,10 +59,12 @@ function Header({ path, setPath }) {
     setPath(1);
     navigate('/');
   };
+
   const moveProject = () => {
     setPath(2);
     navigate('/workspace');
   };
+
   const moveFAQ = () => {
     setPath(4);
     navigate('/faq');
@@ -72,6 +74,10 @@ function Header({ path, setPath }) {
     setPath(5);
     navigate('/event');
   };
+
+  const handleAlarm = () =>{
+    window.alert('기능구현중입니다.')
+  }
 
   return (
     <>
@@ -140,7 +146,7 @@ function Header({ path, setPath }) {
           </StDiv>
         ) : (
           <StDiv>
-            <StAlarmImg src={alarm} />
+            <StAlarmImg src={alarm} onClick={handleAlarm}/>
             <StProfileImg
               src={userData?.profileImageUrl}
               onClick={() => {
