@@ -34,6 +34,8 @@ function Header({ path, setPath }) {
       setPath(1);
     } else if (location === '/faq') {
       setPath(4);
+    } else if (location === '/event') {
+      setPath(5);
     } else {
       setPath(2);
     }
@@ -67,6 +69,7 @@ function Header({ path, setPath }) {
   };
 
   const moveEvent = () => {
+    setPath(5);
     navigate('/event');
   };
 
@@ -111,7 +114,12 @@ function Header({ path, setPath }) {
             >
               FAQ
             </StMenuName>
-             <StMenuName onClick={moveEvent}>Event</StMenuName>
+            <StMenuName
+              onClick={moveEvent}
+              style={path === 5 ? { opacity: '1' } : null}
+            >
+              Event
+            </StMenuName>
           </StMenuDiv>
         </div>
 
