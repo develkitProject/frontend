@@ -24,23 +24,29 @@ import Header from '../components/Header';
 import SignupModal from '../signup/SignupModal';
 import { setAccessToken } from '../Cookie';
 import { loginApi } from '../data/login';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsSignUpModal } from '../redux/modules/global';
+import { selectIsSignUpModal } from '../redux/modules/global/selectors';
 import { FullPage, Slide } from 'react-full-page/lib';
-
 
 function Landing({ path, setPath }) {
   const navigate = useNavigate();
   const cookies = getCookieToken();
   const homeRef = useRef(null);
+  const dispatch = useDispatch();
+  const isSignUp = useSelector(selectIsSignUpModal);
   const API_URL = `${process.env.REACT_APP_BASE_URL}/api/members/guest`;
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const openSignUpModal = () => {
+    dispatch(setIsSignUpModal(true));
+  };
+
   const guestLogin = async () => {
     const response = await axios.get(API_URL);
-    console.log(response);
     const username = response.data.data.username;
     const password = (username.split('@')[0] += '!');
-    console.log(username, password);
 
     loginApi({ username, password })
       .then((res) => {
@@ -77,10 +83,8 @@ function Landing({ path, setPath }) {
     }
   };
 
-
   const onHomeClick = () => {
-    homeRef.current?.scrollIntoView({ behavior: 'smooth', block:'center'});
-    
+    homeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
   return (
@@ -108,14 +112,19 @@ function Landing({ path, setPath }) {
                   </div>
                 </StIntroMent>
                 {!cookies && (
-                  <StStart style={{ marginTop: '30px', fontWeight: "700", lineHeight:"33px"}}>
+                  <StStart
+                    style={{
+                      marginTop: '30px',
+                      fontWeight: '700',
+                      lineHeight: '33px',
+                    }}
+                  >
                     <StIcon src={icon} />
                     <StLink
                       style={{
-                        margin: '10px 0px 0px 10px',
+                        margin: '50px 0px 0px 10px',
                         color: '#21dccf',
-                        fontSize: '1.6rem'
-                
+                        fontSize: '1.6rem',
                       }}
                       onClick={guestLogin}
                     >
@@ -132,19 +141,17 @@ function Landing({ path, setPath }) {
                     ></WorkSpaceErrorModal>
                   )}
                   <StIcon src={icon} />
-                  <StLink style={{marginTop: '30px'}}
-                  onClick={onStartSubmit}>디벨킷 시작하기</StLink>
+                  <StLink style={{ marginTop: '30px' }} onClick={onStartSubmit}>
+                    디벨킷 시작하기
+                  </StLink>
                 </StStart>
-
               </StIntro>
               <Twinklestar></Twinklestar>
               <StVelkit></StVelkit>
             </StWrap>
             <StScroll>
-              <StScrollImg alt='scroll' src={scroll} onClick={onHomeClick} />
-              <div onClick={onHomeClick} className='animate__shakeY'>
-                scroll down
-              </div>
+              <StScrollImg alt='scroll' src={scroll} />
+              <div className='animate__shakeY'>scroll down</div>
             </StScroll>
           </StMain>
         </StWrapper>
@@ -269,9 +276,16 @@ function Landing({ path, setPath }) {
                       디벨킷에서 사이드 프로젝트 제안을 받을 수도 있습니다.
                     </StCardMentContent>
                   </StCardMentContainer>
-                  <StLink 
-                    onClick={() => {alert('기능 준비중입니다!');}}
-                    style={{ marginTop: '60px', marginLeft: '0', textDecoration:'underline'}}>
+                  <StLink
+                    onClick={() => {
+                      alert('기능 준비중입니다!');
+                    }}
+                    style={{
+                      marginTop: '60px',
+                      marginLeft: '0',
+                      textDecoration: 'underline',
+                    }}
+                  >
                     커뮤니티 바로가기{' '}
                   </StLink>
                 </StThirdMent>
@@ -296,16 +310,23 @@ function Landing({ path, setPath }) {
                     <div style={{ marginTop: '10px', fontWeight: '700' }}>
                       더 완벽한 프로젝트를 위해,
                     </div>
-                    <StLink onClick={()=>{setIsOpen(true)}} style={{ marginTop: '100px', marginLeft: '0', textDecoration:'underline' }}>
+                    <StLink
+                      onClick={() => {
+                        openSignUpModal();
+                      }}
+                      style={{
+                        marginTop: '100px',
+                        marginLeft: '0',
+                        textDecoration: 'underline',
+                      }}
+                    >
                       회원가입 바로가기{' '}
-                      {isOpen && (
-                    <SignupModal
-                      open={isOpen}
-                      onClose={handleClose}
-                    ></SignupModal>
-                  )}
-
-
+                      {/* {isOpen && (
+                        <SignupModal
+                          open={isOpen}
+                          onClose={handleClose}
+                        ></SignupModal>
+                      )} */}
                     </StLink>
                   </StSecondBodyMentTwo>
                 </StFourthImg>
@@ -320,8 +341,16 @@ function Landing({ path, setPath }) {
                     <div style={{ marginTop: '10px', fontWeight: '700' }}>
                       힙한 EVENT,
                     </div>
-                    <StLink style={{ marginTop: '100px', marginLeft: '0', textDecoration:'underline'}}
-                      onClick={() => {navigate('/event')}}>
+                    <StLink
+                      style={{
+                        marginTop: '100px',
+                        marginLeft: '0',
+                        textDecoration: 'underline',
+                      }}
+                      onClick={() => {
+                        navigate('/event');
+                      }}
+                    >
                       EVENT 바로가기{' '}
                     </StLink>
                   </StSecondBodyMentTwo>
@@ -333,6 +362,7 @@ function Landing({ path, setPath }) {
         </StWrapper>
         <Footer />
       </Slide>
+      {isSignUp && <SignupModal open={isSignUp}></SignupModal>}
     </FullPage>
   );
 }
@@ -391,7 +421,7 @@ const StWrap = styled.div`
 `;
 
 const StIntro = styled.div`
-  margin-top: 10%;
+  margin-top: 50px;
   justify-content: left;
   align-items: left;
   flex-direction: column;
@@ -451,7 +481,6 @@ const StScroll = styled.div`
   align-items: center;
   flex-direction: column;
   text-align: center;
-  cursor: pointer;
   font-family: 'Montserrat';
   position: absolute;
   bottom: 50px;
