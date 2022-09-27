@@ -1,6 +1,6 @@
 import React from 'react';
 
-import BasicInput from '../../components/BasicInput';
+import BasicInput from '../../common/elements/BasicInput';
 import Icon from '../../components/Icon';
 import useModalOverlay from '../hooks/useModalOverlay';
 import PasswordInfo from './passwordInfo';

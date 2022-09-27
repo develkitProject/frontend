@@ -2,16 +2,17 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.section`
   width: 100%;
-  height: 100vh;
-  /* min-height: 100%; */
+  min-height: 100vh;
+  /* min-height: 100vh; */
   background-color: #f2f2f2;
   display: flex;
   flex-direction: row;
+  position: relative;
 `;
 
 export const Projects = styled.div`
   width: 65%;
-  min-height: 90%;
+  /* height: 90vh; */
   margin-left: 50px;
   margin-top: 60px;
   margin-bottom: 50px;
@@ -19,6 +20,7 @@ export const Projects = styled.div`
   display: flex;
   flex-direction: column;
   align-items: left;
+  position: relative;
 `;
 
 export const StWrapper = styled.div`
@@ -36,26 +38,26 @@ export const StWrapper = styled.div`
 `;
 
 export const StLabel = styled.div`
-  width: 100%;
+  width: 200px;
   border-bottom: solid 1px #c6c6c6;
   display: table-cell;
   /* align-items: center; */
   height: 35px;
   line-height: 35px;
-  vertical-align: middle;
+  /* vertical-align: middle; */
   cursor: pointer;
 `;
 
 export const StMenuInDiv = styled.div`
+  width: 180px;
   display: flex;
   flex-direction: column;
   margin-left: 20px;
-
   cursor: pointer;
 `;
 
 export const StMenuIn = styled.div`
-  width: 100%;
+  width: 180px;
   height: 35px;
   line-height: 35px;
   color: #6a6a6a;

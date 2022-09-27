@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCookieToken, removeCookieToken } from '../Cookie';
-import WorkSpaceErrorModal from '../common/Modal/error';
 import alarm from '../asset/img/alarm.svg';
 import logo from '../asset/img/logo.png';
 import Login from '../login';
@@ -15,39 +14,34 @@ import {
   selectIsLoginModal,
   selectIsSignUpModal,
 } from '../redux/modules/global/selectors';
+import { useGetUserInfoQuery } from '../redux/modules/workspaces';
 
-function Header() {
-  const [path, setPath] = useState(1);
+function Header({ path, setPath }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const API_URL = `https://hosung.shop/api/members/profile`;
   const cookies = getCookieToken();
+  const location = useLocation().pathname;
 
   const [profileOpen, setProfileOpen] = useState(false);
-
-  const [user, setUser] = useState('');
 
   const isLogin = useSelector(selectIsLoginModal);
   const isSignUp = useSelector(selectIsSignUpModal);
 
-  // const { user } = useMemo(() => {
-  //   return useGetUser();
-  // }, []);
+  const { data } = useGetUserInfoQuery();
 
   useEffect(() => {
-    readUser();
+    if (location === '/') {
+      setPath(1);
+    } else if (location === '/faq') {
+      setPath(4);
+    } else if (location === '/event') {
+      setPath(5);
+    } else {
+      setPath(2);
+    }
   }, []);
 
-  const readUser = async () => {
-    if (cookies) {
-      const response = await axios.get(API_URL, {
-        headers: {
-          Authorization: getCookieToken(),
-        },
-      });
-      setUser(response.data.data);
-    }
-  };
+  const userData = data?.data;
 
   const openLoginModal = () => {
     dispatch(setIsLoginModal(true));
@@ -62,17 +56,27 @@ function Header() {
   };
 
   const moveMain = () => {
-    navigate('/');
     setPath(1);
+    navigate('/');
   };
+
   const moveProject = () => {
-    // if (cookies) {
     setPath(2);
     navigate('/workspace');
-    // } else {
-    // alert('로그인해주세요');
-    // navigate('/');
-    // setPath(1);
+  };
+
+  const moveFAQ = () => {
+    setPath(4);
+    navigate('/faq');
+  };
+
+  const moveEvent = () => {
+    setPath(5);
+    navigate('/event');
+  };
+
+  const handleAlarm = () => {
+    window.alert('기능구현중입니다.');
   };
 
   return (
@@ -103,9 +107,25 @@ function Header() {
             >
               Proejct
             </StMenuName>
-            <StMenuName>Community</StMenuName>
-            <StMenuName>FAQ</StMenuName>
-            {/* </StDiv> */}
+            {/* <StMenuName
+              onClick={() => {
+                alert('기능 준비중입니다!');
+              }}
+            >
+              Community
+            </StMenuName> */}
+            <StMenuName
+              onClick={moveFAQ}
+              style={path === 4 ? { opacity: '1' } : null}
+            >
+              FAQ
+            </StMenuName>
+            <StMenuName
+              onClick={moveEvent}
+              style={path === 5 ? { opacity: '1' } : null}
+            >
+              Event
+            </StMenuName>
           </StMenuDiv>
         </div>
 
@@ -126,14 +146,16 @@ function Header() {
           </StDiv>
         ) : (
           <StDiv>
-            <StAlarmImg src={alarm} />
+            <StAlarmImg src={alarm} onClick={handleAlarm} />
             <StProfileImg
-              src={user.profileImageUrl}
+              src={userData?.profileImageUrl}
               onClick={() => {
                 setProfileOpen(profileOpen === false);
               }}
             />
-            {profileOpen ? <MyProfileModal onClose={handleClose} /> : null}
+            {profileOpen ? (
+              <MyProfileModal userData={userData} onClose={handleClose} />
+            ) : null}
           </StDiv>
         )}
       </StHeaderDiv>

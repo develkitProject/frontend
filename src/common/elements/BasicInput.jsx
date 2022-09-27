@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import styled from 'styled-components';
-import Icon from './Icon';
+import Icon from '../../components/Icon';
 
 export default function BasicInput({
   placeholder,
@@ -14,6 +14,7 @@ export default function BasicInput({
   isError,
   isSuccess,
   errorText,
+  value,
 }) {
   const setBorderStyle = useCallback(() => {
     if (isSuccess) return '1px solid #00A99D';
@@ -30,6 +31,7 @@ export default function BasicInput({
           type={type}
           placeholder={placeholder}
           onChange={onChange}
+          value={value}
           borderStyle={setBorderStyle()}
         />
         {isSuccess && <Icon.CheckSuccess />}

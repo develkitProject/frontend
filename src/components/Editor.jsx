@@ -3,17 +3,25 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useAddImageMutation } from '../redux/modules/workspaces';
 import { getCookieToken } from '../Cookie';
 
-function Editor({ setCon }) {
+function Editor({ value, setContent }) {
   const QuillRef = useRef();
-  const [content, setContent] = useState('');
-  setCon(content);
+  const [editContent, setEditContent] = useState(value);
+  useEffect(() => {
+    setEditContent(value);
+  }, [setContent, value]);
   // const [imgurl, setImgurl] =useState("")
   // const [addImage,{data, isSuccess, isFail, refetch}] = useAddImageMutation();
 
   const Headers = {
     Authorization: getCookieToken(),
+  };
+
+  const onChange = (e) => {
+    setContent(e.target.value);
+    // console.log(value);
   };
 
   const imageHandler = () => {
@@ -30,7 +38,7 @@ function Editor({ setCon }) {
         formData.append('image', file);
         try {
           const result = await axios.post(
-            'https://hosung.shop/api/images',
+            `${process.env.REACT_APP_BASE_URL}/api/images`,
             formData,
             { headers: Headers },
           );
@@ -97,19 +105,19 @@ function Editor({ setCon }) {
   return (
     <StEditorContainer>
       <ReactQuill
-        ref={element => {
+        ref={(element) => {
           if (element !== null) {
             QuillRef.current = element;
           }
         }}
         style={{ height: '500px', width: '96%' }}
-        value={content}
         theme="snow"
         name="content"
         modules={modules}
         formats={formats}
         onChange={setContent}
-        content={content}
+        content={editContent}
+        defaultValue={editContent}
       />
     </StEditorContainer>
   );

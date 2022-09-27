@@ -13,7 +13,7 @@ function SpaceHeader() {
   const [inviteCodeConfirm, setInviteCodeConfirm] = useState(false);
   const [code, setCode] = useState('');
 
-  const onChange = e => {
+  const onChange = (e) => {
     setCode(e.target.value);
   };
 
@@ -28,8 +28,12 @@ function SpaceHeader() {
     if (code) {
       try {
         await axios
-          .post('https://hosung.shop/api/invitation/codes', codes, { headers })
-          .then(response => {
+          .post(
+            `${process.env.REACT_APP_BASE_URL}/api/invitation/codes`,
+            codes,
+            { headers },
+          )
+          .then((response) => {
             setInviteCodeConfirm(true);
             setSpaceData(response?.data?.data.workspaces);
           });

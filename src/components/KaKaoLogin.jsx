@@ -4,7 +4,6 @@ import KakaoIcon from '../asset/img/kakaoIcon.png';
 
 const { Kakao } = window;
 const loginWithKakao = () => {
-  console.log('로그인 되었습니다!');
   Kakao.Auth.authorize({
     redirectUri: 'https://d-velkit.com/kakao',
   });
@@ -20,7 +19,7 @@ function KakaoLogin() {
         height: '100%',
       }}
     >
-      <a onClick={loginWithKakao}>
+      <div role="presentation" onClick={loginWithKakao}>
         <StKaKaoLoginButton>
           <StIcon src={KakaoIcon} />
           카카오계정으로 로그인
@@ -31,7 +30,7 @@ function KakaoLogin() {
           src='//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg'
           style={{ width: '100%', height: '75%', cursor: 'pointer' }}
         /> */}
-      </a>
+      </div>
     </div>
   );
 }

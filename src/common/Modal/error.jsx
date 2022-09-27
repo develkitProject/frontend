@@ -1,17 +1,18 @@
 import React, { useRef, useCallback } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import ModalContainer from './ModalContainer';
 import useOutSideClick from '../hooks/useOutSideClick';
 import error_outline from '../../asset/img/error_outline.svg';
-import { useDispatch } from 'react-redux';
 import { setIsLoginModal, setIsSignUpModal } from '../../redux/modules/global';
 import KakaoIcon from '../../asset/img/kakaoIcon.png';
 
-const WorkSpaceErrorModal = ({ onClose }) => {
+function WorkSpaceErrorModal({ onClose }) {
   const dispatch = useDispatch();
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=https://d-velkit.com/kakao&response_type=code`;
   const modalRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleClose = useCallback(() => {
     onClose?.();
@@ -22,7 +23,7 @@ const WorkSpaceErrorModal = ({ onClose }) => {
       onClose?.();
       dispatch(setIsSignUpModal(true));
     },
-    [dispatch, onClose]
+    [dispatch, onClose],
   );
 
   const handleOpenLogin = useCallback(() => {
@@ -40,23 +41,23 @@ const WorkSpaceErrorModal = ({ onClose }) => {
     <ModalContainer>
       <Overlay>
         <ModalWrap ref={modalRef}>
-          <StAlert fw='bold' fs='28px' fc='#00a99d'>
+          <StAlert fw="bold" fs="28px" fc="#00a99d">
             <StErrorImg src={error_outline} />
             로그인을 해주세요!
           </StAlert>
-          <StAlert fs='16px' fc='#626262'>
+          <StAlert fs="16px" fc="#626262">
             성장하는 사람들을 위한 프로젝트 협업 서비스 디벨킷
           </StAlert>
-          <StButton type='button' onClick={handleOpenLogin} bc='#00a99d'>
+          <StButton type="button" onClick={handleOpenLogin} bc="#00a99d">
             로그인
           </StButton>
           <StMent>
-            <StAlert fs='16px' fc='#999'>
+            <StAlert fs="16px" fc="#999">
               디벨킷에 처음인가요?
             </StAlert>
             <StAlert
-              fs='16px'
-              fc='#00a99d'
+              fs="16px"
+              fc="#00a99d"
               onClick={handleOpenSignUp}
               style={{
                 marginLeft: '10px',
@@ -68,25 +69,43 @@ const WorkSpaceErrorModal = ({ onClose }) => {
             </StAlert>
           </StMent>
           <StMent>
-            <StLine></StLine>
-            <StAlert fs='12px' fc='#d9d9d9'>
+            <StLine />
+            <StAlert fs="12px" fc="#d9d9d9">
               또는
             </StAlert>
-            <StLine></StLine>
+            <StLine />
           </StMent>
           <StButton
             onClick={handleLogin}
-            bc='#ffe502'
+            bc="#ffe502"
             style={{ color: 'black' }}
           >
             <StIcon src={KakaoIcon} />
             카카오계정으로 로그인
           </StButton>
+          <button
+            type="button"
+            style={{
+              backgroundColor: 'white',
+              border: 'none',
+              cursor: 'pointer',
+              position: 'absolute',
+              top: '0',
+              fontSize: '27px',
+              right: '20px',
+            }}
+            onClick={() => {
+              handleClose();
+              navigate('/');
+            }}
+          >
+            x
+          </button>
         </ModalWrap>
       </Overlay>
     </ModalContainer>
   );
-};
+}
 
 export default WorkSpaceErrorModal;
 

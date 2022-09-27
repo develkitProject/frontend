@@ -1,31 +1,35 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useGetMemberListQuery } from '../redux/modules/workspaces';
+import { useGetMemberListQuery } from '../../redux/modules/workspaces';
 
-function Address() {
+function Address({ id, data_1, error_1, isLoading_1 }) {
   const params = useParams();
-  const id = Number(params.id);
-  const { data, error, isLoading, refetch } = useGetMemberListQuery(id);
-  const member = data?.data;
+  // const id = Number(params.id);
+  // const { data, error, isLoading, refetch } = useGetMemberListQuery(id);
+  const member = data_1?.data;
 
-  useEffect(() => {
-    refetch();
-  }, [data, refetch]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [data, refetch]);
 
   return (
     <StWrapper>
-      {error ? (
+      {error_1 ? (
         <>에러가 발생했습니다.</>
-      ) : isLoading ? (
+      ) : isLoading_1 ? (
         <>회원 정보를 불러오는 중입니다.</>
-      ) : data ? (
+      ) : data_1 ? (
         <>
           {member?.map((data, i) => {
             return (
               <StAddressContainer key={data?.user.id}>
                 <StAddress>
-                  <StMemberTitle>팀원</StMemberTitle>
+                  <StMemberTitle>
+                    {data?.user.username === data?.user.workspaceCreator
+                      ? '팀장'
+                      : '팀원'}
+                  </StMemberTitle>
                   <StProfileImg src={data?.user.profileImage} />
                   <StNameContainer>
                     <StNickName>{data?.user.nickname}</StNickName>
@@ -59,9 +63,9 @@ const StWrapper = styled.div`
 
 const StAddressContainer = styled.div`
   margin: 1%;
-  width: 45%;
-  min-width: 450px;
-  height: 180px;
+  width: 40%;
+  min-width: 430px;
+  height: 140px;
   background-color: #eef8f8;
   display: flex;
   align-items: center;
@@ -80,36 +84,37 @@ const StAddress = styled.div`
 const StMemberTitle = styled.div`
   width: 60px;
   font-weight: 500;
-  font-size: 1.3rem;
+  font-size: 20px;
   line-height: 10px;
   color: #00a99d;
   letter-spacing: -0.05em;
 `;
 
 const StProfileImg = styled.img`
-  width: 110px;
-  height: 90px;
+  width: 80px;
+  height: 70px;
   border-radius: 70%;
-  margin-left: 30px;
+  margin-left: 10px;
 `;
 
 const StNameContainer = styled.div`
   width: 65%;
   display: flex;
   flex-direction: column;
-  margin-left: 40px;
+  margin-left: 20px;
   color: #333333;
+  flex-wrap: wrap;
 `;
 
 const StNickName = styled.div`
-  font-size: 1.5rem;
+  font-size: 20px;
   font-weight: 500;
-  line-height: 2rem;
+  line-height: 30px;
   margin-bottom: 5px;
 `;
 
 const StUserName = styled.div`
   font-weight: 400;
-  font-size: 1.2rem;
-  line-height: 1.3rem;
+  font-size: 18px;
+  line-height: 24px;
 `;

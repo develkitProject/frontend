@@ -1,24 +1,43 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react';
-import styled from 'styled-components';
-
+/* eslint-disable no-param-reassign */
+/* eslint-disable react/no-array-index-key */
+import React, { useState, useRef, useEffect } from 'react';
+import styled, { keyframes } from 'styled-components';
 import Draggable from 'react-draggable';
-import useGetUser from '../common/hooks/useGetUser';
-import ModalContainer from '../common/Modal/ModalContainer';
+import velkit from '../asset/img/velkit.png';
+import { useGetChatMessagesQuery } from '../redux/modules/workspaces';
 import noteBook from '../asset/img/notebook.png';
 
-export default function Chatting({
-  title,
-  id,
-  stompClient,
-  chatMessages,
-  headers,
-  users,
-}) {
+function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
+  const [users, setUsers] = useState(null);
   const textRef = useRef(null);
-  const messageBoxRef = useRef();
-  const { user } = useGetUser();
+  const { data, isLoading, error, refetch } = useGetChatMessagesQuery(id);
   const [isOpen, setIsOpen] = useState(false);
   const [Opacity, setOpacity] = useState(false);
+  const [minimum, setMinimum] = useState(false);
+
+  // ------------------------------------------------------------------------
+  const messageList = data?.data;
+  const [chatMessages, setChatMessages] = useState([]);
+  const onMiniMode = () => {
+    setMinimum(!minimum);
+  };
+
+  useEffect(() => {
+    onConnected();
+    return () => {
+      disConnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
+  }, [chatMessages]);
+
+  useEffect(() => {
+    setChatMessages(messageList);
+    refetch();
+  }, [messageList]);
+
   const userArray = [...new Set(users)];
 
   const handleStart = () => {
@@ -28,9 +47,48 @@ export default function Chatting({
     setOpacity(false);
   };
 
-  useEffect(() => {
-    messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
-  }, [chatMessages]);
+  function onConnected() {
+    if (stompClient.connected) {
+      stompClient.subscribe(
+        `/sub/chat/room/${id}`,
+        (data) => {
+          const newMessage = JSON.parse(data.body);
+          if (newMessage.type !== 'TALK') {
+            setUsers(newMessage.userList);
+          } else {
+            setChatMessages((chatMessages) => [newMessage, ...chatMessages]);
+          }
+        },
+        headers,
+      );
+    } else if (!stompClient.connected) {
+      onSub();
+    }
+  }
+
+  const disConnect = () => {
+    // if (stompClient.unconnected)
+    if (stompClient != null) {
+      if (stompClient.connected) stompClient.unsubscribe('sub-0');
+    }
+  };
+
+  function onSub() {
+    stompClient.connect(headers, () => {
+      stompClient.subscribe(
+        `/sub/chat/room/${id}`,
+        (data) => {
+          const newMessage = JSON.parse(data.body);
+          if (newMessage.type !== 'TALK') {
+            setUsers(newMessage.userList);
+          } else {
+            setChatMessages((chatMessages) => [newMessage, ...chatMessages]);
+          }
+        },
+        headers,
+      );
+    });
+  }
 
   const sendMessage = () => {
     if (textRef.current.value !== '') {
@@ -46,123 +104,160 @@ export default function Chatting({
     }
   };
 
-  const onKeyDown = e => {
+  const onKeyDown = (e) => {
     if (e.key === 'Enter') {
       sendMessage();
     }
   };
 
   // eslint-disable-next-line array-callback-return
-  const chatdata = chatMessages?.map((data, i) => {
-    if (data.type === 'TALK') {
+  const chatData = chatMessages
+    ?.slice(0)
+    .reverse()
+    .map((data, i) => {
+      // if (data.type === 'TALK') {
       return (
-        <>
-          <Stdiv
-            key={i}
-            style={
-              data.writer === user.username
-                ? { alignItems: 'flex-end' }
-                : { alignItems: 'flex-start' }
-            }
-          >
-            <span
-              style={{
-                color: 'grey',
-              }}
+        <Stdiv
+          key={i}
+          style={
+            data.writer === user?.username
+              ? {
+                  flexDirection: 'row-reverse',
+                  marginTop: '-2px',
+                }
+              : { justifyContent: 'flex-start' }
+          }
+        >
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <NameSpan
+              style={
+                data.writer === user?.username
+                  ? {
+                      display: 'none',
+                    }
+                  : null
+              }
             >
-              {data.writer.split('@')[0]}
-            </span>
+              {data.nickname}
+            </NameSpan>
             <MessageBox key={i}>
               <span style={{ color: 'black' }}>{data.message}</span>
             </MessageBox>
-          </Stdiv>
-        </>
+          </div>
+          <TimeSpan>{data.createdAt.split(' ')[1].slice(0, -7)}</TimeSpan>
+        </Stdiv>
       );
-    }
-  });
+    });
+  // console.log(chatData?.length);
 
   return (
     <>
-      <ModalContainer>
-        <Draggable
-          cancel="input, button, span"
-          onStart={handleStart}
-          onStop={handleEnd}
+      <Draggable
+        cancel="input, button, span"
+        onStart={handleStart}
+        onStop={handleEnd}
+        bounds="parent"
+      >
+        <StChatBox
+          style={{ opacity: Opacity ? '0.85' : '1' }}
+          minimum={minimum}
         >
-          <StChatBox style={{ opacity: Opacity ? '0.85' : '1' }}>
-            {/* <UserList>
-            {userlist?.map((list, i) => {
-              return <>{list}</>;
-            })}
-          </UserList> */}
-            <StChatHeader>
-              <span style={{ marginLeft: '15px', fontSize: '15px' }}>
-                {title}
-              </span>
-              <span
-                style={{
-                  marginRight: '13px',
-                  cursor: 'pointer',
-                  fontSize: '20px',
-                }}
-                onClick={() => {
-                  setIsOpen(!isOpen);
-                }}
-              >
-                +
-              </span>
-            </StChatHeader>
-            <StChatBody ref={messageBoxRef}>{chatdata}</StChatBody>
-            <StChatFooter>
-              <StInput
-                rows="0"
-                cols="0"
-                name="message"
-                // value={textRef.current.value}
-                // onChange={onChange}
-                onKeyPress={onKeyDown}
-                ref={textRef}
-                // autoComplete='off'
-                placeholder="메세지를 입력하세요 (100자 이내)"
-                maxLength={100}
-              />
-              <StButton
-                onClick={sendMessage}
-                // message={message}
-                textRef={textRef}
-                // disabled={textRef.current.value.length === 0}
-              >
-                전송
-              </StButton>
-            </StChatFooter>
-            {isOpen && (
-              <StListDiv>
-                <GreySpan fontWeight="500">디벨킷</GreySpan>
-                <NoteBook />
-                <GreySpan fontWeight="400">현재 접속 인원</GreySpan>
-                <UserListDiv>
-                  {userArray?.map((user, i) => {
-                    return (
-                      <GreySpan padding="10px">{user.split('@')[0]}</GreySpan>
-                    );
-                  })}
-                </UserListDiv>
-              </StListDiv>
+          <StChatHeader>
+            <span style={{ marginLeft: '15px', fontSize: '15px' }}>
+              {title}
+            </span>
+            <span
+              role="presentation"
+              style={{
+                marginRight: '13px',
+                cursor: 'pointer',
+                fontSize: '20px',
+                position: 'absolute',
+                right: '27px',
+                bottom: '18px',
+              }}
+              onClick={onMiniMode}
+            >
+              _
+            </span>
+            <span
+              role="presentation"
+              style={{
+                marginRight: '13px',
+                cursor: 'pointer',
+                fontSize: '20px',
+              }}
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+            >
+              +
+            </span>
+          </StChatHeader>
+          <StChatBody ref={messageBoxRef} minimum={minimum}>
+            {chatData?.length !== 0 ? (
+              chatData
+            ) : (
+              <>
+                <StVelkit />
+                <span
+                  style={{
+                    textAlign: 'center',
+                    marginTop: '150px',
+                    letterSpacing: '-0.5px',
+                    color: '#636363',
+                    width: '100%',
+                  }}
+                >
+                  스페이스 내 멤버들과 채팅해보세요
+                </span>
+              </>
             )}
-          </StChatBox>
-        </Draggable>
-      </ModalContainer>
+          </StChatBody>
+          <StChatFooter minimum={minimum}>
+            <StInput
+              rows="0"
+              cols="0"
+              name="message"
+              onKeyPress={onKeyDown}
+              ref={textRef}
+              placeholder="메세지를 입력하세요 (100자 이내)"
+              maxLength={100}
+            />
+            <StButton onClick={sendMessage} textRef={textRef}>
+              전송
+            </StButton>
+          </StChatFooter>
+          {isOpen && (
+            <StListDiv>
+              <GreySpan fontWeight="500">디벨킷</GreySpan>
+              <NoteBook />
+              <GreySpan fontWeight="400">현재 접속 인원</GreySpan>
+              <UserListDiv>
+                {userArray?.map((user, i) => {
+                  return (
+                    <GreySpan padding="10px" key={i}>
+                      {user.split('@')[0]}
+                    </GreySpan>
+                  );
+                })}
+              </UserListDiv>
+            </StListDiv>
+          )}
+        </StChatBox>
+      </Draggable>
     </>
   );
 }
 
+export default React.memo(Chatting);
+
 const StChatBox = styled.div`
   width: 350px;
-  height: 560px;
+  height: ${(props) => (props.minimum ? '40px' : '560px')};
   background-color: #f6daa2;
   /* position: relative; */
-  left: 50%;
-  top: 50px;
+  right: 20%;
   box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.1), 0 4px 20px 0 rgba(0, 0, 0, 0.2);
   position: absolute;
 `;
@@ -178,6 +273,21 @@ const StChatHeader = styled.div`
   font-weight: 600;
   font-size: 17px;
   letter-spacing: -0.8px;
+  position: relative;
+`;
+
+const StChatBody = styled.div`
+  height: 460px;
+  overflow: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  display: ${(props) => (props.minimum ? 'none' : null)};
+  &::-webkit-scrollbar {
+    width: 5px;
+    display: none;
+  }
 `;
 
 const StChatFooter = styled.div`
@@ -189,8 +299,7 @@ const StChatFooter = styled.div`
   pointer-events: visible;
   position: absolute;
   align-items: center;
-  /* z-index: -999; */
-  /* pointer-events: none; */
+  display: ${(props) => (props.minimum ? 'none' : null)};
 `;
 
 const StInput = styled.input`
@@ -214,25 +323,13 @@ const StButton = styled.button`
   height: 36px;
   font-size: 15px;
   font-weight: 500;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.textRef?.current?.value !== null ? '#f5d28c' : '#d8d8d8'};
   border-radius: 8px;
   margin-left: 14px;
   border: none;
   color: ${({ textRef }) => (textRef !== '' ? '#262012' : '#a1a1a1')};
   cursor: ${({ textRef }) => (textRef !== '' ? 'pointer' : null)};
-`;
-
-const StChatBody = styled.div`
-  height: 460px;
-  overflow: auto;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: right;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const MessageBox = styled.div`
@@ -247,15 +344,18 @@ const MessageBox = styled.div`
   text-align: center;
   align-items: center;
   padding: 0px 5px 0px 5px;
+  white-space: pre-wrap;
   /* margin-left: 10px; */
   /* float: right; */
 `;
 
 const Stdiv = styled.div`
-  margin: 5px;
+  margin: 3px;
   display: flex;
-  flex-direction: column;
-  padding-right: 10px;
+  /* flex-direction: column; */
+  padding: 0px 10px;
+  align-items: flex-end;
+  margin-bottom: 7px;
 `;
 
 const StListDiv = styled.div`
@@ -277,8 +377,8 @@ const StListDiv = styled.div`
 const GreySpan = styled.span`
   color: grey;
   font-size: 17px;
-  padding: ${props => (props.padding ? props.padding : '20px')};
-  font-weight: ${props => props.fontWeight};
+  padding: ${(props) => (props.padding ? props.padding : '20px')};
+  font-weight: ${(props) => props.fontWeight};
   letter-spacing: -0.7px;
 `;
 
@@ -300,4 +400,46 @@ const UserListDiv = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   overflow: auto;
+`;
+
+const TimeSpan = styled.div`
+  color: grey;
+  letter-spacing: -0.9px;
+  font-size: 13px;
+  padding: 0px 9px;
+  /* margin-top: 38px; */
+  /* align-items: flex-start; */
+`;
+
+const NameSpan = styled.span`
+  color: grey;
+  padding: 1px 3px;
+`;
+
+const move = keyframes`
+    0% {
+      transform: translateY(0);
+      transform: translateX(0px);
+    }
+    50% {
+      /* transform: translateY(-25px); */
+      transform: translateX(25px);
+    }
+    100% {
+      transform: translateY(0);
+      transform: translateX(0);
+    }
+
+    
+  `;
+
+const StVelkit = styled.div`
+  width: 20%;
+  height: 10%;
+  background-image: url(${velkit});
+  background-size: 100% 100%;
+  position: absolute;
+  left: 40%;
+  top: 20%;
+  animation: ${move} 3s 0s infinite;
 `;

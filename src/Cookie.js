@@ -31,3 +31,8 @@ export const removeCookieToken = () => {
   alert('로그아웃되었습니다');
   return cookies.remove('user_token', { sameSite: 'strict', path: '/' });
 };
+
+export const removeUser = () => {
+  alert('회원탈퇴되었습니다');
+  return cookies.remove('user_token', { sameSite: 'strict', path: '/' });
+};

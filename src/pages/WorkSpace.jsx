@@ -81,7 +81,7 @@ const StWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 30px;
+  padding-bottom: 200px;
 `;
 
 const CardWrapper = styled.div`

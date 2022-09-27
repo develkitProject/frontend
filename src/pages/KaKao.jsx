@@ -13,8 +13,10 @@ function KaKao() {
   useEffect(() => {
     const kakao = async () => {
       return await axios
-        .get(`https://hosung.shop/user/kakao/callback?code=${code}`)
-        .then(res => setAccessToken(res.headers.authorization))
+        .get(
+          `${process.env.REACT_APP_BASE_URL}/user/kakao/callback?code=${code}`,
+        )
+        .then((res) => setAccessToken(res.headers.authorization))
         .then(() => {
           navigate('/');
           window.location.reload();

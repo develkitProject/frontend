@@ -1,11 +1,11 @@
 import React, { useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import useOutSideClick from '../hooks/useOutSideClick';
 import axios from 'axios';
+import useOutSideClick from '../hooks/useOutSideClick';
 import { getCookieToken } from '../../Cookie';
 
-const CodeConfirmModal = ({ onClose, spaceData }) => {
+function CodeConfirmModal({ onClose, spaceData }) {
   const modalRef = useRef(null);
   const navigate = useNavigate();
   const headers = {
@@ -22,11 +22,11 @@ const CodeConfirmModal = ({ onClose, spaceData }) => {
     try {
       await axios
         .post(
-          `https://hosung.shop/api/workspaces/join/${spaceData.id}`,
+          `${process.env.REACT_APP_BASE_URL}/api/workspaces/join/${spaceData.id}`,
           { obj },
           {
             headers,
-          }
+          },
         )
         .then((response) => {
           alert('가입되었습니다!');
@@ -41,17 +41,17 @@ const CodeConfirmModal = ({ onClose, spaceData }) => {
     <Overlay>
       <ModalWrap ref={modalRef}>
         <StMentDiv>
-          <StTitle fontWeight='bold' fontSize='24px' fontColor='#00a99d'>
+          <StTitle fontWeight="bold" fontSize="24px" fontColor="#00a99d">
             다음 프로젝트에 가입하시겠습니까?
           </StTitle>
-          <StTitle fontSize='14px' fontColor='#626262'>
+          <StTitle fontSize="14px" fontColor="#626262">
             아래 정보를 확인하시어 가입을 희망하시는 프로젝트가 맞는 경우
             <span style={{ fontWeight: '600' }}> “가입하기” </span>버튼을
             눌러주세요
           </StTitle>
         </StMentDiv>
         <StInfoDiv>
-          <StImg img={spaceData.imageUrl}></StImg>
+          <StImg img={spaceData.imageUrl} />
           <StInfoDetail>
             <StInfoMent>{spaceData.title}</StInfoMent>
             <StInfoMent>{spaceData.content}</StInfoMent>
@@ -62,12 +62,12 @@ const CodeConfirmModal = ({ onClose, spaceData }) => {
           </StInfoDetail>
         </StInfoDiv>
         <StButtonBox>
-          <StButton fontColor='white' buttonColor='#00a99d' onClick={onConfirm}>
+          <StButton fontColor="white" buttonColor="#00a99d" onClick={onConfirm}>
             가입하기
           </StButton>
           <StButton
-            fontColor='#424242'
-            buttonColor='#D9D9D9'
+            fontColor="#424242"
+            buttonColor="#D9D9D9"
             onClick={handleClose}
           >
             취소
@@ -78,7 +78,7 @@ const CodeConfirmModal = ({ onClose, spaceData }) => {
       </ModalWrap>
     </Overlay>
   );
-};
+}
 
 export default CodeConfirmModal;
 
@@ -139,7 +139,7 @@ const StInfoDiv = styled.div`
 const StImg = styled.div`
   margin-top: 8px;
   width: 150px;
-  height: 125px;
+  height: 135px;
   background-image: url(${(props) => props.img});
   background-size: 100% 100%;
   border-radius: 20px;
@@ -155,8 +155,8 @@ const StInfoDetail = styled.div`
 
 const StInfoMent = styled.div`
   width: 300px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   background-color: #eef8f8;
   font-weight: 500;
   font-size: 16px;

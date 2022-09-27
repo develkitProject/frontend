@@ -1,14 +1,13 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import Draggable from 'react-draggable';
 import useGetUser from '../hooks/useGetUser';
 import { removeCookieToken } from '../../Cookie';
-import { useNavigate } from 'react-router-dom';
 import useOutSideClick from '../hooks/useOutSideClick';
-import Draggable from 'react-draggable';
 
-const MyProfileModal = ({ onClose }) => {
+function MyProfileModal({ onClose, userData }) {
   const navigate = useNavigate();
-  const { user } = useGetUser();
   const modalRef = useRef(null);
   const logout = () => {
     removeCookieToken();
@@ -30,22 +29,22 @@ const MyProfileModal = ({ onClose }) => {
     <ModalWrap ref={modalRef}>
       <StProfileWrap>
         <StDiv style={{ borderBottom: '1.2px solid #999999' }}>
-          <StProfileImg src={user.profileImageUrl} />
-          <StMent>{user?.nickname}님</StMent>
+          <StProfileImg src={userData?.profileImageUrl} />
+          <StMent>{userData?.nickname}님</StMent>
         </StDiv>
 
         <StDiv>
           <StButton
-            color='#00A99D'
-            border='none'
-            fontColor='#ffffff'
+            color="#00A99D"
+            border="none"
+            fontColor="#ffffff"
             onClick={moveAndClose}
           >
             마이페이지
           </StButton>
           <StButton
-            bc='#999999'
-            fc='#999999'
+            bc="#999999"
+            fc="#999999"
             onClick={() => {
               logout();
             }}
@@ -56,7 +55,7 @@ const MyProfileModal = ({ onClose }) => {
       </StProfileWrap>
     </ModalWrap>
   );
-};
+}
 
 export default MyProfileModal;
 

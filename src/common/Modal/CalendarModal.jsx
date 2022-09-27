@@ -1,12 +1,12 @@
 import React, { useRef, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import BasicInput from '../../components/BasicInput';
+import BasicInput from '../elements/BasicInput';
 import CloseButton from '../elements/CloseButton';
 import Button1 from '../elements/Button';
 import ModalContainer from './ModalContainer';
 import { useAddSchedulesMutation } from '../../redux/modules/workspaces';
 
-const CalendarModal = ({ onClose, id }) => {
+function CalendarModal({ onClose, id }) {
   const modalRef = useRef(null);
   const [state, setState] = useState('');
   const [date, setDate] = useState('');
@@ -26,7 +26,7 @@ const CalendarModal = ({ onClose, id }) => {
 
   const handleSubmit = () => {
     const data = {
-      id: id,
+      id,
       content: state,
       eventDate: date,
     };
@@ -43,7 +43,7 @@ const CalendarModal = ({ onClose, id }) => {
     <ModalContainer>
       <Overlay>
         <ModalWrap ref={modalRef}>
-          <CloseButton handleClose={handleClose}></CloseButton>
+          <CloseButton handleClose={handleClose} />
           <StProejct>프로젝트 일정 만들기</StProejct>
           <StMent>
             프로젝트 일정관리에서 프로젝트 관련 일정을 추가할 수 있습니다
@@ -54,29 +54,25 @@ const CalendarModal = ({ onClose, id }) => {
             <InputSpan>일정 제목</InputSpan>
           </InputBox>
           <BasicInput
-            width='80%'
-            marginTop='10px'
-            placeholder={'일정 제목을 입력하세요'}
+            width="80%"
+            marginTop="10px"
+            placeholder="일정 제목을 입력하세요"
             onChange={onChange}
-          ></BasicInput>
+          />
           <InputBox>
             <InputSpan>날짜</InputSpan>
             <DateInput
-              type='date'
-              data-placeholder='날짜 입력'
+              type="date"
+              data-placeholder="날짜 입력"
               onChange={onChangeDate}
-            ></DateInput>
+            />
           </InputBox>
-          <Button1
-            text={'일정 생성하기'}
-            width='300px'
-            onClick={handleSubmit}
-          ></Button1>
+          <Button1 text="일정 생성하기" width="300px" onClick={handleSubmit} />
         </ModalWrap>
       </Overlay>
     </ModalContainer>
   );
-};
+}
 
 export default CalendarModal;
 

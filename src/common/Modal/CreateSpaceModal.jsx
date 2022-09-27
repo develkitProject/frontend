@@ -1,11 +1,10 @@
 import React, { useRef, useState, useReducer } from 'react';
 import styled from 'styled-components';
+import Draggable from 'react-draggable';
 import ModalContainer from './ModalContainer';
 import { StButton } from '../../login/style';
 import imgupload from '../../asset/img/imgupload.svg';
 import CloseButton from '../elements/CloseButton';
-import Draggable from 'react-draggable';
-
 import { useAddWorkSpacesMutation } from '../../redux/modules/workspaces';
 
 const reducer = (state, action) => {
@@ -15,7 +14,7 @@ const reducer = (state, action) => {
   };
 };
 
-const CreateSpaceModal = ({ onClose }) => {
+function CreateSpaceModal({ onClose }) {
   const imgRef = useRef('');
   const [imageUrl, setImageUrl] = useState(null);
   const [imgFile, setImgFile] = useState('');
@@ -68,25 +67,25 @@ const CreateSpaceModal = ({ onClose }) => {
           <Wrapper>
             <StProejct>프로젝트 생성하기</StProejct>
             <StMent>
-              프로젝트를 생성 후, 프로젝트 홈에서 초대코드를 복사할 수 있습니다.
+              프로젝트 생성 후, 프로젝트 홈에서 초대코드를 복사할 수 있습니다.
             </StMent>
             <StInputTitle>커버 이미지</StInputTitle>
             <StImageBox
-              src={imageUrl ? imageUrl : imgupload}
+              src={imageUrl || imgupload}
               onClick={() => imgRef.current.click()}
-            ></StImageBox>
+            />
             <StInputTitle>프로젝트 이름</StInputTitle>
             <StInput
               onChange={onChange}
-              name='title'
-              placeholder='프로젝트명을 입력해주세요'
-            ></StInput>
+              name="title"
+              placeholder="프로젝트명을 입력해주세요"
+            />
             <StInputTitle>프로젝트 소개</StInputTitle>
             <StInput
               onChange={onChange}
-              name='content'
-              placeholder='프로젝트를 소개해주세요'
-            ></StInput>
+              name="content"
+              placeholder="프로젝트를 소개해주세요"
+            />
             <StButton
               onClick={handleSubmit}
               style={{
@@ -102,10 +101,10 @@ const CreateSpaceModal = ({ onClose }) => {
           <CloseButton handleClose={handleClose}>X</CloseButton>
           <input
             style={{ display: 'none' }}
-            accept='image/*'
-            id='upload-photo'
-            name='upload-photo'
-            type='file'
+            accept="image/*"
+            id="upload-photo"
+            name="upload-photo"
+            type="file"
             onChange={onChangeImage}
             ref={imgRef}
           />
@@ -113,7 +112,7 @@ const CreateSpaceModal = ({ onClose }) => {
       </Overlay>
     </ModalContainer>
   );
-};
+}
 
 export default CreateSpaceModal;
 

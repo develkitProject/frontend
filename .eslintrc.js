@@ -23,5 +23,12 @@ module.exports = {
     'no-return-await': 0,
     'jsx-a11y/no-static-element-interactions': 1,
     'prettier/prettier': 1,
+    camelcase: 0,
+    'jsx-a11y/click-events-have-key-events': 1,
+    'import/named': 1,
+    'react/destructuring-assignment': 0,
+    'react/no-array-index-key': 1,
+    'no-plusplus': 0,
+    'react/no-unescaped-entities': 0,
   },
 };
