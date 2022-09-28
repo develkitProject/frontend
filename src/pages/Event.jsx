@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Event1 from '../asset/img/event1.png';
 import Event2 from '../asset/img/event2.png';
 import Event3 from '../asset/img/event3.png';
+import TopButton from '../common/elements/TopButton';
 import { StButton } from '../login/style';
 
 export default function EventPage() {
@@ -15,6 +16,7 @@ export default function EventPage() {
 
   return (
     <Container>
+      <TopButton />
       <Ment fontColor="white">
         let <Ment fontColor="#00A99D">D_Velkit</Ment> =
         <Ment fontColor="#F5D28C"> “EVENT!”;</Ment>

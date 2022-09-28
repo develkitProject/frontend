@@ -21,12 +21,14 @@ import ThirdImg from '../asset/img/ThirdImg.png';
 import Fourth1 from '../asset/img/Fourth1.png';
 import Fourth2 from '../asset/img/Fourth2.png';
 import circle from '../asset/img/circle.svg';
+import ScrollUp from '../asset/img/ScrollUp.svg';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SignupModal from '../signup/SignupModal';
 import { loginApi } from '../data/login';
 import { setIsSignUpModal } from '../redux/modules/global';
 import { selectIsSignUpModal } from '../redux/modules/global/selectors';
+import TopButton from '../common/elements/TopButton';
 
 function Landing({ path, setPath }) {
   const navigate = useNavigate();
@@ -84,6 +86,7 @@ function Landing({ path, setPath }) {
 
   return (
     <FullPage controls controlsProps={{ className: 'slide-navigation' }}>
+      <TopButton />
       <Slide>
         <Header setPath={setPath} path={path} />
         <StWrapper height="100vh">
