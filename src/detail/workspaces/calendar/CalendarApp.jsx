@@ -5,7 +5,6 @@ import Calendar from 'react-calendar';
 import './Calendar.css'; // css import
 import dayjs from 'dayjs';
 import styled from 'styled-components';
-import CalendarDetail from './CalendarDetail';
 import velkit2 from '../../../asset/img/velkit2.png';
 import velkit3 from '../../../asset/img/velkit3.png';
 import {
@@ -15,7 +14,7 @@ import {
 
 export default function CalendarApp({ id }) {
   const [value, onChange] = useState(new Date());
-  const { data, error, isLoading } = useGetSchedulesQuery(id);
+  const { data } = useGetSchedulesQuery(id);
   const [deleteSchedules] = useDeleteSchedulesMutation();
   const dataArr = data?.data;
   const [isOpen, setIsOpen] = useState(false);
@@ -35,8 +34,10 @@ export default function CalendarApp({ id }) {
       schedulesId,
     };
 
+    // eslint-disable-next-line no-alert
     if (window.confirm('일정을 지우시겠습니까?')) {
       deleteSchedules(obj);
+      // eslint-disable-next-line no-alert
       alert('일정이 삭제되었습니다!');
       setIsOpen(false);
     }
@@ -61,7 +62,7 @@ export default function CalendarApp({ id }) {
         formatDay={(locale, date) =>
           date.toLocaleString('en', { day: 'numeric' })
         }
-        tileContent={({ date, view }) => {
+        tileContent={({ date }) => {
           if (
             dataArr?.find(
               (x) => x?.eventDate === dayjs(date).format('YYYY-MM-DD'),
@@ -136,6 +137,7 @@ const StMark = styled.div`
   border-radius: 5px;
   top: 30px;
   min-height: 22px;
+  max-height: 40px;
   background-color: #00a99d;
   color: white;
   display: flex;
@@ -143,6 +145,7 @@ const StMark = styled.div`
   align-items: center;
   font-size: 15px;
   text-align: center;
+  overflow: hidden;
 `;
 
 const StDetail = styled.div`
@@ -155,11 +158,10 @@ const StDetail = styled.div`
   top: 3%;
   right: 5%;
   display: flex;
-  /* align-items: center; */
-  /* justify-content: center; */
   flex-direction: column;
   font-size: 20px;
   letter-spacing: -0.5px;
+  word-break: break-all;
 `;
 
 const StDeleteButton = styled.span`
@@ -188,6 +190,7 @@ const StContentBox = styled.div`
   align-items: center;
   font-size: 17px;
   margin-top: 8px;
+  word-break: break-all;
 `;
 
 const Velkit = styled.div`

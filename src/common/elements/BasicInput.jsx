@@ -15,6 +15,7 @@ export default function BasicInput({
   isSuccess,
   errorText,
   value,
+  maxLength,
 }) {
   const setBorderStyle = useCallback(() => {
     if (isSuccess) return '1px solid #00A99D';
@@ -33,6 +34,7 @@ export default function BasicInput({
           onChange={onChange}
           value={value}
           borderStyle={setBorderStyle()}
+          maxLength={maxLength}
         />
         {isSuccess && <Icon.CheckSuccess />}
       </InputWrapper>

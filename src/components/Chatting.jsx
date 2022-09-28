@@ -163,36 +163,33 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
           minimum={minimum}
         >
           <StChatHeader>
+            {/* <ArrowDiv /> */}
             <span style={{ marginLeft: '15px', fontSize: '15px' }}>
               {title}
             </span>
-            <span
+            <PlusToggle
               role="presentation"
-              style={{
-                marginRight: '13px',
-                cursor: 'pointer',
-                fontSize: '20px',
-                position: 'absolute',
-                right: '27px',
-                bottom: '18px',
-              }}
               onClick={onMiniMode}
+              minimum={minimum}
+              style={
+                minimum
+                  ? { alignItems: 'center' }
+                  : { alignItems: 'flex-start' }
+              }
+              // style={minimum ? { bottom: '10px' } : { bottom: '18px' }}
             >
-              _
-            </span>
-            <span
+              {minimum ? '+' : '_'}
+            </PlusToggle>
+            <PlusToggle
               role="presentation"
-              style={{
-                marginRight: '13px',
-                cursor: 'pointer',
-                fontSize: '20px',
-              }}
               onClick={() => {
                 setIsOpen(!isOpen);
               }}
+              right="10px"
+              fs="18px"
             >
-              +
-            </span>
+              {!isOpen ? '>' : '<'}
+            </PlusToggle>
           </StChatHeader>
           <StChatBody ref={messageBoxRef} minimum={minimum}>
             {chatData?.length !== 0 ? (
@@ -232,7 +229,9 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
             <StListDiv>
               <GreySpan fontWeight="500">디벨킷</GreySpan>
               <NoteBook />
-              <GreySpan fontWeight="400">현재 접속 인원</GreySpan>
+              <GreySpan fontWeight="400">
+                현재 접속 인원 : {userArray.length}명
+              </GreySpan>
               <UserListDiv>
                 {userArray?.map((user, i) => {
                   return (
@@ -345,8 +344,8 @@ const MessageBox = styled.div`
   align-items: center;
   padding: 0px 5px 0px 5px;
   white-space: pre-wrap;
-  /* margin-left: 10px; */
-  /* float: right; */
+  word-break: break-all;
+  letter-spacing: -0.5px;
 `;
 
 const Stdiv = styled.div`
@@ -412,7 +411,7 @@ const TimeSpan = styled.div`
 `;
 
 const NameSpan = styled.span`
-  color: grey;
+  color: #313131;
   padding: 1px 3px;
 `;
 
@@ -429,9 +428,21 @@ const move = keyframes`
       transform: translateY(0);
       transform: translateX(0);
     }
-
-    
   `;
+
+const PlusToggle = styled.div`
+  background-color: #fbf1de;
+  border-radius: 20px;
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+  font-size: ${(props) => (props.fs ? props.fs : '20px')};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: ${(props) => (props.right ? props.right : '45px')};
+`;
 
 const StVelkit = styled.div`
   width: 20%;

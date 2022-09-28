@@ -35,6 +35,7 @@ function CalendarModal({ onClose, id }) {
       addSchedules(data);
       handleClose();
     } else {
+      // eslint-disable-next-line no-alert
       alert('빈칸을 전부 채워주세요 !');
     }
   };
@@ -56,14 +57,15 @@ function CalendarModal({ onClose, id }) {
           <BasicInput
             width="80%"
             marginTop="10px"
-            placeholder="일정 제목을 입력하세요"
+            placeholder="일정 제목을 입력하세요(25자 이내)"
+            maxLength={25}
             onChange={onChange}
           />
           <InputBox>
             <InputSpan>날짜</InputSpan>
             <DateInput
               type="date"
-              data-placeholder="날짜 입력"
+              // data-placeholder="날짜 입력"
               onChange={onChangeDate}
             />
           </InputBox>

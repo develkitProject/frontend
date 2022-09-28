@@ -30,26 +30,6 @@ export default function Schedule({ id }) {
   );
 }
 
-const StWrapper = styled.div`
-  width: 100%;
-  min-height: 100%;
-  background-color: #f2f2f2;
-  display: flex;
-  flex-direction: row;
-`;
-
-const Projects = styled.div`
-  width: 65%;
-  height: 100%;
-  margin-left: 50px;
-  margin-top: 4%;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 40px;
-  justify-content: center;
-`;
-
 const StIntroContainer = styled.div`
   margin-left: 20px;
   margin-right: 20px;
