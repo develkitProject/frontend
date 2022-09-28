@@ -43,18 +43,21 @@ function WorkSpace() {
               <>Loading...</>
             ) : data ? (
               <>
-                {workspaces?.map((data, i) => {
-                  return (
-                    <div style={{ width: '70%' }} key={data.workspaces.id}>
-                      <SpaceCard
-                        data={data}
-                        width="100%"
-                        deleteButton={deleteButton}
-                        deleteWorkSpaces={deleteWorkSpaces}
-                      />
-                    </div>
-                  );
-                })}
+                {workspaces
+                  ?.slice(0)
+                  .reverse()
+                  .map((data, i) => {
+                    return (
+                      <div style={{ width: '70%' }} key={data.workspaces.id}>
+                        <SpaceCard
+                          data={data}
+                          width="100%"
+                          deleteButton={deleteButton}
+                          deleteWorkSpaces={deleteWorkSpaces}
+                        />
+                      </div>
+                    );
+                  })}
               </>
             ) : null}
           </CardWrapper>

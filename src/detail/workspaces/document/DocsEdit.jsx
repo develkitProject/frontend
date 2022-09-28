@@ -71,9 +71,11 @@ function DocsEdit({ stateId, onDocumentHandle }) {
         new Blob([JSON.stringify(data)], { type: 'application/json' }),
       );
       editDoc(formData);
+      // eslint-disable-next-line no-alert
       window.alert('문서가 수정되었습니다');
       onDocumentHandle('list');
     } else {
+      // eslint-disable-next-line no-alert
       window.alert('제목과 내용을 모두 채워주세요!');
     }
   };

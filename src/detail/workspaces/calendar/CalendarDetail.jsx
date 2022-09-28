@@ -2,13 +2,7 @@ import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
-export default function CalendarDetail({
-  id,
-  data,
-  isOpen,
-  setIsopen,
-  openDetail,
-}) {
+export default function CalendarDetail({ id, data, isOpen, openDetail }) {
   return (
     <>
       <StMark onClick={openDetail}>
@@ -31,6 +25,7 @@ const StMark = styled.div`
   align-items: center;
   font-size: 15px;
   text-align: center;
+  overflow: hidden;
 `;
 
 const StDetail = styled.div`
