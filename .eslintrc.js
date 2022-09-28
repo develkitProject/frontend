@@ -30,5 +30,6 @@ module.exports = {
     'react/no-array-index-key': 1,
     'no-plusplus': 0,
     'react/no-unescaped-entities': 0,
+    'no-undef': 0,
   },
 };

@@ -1,15 +1,15 @@
 import React, { useRef, useCallback } from 'react';
 
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import ModalContainer from './ModalContainer';
 import useOutSideClick from '../hooks/useOutSideClick';
 import error_outline from '../../asset/img/error_outline.svg';
-import { useDispatch } from 'react-redux';
 import { setIsLoginModal, setIsSignUpModal } from '../../redux/modules/global';
 import KakaoIcon from '../../asset/img/kakaoIcon.png';
 import { StAlert } from './error';
 
-const JoinSpaceModal = ({ onClose }) => {
+function JoinSpaceModal({ onClose }) {
   const dispatch = useDispatch();
   const modalRef = useRef(null);
 
@@ -23,12 +23,12 @@ const JoinSpaceModal = ({ onClose }) => {
     <ModalContainer>
       <Overlay>
         <ModalWrap ref={modalRef}>
-          <StProejct>이 워크스페이스에 참여하시겠습니까?</StProejct>
+          <StProject>이 워크스페이스에 참여하시겠습니까?</StProject>
         </ModalWrap>
       </Overlay>
     </ModalContainer>
   );
-};
+}
 
 export default JoinSpaceModal;
 
@@ -59,7 +59,7 @@ const ModalWrap = styled.div`
   align-items: center;
 `;
 
-const StProejct = styled.span`
+const StProject = styled.span`
   font-weight: bold;
   font-size: 30px;
   color: #00a99d;

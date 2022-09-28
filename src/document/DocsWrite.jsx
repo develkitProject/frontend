@@ -16,11 +16,11 @@ function DocsWrite() {
   const [content, setContent] = useState('');
   const [newFile, setNewFile] = useState([]);
 
-  const onTitleChange = e => {
+  const onTitleChange = (e) => {
     setTitle(e.target.value);
   };
 
-  const onFileChange = e => {
+  const onFileChange = (e) => {
     const file = e.target.files[0];
     setNewFile(file);
     console.log(newFile);

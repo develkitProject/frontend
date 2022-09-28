@@ -12,7 +12,7 @@ export default function useModalOverlay() {
       setOpen(false);
     }, []),
     toggle: useCallback(() => {
-      setOpen(e => !e);
+      setOpen((e) => !e);
     }, []),
   };
 }

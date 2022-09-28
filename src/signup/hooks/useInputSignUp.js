@@ -15,7 +15,7 @@ export default function useInputSignUp() {
   const [getSignUp, { data, isSuccess, isFail }] = useGetSignUpMutation();
 
   const onChangeSignUpInputs = useCallback(
-    e => {
+    (e) => {
       const { name, value } = e.target;
       setSignUpInputs({
         ...signUpInputs,

@@ -8,7 +8,7 @@ export default function useChangeMenu() {
       () => {
         setMenu(key);
       },
-    []
+    [],
   );
 
   return { onClickMenu, menu };
