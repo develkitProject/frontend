@@ -1,15 +1,15 @@
 import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
 import { getCookieToken } from '../Cookie';
 import {
   useGetWorkspacesQuery,
   useDeleteWorkSpacesMutation,
 } from '../redux/modules/workspaces';
 import CreateCard from '../components/CreateCard';
-import SpaceCard from '../components/SpaceCard.jsx';
+import SpaceCard from '../components/SpaceCard';
 import SpaceHeader from '../components/SpaceHeader';
 import WorkSpaceErrorModal from '../common/Modal/error';
 import CreateSpaceModal from '../common/Modal/CreateSpaceModal';
-import React, { useEffect, useState } from 'react';
 
 function WorkSpace() {
   const { data, error, isLoading, refetch } = useGetWorkspacesQuery();
@@ -38,23 +38,26 @@ function WorkSpace() {
           <CardWrapper>
             <CreateCard createOpen={createOpen} setCreateOpen={setCreateOpen} />
             {error ? (
-              <>Oh no, there was an error</>
+              <>에러가 발생하였습니다.</>
             ) : isLoading ? (
               <>Loading...</>
             ) : data ? (
               <>
-                {workspaces?.map((data, i) => {
-                  return (
-                    <div style={{ width: '70%' }} key={data.workspaces.id}>
-                      <SpaceCard
-                        data={data}
-                        width='100%'
-                        deleteButton={deleteButton}
-                        deleteWorkSpaces={deleteWorkSpaces}
-                      />
-                    </div>
-                  );
-                })}
+                {workspaces
+                  ?.slice(0)
+                  .reverse()
+                  .map((data, i) => {
+                    return (
+                      <div style={{ width: '70%' }} key={data.workspaces.id}>
+                        <SpaceCard
+                          data={data}
+                          width="100%"
+                          deleteButton={deleteButton}
+                          deleteWorkSpaces={deleteWorkSpaces}
+                        />
+                      </div>
+                    );
+                  })}
               </>
             ) : null}
           </CardWrapper>
@@ -66,7 +69,7 @@ function WorkSpace() {
           onClose={() => {
             setCreateOpen(false);
           }}
-        ></CreateSpaceModal>
+        />
       )}
     </>
   );
@@ -81,6 +84,7 @@ const StWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 200px;
 `;
 
 const CardWrapper = styled.div`

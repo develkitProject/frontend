@@ -1,8 +1,8 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const ModalWrap = styled.div`
   width: 464px;
-  height: 750px;
+  height: 700px;
   border-radius: 20px;
   position: absolute;
   top: 50%;
@@ -30,7 +30,7 @@ export const Overlay = styled.div`
 export const LoginWrap = styled.div`
   margin: 0 auto;
   display: flex;
-  width: 360px;
+  width: 82%;
   flex-direction: column;
   justify-content: center;
 `;
@@ -49,7 +49,6 @@ export const Button = styled.button`
   border-radius: 8px;
   border: none;
   background-color: #00a99d;
-  margin-bottom: 20px;
   color: white;
   font-weight: 500;
   font-size: 15px;
@@ -61,8 +60,10 @@ export const Text = styled.pre`
   font-size: ${(props) => props.size}px;
   font-weight: ${(props) => props.bold};
   font-family: 'Noto Sans KR', sans-serif;
+  letter-spacing: -0.05em;
+  margin-top: 7px;
 `;
 
-export const SubTitle = styled.h4`
-    color:
-`;
+// export const SubTitle = styled.h4`
+//     color:
+// `;

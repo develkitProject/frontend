@@ -1,7 +1,11 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import useGetUser from '../common/hooks/useGetUser';
-import { useGetWorkspacesQuery } from '../redux/modules/workspaces';
+import {
+  useGetWorkspacesQuery,
+  useGetUserInfoQuery,
+} from '../redux/modules/workspaces';
 import SpaceCard from '../components/SpaceCard';
 import MyPage2 from './MyPage2';
 
@@ -10,6 +14,21 @@ function MyPage() {
   const [tab, setTab] = useState(false);
   const { data, error, isLoading } = useGetWorkspacesQuery();
   const workspaces = data?.data;
+  const { data: userData } = useGetUserInfoQuery();
+  const now = new Date();
+  const createdData = userData?.data.createdAt.split(' ')[0];
+  const stYear = Number(createdData?.split('/')[0]);
+  const stMonth = Number(createdData?.split('/')[1]);
+  const stDay = Number(createdData?.split('/')[2]);
+
+  const stDate = new Date(stYear, stMonth, stDay);
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+  const endDate = new Date(year, month, day);
+
+  const btMs = endDate.getTime() - stDate?.getTime();
+  const btDay = btMs / (1000 * 60 * 60 * 24);
 
   return (
     <StWrapper>
@@ -59,12 +78,12 @@ function MyPage() {
                 </IntroBox>
                 <IntroBox>
                   <div>
-                    <BoxSpan>참여한 </BoxSpan>
-                    <BoxSpan style={{ fontWeight: '500' }}>총 일정</BoxSpan>
+                    <BoxSpan style={{ fontWeight: '500' }}>디벨킷</BoxSpan>
+                    <BoxSpan>과 함께</BoxSpan>
                   </div>
                   <div style={{ marginTop: '50px' }}>
-                    <BoxNumSpan>50</BoxNumSpan>
-                    <BoxSpan> 개</BoxSpan>
+                    <BoxNumSpan>{btDay}</BoxNumSpan>
+                    <BoxSpan>일</BoxSpan>
                   </div>
                 </IntroBox>
                 <IntroBox>
@@ -74,12 +93,12 @@ function MyPage() {
                     <BoxSpan>작성 수</BoxSpan>
                   </div>
                   <div style={{ marginTop: '50px' }}>
-                    <BoxNumSpan>120</BoxNumSpan>
+                    <BoxNumSpan>{userData?.data.documentNum}</BoxNumSpan>
                     <BoxSpan> 건</BoxSpan>
                   </div>
                 </IntroBox>
               </div>
-              <Intro style={{ marginTop: '50px', fontWeight: '400' }}>
+              <Intro style={{ marginTop: '50px', fontWeight: '500' }}>
                 프로젝트 관리
               </Intro>
 
@@ -92,7 +111,7 @@ function MyPage() {
                   {workspaces?.map((data, i) => {
                     return (
                       <div style={{ width: '100%' }} key={data.workspaces.id}>
-                        <SpaceCard data={data} width='100%' />
+                        <SpaceCard data={data} width="100%" />
                       </div>
                     );
                   })}
@@ -101,7 +120,7 @@ function MyPage() {
             </>
           ) : (
             <>
-              <MyPage2></MyPage2>
+              <MyPage2 data={userData} />
             </>
           )}
         </TabDiv2>

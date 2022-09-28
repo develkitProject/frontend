@@ -1,13 +1,11 @@
 import styled from 'styled-components';
-import SideMenu from '../components/SideMenu';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import SideMenu from '../components/SideMenu';
 import { useGetDocDetailQuery } from '../redux/modules/workspaces';
 import Board from './Board';
 
 function DocDetail() {
-
   const navigate = useNavigate();
   const params = useParams();
   const workspaces = Number(params.id);
@@ -17,6 +15,7 @@ function DocDetail() {
     docid,
   });
   const document = data?.data;
+  console.log(data);
 
   useEffect(() => {
     refetch();
@@ -28,12 +27,17 @@ function DocDetail() {
       <DocContainer>
         <Projects>
           <StIntroContainer>
-            <StIntroMent>프로젝트 관련 일일보고 및 계획 등</StIntroMent>
+            <StIntroMent>프로젝트 관련 주요 문서 및 파일</StIntroMent>
             <StTitle>{document?.title}</StTitle>
             <StInfoContainer>
               <StProfileImg>{document?.profileImg}</StProfileImg>
-              <StNickname>{document?.nickname}</StNickname>
-              <StCreatedAt>{document?.createdAt.slice(0, -7)}</StCreatedAt>
+              <StNickname>{document?.nickname} </StNickname>
+              <StVerticalBar>|</StVerticalBar>
+              <StDetail>{document?.createdAt.slice(0, -7)}</StDetail>
+              <StVerticalBar>|</StVerticalBar>
+              <StDetail>수정</StDetail>
+              <StVerticalBar>|</StVerticalBar>
+              <StDetail>삭제</StDetail>
             </StInfoContainer>
           </StIntroContainer>
           <StContentContainer>
@@ -41,6 +45,7 @@ function DocDetail() {
               <div dangerouslySetInnerHTML={{ __html: document?.content }} />
             </StContent>
           </StContentContainer>
+          <StFooterContainer />
         </Projects>
         <BoardContainer>
           <Board />
@@ -82,7 +87,6 @@ const StIntroContainer = styled.div`
   min-height: 12vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   border-bottom: solid 1px #c6c6c6;
 `;
 
@@ -91,12 +95,13 @@ const StIntroMent = styled.div`
   font-size: 16px;
   color: #c6c6c6;
   letter-spacing: -0.05em;
+  align-self: center;
 `;
 
 const StTitle = styled.p`
   margin: 20px;
   color: #000000;
-  text-align: center;
+  align-self: left;
   font-size: 28px;
   font-weight: 400;
   letter-spacing: -0.05em;
@@ -127,8 +132,16 @@ const StNickname = styled.div`
   font-weight: 500;
 `;
 
-const StCreatedAt = styled.div`
-  margin-left: 28px;
+const StVerticalBar = styled.div`
+  margin-left: 10px;
+  font-size: 12px;
+  color: #c6c6c6;
+  letter-spacing: -0.05em;
+  font-weight: 200;
+`;
+
+const StDetail = styled.div`
+  margin-left: 10px;
   font-size: 18px;
   color: #b4b4b4;
   letter-spacing: -0.05em;
@@ -151,8 +164,19 @@ const StContent = styled.span`
   text-align: left;
   font-weight: 400;
   letter-spacing: -0.05em;
+  overflow: hidden;
+  min-height: 400px;
 `;
 
 const BoardContainer = styled.div`
   margin-left: 50px;
+`;
+
+const StFooterContainer = styled.div`
+  margin: 20px;
+  min-height: 12vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: solid 1px #c6c6c6;
 `;

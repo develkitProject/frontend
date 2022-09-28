@@ -12,7 +12,7 @@ export default function useInputSignUp() {
     passwordConfirm: '',
   });
 
-  const [getSignUp, { data, isSuccess, isFail }] = useGetSignUpMutation()
+  const [getSignUp, { data, isSuccess, isFail }] = useGetSignUpMutation();
 
   const onChangeSignUpInputs = useCallback(
     (e) => {
@@ -22,34 +22,34 @@ export default function useInputSignUp() {
         [name]: value,
       });
     },
-    [signUpInputs]
+    [signUpInputs],
   );
 
   const handleSignUp = useCallback(() => {
-      const { nickname, email, password } = signUpInputs;
-      getSignUp({
-          username: email,
-          nickname,
-          password,
-      })
-  }, [getSignUp, signUpInputs])
+    const { nickname, email, password } = signUpInputs;
+    getSignUp({
+      username: email,
+      nickname,
+      password,
+    });
+  }, [getSignUp, signUpInputs]);
 
   useEffect(() => {
-    if(isSuccess) {
-      if(data.success === true) {
-        alert('회원가입에 성공하셨습니다.')
-      dispatch(setIsLoginModal(true))
-      dispatch(setIsSignUpModal(false));
+    if (isSuccess) {
+      if (data.success === true) {
+        alert('회원가입에 성공하셨습니다.');
+        dispatch(setIsLoginModal(true));
+        dispatch(setIsSignUpModal(false));
       }
     }
-    if(isFail) {
-      alert('회원가입에 실패했습니다. 다시 시도해주세요')
+    if (isFail) {
+      alert('회원가입에 실패했습니다. 다시 시도해주세요');
     }
-  }, [data])
+  }, [data]);
 
   return {
-      signUpInputs,
-      onChangeSignUpInputs,
-      handleSignUp
-  }
+    signUpInputs,
+    onChangeSignUpInputs,
+    handleSignUp,
+  };
 }

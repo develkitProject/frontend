@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 

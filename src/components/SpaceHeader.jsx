@@ -1,16 +1,70 @@
 import styled from 'styled-components';
+import React, { useState } from 'react';
+import axios from 'axios';
+import CodeConfirmModal from '../common/Modal/CodeConfirmModal';
+import { getCookieToken } from '../Cookie';
 
 function SpaceHeader() {
+  const headers = {
+    Authorization: getCookieToken(),
+  };
+  const [spaceData, setSpaceData] = useState(null);
+
+  const [inviteCodeConfirm, setInviteCodeConfirm] = useState(false);
+  const [code, setCode] = useState('');
+
+  const onChange = (e) => {
+    setCode(e.target.value);
+  };
+
+  const handleClose = () => {
+    setInviteCodeConfirm(false);
+  };
+
+  const handleSubmit = async () => {
+    const codes = {
+      code,
+    };
+    if (code) {
+      try {
+        await axios
+          .post(
+            `${process.env.REACT_APP_BASE_URL}/api/invitation/codes`,
+            codes,
+            { headers },
+          )
+          .then((response) => {
+            setInviteCodeConfirm(true);
+            setSpaceData(response?.data?.data.workspaces);
+          });
+      } catch (error) {
+        alert('없는 코드입니다!');
+      }
+    } else {
+      window.alert('코드를 입력해주세요!');
+    }
+  };
+
   return (
     <StHeaderDiv>
       <StMent>
-        스마트한 프로젝트 관리의 시작, 
+        스마트한 프로젝트 관리의 시작,
         <StMent style={{ fontWeight: '600' }}> 디벨킷</StMent>
       </StMent>
       <StSearch>
-        <StInput placeholder='초대코드 입력하고 프로젝트 참여하기'></StInput>
-        <StGo>Go.</StGo>
+        <StInput
+          onChange={onChange}
+          placeholder="초대코드 입력하고 프로젝트 참여하기"
+        />
+        <StGo onClick={handleSubmit}>Go.</StGo>
       </StSearch>
+      {inviteCodeConfirm ? (
+        <CodeConfirmModal
+          onClose={handleClose}
+          spaceData={spaceData}
+          headers={headers}
+        />
+      ) : null}
     </StHeaderDiv>
   );
 }
@@ -49,20 +103,20 @@ const StInput = styled.input`
   margin-top: 30px;
   border: none;
   box-shadow: 0 0 10px 0 #00a99d;
-  padding: 5px 25px 5px 25px;;
-  font-size:1.2em;
+  padding: 5px 25px 5px 25px;
+  font-size: 1.2em;
   font-weight: 400;
   color: #999999;
   &:focus {
     outline: none;
   }
   box-sizing: border-box;
-  display:inline;
+  display: inline;
 `;
 
 const StGo = styled.button`
   font-family: Montserrat;
-  font-size:1.2em;
+  font-size: 1.2em;
   font-weight: 700;
   color: #00a99d;
   background-color: transparent;
@@ -70,9 +124,9 @@ const StGo = styled.button`
   box-sizing: border-box;
   margin-left: -65px;
   margin-top: 0;
-  display:inline;
+  display: inline;
   cursor: pointer;
-  @media screen and (max-width: 800px) {
-  display: none;
-  }
+  /* @media screen and (max-width: 800px) {
+    display: none;
+  } */
 `;

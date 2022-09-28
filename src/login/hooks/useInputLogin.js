@@ -19,9 +19,10 @@ export default function useInputLogin() {
         [name]: value,
       });
     },
-    [inputs]
+    [inputs],
   );
 
+  // eslint-disable-next-line consistent-return
   const onClickLogin = useCallback(() => {
     const { username, password } = inputs;
     if (username === '') {

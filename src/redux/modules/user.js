@@ -9,13 +9,13 @@ const initialState = {
 
 export const addUserAsync = createAsyncThunk('ADD_USER', async (user) => {
   const response = await axios.post(
-    'https://hosung.shop/api/members/signup',
-    user
+    `${process.env.REACT_APP_BASE_URL}/api/members/signup`,
+    user,
   );
   return response.data;
 });
 
-const { actions, reducer } = createSlice({
+const { reducer } = createSlice({
   name: 'user',
   initialState,
   reducers: {},

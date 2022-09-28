@@ -64,3 +64,21 @@
   font-family: 'Consolas';
   src: url('../src//asset/fonts/CONSOLA.TTF') format("truetype")
 }
+
+.root::-webkit-scrollbar {
+  display: none;
+}
+
+.slide-navigation {
+  display: none;
+}
+
+.sc-iIPllB{
+  display: none;
+}
+
+
+
+.sc-jOrMOR {
+  display: none;
+}

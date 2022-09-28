@@ -11,7 +11,7 @@ const store = configureStore({
     user,
     [workspaceApi.reducerPath]: workspaceApi.reducer,
     [chatApi.reducerPath]: chatApi.reducer,
-    global: global,
+    global,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware(),

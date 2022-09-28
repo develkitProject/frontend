@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import logo from '../asset/img/logo.png';
 import { useNavigate } from 'react-router-dom';
+import logo from '../asset/img/logo.png';
 
 function Footer() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ function Footer() {
         <StDivLeft>
           <StMenuDiv>
             <StMenuName onClick={moveMain}>About</StMenuName>
-            <StMenuName onClick={moveProject}>Proejct</StMenuName>
+            <StMenuName onClick={moveProject}>Project</StMenuName>
             <StMenuName>Community</StMenuName>
             <StMenuName>FAQ</StMenuName>
             <StMenuName>Team</StMenuName>
@@ -26,23 +26,21 @@ function Footer() {
 
           <StInfoDiv>
             <StInfoDetail>
-              <StInfoName cs='pointer'>개인정보 처리 방침</StInfoName>
+              <StInfoName cs="pointer">개인정보 처리 방침</StInfoName>
               <StInfoName>|</StInfoName>
-              <StInfoName cs='pointer'>이용약관</StInfoName>
+              <StInfoName cs="pointer">이용약관</StInfoName>
               <StInfoName>|</StInfoName>
-              <StInfoName cs='pointer'>법적고지</StInfoName>
+              <StInfoName cs="pointer">법적고지</StInfoName>
               <StInfoName>|</StInfoName>
-              <StInfoName cs='pointer'>이메일무단수집거부</StInfoName>
+              <StInfoName cs="pointer">이메일무단수집거부</StInfoName>
             </StInfoDetail>
 
-            <StCopyright>
-              Copyright, D.vel kit.All rights reserved.
-            </StCopyright>
+            <StCopyright>Copyright, D.vel kit.All rights reserved.</StCopyright>
           </StInfoDiv>
         </StDivLeft>
 
         <StDivRight>
-          <StLogo alt='logo' src={logo} />
+          <StLogo alt="logo" src={logo} />
         </StDivRight>
       </StFooterWrapper>
     </StFooterDiv>
@@ -57,7 +55,8 @@ const StFooterDiv = styled.div`
   background-color: #1b1b1b;
   color: #999999;
   width: 100%;
-  height: 170px;
+  /* height: 170px; */
+  height: 20vh;
   left: 0px;
   top: 0px;
   position: relative;

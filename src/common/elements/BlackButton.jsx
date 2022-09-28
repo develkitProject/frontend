@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export default function BlackButton(props) {
   return (
     <StButton
-      type='button'
+      type="button"
       onClick={() => {
         props.onClick();
       }}

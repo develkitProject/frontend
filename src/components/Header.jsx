@@ -2,52 +2,46 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCookieToken, removeCookieToken } from '../Cookie';
-import WorkSpaceErrorModal from '../common/Modal/error';
 import alarm from '../asset/img/alarm.svg';
 import logo from '../asset/img/logo.png';
 import Login from '../login';
 import SignupModal from '../signup/SignupModal';
 import MyProfileModal from '../common/Modal/MyProfileModal';
-import { useDispatch, useSelector } from 'react-redux';
 import { setIsLoginModal, setIsSignUpModal } from '../redux/modules/global';
 import {
   selectIsLoginModal,
   selectIsSignUpModal,
 } from '../redux/modules/global/selectors';
+import { useGetUserInfoQuery } from '../redux/modules/workspaces';
 
-function Header() {
+function Header({ path, setPath }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const API_URL = `https://hosung.shop/api/members/profile`;
   const cookies = getCookieToken();
+  const location = useLocation().pathname;
 
   const [profileOpen, setProfileOpen] = useState(false);
-  const [path, setPath] = useState(1);
-  const [user, setUser] = useState('');
 
   const isLogin = useSelector(selectIsLoginModal);
   const isSignUp = useSelector(selectIsSignUpModal);
 
-  // const { user } = useMemo(() => {
-  //   return useGetUser();
-  // }, []);
+  const { data } = useGetUserInfoQuery();
 
   useEffect(() => {
-    console.log('d');
-    readUser();
+    if (location === '/') {
+      setPath(1);
+    } else if (location === '/faq') {
+      setPath(4);
+    } else if (location === '/event') {
+      setPath(5);
+    } else {
+      setPath(2);
+    }
   }, []);
 
-  const readUser = useCallback(async () => {
-    if (cookies) {
-      const response = await axios.get(API_URL, {
-        headers: {
-          Authorization: getCookieToken(),
-        },
-      });
-      setUser(response.data.data);
-    }
-  });
+  const userData = data?.data;
 
   const openLoginModal = () => {
     dispatch(setIsLoginModal(true));
@@ -62,17 +56,27 @@ function Header() {
   };
 
   const moveMain = () => {
-    navigate('/');
     setPath(1);
+    navigate('/');
   };
+
   const moveProject = () => {
-    // if (cookies) {
     setPath(2);
     navigate('/workspace');
-    // } else {
-    // alert('로그인해주세요');
-    // navigate('/');
-    // setPath(1);
+  };
+
+  const moveFAQ = () => {
+    setPath(4);
+    navigate('/faq');
+  };
+
+  const moveEvent = () => {
+    setPath(5);
+    navigate('/event');
+  };
+
+  const handleAlarm = () => {
+    window.alert('기능구현중입니다.');
   };
 
   return (
@@ -87,7 +91,7 @@ function Header() {
             alignItems: 'center',
           }}
         >
-          <StLogo alt='logo' src={logo} onClick={moveMain} />
+          <StLogo alt="logo" src={logo} onClick={moveMain} />
 
           {/* <StDiv style={!matches ? { display: 'none' } : null}> */}
           <StMenuDiv>
@@ -101,22 +105,38 @@ function Header() {
               onClick={moveProject}
               style={path === 2 ? { opacity: '1' } : null}
             >
-              Proejct
+              Project
             </StMenuName>
-            <StMenuName>Community</StMenuName>
-            <StMenuName>FAQ</StMenuName>
-            {/* </StDiv> */}
+            {/* <StMenuName
+              onClick={() => {
+                alert('기능 준비중입니다!');
+              }}
+            >
+              Community
+            </StMenuName> */}
+            <StMenuName
+              onClick={moveFAQ}
+              style={path === 4 ? { opacity: '1' } : null}
+            >
+              FAQ
+            </StMenuName>
+            <StMenuName
+              onClick={moveEvent}
+              style={path === 5 ? { opacity: '1' } : null}
+            >
+              Event
+            </StMenuName>
           </StMenuDiv>
         </div>
 
         {!cookies ? (
           <StDiv>
-            <StLogJoin fc='#00A99D' onClick={openLoginModal}>
+            <StLogJoin fc="#00A99D" onClick={openLoginModal}>
               LOGIN
             </StLogJoin>
-            <StLogJoin fc='white'>·</StLogJoin>
+            <StLogJoin fc="white">·</StLogJoin>
             <StLogJoin
-              fc='white'
+              fc="white"
               onClick={openSignUpModal}
               SignupButton={openSignUpModal}
             >
@@ -126,21 +146,21 @@ function Header() {
           </StDiv>
         ) : (
           <StDiv>
-            <StAlarmImg src={alarm} />
+            <StAlarmImg src={alarm} onClick={handleAlarm} />
             <StProfileImg
-              src={user.profileImageUrl}
+              src={userData?.profileImageUrl}
               onClick={() => {
-                setProfileOpen(profileOpen === false ? true : false);
+                setProfileOpen(profileOpen === false);
               }}
             />
-            {profileOpen ? <MyProfileModal onClose={handleClose} /> : null}
+            {profileOpen ? (
+              <MyProfileModal userData={userData} onClose={handleClose} />
+            ) : null}
           </StDiv>
         )}
       </StHeaderDiv>
-      {isLogin && (
-        <Login onSignupButton={openSignUpModal} open={isLogin}></Login>
-      )}
-      {isSignUp && <SignupModal open={isSignUp}></SignupModal>}
+      {isLogin && <Login onSignupButton={openSignUpModal} open={isLogin} />}
+      {isSignUp && <SignupModal open={isSignUp} />}
     </>
   );
 }

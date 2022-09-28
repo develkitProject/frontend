@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigate, useParams } from 'react-router-dom';
 import home from '../asset/img/home.svg';
 import document from '../asset/img/document.svg';
 import schedule from '../asset/img/schedule.svg';
@@ -6,10 +7,8 @@ import contacts from '../asset/img/contacts.svg';
 import laptop from '../asset/img/laptop.svg';
 import chat from '../asset/img/chat.svg';
 import arrowDown from '../asset/img/arrowDown.svg';
-import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
 
-function SideMenu(data) {
+function SideMenu() {
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);

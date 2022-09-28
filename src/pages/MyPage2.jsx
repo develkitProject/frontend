@@ -1,31 +1,53 @@
 import React, { useCallback, useState, useRef } from 'react';
-
-import axios from 'axios';
 import styled, { keyframes } from 'styled-components';
-
 import useGetUser from '../common/hooks/useGetUser';
 import velkit from '../asset/img/velkit.png';
+import BasicInput from '../common/elements/BasicInput';
+import {
+  useDeleteUserInfoMutation,
+  useGetUserInfoQuery,
+  useUpdateUserInfoMutation,
+} from '../redux/modules/workspaces';
+import { removeUser } from '../Cookie';
 
-import { getCookieToken } from '../Cookie';
-import BasicInput from '../components/BasicInput';
+function MyPage2({ data }) {
+  const [updateUserInfo] = useUpdateUserInfoMutation();
 
-function MyPage2() {
+  const { user } = useGetUser();
+  const userNickname = data?.data.nickname;
+  const userImg = user?.profileImageUrl;
+
   const imgRef = useRef('');
   const [imageUrl, setImageUrl] = useState(null);
   const [imgFile, setImgFile] = useState('');
+  const [nickname, setNickname] = useState(user?.nickname);
 
-  const { user } = useGetUser();
-  // let objcopy:userType= {};
+  const onChange = useCallback((e) => {
+    setNickname(e.target.value);
+  }, []);
 
-  // objcopy = { ...user };
+  const [deleteUserInfos] = useDeleteUserInfoMutation();
+  const deleteUserInfo = () => {
+    if (window.confirm('정말 탈퇴하시겠습니까?')) {
+      deleteUserInfos();
+      removeUser();
+      window.location.href = '/';
+    }
+  };
 
-  // if (objcopy === undefined) {
-  //   return (
-  //     <div>
-  //       d
-  //     </div>
-  //   );
-  // }
+  const handleSubmit = () => {
+    if (!nickname || (nickname.length <= 8 && nickname.length >= 2)) {
+      const updateInfo = {
+        profileImageUrl: imageUrl,
+        nickname,
+      };
+      updateUserInfo(updateInfo);
+      window.alert('회원정보가 수정되었습니다!');
+      // window.location.reload();
+    } else {
+      window.alert('닉네임은 2~8글자여야합니다.');
+    }
+  };
 
   const onChangeImage = () => {
     const reader = new FileReader();
@@ -36,33 +58,14 @@ function MyPage2() {
       setImgFile(file);
     };
   };
-
-  const [nickname, setNickname] = useState('');
-  const onChange = useCallback((e) => {
-    // let { value } = {...e.target}
-    // setNickname(value)
-    setNickname(e.target.value);
-  }, []);
-
-  const addpost = async (newList) => {
-    const response = await axios.post(
-      'https://hosung.shop/api/members/profile',
-      newList,
-      {
-        headers: {
-          Authorization: getCookieToken(),
-        },
-      }
-    );
-
-    return response.data;
-  };
-
   return (
     <StWrapper>
       <StProfile>
         <StSpan>나의 프로필</StSpan>
-        <StImage profileImageUrl={user?.profileImageUrl} />
+        <StImage
+          profileImageUrl={imageUrl || userImg}
+          onClick={() => imgRef.current.click()}
+        />
         <div
           style={{
             display: 'flex',
@@ -71,14 +74,14 @@ function MyPage2() {
             width: '100%',
           }}
         >
-          <StEmail fs={'20px'} fc={'#000000'} fw={'500'}>
-            {user?.nickname}
+          <StEmail fs="20px" fc="#000000" fw="500">
+            {nickname || userNickname}
           </StEmail>
-          <StEmail fs={'18px'} fc={'#999999'} fw={'400'}>
+          <StEmail fs="18px" fc="#999999" fw="400">
             {user?.username}
           </StEmail>
         </div>
-        <StChange>회원탈퇴</StChange>
+        <StChange onClick={deleteUserInfo}>회원탈퇴</StChange>
       </StProfile>
 
       <StDetail>
@@ -89,30 +92,38 @@ function MyPage2() {
             marginLeft: '50px',
           }}
         >
-          <StSpan style={{ marginTop: '80px' }}>프로필 상세보기</StSpan>
+          <StSpan style={{ marginTop: '50px' }}>프로필 상세보기</StSpan>
           <BasicInput
-            label='닉네임'
-            marginTop='80px'
-            placeholder={user?.nickname}
-          ></BasicInput>
-          <BasicInput
-            label='이메일'
-            marginTop='40px'
-            placeholder={user?.username}
-          ></BasicInput>
-          <StButton>변경사항 저장</StButton>
-          <StVelkit></StVelkit>
+            type="text"
+            label="닉네임"
+            marginTop="80px"
+            onChange={onChange}
+            name="nickname"
+            // value={user?.nickname}
+            placeholder={userNickname}
+          />
+
+          <fieldset disabled>
+            <BasicInput
+              label="이메일"
+              marginTop="40px"
+              placeholder={user?.username}
+            />
+          </fieldset>
+
+          <StButton onClick={handleSubmit}>변경사항 저장</StButton>
+          <StVelkit />
         </div>
       </StDetail>
 
-      {imageUrl ? <StImgTag src={imageUrl} /> : null}
+      {/* {imageUrl ? <StImgTag src={imageUrl} /> : null} */}
 
       <input
         style={{ display: 'none' }}
-        accept='image/*'
-        id='upload-photo'
-        name='upload-photo'
-        type='file'
+        accept="image/*"
+        id="upload-photo"
+        name="upload-photo"
+        type="file"
         onChange={onChangeImage}
         ref={imgRef}
       />
@@ -138,17 +149,18 @@ const StWrapper = styled.div`
 `;
 
 const StProfile = styled.div`
-  width: 25%;
-  min-width: 400px;
+  width: 30%;
+  min-width: 300px;
   max-width: 600px;
-  height: 600px;
+  margin-left: 50px;
+  height: 550px;
   display: flex;
   flex-direction: column;
   text-align: center;
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
-  position: relative;
+  /* position: relative; */
   box-shadow: 12px 16px 10px rgba(0, 0, 0, 0.1);
 `;
 
@@ -165,6 +177,7 @@ const StImage = styled.div`
   background-size: 100% 100%;
   background-image: url(${(props) => props.profileImageUrl});
   margin-top: 30px;
+  cursor: pointer;
 `;
 
 const StEmail = styled.span`
@@ -187,15 +200,10 @@ const StChange = styled.span`
   border-bottom: 1px solid grey;
 `;
 
-const StImgTag = styled.img`
-  width: 300px;
-  height: 350px;
-`;
-
 const StDetail = styled.div`
   width: 60%;
-  min-width: 700px;
-  height: 600px;
+  min-width: 680px;
+  height: 550px;
   background-color: #ffffff;
   border: none;
   box-shadow: 12px 16px 30px rgba(0, 0, 0, 0.1);
@@ -233,8 +241,8 @@ const move = keyframes`
 const StVelkit = styled.div`
   width: 15%;
   height: 25%;
-  min-width: 350px;
-  min-height: 300px;
+  min-width: 250px;
+  min-height: 200px;
   background-image: url(${velkit});
   background-size: 100% 100%;
   position: absolute;

@@ -4,23 +4,22 @@ import KakaoIcon from '../asset/img/kakaoIcon.png';
 
 const { Kakao } = window;
 const loginWithKakao = () => {
-  // console.log('hello');
   Kakao.Auth.authorize({
     redirectUri: 'https://d-velkit.com/kakao',
   });
 };
 
-const KakaoLogin = () => {
+function KakaoLogin() {
   return (
     <div
       style={{
         width: '100%',
-        marginTop: '30px',
+        marginTop: '10px',
         borderRadius: '35px',
         height: '100%',
       }}
     >
-      <a onClick={loginWithKakao}>
+      <div role="presentation" onClick={loginWithKakao}>
         <StKaKaoLoginButton>
           <StIcon src={KakaoIcon} />
           카카오계정으로 로그인
@@ -31,16 +30,16 @@ const KakaoLogin = () => {
           src='//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg'
           style={{ width: '100%', height: '75%', cursor: 'pointer' }}
         /> */}
-      </a>
+      </div>
     </div>
   );
-};
+}
 
 export default KakaoLogin;
 
 const StKaKaoLoginButton = styled.button`
   width: 100%;
-  height: 68%;
+  height: 50px;
   border-radius: 24px;
   background-color: #ffe502;
   color: #3b1e1e;
@@ -52,5 +51,5 @@ const StKaKaoLoginButton = styled.button`
 
 const StIcon = styled.img`
   margin-right: 5px;
-  width: 6.5%;
+  width: 6.3%;
 `;

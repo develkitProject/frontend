@@ -25,7 +25,7 @@ export default function useInputStatus({ signUpInputs }) {
   });
 
   useEffect(() => {
-    if (nickname.length >= 2) {
+    if (nickname.length >= 2 && nickname.length <= 8) {
       setSuccessStatus({ ...successStatus, isNickname: true });
     }
   }, [nickname]);

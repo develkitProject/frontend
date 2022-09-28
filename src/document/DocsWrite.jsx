@@ -6,56 +6,77 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Editor from '../components/Editor';
 import { useAddDocMutation } from '../redux/modules/workspaces';
 
+function DocsWrite() {
+  const navigate = useNavigate();
+  const params = useParams();
+  const id = Number(params.id);
 
+  const [addDoc] = useAddDocMutation();
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [newFile, setNewFile] = useState([]);
 
-const DocsWrite = ()=>{
- const navigate = useNavigate();
- const params = useParams();
- const id = Number(params.id);
+  const onTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
 
- const [addDoc] = useAddDocMutation();
- const [title, setTitle] = useState('')
- const [content, setContent] = useState('')
-    
- const onTitleChange = (e) => {
-      setTitle(e.target.value);
- };
+  const onFileChange = (e) => {
+    const file = e.target.files[0];
+    setNewFile(file);
+    console.log(newFile);
+  };
 
- const handleSubmit = () => {
-      
- if (title !== '' && content !== '') {
-    const document = {
-          id,
-          title,
-          content,
-    };
+  const handleSubmit = () => {
+    if (title !== '' && content !== '') {
+      const formData = new FormData();
+      formData.append('fileKey', newFile[0]);
+      console.log(formData);
+
+      const document = {
+        id,
+        title,
+        content,
+        formData,
+      };
       addDoc(document);
       window.alert('문서가 등록되었습니다');
       navigate(`/workspace/main/${id}/docs`);
+    } else {
+      window.alert('제목과 내용을 모두 채워주세요!');
+    }
+  };
 
-      } else {
-        window.alert('제목과 내용을 모두 채워주세요!');
-      }
-    };
-    
-return(
-      <StEditorContainer>
-            <StInputTitle onChange={onTitleChange} name='title' placeholder='제목' value={title}/>
-            <Editor setCon={setContent}/>
-            <EditorBlock>
-              <StButton onClick={handleSubmit}>게시하기</StButton>
-            </EditorBlock>
-        </StEditorContainer>
-    )}
-export default DocsWrite
-
+  return (
+    <StEditorContainer>
+      <StInputTitle
+        onChange={onTitleChange}
+        name="title"
+        placeholder="제목"
+        value={title}
+      />
+      <Editor setCon={setContent} />
+      <EditorBlock>
+        <div>
+          <input
+            type="file"
+            name="file"
+            accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/msword,application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf, .hwp"
+            onChange={onFileChange}
+          />
+        </div>
+        <StButton onClick={handleSubmit}>게시하기</StButton>
+      </EditorBlock>
+    </StEditorContainer>
+  );
+}
+export default DocsWrite;
 
 const StEditorContainer = styled.div`
- margin: 2%;
- width: 100%;
- min-height: 60%;
- display: flex;
- flex-direction: column;
+  margin: 2%;
+  width: 100%;
+  min-height: 60%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StInputTitle = styled.input`
@@ -73,22 +94,22 @@ const StInputTitle = styled.input`
 `;
 
 const EditorBlock = styled.div`
- align-items: center;
- text-align: center;
+  margin-top: 60px;
+  align-items: center;
+  text-align: center;
 `;
 
 const StButton = styled.button`
- background-color: #000000;
- margin-left: 3%;
- width: 20%;
- height: 35px;
- border-radius: 8px;
- border: 0px;
- color: #fff;
- text-align: center;
- font-size: 0.9rem;
- font-weight: 500;
- cursor: pointer;
- margin-top: 60px;
+  background-color: #000000;
+  margin-left: 3%;
+  width: 20%;
+  height: 35px;
+  border-radius: 8px;
+  border: 0px;
+  color: #fff;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 20px;
 `;
-

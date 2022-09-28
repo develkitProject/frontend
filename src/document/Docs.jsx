@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import SideMenu from '../components/SideMenu';
-import { useParams } from 'react-router-dom';
-import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useGetMainWorkSpacesQuery } from '../redux/modules/workspaces';
+import SideMenu from '../components/SideMenu';
 import Board from './Board';
 import BlackButton from '../common/elements/BlackButton';
 
@@ -25,7 +24,7 @@ function Docs() {
             <StTitle>문서</StTitle>
             <StContent>프로젝트 관련 일일보고 및 계획 등</StContent>
           </div>
-          <BlackButton text='글쓰기' onClick={handleClick}></BlackButton>
+          <BlackButton text="글쓰기" onClick={handleClick} />
         </StIntroContainer>
         <div>
           <Board />
