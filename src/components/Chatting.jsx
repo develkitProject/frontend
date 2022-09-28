@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/no-array-index-key */
+import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Draggable from 'react-draggable';
@@ -17,7 +18,13 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
 
   // ------------------------------------------------------------------------
   const messageList = data?.data;
+
+  // ------------------------------------------무한스크롤 --------------------
+
   const [chatMessages, setChatMessages] = useState([]);
+
+  // ------------------------------------------무한스크롤 --------------------
+
   const onMiniMode = () => {
     setMinimum(!minimum);
   };
@@ -148,7 +155,6 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
         </Stdiv>
       );
     });
-  // console.log(chatData?.length);
 
   return (
     <>
@@ -193,7 +199,12 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
           </StChatHeader>
           <StChatBody ref={messageBoxRef} minimum={minimum}>
             {chatData?.length !== 0 ? (
-              chatData
+              <>
+                <div>
+                  <TargetDiv />
+                </div>
+                {chatData}
+              </>
             ) : (
               <>
                 <StVelkit />
@@ -436,7 +447,7 @@ const PlusToggle = styled.div`
   height: 25px;
   width: 25px;
   cursor: pointer;
-  font-size: ${(props) => (props.fs ? props.fs : '20px')};
+  font-size: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -453,4 +464,11 @@ const StVelkit = styled.div`
   left: 40%;
   top: 20%;
   animation: ${move} 3s 0s infinite;
+`;
+
+const TargetDiv = styled.div`
+  height: 30px;
+  background-color: #000000;
+  margin: 0 auto;
+  visibility: hidden;
 `;
