@@ -44,7 +44,7 @@ function CalendarModal({ onClose, id }) {
       <Overlay>
         <ModalWrap ref={modalRef}>
           <CloseButton handleClose={handleClose} />
-          <StProejct>프로젝트 일정 만들기</StProejct>
+          <StProject>프로젝트 일정 만들기</StProject>
           <StMent>
             프로젝트 일정관리에서 프로젝트 관련 일정을 추가할 수 있습니다
           </StMent>
@@ -107,7 +107,7 @@ const ModalWrap = styled.div`
   box-shadow: 3px 3px 3px rgba(85, 85, 85, 0.1);
 `;
 
-const StProejct = styled.span`
+const StProject = styled.span`
   font-weight: bold;
   font-size: 30px;
   color: #00a99d;

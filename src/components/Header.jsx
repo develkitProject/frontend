@@ -105,7 +105,7 @@ function Header({ path, setPath }) {
               onClick={moveProject}
               style={path === 2 ? { opacity: '1' } : null}
             >
-              Proejct
+              Project
             </StMenuName>
             {/* <StMenuName
               onClick={() => {
@@ -215,7 +215,7 @@ const StMenuName = styled.span`
 `;
 
 const StLogJoin = styled.p`
-  color: ${props => props.fc};
+  color: ${(props) => props.fc};
   padding-left: 5px;
   padding-right: 5px;
   font-family: 'Montserrat';

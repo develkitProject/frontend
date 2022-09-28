@@ -36,8 +36,8 @@ export default function useShowFaq() {
                 ...question,
                 isOpen: true,
               }
-            : question
-        )
+            : question,
+        ),
       );
     };
 
@@ -51,8 +51,8 @@ export default function useShowFaq() {
                 ...question,
                 isOpen: false,
               }
-            : question
-        )
+            : question,
+        ),
       );
     };
 

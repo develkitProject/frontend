@@ -13,7 +13,7 @@ const store = configureStore({
     [chatApi.reducerPath]: chatApi.reducer,
     global,
   },
-  middleware: getDefaultMiddleware => [
+  middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware(),
     coreApi.middleware,
   ],

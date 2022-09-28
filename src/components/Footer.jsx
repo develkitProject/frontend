@@ -18,7 +18,7 @@ function Footer() {
         <StDivLeft>
           <StMenuDiv>
             <StMenuName onClick={moveMain}>About</StMenuName>
-            <StMenuName onClick={moveProject}>Proejct</StMenuName>
+            <StMenuName onClick={moveProject}>Project</StMenuName>
             <StMenuName>Community</StMenuName>
             <StMenuName>FAQ</StMenuName>
             <StMenuName>Team</StMenuName>
@@ -111,7 +111,7 @@ const StInfoDetail = styled.div`
 
 const StInfoName = styled.div`
   margin-right: 8px;
-  cursor: ${props => props.cs}; ;
+  cursor: ${(props) => props.cs}; ;
 `;
 
 const StCopyright = styled.div`

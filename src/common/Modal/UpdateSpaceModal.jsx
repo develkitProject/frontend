@@ -79,7 +79,7 @@ function UpdateSpaceModal({ onClose }) {
       <Overlay>
         <ModalWrap ref={modalRef}>
           <Wrapper>
-            <StProejct>프로젝트 수정하기</StProejct>
+            <StProject>프로젝트 수정하기</StProject>
             <StMent>
               프로젝트 생성 후, 프로젝트 홈에서 초대코드를 복사할 수 있습니다.
             </StMent>
@@ -159,7 +159,7 @@ const Overlay = styled.div`
   z-index: 9999;
 `;
 
-const StProejct = styled.span`
+const StProject = styled.span`
   font-weight: bold;
   font-size: 30px;
   color: #00a99d;

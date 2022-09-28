@@ -77,16 +77,12 @@ function DocsWrite({ onDocumentHandle }) {
           <div
             style={{
               display: 'flex',
-              flexDirection: 'column',
+              flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
               margin: '30px 0px 0px 50px',
             }}
           >
-            <span style={{ width: '150px' }}>
-              {' '}
-              파일용량은 <br /> 총 30MB로 제한됩니다
-            </span>
             <button
               type="button"
               style={{
@@ -94,14 +90,19 @@ function DocsWrite({ onDocumentHandle }) {
                 height: '50px',
                 fontWeight: '500',
                 marginTop: '20px',
-                border: ' none',
-                background: '#e3e3e3',
+                background: '#D9D9D9',
                 cursor: 'pointer',
+                border: '1px solid #424242',
               }}
               onClick={onClickInput}
             >
               파일업로드하기!
             </button>
+
+            <span style={{ width: '150px' }}>
+              {' '}
+              파일용량은 <br /> 총 30MB로 제한됩니다
+            </span>
           </div>
           <input
             style={{ display: 'none' }}
