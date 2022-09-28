@@ -48,13 +48,13 @@ export default function useInputStatus({ signUpInputs }) {
   }, [email]);
 
   useEffect(() => {
-    if (password.length >= 2)
-      if (!passwordCheckReg.test(password)) {
-        setErrorStatus({ ...errorStatus, isPassword: true });
-        setSuccessStatus({ ...successStatus, isPassword: false });
-      } else {
+    if (password.length >= 3)
+      if (passwordCheckReg.test(password)) {
         setErrorStatus({ ...errorStatus, isPassword: false });
         setSuccessStatus({ ...successStatus, isPassword: true });
+      } else {
+        setErrorStatus({ ...errorStatus, isPassword: true });
+        setSuccessStatus({ ...successStatus, isPassword: false });
       }
   }, [password]);
 
