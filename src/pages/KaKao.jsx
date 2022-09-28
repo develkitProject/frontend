@@ -27,7 +27,7 @@ function KaKao() {
     }
   }, [code, navigate]);
 
-  return <div>카카오페이지입니다.</div>;
+  return null;
 }
 
 export default KaKao;

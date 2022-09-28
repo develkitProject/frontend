@@ -14,8 +14,10 @@ function UserInputForm({ onChange, errorStatus, successStatus }) {
         marginTop="20px"
         label="닉네임"
         name="nickname"
-        placeholder="닉네임"
+        errorText="2~8글자 내외(한글, 영어, 숫자)로 입력해주세요."
         isSuccess={successStatus.isNickname}
+        isError={errorStatus.isNickname}
+        placeholder="닉네임"
         onChange={onChange}
       />
       <BasicInput
@@ -39,7 +41,9 @@ function UserInputForm({ onChange, errorStatus, successStatus }) {
           type="password"
           name="password"
           isSuccess={successStatus.isPassword}
+          isError={errorStatus.isPassword}
           placeholder="비밀번호를 입력해주세요!"
+          errorText="비밀번호는 8~20자 내외로 영어+숫자+특수문자 조합입니다."
           onChange={onChange}
         />
         <PasswordInfo isOpen={isOpen} />

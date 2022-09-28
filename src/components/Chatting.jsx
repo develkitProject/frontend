@@ -15,7 +15,6 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const [isOpen, setIsOpen] = useState(false);
   const [Opacity, setOpacity] = useState(false);
   const [minimum, setMinimum] = useState(false);
-
   // ------------------------------------------------------------------------
   const messageList = data?.data;
 
