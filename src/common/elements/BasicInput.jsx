@@ -46,8 +46,8 @@ export default function BasicInput({
 }
 
 const Spacer = styled.div`
-  margin-top: ${props => props.marginTop};
-  margin-bottom: ${props => props.marginBottom};
+  margin-top: ${(props) => props.marginTop};
+  margin-bottom: ${(props) => props.marginBottom};
 `;
 
 const LabelText = styled.span`
@@ -59,7 +59,7 @@ const LabelText = styled.span`
 `;
 
 const InputWrapper = styled.div`
-  border: ${props => props.borderStyle};
+  border: ${(props) => props.borderStyle};
   line-height: 60px;
   border-radius: 10px;
   padding-left: 20px;

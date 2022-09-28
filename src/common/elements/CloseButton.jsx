@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export default function CloseButton({ handleClose }) {
   return (
     <>
-      <XButton onClick={handleClose} type='button'>
+      <XButton onClick={handleClose} type="button">
         X
       </XButton>
     </>

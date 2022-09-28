@@ -16,9 +16,9 @@ export default function FAQPage() {
 
   return (
     <S.Container>
-      <S.Ment fontColor='white'>
-        let <S.Ment fontColor='#00A99D'>D_Velkit</S.Ment> =
-        <S.Ment fontColor='#F5D28C'> “FAQ”;</S.Ment>
+      <S.Ment fontColor="white">
+        let <S.Ment fontColor="#00A99D">D_Velkit</S.Ment> =
+        <S.Ment fontColor="#F5D28C"> “FAQ”;</S.Ment>
       </S.Ment>
       <S.FaqTitle>자주 묻는 질문</S.FaqTitle>
       <S.QuestionBox>
@@ -44,7 +44,7 @@ export default function FAQPage() {
           </div>
         ))}
       </S.QuestionBox>
-      <div style={{marginBottom: "100px"}}/>
+      <div style={{ marginBottom: '100px' }} />
     </S.Container>
   );
 }

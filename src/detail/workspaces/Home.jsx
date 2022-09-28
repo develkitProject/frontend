@@ -273,5 +273,4 @@ const StTbody = styled.div`
   cursor: pointer;
   text-align: center;
   margin-bottom: 10px;
->>>>>>> dev_1
 `;

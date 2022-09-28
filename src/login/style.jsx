@@ -57,8 +57,6 @@ export const StInput = styled.input`
   }
 `;
 
-
-
 export const ButtonDiv = styled.div`
   width: 100%;
   display: flex;
@@ -71,7 +69,7 @@ export const KakaoDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   margin-top: 10px;
-  color: #D9D9D9;
+  color: #d9d9d9;
 `;
 
 export const StButton = styled.button`

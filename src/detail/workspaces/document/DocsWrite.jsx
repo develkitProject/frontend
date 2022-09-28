@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import React, { useState, useReducer, useRef } from 'react';
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import Editor from '../../../components/Editor';

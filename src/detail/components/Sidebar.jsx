@@ -1,12 +1,9 @@
-import styled from 'styled-components';
 import home from '../../asset/img/home.svg';
 import document from '../../asset/img/document.svg';
 import schedule from '../../asset/img/schedule.svg';
 import contacts from '../../asset/img/contacts.svg';
 import laptop from '../../asset/img/laptop.svg';
 import chat from '../../asset/img/chat.svg';
-import arrowDown from '../../asset/img/arrowDown.svg';
-import Icon from './Icon';
 
 import * as S from '../style';
 
@@ -55,7 +52,7 @@ export default function Sidebar({ onClickMenu, handleClick, menu }) {
         <div key={key}>
           {!subItem ? (
             <S.StLabel
-              role='presentation'
+              role="presentation"
               onClick={onClickMenu({ key })}
               key={key}
               style={
@@ -74,7 +71,7 @@ export default function Sidebar({ onClickMenu, handleClick, menu }) {
           ) : (
             <>
               <S.StLabel
-                role='presentation'
+                role="presentation"
                 key={key}
                 style={{ borderBottom: 'none' }}
               >
