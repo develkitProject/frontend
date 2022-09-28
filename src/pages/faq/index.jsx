@@ -1,3 +1,4 @@
+import TopButton from '../../common/elements/TopButton';
 import FaqContents from './components/FaqContent';
 import FaqIcon from './components/FaqIcon';
 
@@ -16,6 +17,7 @@ export default function FAQPage() {
 
   return (
     <S.Container>
+      <TopButton />
       <S.Ment fontColor="white">
         let <S.Ment fontColor="#00A99D">D_Velkit</S.Ment> =
         <S.Ment fontColor="#F5D28C"> “FAQ”;</S.Ment>
