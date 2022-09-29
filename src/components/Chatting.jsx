@@ -30,7 +30,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
 
   useEffect(() => {
     let observer;
-    if (!isLoading) {
+    if (target.current && !isLoading) {
       observer = new IntersectionObserver(onIntersect);
       observer.observe(target.current);
     }
