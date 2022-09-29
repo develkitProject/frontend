@@ -63,9 +63,9 @@ function WorkSpaceDetail() {
       stompClient.connect(headers, () => {
         stompClient.subscribe(
           `/sub/chat/room/${id}`,
-          data => {
+          (data) => {
             const newMessage = JSON.parse(data.body);
-            setChatMessages(chatMessages => [...chatMessages, newMessage]);
+            setChatMessages((chatMessages) => [...chatMessages, newMessage]);
             if (newMessage.type !== 'TALK') {
               setUsers(newMessage.userList);
             }
@@ -156,7 +156,7 @@ function WorkSpaceDetail() {
               </StThead>
 
               <StTbody>
-                {document?.map(data => {
+                {document?.map((data) => {
                   return (
                     <StTable
                       key={data.id}
@@ -227,9 +227,9 @@ const StIntroContainer = styled.div`
 `;
 
 const StTitle = styled.p`
-  color: ${props => props.fc};
+  color: ${(props) => props.fc};
   text-align: left;
-  font-size: ${props => props.fs};
+  font-size: ${(props) => props.fs};
   font-weight: bold;
   letter-spacing: -1.5px;
 `;
@@ -312,7 +312,7 @@ const StScheduleWrapper = styled.div`
 `;
 
 const StScheduleTitle = styled.p`
-  color: ${props => props.fc};
+  color: ${(props) => props.fc};
   text-align: left;
   font-size: 20px;
   font-weight: bold;
