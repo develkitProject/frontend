@@ -41,7 +41,7 @@ export default function Document() {
         ) : (
           <>
             <BlackButton
-              text="리스트 보기"
+              text="리스트 돌아가기"
               onClick={() => {
                 onDocumentHandle('list');
               }}

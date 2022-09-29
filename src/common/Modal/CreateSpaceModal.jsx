@@ -78,13 +78,15 @@ function CreateSpaceModal({ onClose }) {
             <StInput
               onChange={onChange}
               name="title"
-              placeholder="프로젝트명을 입력해주세요"
+              placeholder="프로젝트명을 입력해주세요(20자 이내)"
+              maxLength={20}
             />
             <StInputTitle>프로젝트 소개</StInputTitle>
             <StInput
               onChange={onChange}
               name="content"
-              placeholder="프로젝트를 소개해주세요"
+              placeholder="프로젝트를 소개해주세요(50자 이내)"
+              maxLength={50}
             />
             <StButton
               onClick={handleSubmit}

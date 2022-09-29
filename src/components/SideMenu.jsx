@@ -22,7 +22,7 @@ function SideMenu() {
       >
         <StIcon src={home} />홈
       </StLabel>
-      <StLabel style={{ borderBottom: 'none' }}>
+      <StLabel style={{ cursor: 'auto', borderBottom: 'none' }}>
         <StIcon src={document} />
         게시판
         <StIcon src={arrowDown} />

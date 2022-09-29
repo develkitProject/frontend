@@ -89,9 +89,19 @@ function UpdateSpaceModal({ onClose }) {
               onClick={() => imgRef.current.click()}
             />
             <StInputTitle>프로젝트 이름</StInputTitle>
-            <StInput onChange={onChange} name="title" value={title} />
+            <StInput
+              onChange={onChange}
+              name="title"
+              value={title}
+              maxLength={20}
+            />
             <StInputTitle>프로젝트 소개</StInputTitle>
-            <StInput onChange={onChange} name="content" value={content} />
+            <StInput
+              onChange={onChange}
+              name="content"
+              value={content}
+              maxLength={50}
+            />
             <StButton
               onClick={handleSubmit}
               style={{

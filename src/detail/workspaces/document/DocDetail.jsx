@@ -73,10 +73,10 @@ function DocDetail({ stateId, onDocumentHandle }) {
                 <div
                   style={{
                     display: 'flex',
-                    backgroundColor: '#eef4f2',
-                    borderRadius: '20px',
-                    padding: '10px',
-                    width: '30%',
+                    backgroundColor: '#EEF8F8',
+                    borderRadius: '15px',
+                    padding: '20px',
+                    width: '35%',
                     minWidth: '250px',
                   }}
                 >
@@ -87,28 +87,41 @@ function DocDetail({ stateId, onDocumentHandle }) {
                       minWidth: '70px',
                     }}
                   >
-                    첨부파일{' '}
+                    첨부파일:{' '}
                   </StDetail>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                    }}
-                  >
-                    {nameUrl?.map((file, i) => {
-                      return (
-                        <div key={i} style={{ margin: '0px 0px 5px 20px' }}>
-                          <FileName
-                            href={file.key_2}
-                            target="_blank"
-                            download={file.key_1}
-                          >
-                            {file.key_1}
-                          </FileName>
-                        </div>
-                      );
-                    })}
-                  </div>
+
+                  {files?.length === 0 ? (
+                    <FileName
+                      style={{
+                        color: 'black',
+                        cursor: 'auto',
+                        marginLeft: '20px',
+                      }}
+                    >
+                      첨부파일이 없습니다.
+                    </FileName>
+                  ) : (
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                      }}
+                    >
+                      {nameUrl?.map((file, i) => {
+                        return (
+                          <div key={i} style={{ margin: '0px 0px 5px 20px' }}>
+                            <FileName
+                              href={file.key_2}
+                              target="_blank"
+                              download={file.key_1}
+                            >
+                              {file.key_1}
+                            </FileName>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               </StIntroContainer>
               <StContentContainer>
@@ -120,7 +133,12 @@ function DocDetail({ stateId, onDocumentHandle }) {
               </StContentContainer>
               <StFooterContainer>
                 <StInfoContainer style={{ justifyContent: 'space-between' }}>
-                  <StDetail style={{ marginTop: '10px' }}>
+                  <StDetail
+                    style={{
+                      width: '85%',
+                      marginTop: '10px',
+                    }}
+                  >
                     <span>읽음 &nbsp;:</span>
                     {readMember?.map((members, i) => {
                       return <span key={i}>&nbsp;{members}&nbsp;</span>;
@@ -310,7 +328,7 @@ const StEditIntroContainer = styled.div`
 `;
 
 const FileName = styled.a`
-  color: #025f8a;
+  color: #00a99d;
   font-size: 18px;
   cursor: pointer;
   text-decoration: none;

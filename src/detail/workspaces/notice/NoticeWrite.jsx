@@ -39,7 +39,8 @@ function NoticeWrite({ onNoticeHandle }) {
       <StInputTitle
         onChange={onTitleChange}
         name="title"
-        placeholder="제목"
+        placeholder="제목 (50글자내로 작성해주세요)"
+        maxLength={50}
         value={title}
       />
       <NoticeEditor setContent={setContent} />

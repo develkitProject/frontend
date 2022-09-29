@@ -63,9 +63,9 @@ function WorkSpaceDetail() {
       stompClient.connect(headers, () => {
         stompClient.subscribe(
           `/sub/chat/room/${id}`,
-          data => {
+          (data) => {
             const newMessage = JSON.parse(data.body);
-            setChatMessages(chatMessages => [...chatMessages, newMessage]);
+            setChatMessages((chatMessages) => [...chatMessages, newMessage]);
             if (newMessage.type !== 'TALK') {
               setUsers(newMessage.userList);
             }
@@ -91,7 +91,7 @@ function WorkSpaceDetail() {
       <Projects>
         <StIntroContainer>
           <div>
-            <StTitle fc="#333333" fs="1.5rem">
+            <StTitle fontColor="#333333" fontSize="1.5rem">
               {title}
             </StTitle>
             <StContent>{content}</StContent>
@@ -103,18 +103,26 @@ function WorkSpaceDetail() {
         ) : null}
         <div>
           <StNoticeWrapper>
-            <StTitle style={{ marginBottom: '15px' }} fc="#333333" fs="20px">
+            <StTitle
+              style={{ marginBottom: '15px' }}
+              fontColor="#333333"
+              fontSize="20px"
+            >
               필독
             </StTitle>
             <StNoticeContainer>
-              <StTitle style={{ marginBottom: '15px' }} fc="#00a99d" fs="20px">
+              <StTitle
+                style={{ marginBottom: '15px' }}
+                fontColor="#00a99d"
+                fontSize="20px"
+              >
                 공지사항
               </StTitle>
               <StNoticeBox>
                 <StTitle
                   style={{ marginBottom: '15px' }}
-                  fc="#333333"
-                  fs="20px"
+                  fontColor="#333333"
+                  fontSize="20px"
                 >
                   {data?.data.notices && data?.data.notices.title}
                 </StTitle>
@@ -140,7 +148,7 @@ function WorkSpaceDetail() {
         </div>
         <div>
           <StScheduleWrapper>
-            <StScheduleTitle onClick={clickHandler} fc="#333333">
+            <StScheduleTitle onClick={clickHandler} fontColor="#333333">
               문서 및 계획
             </StScheduleTitle>
 
@@ -156,7 +164,7 @@ function WorkSpaceDetail() {
               </StThead>
 
               <StTbody>
-                {document?.map(data => {
+                {document?.map((data) => {
                   return (
                     <StTable
                       key={data.id}
@@ -227,9 +235,9 @@ const StIntroContainer = styled.div`
 `;
 
 const StTitle = styled.p`
-  color: ${props => props.fc};
+  color: ${(props) => props.fontColor};
   text-align: left;
-  font-size: ${props => props.fs};
+  font-size: ${(props) => props.fontSize};
   font-weight: bold;
   letter-spacing: -1.5px;
 `;
@@ -312,7 +320,7 @@ const StScheduleWrapper = styled.div`
 `;
 
 const StScheduleTitle = styled.p`
-  color: ${props => props.fc};
+  color: ${(props) => props.fontColor};
   text-align: left;
   font-size: 20px;
   font-weight: bold;

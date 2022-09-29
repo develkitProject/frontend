@@ -41,7 +41,12 @@ function NoticeEdit({ stateId, onNoticeHandle }) {
 
   return (
     <StEditorContainer>
-      <StInputTitle onChange={onTitleChange} name="title" value={title} />
+      <StInputTitle
+        onChange={onTitleChange}
+        name="title"
+        value={title}
+        maxLength={50}
+      />
       <NoticeEditor value={content} setContent={setContent} />
       <EditorBlock>
         <StButton onClick={handleSubmit}>수정하기</StButton>

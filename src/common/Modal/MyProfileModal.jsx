@@ -37,14 +37,15 @@ function MyProfileModal({ onClose, userData }) {
           <StButton
             color="#00A99D"
             border="none"
-            fontColor="#ffffff"
+            fontHoverColor="#ffffff"
+            fontColor="black"
             onClick={moveAndClose}
           >
             마이페이지
           </StButton>
           <StButton
             bc="#999999"
-            fc="#999999"
+            fontColor="#999999"
             onClick={() => {
               logout();
             }}
@@ -89,9 +90,9 @@ export const StDiv = styled.div`
   margin-bottom: 10px;
   align-items: center;
   text-align: center;
-  /* font-weight: ${(props) => props.fw};
-  font-size: ${(props) => props.fs};
-  color: ${(props) => props.fc}; */
+  /* font-weight: ${(props) => props.fontWeight};
+  font-size: ${(props) => props.fontSize};
+  color: ${(props) => props.fontColor}; */
 `;
 
 const StProfileImg = styled.img`
@@ -119,7 +120,7 @@ export const StButton = styled.button`
   background-color: #ffffff;
   margin-top: 8px;
   margin-bottom: 8px;
-  color: ${(props) => props.fc};
+  color: ${(props) => props.fontColor};
   font-weight: 500;
   font-size: 1rem;
   line-height: 23px;
@@ -127,6 +128,6 @@ export const StButton = styled.button`
   &:hover {
     background-color: ${(props) => props.color};
     border: ${(props) => props.border};
-    color: ${(props) => props.fontColor};
+    color: ${(props) => props.fontHoverColor};
   }
 `;
