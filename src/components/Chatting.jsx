@@ -234,7 +234,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
                 setIsOpen(!isOpen);
               }}
               right="10px"
-              fs="18px"
+              fontSize="18px"
             >
               {!isOpen ? '>' : '<'}
             </PlusToggle>

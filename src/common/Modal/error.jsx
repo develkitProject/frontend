@@ -41,23 +41,23 @@ function WorkSpaceErrorModal({ onClose }) {
     <ModalContainer>
       <Overlay>
         <ModalWrap ref={modalRef}>
-          <StAlert fw="bold" fs="28px" fc="#00a99d">
+          <StAlert fontWeight="bold" fontSize="28px" fontColor="#00a99d">
             <StErrorImg src={error_outline} />
             로그인을 해주세요!
           </StAlert>
-          <StAlert fs="16px" fc="#626262">
+          <StAlert fontSize="16px" fontColor="#626262">
             성장하는 사람들을 위한 프로젝트 협업 서비스 디벨킷
           </StAlert>
           <StButton type="button" onClick={handleOpenLogin} bc="#00a99d">
             로그인
           </StButton>
           <StMent>
-            <StAlert fs="16px" fc="#999">
+            <StAlert fontSize="16px" fontColor="#999">
               디벨킷에 처음인가요?
             </StAlert>
             <StAlert
-              fs="16px"
-              fc="#00a99d"
+              fontSize="16px"
+              fontColor="#00a99d"
               onClick={handleOpenSignUp}
               style={{
                 marginLeft: '10px',
@@ -70,7 +70,7 @@ function WorkSpaceErrorModal({ onClose }) {
           </StMent>
           <StMent>
             <StLine />
-            <StAlert fs="12px" fc="#d9d9d9">
+            <StAlert fontSize="12px" fontColor="#d9d9d9">
               또는
             </StAlert>
             <StLine />
@@ -138,9 +138,9 @@ const ModalWrap = styled.div`
 
 export const StAlert = styled.div`
   letter-spacing: -1.5px;
-  font-weight: ${(props) => props.fw};
-  font-size: ${(props) => props.fs};
-  color: ${(props) => props.fc};
+  font-weight: ${(props) => props.fontWeight};
+  font-size: ${(props) => props.fontSize};
+  color: ${(props) => props.fontColor};
   margin-top: 10px;
   margin-bottom: 10px;
 `;

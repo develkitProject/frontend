@@ -87,6 +87,7 @@ function DocsEdit({ stateId, onDocumentHandle }) {
         name="title"
         placeholder="제목"
         value={title}
+        maxLength={50}
       />
       <Editor value={content} setContent={setContent} />
       <EditorBlock>

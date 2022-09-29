@@ -227,7 +227,7 @@ const StFooter = styled.div`
 
 const StDiv = styled.div`
   margin-top: 10px;
-  overflow: hidden;
+  /* overflow: hidden; */
   white-space: nowrap;
   text-overflow: ellipsis;
 `;

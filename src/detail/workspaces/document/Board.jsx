@@ -27,7 +27,7 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
   return (
     <>
       <StWrapper>
-        <StTitle fc="#333333">문서관리</StTitle>
+        <StTitle fontColor="#333333">문서관리</StTitle>
         <StTableContainer>
           <StThead>
             <StTable style={{ borderBottom: 'none' }}>
@@ -133,7 +133,7 @@ const StWrapper = styled.div`
 `;
 
 const StTitle = styled.p`
-  color: ${(props) => props.fc};
+  color: ${(props) => props.fontColor};
   text-align: left;
   font-size: 20px;
   font-weight: bold;

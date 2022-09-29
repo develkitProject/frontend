@@ -131,12 +131,12 @@ function Header({ path, setPath }) {
 
         {!cookies ? (
           <StDiv>
-            <StLogJoin fc="#00A99D" onClick={openLoginModal}>
+            <StLogJoin fontColor="#00A99D" onClick={openLoginModal}>
               LOGIN
             </StLogJoin>
-            <StLogJoin fc="white">·</StLogJoin>
+            <StLogJoin fontColor="white">·</StLogJoin>
             <StLogJoin
-              fc="white"
+              fontColor="white"
               onClick={openSignUpModal}
               SignupButton={openSignUpModal}
             >
@@ -215,7 +215,7 @@ const StMenuName = styled.span`
 `;
 
 const StLogJoin = styled.p`
-  color: ${(props) => props.fc};
+  color: ${(props) => props.fontColor};
   padding-left: 5px;
   padding-right: 5px;
   font-family: 'Montserrat';
