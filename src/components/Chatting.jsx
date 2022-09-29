@@ -1,20 +1,26 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/no-array-index-key */
-import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Draggable from 'react-draggable';
 import velkit from '../asset/img/velkit.png';
-import { useGetChatMessagesQuery } from '../redux/modules/workspaces';
+import {
+  useGetChatMessagesQuery,
+  useNextChatMessagesMutation,
+} from '../redux/modules/workspaces';
 import noteBook from '../asset/img/notebook.png';
 
 function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const [users, setUsers] = useState(null);
   const textRef = useRef(null);
   const { data, isLoading, error, refetch } = useGetChatMessagesQuery(id);
+  const [nextgetChat] = useNextChatMessagesMutation();
+  const target = useRef(null);
+
   const [isOpen, setIsOpen] = useState(false);
   const [Opacity, setOpacity] = useState(false);
   const [minimum, setMinimum] = useState(false);
+
   // ------------------------------------------------------------------------
   const messageList = data?.data;
 
@@ -22,11 +28,47 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
 
   const [chatMessages, setChatMessages] = useState([]);
 
+  useEffect(() => {
+    let observer;
+    if (!isLoading) {
+      observer = new IntersectionObserver(onIntersect);
+      observer.observe(target.current);
+    }
+    return () => observer && observer.disconnect();
+  }, [chatMessages]);
+
+  const onIntersect = (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          fetchMessage();
+        }, 700);
+
+        observer.observe(entry.target);
+      }
+    });
+  };
+
+  const fetchMessage = async () => {
+    // eslint-disable-next-line no-unsafe-optional-chaining
+    const last = chatMessages[chatMessages.length - 1];
+    const obj = {
+      message: last.message,
+      writer: last.writer,
+      cursor: last.createdAt,
+      id,
+    };
+
+    await nextgetChat(obj).then((res) =>
+      // eslint-disable-next-line no-unsafe-optional-chaining
+      setChatMessages((chatMessages) => [...chatMessages, ...res.data.data]),
+    );
+  };
   // ------------------------------------------무한스크롤 --------------------
 
-  const onMiniMode = () => {
+  function onMiniMode() {
     setMinimum(!minimum);
-  };
+  }
 
   useEffect(() => {
     onConnected();
@@ -34,10 +76,6 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
       disConnect();
     };
   }, []);
-
-  useEffect(() => {
-    messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
-  }, [chatMessages]);
 
   useEffect(() => {
     setChatMessages(messageList);
@@ -67,7 +105,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
         },
         headers,
       );
-    } else if (!stompClient.connected) {
+    } else {
       onSub();
     }
   }
@@ -115,6 +153,10 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
       sendMessage();
     }
   };
+
+  useEffect(() => {
+    messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
+  }, [chatMessages, sendMessage]);
 
   // eslint-disable-next-line array-callback-return
   const chatData = chatMessages
@@ -174,6 +216,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
             </span>
             <PlusToggle
               role="presentation"
+              // eslint-disable-next-line react/jsx-no-bind
               onClick={onMiniMode}
               minimum={minimum}
               style={
@@ -200,7 +243,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
             {chatData?.length !== 0 ? (
               <>
                 <div>
-                  <TargetDiv />
+                  <TargetDiv ref={target} />
                 </div>
                 {chatData}
               </>

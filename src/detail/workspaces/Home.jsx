@@ -15,7 +15,7 @@ export default function Home({ id, data, onDocumentHandle }) {
 
   const { data: docdata } = useGetDocQuery(id);
   const { data: noticedata } = useGetNoticeQuery(id);
-  const firstNotice = noticedata?.data[0];
+  const firstNotice = noticedata?.data[noticedata.data.length - 1];
   const fourDocuments = docdata?.data?.slice(0, 4);
 
   const title = data?.data?.workspaces?.title;

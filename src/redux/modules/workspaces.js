@@ -316,6 +316,17 @@ export const workspaceApi = coreApi.injectEndpoints({
       },
       providesTags: ['Messages'],
     }),
+    nextChatMessages: builder.mutation({
+      query: (obj) => {
+        return {
+          url: `/api/chats/${obj.id}`,
+          method: 'POST',
+          body: obj,
+          headers,
+        };
+      },
+      providesTags: ['Messages'],
+    }),
   }),
 });
 
@@ -349,4 +360,5 @@ export const {
   useUpdateDocMutation,
   useGetChatMessagesQuery,
   useDeleteSchedulesMutation,
+  useNextChatMessagesMutation,
 } = workspaceApi;
