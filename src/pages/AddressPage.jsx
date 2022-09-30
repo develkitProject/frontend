@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDeleteWorkSpacesMutation } from '../redux/modules/workspaces';
 import SideMenu from '../components/SideMenu';
-import Board from '../document/Board';
+// eslint-disable-next-line import/no-unresolved, import/extensions
 import Address from '../components/Address';
 import BlackButton from '../common/elements/BlackButton';
 
@@ -14,7 +14,7 @@ function AddressPage() {
 
   const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
 
-  const deleteWorkSpace = id => {
+  const deleteWorkSpace = (id) => {
     if (window.confirm('정말 지우시겠습니까?')) {
       deleteWorkSpaces(id);
       navigate('/workspace');

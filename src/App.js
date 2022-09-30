@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import DocDetail from './detail/workspaces/document/DocDetail';
 import FAQPage from './pages/faq';
 import WorkspaceDetailPage from './detail';
+import Circle from './common/elements/Circle';
 import EventPage from './pages/Event';
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
         <Route path="/editor" element={<PostEditor />} />
         <Route path="/kakao" element={<Kakao />} />
         <Route path="/workspace/main/:id" element={<WorkspaceDetailPage />} />
-        <Route path="/workspace/main/:id/docs/:docid" element={<DocDetail />} />
+        {/* <Route path="/workspace/main/:id/docs/:docid" element={<DocDetail />} /> */}
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/event" element={<EventPage />} />
       </Routes>
