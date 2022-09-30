@@ -96,7 +96,7 @@ function Landing({ path, setPath }) {
                 <StMent>
                   let <StMent fontColor="#00A99D">D_Velkit</StMent> ={' '}
                   <StMent fontColor="#F5D28C">
-                    “Devlop Your Teamwork through D.VelKit!”;
+                    Develop Your Teamwork through D.VelKit!”;
                   </StMent>
                 </StMent>
 
