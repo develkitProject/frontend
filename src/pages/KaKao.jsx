@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import axios from 'axios';
+import Circle from '../common/elements/Circle';
 import { setAccessToken } from '../Cookie';
 
 axios.defaults.withCredentials = true;
@@ -27,7 +29,20 @@ function KaKao() {
     }
   }, [code, navigate]);
 
-  return null;
+  return (
+    <StContainer>
+      <Circle />
+    </StContainer>
+  );
 }
 
 export default KaKao;
+
+const StContainer = styled.div`
+  width: 100%;
+  height: 70vh;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
