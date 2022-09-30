@@ -55,7 +55,7 @@ export default function Sidebar({ onClickMenu, handleClick, menu }) {
         <div key={key}>
           {!subItem ? (
             <S.StLabel
-              role='presentation'
+              role="presentation"
               onClick={onClickMenu({ key })}
               key={key}
               style={
@@ -74,7 +74,7 @@ export default function Sidebar({ onClickMenu, handleClick, menu }) {
           ) : (
             <>
               <S.StLabel
-                role='presentation'
+                role="presentation"
                 key={key}
                 style={{ borderBottom: 'none' }}
               >

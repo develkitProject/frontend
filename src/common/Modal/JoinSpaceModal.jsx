@@ -1,15 +1,15 @@
 import React, { useRef, useCallback } from 'react';
 
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import ModalContainer from './ModalContainer';
 import useOutSideClick from '../hooks/useOutSideClick';
 import error_outline from '../../asset/img/error_outline.svg';
-import { useDispatch } from 'react-redux';
 import { setIsLoginModal, setIsSignUpModal } from '../../redux/modules/global';
 import KakaoIcon from '../../asset/img/kakaoIcon.png';
 import { StAlert } from './error';
 
-const JoinSpaceModal = ({ onClose }) => {
+function JoinSpaceModal({ onClose }) {
   const dispatch = useDispatch();
   const modalRef = useRef(null);
 
@@ -28,7 +28,7 @@ const JoinSpaceModal = ({ onClose }) => {
       </Overlay>
     </ModalContainer>
   );
-};
+}
 
 export default JoinSpaceModal;
 

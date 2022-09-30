@@ -17,6 +17,8 @@ import EventPage from './pages/Event';
 function App() {
   const [path, setPath] = useState(1);
   const location = useLocation();
+
+  console.log('test');
   return (
     <>
       {location.pathname !== '/' ? (

@@ -3,14 +3,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 export default function BlackButton(props) {
+  const { onClick, text } = props;
   return (
-    <StButton
-      type="button"
-      onClick={() => {
-        props.onClick();
-      }}
-    >
-      {props.text}
+    <StButton type="button" onClick={onClick}>
+      {text}
     </StButton>
   );
 }

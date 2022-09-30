@@ -15,7 +15,6 @@ function DocDetail() {
     docid,
   });
   const document = data?.data;
-  console.log(data);
 
   useEffect(() => {
     refetch();
