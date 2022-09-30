@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Draggable from 'react-draggable';
+import useModalOverlay from '../signup/hooks/useModalOverlay';
 import velkit from '../asset/img/velkit.png';
 import {
   useGetChatMessagesQuery,
@@ -13,20 +14,18 @@ import noteBook from '../asset/img/notebook.png';
 function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const [users, setUsers] = useState(null);
   const textRef = useRef(null);
+  const { isOpen, toggle } = useModalOverlay();
   const { data, isLoading, error, refetch } = useGetChatMessagesQuery(id);
   const [nextgetChat] = useNextChatMessagesMutation();
   const target = useRef(null);
 
-  const [isOpen, setIsOpen] = useState(false);
   const [Opacity, setOpacity] = useState(false);
   const [minimum, setMinimum] = useState(false);
-
-  // ------------------------------------------------------------------------
+  const [prevHeight, setPrevHeight] = useState(null);
   const messageList = data?.data;
-
-  // ------------------------------------------무한스크롤 --------------------
-
   const [chatMessages, setChatMessages] = useState([]);
+
+  // -----------------------------무한 스크롤----------------------------------------
 
   useEffect(() => {
     let observer;
@@ -37,20 +36,18 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
     return () => observer && observer.disconnect();
   }, [chatMessages]);
 
-  const onIntersect = (entries, observer) => {
+  const onIntersect = (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         setTimeout(() => {
           fetchMessage();
-        }, 700);
-
-        observer.observe(entry.target);
+        }, 300);
+        // observer.observe(entry.target);
       }
     });
   };
 
   const fetchMessage = async () => {
-    // eslint-disable-next-line no-unsafe-optional-chaining
     const last = chatMessages[chatMessages.length - 1];
     const obj = {
       message: last.message,
@@ -58,13 +55,19 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
       cursor: last.createdAt,
       id,
     };
-
-    await nextgetChat(obj).then((res) =>
-      // eslint-disable-next-line no-unsafe-optional-chaining
-      setChatMessages((chatMessages) => [...chatMessages, ...res.data.data]),
-    );
+    if (prevHeight !== messageBoxRef.current.scrollHeight) {
+      await nextgetChat(obj).then((res) =>
+        // eslint-disable-next-line no-unsafe-optional-chaining
+        setTimeout(() =>
+          setChatMessages((chatMessages) => [
+            ...chatMessages,
+            ...res.data.data,
+          ]),
+        ),
+      );
+      setPrevHeight(messageBoxRef.current.scrollHeight);
+    }
   };
-  // ------------------------------------------무한스크롤 --------------------
 
   function onMiniMode() {
     setMinimum(!minimum);
@@ -79,8 +82,20 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
 
   useEffect(() => {
     setChatMessages(messageList);
-    refetch();
+    // refetch();
   }, [messageList]);
+
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    if (prevHeight) {
+      const currentHeight = messageBoxRef.current.scrollHeight - prevHeight;
+      messageBoxRef.current.scrollTo(0, currentHeight);
+      return setPrevHeight(null);
+    }
+    messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
+  }, [chatMessages]);
+
+  // -----------------------------무한 스크롤----------------------------------------
 
   const userArray = [...new Set(users)];
 
@@ -93,46 +108,34 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
 
   function onConnected() {
     if (stompClient.connected) {
-      stompClient.subscribe(
-        `/sub/chat/room/${id}`,
-        (data) => {
-          const newMessage = JSON.parse(data.body);
-          if (newMessage.type !== 'TALK') {
-            setUsers(newMessage.userList);
-          } else {
-            setChatMessages((chatMessages) => [newMessage, ...chatMessages]);
-          }
-        },
-        headers,
-      );
+      onSubscribe();
     } else {
-      onSub();
+      stompClient.connect(headers, () => {
+        onSubscribe();
+      });
     }
   }
 
   const disConnect = () => {
-    // if (stompClient.unconnected)
     if (stompClient != null) {
       if (stompClient.connected) stompClient.unsubscribe('sub-0');
     }
   };
 
-  function onSub() {
-    stompClient.connect(headers, () => {
-      stompClient.subscribe(
-        `/sub/chat/room/${id}`,
-        (data) => {
-          const newMessage = JSON.parse(data.body);
-          if (newMessage.type !== 'TALK') {
-            setUsers(newMessage.userList);
-          } else {
-            setChatMessages((chatMessages) => [newMessage, ...chatMessages]);
-          }
-        },
-        headers,
-      );
-    });
-  }
+  const onSubscribe = () => {
+    stompClient.subscribe(
+      `/sub/chat/room/${id}`,
+      (data) => {
+        const newMessage = JSON.parse(data.body);
+        if (newMessage.type !== 'TALK') {
+          setUsers(newMessage.userList);
+        } else {
+          setChatMessages((chatMessages) => [newMessage, ...chatMessages]);
+        }
+      },
+      headers,
+    );
+  };
 
   const sendMessage = () => {
     if (textRef.current.value !== '') {
@@ -154,11 +157,6 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
     }
   };
 
-  useEffect(() => {
-    messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
-  }, [chatMessages, sendMessage]);
-
-  // eslint-disable-next-line array-callback-return
   const chatData = chatMessages
     ?.slice(0)
     .reverse()
@@ -230,9 +228,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
             </PlusToggle>
             <PlusToggle
               role="presentation"
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
+              onClick={toggle}
               right="10px"
               fontSize="18px"
             >

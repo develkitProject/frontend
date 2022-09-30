@@ -15,7 +15,6 @@ function InvitationCodeModal({ onClose }) {
   useOutSideClick(modalRef, handleClose);
   const { data, error, isLoading } = useGetInviteCodeQuery(id);
   const invite_code = data?.data?.code;
-  console.log(data);
 
   const copyCode = async () => {
     try {

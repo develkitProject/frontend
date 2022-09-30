@@ -51,7 +51,6 @@ function Landing({ path, setPath }) {
 
     loginApi({ username, password })
       .then((res) => {
-        console.log(res);
         if (res.data.success === false) {
           alert('아이디 또는 비밀번호를 확인해주세요.');
         } else {
@@ -96,7 +95,7 @@ function Landing({ path, setPath }) {
                 <StMent>
                   let <StMent fontColor="#00A99D">D_Velkit</StMent> ={' '}
                   <StMent fontColor="#F5D28C">
-                    Develop Your Teamwork through D.VelKit!”;
+                    “Develop Your Teamwork through D.VelKit!”;
                   </StMent>
                 </StMent>
 
@@ -363,17 +362,6 @@ function Landing({ path, setPath }) {
 
 export default Landing;
 
-const StOuter = styled.div`
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  color: white;
-  width: 100%;
-  height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
-`;
-
 const StWrapper = styled.div`
   color: white;
   width: 100%;
@@ -539,18 +527,19 @@ const rotate = keyframes`
 }
 `;
 
-const StCircle = styled.div`
-  width: 25%;
-  height: 25%;
-  min-width: 100px;
-  min-height: 100px;
+export const StCircle = styled.div`
+  /* width: 25%;
+  height: 25%; */
+  min-width: 250px;
+  min-height: 250px;
   background-image: url(${circle});
   background-size: 100% 100%;
   position: absolute;
   left: 70%;
-  top: 287%;
+  top: 96%;
   animation: ${rotate} 15s linear infinite;
   transform-origin: 50% 50%;
+  z-index: 500;
 `;
 
 const StVelkit3 = styled.div`
