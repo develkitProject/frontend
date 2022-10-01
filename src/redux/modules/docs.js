@@ -43,6 +43,21 @@ export const docsApi = coreApi.injectEndpoints({
       invalidatesTags: ['Docs'],
     }),
 
+    // 이미지추가
+    addDocImage: builder.mutation({
+      query: (formData) => {
+        return {
+          url: `/api/images`,
+          method: 'POST',
+          body: formData,
+          headers: {
+            Authorization: getCookieToken(),
+          },
+        };
+      },
+      invalidatesTags: ['Docs'],
+    }),
+
     updateDoc: builder.mutation({
       query: (formData) => {
         return {
@@ -85,6 +100,7 @@ export const {
   useGetDocQuery,
   useGetDocDetailQuery,
   useAddDocMutation,
+  useAddDocImageMutation,
   useDeleteDocMutation,
   useGetDocSearchQuery,
   useUpdateDocMutation,
