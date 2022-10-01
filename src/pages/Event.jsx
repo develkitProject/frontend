@@ -4,7 +4,7 @@ import Event1 from '../common/img/event1.png';
 import Event2 from '../common/img/event2.png';
 import Event3 from '../common/img/event3.png';
 import TopButton from '../common/elements/TopButton';
-import { StButton } from '../oauth/login/style';
+import { StButton } from '../account/login/style';
 
 export default function EventPage() {
   const handleSubmit = () => {

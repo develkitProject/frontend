@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Draggable from 'react-draggable';
-import useModalOverlay from '../oauth/signup/hooks/useModalOverlay';
+import useModalOverlay from '../account/signup/hooks/useModalOverlay';
 import velkit from '../common/img/velkit.png';
 import {
   useGetChatMessagesQuery,
