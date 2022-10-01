@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import { useGetDocQuery } from '../../redux/modules/workspaces';
+import { useGetDocQuery } from '../../redux/modules/docs';
 import Board from './document/Board';
 import DocsWrite from './document/DocsWrite';
 import DocsEdit from './document/DocsEdit';

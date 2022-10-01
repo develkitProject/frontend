@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
-import {
-  useDeleteNoticeMutation,
-  useGetNoticeQuery,
-} from '../../../redux/modules/workspaces';
-import { getCookieToken } from '../../../Cookie';
+import { useDeleteNoticeMutation } from '../../../redux/modules/notices';
 import useGetUser from '../../../common/hooks/useGetUser';
+import { getCookieToken } from '../../../Cookie';
 
 function NoticeList({ error, isLoading, data, notice, onNoticeHandle, id }) {
   const { user } = useGetUser();

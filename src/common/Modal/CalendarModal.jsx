@@ -4,7 +4,7 @@ import BasicInput from '../elements/BasicInput';
 import CloseButton from '../elements/CloseButton';
 import Button1 from '../elements/Button';
 import ModalContainer from './ModalContainer';
-import { useAddSchedulesMutation } from '../../redux/modules/workspaces';
+import { useAddSchedulesMutation } from '../../redux/modules/schedules';
 
 function CalendarModal({ onClose, id }) {
   const modalRef = useRef(null);

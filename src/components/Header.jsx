@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCookieToken, removeCookieToken } from '../Cookie';
 import alarm from '../asset/img/alarm.svg';
@@ -14,7 +13,7 @@ import {
   selectIsLoginModal,
   selectIsSignUpModal,
 } from '../redux/modules/global/selectors';
-import { useGetUserInfoQuery } from '../redux/modules/workspaces';
+import { useGetUserInfoQuery } from '../redux/modules/user';
 
 function Header({ path, setPath }) {
   const navigate = useNavigate();

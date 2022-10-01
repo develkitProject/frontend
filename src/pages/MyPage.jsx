@@ -2,10 +2,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import useGetUser from '../common/hooks/useGetUser';
-import {
-  useGetWorkspacesQuery,
-  useGetUserInfoQuery,
-} from '../redux/modules/workspaces';
+import { useGetWorkspacesQuery } from '../redux/modules/workspaces';
+import { useGetUserInfoQuery } from '../redux/modules/user';
 import SpaceCard from '../components/SpaceCard';
 import MyPage2 from './MyPage2';
 

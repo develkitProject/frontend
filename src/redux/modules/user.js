@@ -1,25 +1,51 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { getCookieToken } from '../../Cookie';
+import { coreApi } from '../query/coreApi';
 
-const initialState = {
-  username: '',
-  password: '',
-  nickname: '',
+const headers = {
+  Authorization: getCookieToken(),
 };
 
-export const addUserAsync = createAsyncThunk('ADD_USER', async (user) => {
-  const response = await axios.post(
-    `${process.env.REACT_APP_BASE_URL}/api/members/signup`,
-    user,
-  );
-  return response.data;
+export const userApi = coreApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getUserInfo: builder.query({
+      query: () => {
+        return {
+          url: `/api/members/profile`,
+          method: 'GET',
+          headers,
+        };
+      },
+      providesTags: ['User'],
+    }),
+    // 회원정보수정
+    updateUserInfo: builder.mutation({
+      query: (updateInfo) => {
+        return {
+          url: `/api/members/profile`,
+          method: 'PUT',
+          body: updateInfo,
+          headers,
+        };
+      },
+      invalidatesTags: ['User'],
+    }),
+
+    // 회원정보탈퇴
+    deleteUserInfo: builder.mutation({
+      query: () => {
+        return {
+          url: `/api/members/signout`,
+          method: 'DELETE',
+          headers,
+        };
+      },
+      invalidatesTags: ['User'],
+    }),
+  }),
 });
 
-const { reducer } = createSlice({
-  name: 'user',
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {},
-});
-
-export default reducer;
+export const {
+  useGetUserInfoQuery,
+  useUpdateUserInfoMutation,
+  useDeleteUserInfoMutation,
+} = userApi;

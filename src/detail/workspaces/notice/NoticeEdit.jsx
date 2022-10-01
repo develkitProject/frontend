@@ -7,7 +7,7 @@ import NoticeEditor from './NoticeEditor';
 import {
   useGetNoticeQuery,
   useUpdateNoticeMutation,
-} from '../../../redux/modules/workspaces';
+} from '../../../redux/modules/notices';
 
 function NoticeEdit({ stateId, onNoticeHandle }) {
   const params = useParams();

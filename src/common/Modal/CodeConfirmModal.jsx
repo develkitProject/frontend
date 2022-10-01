@@ -1,8 +1,8 @@
 import React, { useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 import useOutSideClick from '../hooks/useOutSideClick';
+import { useGetWorkSpacesJoinMutation } from '../../redux/modules/workspaces';
 import { getCookieToken } from '../../Cookie';
 
 function CodeConfirmModal({ onClose, spaceData }) {
@@ -11,27 +11,18 @@ function CodeConfirmModal({ onClose, spaceData }) {
   const headers = {
     Authorization: getCookieToken(),
   };
+  const [getWorkSpacesJoin, { error }] = useGetWorkSpacesJoinMutation();
   const handleClose = useCallback(() => {
     onClose?.();
   }, [onClose]);
 
   useOutSideClick(modalRef, handleClose);
 
-  const onConfirm = async () => {
-    const obj = {};
+  const onJoin = async () => {
     try {
-      await axios
-        .post(
-          `${process.env.REACT_APP_BASE_URL}/api/workspaces/join/${spaceData.id}`,
-          { obj },
-          {
-            headers,
-          },
-        )
-        .then((response) => {
-          alert('가입되었습니다!');
-          navigate(`/workspace/main/${spaceData.id}`);
-        });
+      const result = await getWorkSpacesJoin(spaceData.id).unwrap();
+      alert('가입되었습니다!');
+      navigate(`/workspace/main/${spaceData.id}`);
     } catch (error) {
       alert('이미 가입된 워크스페이스입니다!');
     }
@@ -62,14 +53,10 @@ function CodeConfirmModal({ onClose, spaceData }) {
           </StInfoDetail>
         </StInfoDiv>
         <StButtonBox>
-          <StButton fontColor="white" buttonColor="#00a99d" onClick={onConfirm}>
+          <StButton fontColor="white" buttonColor="#00a99d" onClick={onJoin}>
             가입하기
           </StButton>
-          <StButton
-            fontColor="#424242"
-            buttonColor="#D9D9D9"
-            onClick={handleClose}
-          >
+          <StButton fontColor="#424242" buttonColor="#D9D9D9" onClick={onClose}>
             취소
           </StButton>
         </StButtonBox>

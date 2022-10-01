@@ -6,7 +6,7 @@ import Editor from '../../../components/Editor';
 import {
   useGetDocDetailQuery,
   useUpdateDocMutation,
-} from '../../../redux/modules/workspaces';
+} from '../../../redux/modules/docs';
 
 function DocsEdit({ stateId, onDocumentHandle }) {
   const params = useParams();

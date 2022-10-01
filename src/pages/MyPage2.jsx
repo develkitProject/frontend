@@ -7,7 +7,7 @@ import {
   useDeleteUserInfoMutation,
   useGetUserInfoQuery,
   useUpdateUserInfoMutation,
-} from '../redux/modules/workspaces';
+} from '../redux/modules/user';
 import { removeUser } from '../Cookie';
 
 function MyPage2({ data }) {
