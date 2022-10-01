@@ -19,6 +19,8 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
   const docs = searchData?.data;
   const [searchDocs, setSearchDocs] = useState(0);
 
+  console.log(doc);
+
   const onSearchHandle = (obj) => {
     setSearchDocs(1);
     setState(obj);
@@ -104,6 +106,11 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
             ) : null}
           </StTbody>
         </StTableContainer>
+        <StPagination>
+          <StChangePage> ◀ 이전 </StChangePage>
+          <div style={{ margin: '0px 20px 0 20px' }} />
+          <StChangePage> 다음 ▶</StChangePage>
+        </StPagination>
       </StWrapper>
       <SearchBar
         id={id}
@@ -177,4 +184,15 @@ const StTbody = styled.div`
   text-align: center;
   white-space: nowrap;
   text-overflow: ellipsis;
+`;
+
+const StPagination = styled.div`
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const StChangePage = styled.div`
+  cursor: pointer;
 `;
