@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import logo from '../asset/img/logo.png';
+import logo from '../common/img/logo.png';
 
 function Footer() {
   const navigate = useNavigate();

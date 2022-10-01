@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import Event1 from '../asset/img/event1.png';
-import Event2 from '../asset/img/event2.png';
-import Event3 from '../asset/img/event3.png';
+import Event1 from '../common/img/event1.png';
+import Event2 from '../common/img/event2.png';
+import Event3 from '../common/img/event3.png';
 import TopButton from '../common/elements/TopButton';
-import { StButton } from '../login/style';
+import { StButton } from '../oauth/login/style';
 
 export default function EventPage() {
   const handleSubmit = () => {

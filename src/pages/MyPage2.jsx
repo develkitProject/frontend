@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
-import useGetUser from '../common/hooks/useGetUser';
-import velkit from '../asset/img/velkit.png';
+import velkit from '../common/img/velkit.png';
 import BasicInput from '../common/elements/BasicInput';
 import {
   useDeleteUserInfoMutation,
@@ -10,12 +9,11 @@ import {
 } from '../redux/modules/user';
 import { removeUser } from '../Cookie';
 
-function MyPage2({ data }) {
+function MyPage2({ user }) {
   const [updateUserInfo] = useUpdateUserInfoMutation();
 
-  const { user } = useGetUser();
-  const userNickname = data?.data.nickname;
-  const userImg = user?.profileImageUrl;
+  const userNickname = user?.data.nickname;
+  const userImg = user?.data.profileImageUrl;
 
   const imgRef = useRef('');
   const [imageUrl, setImageUrl] = useState(null);
@@ -108,7 +106,7 @@ function MyPage2({ data }) {
             <BasicInput
               label="이메일"
               marginTop="40px"
-              placeholder={user?.username}
+              placeholder={user?.data.username}
             />
           </fieldset>
 

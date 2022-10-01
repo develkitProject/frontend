@@ -1,7 +1,7 @@
 import React from 'react';
 
-import BasicInput from '../../common/elements/BasicInput';
-import Icon from '../../common/elements/Icon';
+import BasicInput from '../../../common/elements/BasicInput';
+import Icon from '../../../common/elements/Icon';
 import useModalOverlay from '../hooks/useModalOverlay';
 import PasswordInfo from './passwordInfo';
 

@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useDeleteWorkSpacesMutation } from '../redux/modules/workspaces';
-import SideMenu from '../components/SideMenu';
+import { useDeleteWorkSpacesMutation } from '../../../redux/modules/workspaces';
+import SideMenu from '../../../components/SideMenu';
 // eslint-disable-next-line import/no-unresolved, import/extensions
 import Address from '../components/Address';
-import BlackButton from '../common/elements/BlackButton';
+import BlackButton from '../../../common/elements/BlackButton';
 
 function AddressPage() {
   const navigate = useNavigate();

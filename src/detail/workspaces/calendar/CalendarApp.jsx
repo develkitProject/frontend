@@ -5,8 +5,8 @@ import Calendar from 'react-calendar';
 import './Calendar.css'; // css import
 import dayjs from 'dayjs';
 import styled from 'styled-components';
-import velkit2 from '../../../asset/img/velkit2.png';
-import velkit3 from '../../../asset/img/velkit3.png';
+import velkit2 from '../../../common/img/velkit2.png';
+import velkit3 from '../../../common/img/velkit3.png';
 import {
   useGetSchedulesQuery,
   useDeleteSchedulesMutation,

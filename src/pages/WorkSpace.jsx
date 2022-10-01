@@ -5,6 +5,7 @@ import {
   useGetWorkspacesQuery,
   useDeleteWorkSpacesMutation,
 } from '../redux/modules/workspaces';
+import Circle from '../common/elements/Circle';
 import CreateCard from '../components/CreateCard';
 import SpaceCard from '../components/SpaceCard';
 import SpaceHeader from '../components/SpaceHeader';
@@ -40,7 +41,11 @@ function WorkSpace() {
             {error ? (
               <>에러가 발생하였습니다.</>
             ) : isLoading ? (
-              <>Loading...</>
+              <>
+                <div style={{ width: '70%' }}>
+                  <Circle style={{ width: '100%' }} />
+                </div>
+              </>
             ) : data ? (
               <>
                 {workspaces

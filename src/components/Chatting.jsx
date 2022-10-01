@@ -3,13 +3,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Draggable from 'react-draggable';
-import useModalOverlay from '../signup/hooks/useModalOverlay';
-import velkit from '../asset/img/velkit.png';
+import useModalOverlay from '../oauth/signup/hooks/useModalOverlay';
+import velkit from '../common/img/velkit.png';
 import {
   useGetChatMessagesQuery,
   useNextChatMessagesMutation,
 } from '../redux/modules/chat';
-import noteBook from '../asset/img/notebook.png';
+import noteBook from '../common/img/notebook.png';
 
 function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const [users, setUsers] = useState(null);
