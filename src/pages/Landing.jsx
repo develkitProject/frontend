@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { FullPage, Slide } from 'react-full-page/lib';
-import axios from 'axios';
+import { useGetGuestLoginQuery } from '../redux/modules/user';
 import icon from '../common/img/icon1.png';
 import scroll from '../common/img/scroll.svg';
 import 'animate.css';
@@ -35,7 +35,7 @@ function Landing({ path, setPath }) {
   const homeRef = useRef(null);
   const dispatch = useDispatch();
   const isSignUp = useSelector(selectIsSignUpModal);
-  const API_URL = `${process.env.REACT_APP_BASE_URL}/api/members/guest`;
+  const { data, error, isLoading, refetch } = useGetGuestLoginQuery();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -44,8 +44,7 @@ function Landing({ path, setPath }) {
   };
 
   const guestLogin = async () => {
-    const response = await axios.get(API_URL);
-    const { username } = response.data.data;
+    const { username } = data.data;
     const password = `${username.split('@')[0]}!`;
 
     loginApi({ username, password })
@@ -55,14 +54,12 @@ function Landing({ path, setPath }) {
         } else {
           setAccessToken(res.headers.authorization);
           alert('게스트 로그인이 완료되었습니다! 반가워요');
-          // navigate('/');
           window.location.reload();
         }
       })
       .catch((err) => {
         alert('아이디 또는 비밀번호를 확인해주세요!');
       });
-    // setUser(response.data.data);
   };
 
   const onStartButton = () => {

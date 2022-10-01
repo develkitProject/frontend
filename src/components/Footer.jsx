@@ -5,17 +5,8 @@ import logo from '../common/img/logo.png';
 function Footer() {
   const navigate = useNavigate();
 
-  const moveMain = () => {
-    navigate('/');
-  };
-  const moveProject = () => {
-    navigate('/workspace');
-  };
-  const moveFAQ = () => {
-    navigate('/faq');
-  };
-  const moveEvent = () => {
-    navigate('/event');
+  const onMovePageHandle = (page) => {
+    navigate(page);
   };
 
   return (
@@ -23,10 +14,34 @@ function Footer() {
       <StFooterWrapper>
         <StDivLeft>
           <StMenuDiv>
-            <StMenuName onClick={moveMain}>About</StMenuName>
-            <StMenuName onClick={moveProject}>Project</StMenuName>
-            <StMenuName onClick={moveFAQ}>FAQ</StMenuName>
-            <StMenuName onClick={moveEvent}>Event</StMenuName>
+            <StMenuName
+              onClick={() => {
+                onMovePageHandle('/');
+              }}
+            >
+              About
+            </StMenuName>
+            <StMenuName
+              onClick={() => {
+                onMovePageHandle('/workspace');
+              }}
+            >
+              Project
+            </StMenuName>
+            <StMenuName
+              onClick={() => {
+                onMovePageHandle('/faq');
+              }}
+            >
+              FAQ
+            </StMenuName>
+            <StMenuName
+              onClick={() => {
+                onMovePageHandle('/event');
+              }}
+            >
+              Event
+            </StMenuName>
             <StMenuName>Team</StMenuName>
           </StMenuDiv>
 
@@ -41,7 +56,7 @@ function Footer() {
               <StInfoName>이메일무단수집거부</StInfoName>
             </StInfoDetail>
 
-            <StCopyright>Copyright, D.vel kit.All rights reserved.</StCopyright>
+            <StCopyright>Copyright, D.velkit.All rights reserved.</StCopyright>
           </StInfoDiv>
         </StDivLeft>
 

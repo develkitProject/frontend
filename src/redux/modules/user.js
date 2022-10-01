@@ -17,6 +17,18 @@ export const userApi = coreApi.injectEndpoints({
       },
       providesTags: ['User'],
     }),
+
+    // 게스트로그인
+    getGuestLogin: builder.query({
+      query: () => {
+        return {
+          url: `/api/members/guest`,
+          method: 'GET',
+          headers,
+        };
+      },
+      providesTags: ['User'],
+    }),
     // 회원정보수정
     updateUserInfo: builder.mutation({
       query: (updateInfo) => {
@@ -46,6 +58,7 @@ export const userApi = coreApi.injectEndpoints({
 
 export const {
   useGetUserInfoQuery,
+  useGetGuestLoginQuery,
   useUpdateUserInfoMutation,
   useDeleteUserInfoMutation,
 } = userApi;
