@@ -3,7 +3,7 @@ import React, { useState, useReducer } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAddNoticeMutation } from '../../../redux/modules/workspaces';
+import { useAddNoticeMutation } from '../../../redux/modules/notices';
 import NoticeEditor from './NoticeEditor';
 
 function NoticeWrite({ onNoticeHandle }) {

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetNoticeQuery } from '../../redux/modules/workspaces';
+import { useGetNoticeQuery } from '../../redux/modules/notices';
 import NoticeList from './notice/NoticeList';
 import BlackButton from '../../common/elements/BlackButton';
 import NoticeWrite from './notice/NoticeWrite';

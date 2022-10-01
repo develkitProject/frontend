@@ -5,7 +5,7 @@ import { useState } from 'react';
 import {
   useDeleteDocMutation,
   useGetDocDetailQuery,
-} from '../../../redux/modules/workspaces';
+} from '../../../redux/modules/docs';
 import BlackButton from '../../../common/elements/BlackButton';
 import DocsEdit from './DocsEdit';
 

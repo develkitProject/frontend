@@ -8,7 +8,7 @@ import velkit from '../asset/img/velkit.png';
 import {
   useGetChatMessagesQuery,
   useNextChatMessagesMutation,
-} from '../redux/modules/workspaces';
+} from '../redux/modules/chat';
 import noteBook from '../asset/img/notebook.png';
 
 function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {

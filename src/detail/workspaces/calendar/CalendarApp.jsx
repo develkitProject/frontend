@@ -10,7 +10,7 @@ import velkit3 from '../../../asset/img/velkit3.png';
 import {
   useGetSchedulesQuery,
   useDeleteSchedulesMutation,
-} from '../../../redux/modules/workspaces';
+} from '../../../redux/modules/schedules';
 
 export default function CalendarApp({ id }) {
   const [value, onChange] = useState(new Date());

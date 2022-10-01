@@ -1,10 +1,7 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  useGetDocQuery,
-  useGetDocSearchQuery,
-} from '../../../redux/modules/workspaces';
+import { useGetDocSearchQuery } from '../../../redux/modules/docs';
 import SearchBar from '../../../components/SearchBar';
 
 function Board({ onDocumentHandle, error, isLoading, data }) {
