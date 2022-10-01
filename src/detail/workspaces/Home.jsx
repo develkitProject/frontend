@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import {
-  useGetMainWorkSpacesQuery,
-  useGetDocQuery,
-  useGetNoticeQuery,
-} from '../../redux/modules/workspaces';
+import { useGetDocQuery } from '../../redux/modules/docs';
+import { useGetNoticeQuery } from '../../redux/modules/notices';
 import BlackButton from '../../common/elements/BlackButton';
 import InvitationCodeModal from '../../common/Modal/InvitationCodeModal';
 
@@ -15,7 +12,7 @@ export default function Home({ id, data, onDocumentHandle }) {
 
   const { data: docdata } = useGetDocQuery(id);
   const { data: noticedata } = useGetNoticeQuery(id);
-  const firstNotice = noticedata?.data[0];
+  const firstNotice = noticedata?.data[noticedata.data.length - 1];
   const fourDocuments = docdata?.data?.slice(0, 4);
 
   const title = data?.data?.workspaces?.title;
@@ -35,7 +32,7 @@ export default function Home({ id, data, onDocumentHandle }) {
     <>
       <StIntroContainer>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <StTitle fc="#333333" fs="1.5rem">
+          <StTitle fontColor="#333333" fontSize="1.5rem">
             {title}
           </StTitle>
           <StContent>{content}</StContent>
@@ -47,15 +44,27 @@ export default function Home({ id, data, onDocumentHandle }) {
       ) : null}
       <div>
         <StNoticeWrapper>
-          <StTitle style={{ marginBottom: '15px' }} fc="#333333" fs="20px">
+          <StTitle
+            style={{ marginBottom: '15px' }}
+            fontColor="#333333"
+            fontSize="20px"
+          >
             필독
           </StTitle>
           <StNoticeContainer>
-            <StTitle style={{ marginBottom: '15px' }} fc="#00a99d" fs="20px">
+            <StTitle
+              style={{ marginBottom: '15px' }}
+              fontColor="#00a99d"
+              fontSize="20px"
+            >
               공지사항
             </StTitle>
             <StNoticeBox>
-              <StTitle style={{ marginBottom: '15px' }} fc="#333333" fs="20px">
+              <StTitle
+                style={{ marginBottom: '15px' }}
+                fontColor="#333333"
+                fontSize="20px"
+              >
                 {firstNotice !== undefined ? (
                   firstNotice?.title
                 ) : (
@@ -84,7 +93,7 @@ export default function Home({ id, data, onDocumentHandle }) {
       </div>
       <div>
         <StScheduleWrapper>
-          <StScheduleTitle onClick={clickHandler} fc="#333333">
+          <StScheduleTitle onClick={clickHandler} fontColor="#333333">
             문서 및 계획
           </StScheduleTitle>
 
@@ -142,9 +151,9 @@ const StIntroContainer = styled.div`
 `;
 
 const StTitle = styled.span`
-  color: ${(props) => props.fc};
+  color: ${(props) => props.fontColor};
   text-align: left;
-  font-size: ${(props) => props.fs};
+  font-size: ${(props) => props.fontSize};
   font-weight: bold;
   letter-spacing: -1.5px;
 `;
@@ -227,7 +236,7 @@ const StScheduleWrapper = styled.div`
 `;
 
 const StScheduleTitle = styled.span`
-  color: ${(props) => props.fc};
+  color: ${(props) => props.fontColor};
   text-align: left;
   font-size: 20px;
   font-weight: bold;

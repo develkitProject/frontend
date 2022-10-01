@@ -1,21 +1,19 @@
 import React, { useCallback, useState, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
-import useGetUser from '../common/hooks/useGetUser';
-import velkit from '../asset/img/velkit.png';
+import velkit from '../common/img/velkit.png';
 import BasicInput from '../common/elements/BasicInput';
 import {
   useDeleteUserInfoMutation,
   useGetUserInfoQuery,
   useUpdateUserInfoMutation,
-} from '../redux/modules/workspaces';
+} from '../redux/modules/user';
 import { removeUser } from '../Cookie';
 
-function MyPage2({ data }) {
+function MyPage2({ user }) {
   const [updateUserInfo] = useUpdateUserInfoMutation();
 
-  const { user } = useGetUser();
-  const userNickname = data?.data.nickname;
-  const userImg = user?.profileImageUrl;
+  const userNickname = user?.data.nickname;
+  const userImg = user?.data.profileImageUrl;
 
   const imgRef = useRef('');
   const [imageUrl, setImageUrl] = useState(null);
@@ -74,10 +72,10 @@ function MyPage2({ data }) {
             width: '100%',
           }}
         >
-          <StEmail fs="20px" fc="#000000" fw="500">
+          <StEmail fontSize="20px" fontColor="#000000" fontWeight="500">
             {nickname || userNickname}
           </StEmail>
-          <StEmail fs="18px" fc="#999999" fw="400">
+          <StEmail fontSize="18px" fontColor="#999999" fontWeight="400">
             {user?.username}
           </StEmail>
         </div>
@@ -101,13 +99,14 @@ function MyPage2({ data }) {
             name="nickname"
             // value={user?.nickname}
             placeholder={userNickname}
+            maxLength="8"
           />
 
           <fieldset disabled>
             <BasicInput
               label="이메일"
               marginTop="40px"
-              placeholder={user?.username}
+              placeholder={user?.data.username}
             />
           </fieldset>
 
@@ -181,9 +180,9 @@ const StImage = styled.div`
 `;
 
 const StEmail = styled.span`
-  font-weight: ${(props) => props.fw};
-  font-size: ${(props) => props.fs};
-  color: ${(props) => props.fc};
+  font-weight: ${(props) => props.fontWeight};
+  font-size: ${(props) => props.fontSize};
+  color: ${(props) => props.fontColor};
   margin-top: 15px;
   letter-spacing: -0.8px;
 `;

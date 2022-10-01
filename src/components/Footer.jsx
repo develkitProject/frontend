@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import logo from '../asset/img/logo.png';
+import logo from '../common/img/logo.png';
 
 function Footer() {
   const navigate = useNavigate();
@@ -11,6 +11,12 @@ function Footer() {
   const moveProject = () => {
     navigate('/workspace');
   };
+  const moveFAQ = () => {
+    navigate('/faq');
+  };
+  const moveEvent = () => {
+    navigate('/event');
+  };
 
   return (
     <StFooterDiv>
@@ -19,20 +25,20 @@ function Footer() {
           <StMenuDiv>
             <StMenuName onClick={moveMain}>About</StMenuName>
             <StMenuName onClick={moveProject}>Project</StMenuName>
-            <StMenuName>Community</StMenuName>
-            <StMenuName>FAQ</StMenuName>
+            <StMenuName onClick={moveFAQ}>FAQ</StMenuName>
+            <StMenuName onClick={moveEvent}>Event</StMenuName>
             <StMenuName>Team</StMenuName>
           </StMenuDiv>
 
           <StInfoDiv>
             <StInfoDetail>
-              <StInfoName cs="pointer">개인정보 처리 방침</StInfoName>
+              <StInfoName>개인정보 처리 방침</StInfoName>
               <StInfoName>|</StInfoName>
-              <StInfoName cs="pointer">이용약관</StInfoName>
+              <StInfoName>이용약관</StInfoName>
               <StInfoName>|</StInfoName>
-              <StInfoName cs="pointer">법적고지</StInfoName>
+              <StInfoName>법적고지</StInfoName>
               <StInfoName>|</StInfoName>
-              <StInfoName cs="pointer">이메일무단수집거부</StInfoName>
+              <StInfoName>이메일무단수집거부</StInfoName>
             </StInfoDetail>
 
             <StCopyright>Copyright, D.vel kit.All rights reserved.</StCopyright>
@@ -65,7 +71,7 @@ const StFooterDiv = styled.div`
 
 const StFooterWrapper = styled.div`
   width: 100%;
-  margin: 80px;
+  margin: 5%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -80,15 +86,12 @@ const StMenuDiv = styled.div`
   display: flex;
   flex-direction: row;
   align-items: left;
-  @media screen and (max-width: 900px) {
-    display: none;
-  }
 `;
 
 const StMenuName = styled.div`
   color: white;
   font-family: 'Montserrat';
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: -0.05em;
   opacity: 0.6;
@@ -96,7 +99,7 @@ const StMenuName = styled.div`
   &:hover {
     opacity: 1;
   }
-  margin-right: 25px;
+  margin-right: 7%;
 `;
 
 const StInfoDiv = styled.div`
@@ -111,11 +114,13 @@ const StInfoDetail = styled.div`
 
 const StInfoName = styled.div`
   margin-right: 8px;
-  cursor: ${(props) => props.cs}; ;
+  cursor: ${(props) => props.cs};
+  font-size: 1rem;
 `;
 
 const StCopyright = styled.div`
   margin-top: 7px;
+  font-size: 1rem;
 `;
 
 const StDivRight = styled.div`

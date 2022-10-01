@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import ModalContainer from './ModalContainer';
 import useOutSideClick from '../hooks/useOutSideClick';
-import error_outline from '../../asset/img/error_outline.svg';
+import error_outline from '../img/error_outline.svg';
 import { setIsLoginModal, setIsSignUpModal } from '../../redux/modules/global';
-import KakaoIcon from '../../asset/img/kakaoIcon.png';
+import KakaoIcon from '../img/kakaoIcon.png';
 import { StAlert } from './error';
 
 function JoinSpaceModal({ onClose }) {

@@ -4,28 +4,28 @@ import styled, { keyframes } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { FullPage, Slide } from 'react-full-page/lib';
 import axios from 'axios';
-import icon from '../asset/img/icon1.png';
-import scroll from '../asset/img/scroll.svg';
+import icon from '../common/img/icon1.png';
+import scroll from '../common/img/scroll.svg';
 import 'animate.css';
 import WorkSpaceErrorModal from '../common/Modal/error';
 import { getCookieToken, setAccessToken } from '../Cookie';
-import velkit from '../asset/img/velkit.png';
-import velkit2 from '../asset/img/velkit2.png';
-import velkit3 from '../asset/img/velkit3.png';
-import twinklestar from '../asset/img/twinklestar.svg';
-import SecondCard1 from '../asset/img/SecondCard1.png';
-import SecondCard2 from '../asset/img/SecondCard2.png';
-import SecondCard3 from '../asset/img/SecondCard3.png';
-import ThirdBackground from '../asset/img/ThirdBackground.png';
-import ThirdImg from '../asset/img/ThirdImg.png';
-import Fourth1 from '../asset/img/Fourth1.png';
-import Fourth2 from '../asset/img/Fourth2.png';
-import circle from '../asset/img/circle.svg';
-import ScrollUp from '../asset/img/ScrollUp.svg';
+import velkit from '../common/img/velkit.png';
+import velkit2 from '../common/img/velkit2.png';
+import velkit3 from '../common/img/velkit3.png';
+import twinklestar from '../common/img/twinklestar.svg';
+import SecondCard1 from '../common/img/SecondCard1.png';
+import SecondCard2 from '../common/img/SecondCard2.png';
+import SecondCard3 from '../common/img/SecondCard3.png';
+import ThirdBackground from '../common/img/ThirdBackground.png';
+import ThirdImg from '../common/img/ThirdImg.png';
+import Fourth1 from '../common/img/Fourth1.png';
+import Fourth2 from '../common/img/Fourth2.png';
+import circle from '../common/img/circle.svg';
+import ScrollUp from '../common/img/ScrollUp.svg';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import SignupModal from '../signup/SignupModal';
-import { loginApi } from '../data/login';
+import SignupModal from '../account/signup/SignupModal';
+import { loginApi } from '../account/data/login';
 import { setIsSignUpModal } from '../redux/modules/global';
 import { selectIsSignUpModal } from '../redux/modules/global/selectors';
 import TopButton from '../common/elements/TopButton';
@@ -51,7 +51,6 @@ function Landing({ path, setPath }) {
 
     loginApi({ username, password })
       .then((res) => {
-        console.log(res);
         if (res.data.success === false) {
           alert('아이디 또는 비밀번호를 확인해주세요.');
         } else {
@@ -96,7 +95,7 @@ function Landing({ path, setPath }) {
                 <StMent>
                   let <StMent fontColor="#00A99D">D_Velkit</StMent> ={' '}
                   <StMent fontColor="#F5D28C">
-                    “Devlop Your Teamwork through D.VelKit!”;
+                    “Develop Your Teamwork through D.VelKit!”;
                   </StMent>
                 </StMent>
 
@@ -363,17 +362,6 @@ function Landing({ path, setPath }) {
 
 export default Landing;
 
-const StOuter = styled.div`
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  color: white;
-  width: 100%;
-  height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
-`;
-
 const StWrapper = styled.div`
   color: white;
   width: 100%;
@@ -539,18 +527,19 @@ const rotate = keyframes`
 }
 `;
 
-const StCircle = styled.div`
-  width: 25%;
-  height: 25%;
-  min-width: 100px;
-  min-height: 100px;
+export const StCircle = styled.div`
+  /* width: 25%;
+  height: 25%; */
+  min-width: 250px;
+  min-height: 250px;
   background-image: url(${circle});
   background-size: 100% 100%;
   position: absolute;
   left: 70%;
-  top: 287%;
+  top: 96%;
   animation: ${rotate} 15s linear infinite;
   transform-origin: 50% 50%;
+  z-index: 500;
 `;
 
 const StVelkit3 = styled.div`

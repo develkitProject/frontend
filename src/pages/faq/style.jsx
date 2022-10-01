@@ -32,6 +32,7 @@ export const Questions = styled.li`
   max-width: 1000px;
   height: 80px;
   padding: 0 30px;
+  cursor: pointer;
 `;
 
 export const QuestionTitle = styled.h4`

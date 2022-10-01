@@ -1,4 +1,3 @@
-// Need to use the React-specific entry point to import createApi
 import { getCookieToken } from '../../Cookie';
 import { coreApi } from '../query/coreApi';
 
@@ -8,7 +7,7 @@ const headers = {
 
 export const chatApi = coreApi.injectEndpoints({
   endpoints: (builder) => ({
-    getChatMessage: builder.query({
+    getChatMessages: builder.query({
       query: (id) => {
         return {
           url: `/api/chats/${id}`,
@@ -16,11 +15,20 @@ export const chatApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      providesTags: ['ChatMessage'],
+      providesTags: ['Messages'],
+    }),
+    nextChatMessages: builder.mutation({
+      query: (obj) => {
+        return {
+          url: `/api/chats/${obj.id}`,
+          method: 'POST',
+          body: obj,
+          headers,
+        };
+      },
+      providesTags: ['Messages'],
     }),
   }),
 });
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
-export const { useGetChatMessageQuery } = chatApi;
+export const { useGetChatMessagesQuery, useNextChatMessagesMutation } = chatApi;

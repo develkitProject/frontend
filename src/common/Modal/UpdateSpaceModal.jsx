@@ -2,8 +2,8 @@ import React, { useRef, useState, useReducer } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import ModalContainer from './ModalContainer';
-import { StButton } from '../../login/style';
-import imgupload from '../../asset/img/imgupload.svg';
+import { StButton } from '../../account/login/style';
+import imgupload from '../img/imgupload.svg';
 import CloseButton from '../elements/CloseButton';
 import {
   useGetWorkspaceInfoQuery,
@@ -89,9 +89,19 @@ function UpdateSpaceModal({ onClose }) {
               onClick={() => imgRef.current.click()}
             />
             <StInputTitle>프로젝트 이름</StInputTitle>
-            <StInput onChange={onChange} name="title" value={title} />
+            <StInput
+              onChange={onChange}
+              name="title"
+              value={title}
+              maxLength={20}
+            />
             <StInputTitle>프로젝트 소개</StInputTitle>
-            <StInput onChange={onChange} name="content" value={content} />
+            <StInput
+              onChange={onChange}
+              name="content"
+              value={content}
+              maxLength={50}
+            />
             <StButton
               onClick={handleSubmit}
               style={{

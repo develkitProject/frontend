@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetNoticeQuery } from '../../redux/modules/workspaces';
+import { useGetNoticeQuery } from '../../redux/modules/notices';
 import NoticeList from './notice/NoticeList';
 import BlackButton from '../../common/elements/BlackButton';
 import NoticeWrite from './notice/NoticeWrite';
 import NoticeEdit from './notice/NoticeEdit';
 
-export default function Notice() {
+export default function Notice({ user }) {
   const params = useParams();
   const id = Number(params.id);
   const [tab, setTab] = useState('list');
@@ -40,7 +40,7 @@ export default function Notice() {
         ) : (
           <>
             <BlackButton
-              text="리스트 보기"
+              text="리스트 돌아가기"
               onClick={() => {
                 onNoticeHandle('list');
               }}
@@ -57,6 +57,7 @@ export default function Notice() {
             data={data}
             notice={notice}
             onNoticeHandle={onNoticeHandle}
+            user={user}
             id={id}
           />
         </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useGetEmailCheckMutation } from '../../redux/query/signup';
+import { useGetEmailCheckMutation } from '../../../redux/query/signup';
 
 const emailCheckReg =
   /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -25,7 +25,12 @@ export default function useInputStatus({ signUpInputs }) {
   });
 
   useEffect(() => {
-    if (nickname.length >= 2 && nickname.length <= 8) {
+    if (nickname.length < 1) return;
+    if (nickname.length < 2 || nickname.length > 8) {
+      setErrorStatus({ ...errorStatus, isNickname: true });
+      setSuccessStatus({ ...successStatus, isNickname: false });
+    } else {
+      setErrorStatus({ ...errorStatus, isNickname: false });
       setSuccessStatus({ ...successStatus, isNickname: true });
     }
   }, [nickname]);
@@ -43,11 +48,14 @@ export default function useInputStatus({ signUpInputs }) {
   }, [email]);
 
   useEffect(() => {
-    if (passwordCheckReg.test(password)) {
-      setSuccessStatus({ ...successStatus, isPassword: true });
-    } else {
-      setSuccessStatus({ ...successStatus, isPassword: false });
-    }
+    if (password.length >= 3)
+      if (passwordCheckReg.test(password)) {
+        setErrorStatus({ ...errorStatus, isPassword: false });
+        setSuccessStatus({ ...successStatus, isPassword: true });
+      } else {
+        setErrorStatus({ ...errorStatus, isPassword: true });
+        setSuccessStatus({ ...successStatus, isPassword: false });
+      }
   }, [password]);
 
   useEffect(() => {

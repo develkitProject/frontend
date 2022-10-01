@@ -1,10 +1,10 @@
 import React, { useRef, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import useOutSideClick from '../common/hooks/useOutSideClick';
-import ModalContainer from '../common/Modal/ModalContainer';
+import useOutSideClick from '../../common/hooks/useOutSideClick';
+import ModalContainer from '../../common/Modal/ModalContainer';
 import useInputLogin from './hooks/useInputLogin';
-import KakaoLogin from '../components/KaKaoLogin';
-import CloseButton from '../common/elements/CloseButton';
+import KakaoLogin from '../../components/KaKaoLogin';
+import CloseButton from '../../common/elements/CloseButton';
 
 import {
   Overlay,
@@ -17,7 +17,7 @@ import {
   StButton,
   KakaoDiv,
 } from './style';
-import { setIsLoginModal, setIsSignUpModal } from '../redux/modules/global';
+import { setIsLoginModal, setIsSignUpModal } from '../../redux/modules/global';
 
 function Login() {
   const dispatch = useDispatch();

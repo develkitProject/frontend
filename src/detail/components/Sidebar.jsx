@@ -1,9 +1,9 @@
-import home from '../../asset/img/home.svg';
-import document from '../../asset/img/document.svg';
-import schedule from '../../asset/img/schedule.svg';
-import contacts from '../../asset/img/contacts.svg';
-import laptop from '../../asset/img/laptop.svg';
-import chat from '../../asset/img/chat.svg';
+import home from '../../common/img/home.svg';
+import document from '../../common/img/document.svg';
+import schedule from '../../common/img/schedule.svg';
+import contacts from '../../common/img/contacts.svg';
+import laptop from '../../common/img/laptop.svg';
+import chat from '../../common/img/chat.svg';
 
 import * as S from '../style';
 

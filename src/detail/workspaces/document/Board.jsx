@@ -1,10 +1,7 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  useGetDocQuery,
-  useGetDocSearchQuery,
-} from '../../../redux/modules/workspaces';
+import { useGetDocSearchQuery } from '../../../redux/modules/docs';
 import SearchBar from '../../../components/SearchBar';
 
 function Board({ onDocumentHandle, error, isLoading, data }) {
@@ -27,7 +24,7 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
   return (
     <>
       <StWrapper>
-        <StTitle fc="#333333">문서관리</StTitle>
+        <StTitle fontColor="#333333">문서관리</StTitle>
         <StTableContainer>
           <StThead>
             <StTable style={{ borderBottom: 'none' }}>
@@ -104,6 +101,11 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
             ) : null}
           </StTbody>
         </StTableContainer>
+        <StPagination>
+          <StChangePage> ◀ 이전 </StChangePage>
+          <div style={{ margin: '0px 20px 0 20px' }} />
+          <StChangePage> 다음 ▶</StChangePage>
+        </StPagination>
       </StWrapper>
       <SearchBar
         id={id}
@@ -133,7 +135,7 @@ const StWrapper = styled.div`
 `;
 
 const StTitle = styled.p`
-  color: ${(props) => props.fc};
+  color: ${(props) => props.fontColor};
   text-align: left;
   font-size: 20px;
   font-weight: bold;
@@ -177,4 +179,15 @@ const StTbody = styled.div`
   text-align: center;
   white-space: nowrap;
   text-overflow: ellipsis;
+`;
+
+const StPagination = styled.div`
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const StChangePage = styled.div`
+  cursor: pointer;
 `;

@@ -1,15 +1,16 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import axios from 'axios';
 import CodeConfirmModal from '../common/Modal/CodeConfirmModal';
 import { getCookieToken } from '../Cookie';
+import { useAddWorkspaceCodeMutation } from '../redux/modules/workspaces';
 
 function SpaceHeader() {
   const headers = {
     Authorization: getCookieToken(),
   };
-  const [spaceData, setSpaceData] = useState(null);
 
+  const [workspaceCode] = useAddWorkspaceCodeMutation();
+  const [spaceData, setSpaceData] = useState(null);
   const [inviteCodeConfirm, setInviteCodeConfirm] = useState(false);
   const [code, setCode] = useState('');
 
@@ -27,16 +28,10 @@ function SpaceHeader() {
     };
     if (code) {
       try {
-        await axios
-          .post(
-            `${process.env.REACT_APP_BASE_URL}/api/invitation/codes`,
-            codes,
-            { headers },
-          )
-          .then((response) => {
-            setInviteCodeConfirm(true);
-            setSpaceData(response?.data?.data.workspaces);
-          });
+        await workspaceCode(codes, { headers }).then((response) => {
+          setInviteCodeConfirm(true);
+          setSpaceData(response?.data?.data.workspaces);
+        });
       } catch (error) {
         alert('없는 코드입니다!');
       }

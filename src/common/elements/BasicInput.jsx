@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import styled from 'styled-components';
-import Icon from '../../components/Icon';
+import Icon from './Icon';
 
 export default function BasicInput({
   placeholder,

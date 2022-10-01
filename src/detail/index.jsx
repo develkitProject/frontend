@@ -6,7 +6,7 @@ import {
   useGetMainWorkSpacesQuery,
   useGetMemberListQuery,
 } from '../redux/modules/workspaces';
-import useGetUser from '../common/hooks/useGetUser';
+import { useGetUserInfoQuery } from '../redux/modules/user';
 import Sidebar from './components/Sidebar';
 import useChangeMenu from './hooks/useChangeMenu';
 import Home from './workspaces/Home';
@@ -41,12 +41,12 @@ export default function WorkspaceDetailPage() {
     isLoading: isLoading_1,
     error: error_1,
   } = useGetMemberListQuery(id);
-
-  const { user } = useGetUser();
+  const { data: userData } = useGetUserInfoQuery();
 
   const title = data?.data.workspaces.title;
   const [isOpen, setIsOpen] = useState(true);
   const cookie = getCookieToken();
+  const user = userData?.data;
 
   useEffect(() => {
     if (!cookie) {

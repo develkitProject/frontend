@@ -26,15 +26,19 @@ export default function FAQPage() {
       <S.QuestionBox>
         {questions.map(({ title, key, isOpen }) => (
           <div key={key}>
-            <S.Questions>
-              <FaqIcon.QuestionIcon />
-              <S.QuestionTitle>{title}</S.QuestionTitle>
-              {!isOpen ? (
-                <FaqIcon.ArrowDown onClick={handleShowQuestions({ key })} />
-              ) : (
-                <FaqIcon.ArrowUp onClick={handleCloseQuestions({ key })} />
-              )}
-            </S.Questions>
+            {!isOpen ? (
+              <S.Questions onClick={handleShowQuestions({ key })}>
+                <FaqIcon.QuestionIcon />
+                <S.QuestionTitle>{title}</S.QuestionTitle>
+                <FaqIcon.ArrowDown />
+              </S.Questions>
+            ) : (
+              <S.Questions onClick={handleCloseQuestions({ key })}>
+                <FaqIcon.QuestionIcon />
+                <S.QuestionTitle>{title}</S.QuestionTitle>
+                <FaqIcon.ArrowUp />
+              </S.Questions>
+            )}
             {isOpen && (
               <>
                 <S.QuestionContentsWrapper>

@@ -3,24 +3,75 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Draggable from 'react-draggable';
-import velkit from '../asset/img/velkit.png';
-import { useGetChatMessagesQuery } from '../redux/modules/workspaces';
-import noteBook from '../asset/img/notebook.png';
+import useModalOverlay from '../account/signup/hooks/useModalOverlay';
+import velkit from '../common/img/velkit.png';
+import {
+  useGetChatMessagesQuery,
+  useNextChatMessagesMutation,
+} from '../redux/modules/chat';
+import noteBook from '../common/img/notebook.png';
 
 function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const [users, setUsers] = useState(null);
   const textRef = useRef(null);
+  const { isOpen, toggle } = useModalOverlay();
   const { data, isLoading, error, refetch } = useGetChatMessagesQuery(id);
-  const [isOpen, setIsOpen] = useState(false);
+  const [nextgetChat] = useNextChatMessagesMutation();
+  const target = useRef(null);
+
   const [Opacity, setOpacity] = useState(false);
   const [minimum, setMinimum] = useState(false);
-
-  // ------------------------------------------------------------------------
+  const [prevHeight, setPrevHeight] = useState(null);
   const messageList = data?.data;
   const [chatMessages, setChatMessages] = useState([]);
-  const onMiniMode = () => {
-    setMinimum(!minimum);
+
+  // -----------------------------무한 스크롤----------------------------------------
+
+  useEffect(() => {
+    let observer;
+    if (target.current && !isLoading) {
+      observer = new IntersectionObserver(onIntersect);
+      observer.observe(target.current);
+    }
+    return () => observer && observer.disconnect();
+  }, [chatMessages]);
+
+  const onIntersect = (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          fetchMessage();
+        }, 300);
+        // observer.observe(entry.target);
+      }
+    });
   };
+
+  const fetchMessage = async () => {
+    const last = chatMessages[chatMessages.length - 1];
+    const obj = {
+      message: last.message,
+      writer: last.writer,
+      cursor: last.createdAt,
+      id,
+    };
+    if (prevHeight !== messageBoxRef.current.scrollHeight) {
+      await nextgetChat(obj).then((res) =>
+        // eslint-disable-next-line no-unsafe-optional-chaining
+        setTimeout(() =>
+          setChatMessages((chatMessages) => [
+            ...chatMessages,
+            ...res.data.data,
+          ]),
+        ),
+      );
+      setPrevHeight(messageBoxRef.current.scrollHeight);
+    }
+  };
+
+  function onMiniMode() {
+    setMinimum(!minimum);
+  }
 
   useEffect(() => {
     onConnected();
@@ -30,13 +81,21 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   }, []);
 
   useEffect(() => {
+    setChatMessages(messageList);
+    // refetch();
+  }, [messageList]);
+
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    if (prevHeight) {
+      const currentHeight = messageBoxRef.current.scrollHeight - prevHeight;
+      messageBoxRef.current.scrollTo(0, currentHeight);
+      return setPrevHeight(null);
+    }
     messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
   }, [chatMessages]);
 
-  useEffect(() => {
-    setChatMessages(messageList);
-    refetch();
-  }, [messageList]);
+  // -----------------------------무한 스크롤----------------------------------------
 
   const userArray = [...new Set(users)];
 
@@ -49,46 +108,34 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
 
   function onConnected() {
     if (stompClient.connected) {
-      stompClient.subscribe(
-        `/sub/chat/room/${id}`,
-        (data) => {
-          const newMessage = JSON.parse(data.body);
-          if (newMessage.type !== 'TALK') {
-            setUsers(newMessage.userList);
-          } else {
-            setChatMessages((chatMessages) => [newMessage, ...chatMessages]);
-          }
-        },
-        headers,
-      );
-    } else if (!stompClient.connected) {
-      onSub();
+      onSubscribe();
+    } else {
+      stompClient.connect(headers, () => {
+        onSubscribe();
+      });
     }
   }
 
   const disConnect = () => {
-    // if (stompClient.unconnected)
     if (stompClient != null) {
       if (stompClient.connected) stompClient.unsubscribe('sub-0');
     }
   };
 
-  function onSub() {
-    stompClient.connect(headers, () => {
-      stompClient.subscribe(
-        `/sub/chat/room/${id}`,
-        (data) => {
-          const newMessage = JSON.parse(data.body);
-          if (newMessage.type !== 'TALK') {
-            setUsers(newMessage.userList);
-          } else {
-            setChatMessages((chatMessages) => [newMessage, ...chatMessages]);
-          }
-        },
-        headers,
-      );
-    });
-  }
+  const onSubscribe = () => {
+    stompClient.subscribe(
+      `/sub/chat/room/${id}`,
+      (data) => {
+        const newMessage = JSON.parse(data.body);
+        if (newMessage.type !== 'TALK') {
+          setUsers(newMessage.userList);
+        } else {
+          setChatMessages((chatMessages) => [newMessage, ...chatMessages]);
+        }
+      },
+      headers,
+    );
+  };
 
   const sendMessage = () => {
     if (textRef.current.value !== '') {
@@ -110,7 +157,6 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
     }
   };
 
-  // eslint-disable-next-line array-callback-return
   const chatData = chatMessages
     ?.slice(0)
     .reverse()
@@ -148,7 +194,6 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
         </Stdiv>
       );
     });
-  // console.log(chatData?.length);
 
   return (
     <>
@@ -169,6 +214,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
             </span>
             <PlusToggle
               role="presentation"
+              // eslint-disable-next-line react/jsx-no-bind
               onClick={onMiniMode}
               minimum={minimum}
               style={
@@ -182,18 +228,21 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
             </PlusToggle>
             <PlusToggle
               role="presentation"
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
+              onClick={toggle}
               right="10px"
-              fs="18px"
+              fontSize="18px"
             >
               {!isOpen ? '>' : '<'}
             </PlusToggle>
           </StChatHeader>
           <StChatBody ref={messageBoxRef} minimum={minimum}>
             {chatData?.length !== 0 ? (
-              chatData
+              <>
+                <div>
+                  <TargetDiv ref={target} />
+                </div>
+                {chatData}
+              </>
             ) : (
               <>
                 <StVelkit />
@@ -436,7 +485,7 @@ const PlusToggle = styled.div`
   height: 25px;
   width: 25px;
   cursor: pointer;
-  font-size: ${(props) => (props.fs ? props.fs : '20px')};
+  font-size: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -453,4 +502,11 @@ const StVelkit = styled.div`
   left: 40%;
   top: 20%;
   animation: ${move} 3s 0s infinite;
+`;
+
+const TargetDiv = styled.div`
+  height: 30px;
+  background-color: #000000;
+  margin: 0 auto;
+  visibility: hidden;
 `;

@@ -1,14 +1,17 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
-import {
-  useDeleteNoticeMutation,
-  useGetNoticeQuery,
-} from '../../../redux/modules/workspaces';
+import { useDeleteNoticeMutation } from '../../../redux/modules/notices';
 import { getCookieToken } from '../../../Cookie';
-import useGetUser from '../../../common/hooks/useGetUser';
 
-function NoticeList({ error, isLoading, data, notice, onNoticeHandle, id }) {
-  const { user } = useGetUser();
+function NoticeList({
+  user,
+  error,
+  isLoading,
+  data,
+  notice,
+  onNoticeHandle,
+  id,
+}) {
   const userInfo = user?.username;
   const [deleteNotices] = useDeleteNoticeMutation();
   const deleteNotice = (dataId) => {

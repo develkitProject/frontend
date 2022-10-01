@@ -3,7 +3,7 @@ import React, { useState, useReducer } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAddNoticeMutation } from '../../../redux/modules/workspaces';
+import { useAddNoticeMutation } from '../../../redux/modules/notices';
 import NoticeEditor from './NoticeEditor';
 
 function NoticeWrite({ onNoticeHandle }) {
@@ -39,7 +39,8 @@ function NoticeWrite({ onNoticeHandle }) {
       <StInputTitle
         onChange={onTitleChange}
         name="title"
-        placeholder="제목"
+        placeholder="제목 (50글자내로 작성해주세요)"
+        maxLength={50}
         value={title}
       />
       <NoticeEditor setContent={setContent} />

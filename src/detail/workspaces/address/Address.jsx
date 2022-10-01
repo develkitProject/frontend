@@ -1,17 +1,7 @@
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useGetMemberListQuery } from '../../redux/modules/workspaces';
 
-function Address({ id, data_1, error_1, isLoading_1 }) {
-  const params = useParams();
-  // const id = Number(params.id);
-  // const { data, error, isLoading, refetch } = useGetMemberListQuery(id);
+function Address({ data_1, error_1, isLoading_1 }) {
   const member = data_1?.data;
-
-  // useEffect(() => {
-  //   refetch();
-  // }, [data, refetch]);
 
   return (
     <StWrapper>

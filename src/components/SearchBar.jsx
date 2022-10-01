@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import search from '../asset/img/search.png';
+import search from '../common/img/search.png';
 
 function SearchBar({ id, onSearchHandle, setSearchDocs }) {
   const [type, setType] = useState('ContentTitle');

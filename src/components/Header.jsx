@@ -1,20 +1,19 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCookieToken, removeCookieToken } from '../Cookie';
-import alarm from '../asset/img/alarm.svg';
-import logo from '../asset/img/logo.png';
-import Login from '../login';
-import SignupModal from '../signup/SignupModal';
+import alarm from '../common/img/alarm.svg';
+import logo from '../common/img/logo.png';
+import Login from '../account/login';
+import SignupModal from '../account/signup/SignupModal';
 import MyProfileModal from '../common/Modal/MyProfileModal';
 import { setIsLoginModal, setIsSignUpModal } from '../redux/modules/global';
 import {
   selectIsLoginModal,
   selectIsSignUpModal,
 } from '../redux/modules/global/selectors';
-import { useGetUserInfoQuery } from '../redux/modules/workspaces';
+import { useGetUserInfoQuery } from '../redux/modules/user';
 
 function Header({ path, setPath }) {
   const navigate = useNavigate();
@@ -131,12 +130,12 @@ function Header({ path, setPath }) {
 
         {!cookies ? (
           <StDiv>
-            <StLogJoin fc="#00A99D" onClick={openLoginModal}>
+            <StLogJoin fontColor="#00A99D" onClick={openLoginModal}>
               LOGIN
             </StLogJoin>
-            <StLogJoin fc="white">·</StLogJoin>
+            <StLogJoin fontColor="white">·</StLogJoin>
             <StLogJoin
-              fc="white"
+              fontColor="white"
               onClick={openSignUpModal}
               SignupButton={openSignUpModal}
             >
@@ -215,7 +214,7 @@ const StMenuName = styled.span`
 `;
 
 const StLogJoin = styled.p`
-  color: ${(props) => props.fc};
+  color: ${(props) => props.fontColor};
   padding-left: 5px;
   padding-right: 5px;
   font-family: 'Montserrat';

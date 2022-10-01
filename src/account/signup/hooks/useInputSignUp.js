@@ -1,10 +1,14 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setIsLoginModal, setIsSignUpModal } from '../../redux/modules/global';
-import { useGetSignUpMutation } from '../../redux/query/signup';
+import {
+  setIsLoginModal,
+  setIsSignUpModal,
+} from '../../../redux/modules/global';
+import { useGetSignUpMutation } from '../../../redux/query/signup';
 
 export default function useInputSignUp() {
   const dispatch = useDispatch();
+  const [timer, setTimer] = useState(0);
   const [signUpInputs, setSignUpInputs] = useState({
     nickname: '',
     email: '',
@@ -17,10 +21,21 @@ export default function useInputSignUp() {
   const onChangeSignUpInputs = useCallback(
     (e) => {
       const { name, value } = e.target;
-      setSignUpInputs({
-        ...signUpInputs,
-        [name]: value,
-      });
+
+      if (timer) {
+        clearTimeout(timer);
+      }
+      const newTimer = setTimeout(async () => {
+        try {
+          setSignUpInputs({
+            ...signUpInputs,
+            [name]: value,
+          });
+        } catch {
+          alert('에러가 발생했습니다.다시 시도해주세요');
+        }
+      }, 800);
+      setTimer(newTimer);
     },
     [signUpInputs],
   );

@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
-import home from '../asset/img/home.svg';
-import document from '../asset/img/document.svg';
-import schedule from '../asset/img/schedule.svg';
-import contacts from '../asset/img/contacts.svg';
-import laptop from '../asset/img/laptop.svg';
-import chat from '../asset/img/chat.svg';
-import arrowDown from '../asset/img/arrowDown.svg';
+import home from '../common/img/home.svg';
+import document from '../common/img/document.svg';
+import schedule from '../common/img/schedule.svg';
+import contacts from '../common/img/contacts.svg';
+import laptop from '../common/img/laptop.svg';
+import chat from '../common/img/chat.svg';
+import arrowDown from '../common/img/arrowDown.svg';
 
 function SideMenu() {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ function SideMenu() {
       >
         <StIcon src={home} />홈
       </StLabel>
-      <StLabel style={{ borderBottom: 'none' }}>
+      <StLabel style={{ cursor: 'auto', borderBottom: 'none' }}>
         <StIcon src={document} />
         게시판
         <StIcon src={arrowDown} />

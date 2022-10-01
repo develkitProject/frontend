@@ -2,9 +2,8 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
-import axios from 'axios';
-import { useAddImageMutation } from '../redux/modules/workspaces';
 import { getCookieToken } from '../Cookie';
+import { useAddDocImageMutation } from '../redux/modules/docs';
 
 function Editor({ value, setContent }) {
   const QuillRef = useRef();
@@ -13,9 +12,9 @@ function Editor({ value, setContent }) {
     setEditContent(value);
   }, [setContent, value]);
   // const [imgurl, setImgurl] =useState("")
-  // const [addImage,{data, isSuccess, isFail, refetch}] = useAddImageMutation();
+  const [addDocImage] = useAddDocImageMutation();
 
-  const Headers = {
+  const headers = {
     Authorization: getCookieToken(),
   };
 
@@ -37,22 +36,19 @@ function Editor({ value, setContent }) {
       if (file) {
         formData.append('image', file);
         try {
-          const result = await axios.post(
-            `${process.env.REACT_APP_BASE_URL}/api/images`,
-            formData,
-            { headers: Headers },
-          );
-          const IMG_URL = result?.data?.data?.images[0];
-          const range = QuillRef.current?.getEditor().getSelection()?.index;
-          if (range !== null && range !== undefined) {
-            const quill = QuillRef.current?.getEditor();
-            quill?.setSelection(range, 1);
-            quill?.clipboard.dangerouslyPasteHTML(
-              range,
-              `<img src=${IMG_URL} alt="이미지 태그가 삽입됩니다." />`,
-            );
-          }
-          return { ...result, success: true };
+          await addDocImage(formData, { headers }).then((result) => {
+            const IMG_URL = result?.data?.data?.images[0];
+            const range = QuillRef.current?.getEditor().getSelection()?.index;
+            if (range !== null && range !== undefined) {
+              const quill = QuillRef.current?.getEditor();
+              quill?.setSelection(range, 1);
+              quill?.clipboard.dangerouslyPasteHTML(
+                range,
+                `<img src=${IMG_URL} alt="이미지 태그가 삽입됩니다." />`,
+              );
+            }
+            return { ...result, success: true };
+          });
         } catch (error) {
           const err = error;
           return { ...err.response, success: false };

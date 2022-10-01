@@ -6,7 +6,7 @@ import Editor from '../../../components/Editor';
 import {
   useGetDocDetailQuery,
   useUpdateDocMutation,
-} from '../../../redux/modules/workspaces';
+} from '../../../redux/modules/docs';
 
 function DocsEdit({ stateId, onDocumentHandle }) {
   const params = useParams();
@@ -87,6 +87,7 @@ function DocsEdit({ stateId, onDocumentHandle }) {
         name="title"
         placeholder="제목"
         value={title}
+        maxLength={50}
       />
       <Editor value={content} setContent={setContent} />
       <EditorBlock>
