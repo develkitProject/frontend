@@ -54,24 +54,9 @@ function Header({ path, setPath }) {
     setProfileOpen(false);
   };
 
-  const moveMain = () => {
-    setPath(1);
-    navigate('/');
-  };
-
-  const moveProject = () => {
-    setPath(2);
-    navigate('/workspace');
-  };
-
-  const moveFAQ = () => {
-    setPath(4);
-    navigate('/faq');
-  };
-
-  const moveEvent = () => {
-    setPath(5);
-    navigate('/event');
+  const onMoveHandle = (path, page) => {
+    setPath(path);
+    navigate(page);
   };
 
   const handleAlarm = () => {
@@ -90,18 +75,28 @@ function Header({ path, setPath }) {
             alignItems: 'center',
           }}
         >
-          <StLogo alt="logo" src={logo} onClick={moveMain} />
+          <StLogo
+            alt="logo"
+            src={logo}
+            onClick={() => {
+              onMoveHandle(1, '/');
+            }}
+          />
 
           {/* <StDiv style={!matches ? { display: 'none' } : null}> */}
           <StMenuDiv>
             <StMenuName
-              onClick={moveMain}
+              onClick={() => {
+                onMoveHandle(1, '/');
+              }}
               style={path === 1 ? { opacity: '1' } : null}
             >
               About
             </StMenuName>
             <StMenuName
-              onClick={moveProject}
+              onClick={() => {
+                onMoveHandle(2, '/workspace');
+              }}
               style={path === 2 ? { opacity: '1' } : null}
             >
               Project
@@ -114,13 +109,17 @@ function Header({ path, setPath }) {
               Community
             </StMenuName> */}
             <StMenuName
-              onClick={moveFAQ}
+              onClick={() => {
+                onMoveHandle(4, '/faq');
+              }}
               style={path === 4 ? { opacity: '1' } : null}
             >
               FAQ
             </StMenuName>
             <StMenuName
-              onClick={moveEvent}
+              onClick={() => {
+                onMoveHandle(5, '/event');
+              }}
               style={path === 5 ? { opacity: '1' } : null}
             >
               Event
