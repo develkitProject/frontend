@@ -7,7 +7,7 @@ import BlackButton from '../../common/elements/BlackButton';
 import NoticeWrite from './notice/NoticeWrite';
 import NoticeEdit from './notice/NoticeEdit';
 
-export default function Notice() {
+export default function Notice({ user }) {
   const params = useParams();
   const id = Number(params.id);
   const [tab, setTab] = useState('list');
@@ -57,6 +57,7 @@ export default function Notice() {
             data={data}
             notice={notice}
             onNoticeHandle={onNoticeHandle}
+            user={user}
             id={id}
           />
         </div>

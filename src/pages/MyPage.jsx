@@ -8,13 +8,12 @@ import SpaceCard from '../components/SpaceCard';
 import MyPage2 from './MyPage2';
 
 function MyPage() {
-  const { user } = useGetUser();
   const [tab, setTab] = useState(false);
   const { data, error, isLoading } = useGetWorkspacesQuery();
   const workspaces = data?.data;
-  const { data: userData } = useGetUserInfoQuery();
+  const { data: user } = useGetUserInfoQuery();
   const now = new Date();
-  const createdData = userData?.data.createdAt.split(' ')[0];
+  const createdData = user?.data.createdAt.split(' ')[0];
   const stYear = Number(createdData?.split('/')[0]);
   const stMonth = Number(createdData?.split('/')[1]);
   const stDay = Number(createdData?.split('/')[2]);
@@ -54,8 +53,10 @@ function MyPage() {
           {!tab ? (
             <>
               <Intro>
-                <Intro style={{ fontWeight: '700' }}>{user?.nickname}님</Intro>,
-                오늘도 디벨킷에서 성장하고 있습니다 🙌
+                <Intro style={{ fontWeight: '700' }}>
+                  {user?.data.nickname}님
+                </Intro>
+                , 오늘도 디벨킷에서 성장하고 있습니다 🙌
               </Intro>
               <div
                 style={{
@@ -91,7 +92,7 @@ function MyPage() {
                     <BoxSpan>작성 수</BoxSpan>
                   </div>
                   <div style={{ marginTop: '50px' }}>
-                    <BoxNumSpan>{userData?.data.documentNum}</BoxNumSpan>
+                    <BoxNumSpan>{user?.data.documentNum}</BoxNumSpan>
                     <BoxSpan> 건</BoxSpan>
                   </div>
                 </IntroBox>
@@ -118,7 +119,7 @@ function MyPage() {
             </>
           ) : (
             <>
-              <MyPage2 data={userData} />
+              <MyPage2 user={user} />
             </>
           )}
         </TabDiv2>

@@ -1,7 +1,10 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setIsLoginModal, setIsSignUpModal } from '../../redux/modules/global';
-import { useGetSignUpMutation } from '../../redux/query/signup';
+import {
+  setIsLoginModal,
+  setIsSignUpModal,
+} from '../../../redux/modules/global';
+import { useGetSignUpMutation } from '../../../redux/query/signup';
 
 export default function useInputSignUp() {
   const dispatch = useDispatch();

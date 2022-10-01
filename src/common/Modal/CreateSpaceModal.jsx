@@ -2,8 +2,8 @@ import React, { useRef, useState, useReducer } from 'react';
 import styled from 'styled-components';
 import Draggable from 'react-draggable';
 import ModalContainer from './ModalContainer';
-import { StButton } from '../../login/style';
-import imgupload from '../../asset/img/imgupload.svg';
+import { StButton } from '../../oauth/login/style';
+import imgupload from '../img/imgupload.svg';
 import CloseButton from '../elements/CloseButton';
 import { useAddWorkSpacesMutation } from '../../redux/modules/workspaces';
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
-import circle from '../../asset/img/circle.svg';
+import circle from '../img/circle.svg';
 
 function Circle() {
   return (

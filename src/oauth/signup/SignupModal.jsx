@@ -1,16 +1,16 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 
 import { useDispatch } from 'react-redux';
-import ModalContainer from '../common/Modal/ModalContainer';
-import useOutSideClick from '../common/hooks/useOutSideClick';
+import ModalContainer from '../../common/Modal/ModalContainer';
+import useOutSideClick from '../../common/hooks/useOutSideClick';
 
 import useInputSignUp from './hooks/useInputSignUp';
 import UserInputForm from './components/UserInputForm';
 import useInputStatus from './hooks/useInputStatus';
-import CloseButton from '../common/elements/CloseButton';
+import CloseButton from '../../common/elements/CloseButton';
 
 import * as St from './style';
-import { setIsSignUpModal } from '../redux/modules/global';
+import { setIsSignUpModal } from '../../redux/modules/global';
 
 function SignupModal({ onClose }) {
   const dispatch = useDispatch();

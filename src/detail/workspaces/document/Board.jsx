@@ -16,8 +16,6 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
   const docs = searchData?.data;
   const [searchDocs, setSearchDocs] = useState(0);
 
-  console.log(doc);
-
   const onSearchHandle = (obj) => {
     setSearchDocs(1);
     setState(obj);

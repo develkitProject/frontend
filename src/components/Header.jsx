@@ -3,10 +3,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCookieToken, removeCookieToken } from '../Cookie';
-import alarm from '../asset/img/alarm.svg';
-import logo from '../asset/img/logo.png';
-import Login from '../login';
-import SignupModal from '../signup/SignupModal';
+import alarm from '../common/img/alarm.svg';
+import logo from '../common/img/logo.png';
+import Login from '../oauth/login';
+import SignupModal from '../oauth/signup/SignupModal';
 import MyProfileModal from '../common/Modal/MyProfileModal';
 import { setIsLoginModal, setIsSignUpModal } from '../redux/modules/global';
 import {
