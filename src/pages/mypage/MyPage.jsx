@@ -1,10 +1,9 @@
 /* eslint-disable no-unsafe-optional-chaining */
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import useGetUser from '../common/hooks/useGetUser';
-import { useGetWorkspacesQuery } from '../redux/modules/workspaces';
-import { useGetUserInfoQuery } from '../redux/modules/user';
-import SpaceCard from '../components/SpaceCard';
+import { useGetWorkspacesQuery } from '../../redux/modules/workspaces';
+import { useGetUserInfoQuery } from '../../redux/modules/user';
+import SpaceCard from '../../components/SpaceCard';
 import MyPage2 from './MyPage2';
 
 function MyPage() {
@@ -17,13 +16,11 @@ function MyPage() {
   const stYear = Number(createdData?.split('/')[0]);
   const stMonth = Number(createdData?.split('/')[1]);
   const stDay = Number(createdData?.split('/')[2]);
-
-  const stDate = new Date(stYear, stMonth, stDay);
   const year = now.getFullYear();
   const month = now.getMonth() + 1;
   const day = now.getDate();
+  const stDate = new Date(stYear, stMonth, stDay);
   const endDate = new Date(year, month, day);
-
   const btMs = endDate.getTime() - stDate?.getTime();
   const btDay = btMs / (1000 * 60 * 60 * 24);
 
@@ -224,14 +221,4 @@ const BoxNumSpan = styled.span`
   font-weight: bold;
   letter-spacing: 0px;
   font-family: 'Montserrat';
-`;
-
-const StButton = styled.button`
-  width: 200px;
-  height: 30px;
-  background-color: rgb(0, 169, 157);
-  font-size: 20px;
-  cursor: pointer;
-  border: none;
-  color: white;
 `;

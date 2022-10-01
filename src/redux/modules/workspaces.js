@@ -103,7 +103,7 @@ export const workspaceApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      providesTags: ['Notice'],
+      providesTags: ['Workspaces'],
     }),
     getWorkSpacesJoin: builder.mutation({
       query: (id) => {

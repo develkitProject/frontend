@@ -1,7 +1,7 @@
 import React, { useRef, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import useOutSideClick from '../../common/hooks/useOutSideClick';
-import ModalContainer from '../../common/Modal/ModalContainer';
+import ModalContainer from '../../common/modal/ModalContainer';
 import useInputLogin from './hooks/useInputLogin';
 import KakaoLogin from '../../components/KaKaoLogin';
 import CloseButton from '../../common/elements/CloseButton';

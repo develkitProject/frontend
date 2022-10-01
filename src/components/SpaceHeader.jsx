@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import CodeConfirmModal from '../common/Modal/CodeConfirmModal';
+import CodeConfirmModal from '../common/modal/CodeConfirmModal';
 import { getCookieToken } from '../Cookie';
 import { useAddWorkspaceCodeMutation } from '../redux/modules/workspaces';
 
