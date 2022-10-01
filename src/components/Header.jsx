@@ -7,7 +7,7 @@ import alarm from '../common/img/alarm.svg';
 import logo from '../common/img/logo.png';
 import Login from '../account/login';
 import SignupModal from '../account/signup/SignupModal';
-import MyProfileModal from '../common/Modal/MyProfileModal';
+import MyProfileModal from '../common/modal/MyProfileModal';
 import { setIsLoginModal, setIsSignUpModal } from '../redux/modules/global';
 import {
   selectIsLoginModal,

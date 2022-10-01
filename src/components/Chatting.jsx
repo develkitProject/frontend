@@ -15,7 +15,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const [users, setUsers] = useState(null);
   const textRef = useRef(null);
   const { isOpen, toggle } = useModalOverlay();
-  const { data, isLoading, error, refetch } = useGetChatMessagesQuery(id);
+  const { data, isLoading } = useGetChatMessagesQuery(id);
   const [nextgetChat] = useNextChatMessagesMutation();
   const target = useRef(null);
 

@@ -9,8 +9,8 @@ import Circle from '../common/elements/Circle';
 import CreateCard from '../components/CreateCard';
 import SpaceCard from '../components/SpaceCard';
 import SpaceHeader from '../components/SpaceHeader';
-import WorkSpaceErrorModal from '../common/Modal/error';
-import CreateSpaceModal from '../common/Modal/CreateSpaceModal';
+import WorkSpaceErrorModal from '../common/modal/error';
+import CreateSpaceModal from '../common/modal/CreateSpaceModal';
 
 function WorkSpace() {
   const { data, error, isLoading, refetch } = useGetWorkspacesQuery();

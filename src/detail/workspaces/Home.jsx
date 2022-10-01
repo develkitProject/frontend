@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useGetDocQuery } from '../../redux/modules/docs';
 import { useGetNoticeQuery } from '../../redux/modules/notices';
 import BlackButton from '../../common/elements/BlackButton';
-import InvitationCodeModal from '../../common/Modal/InvitationCodeModal';
+import InvitationCodeModal from '../../common/modal/InvitationCodeModal';
 
 export default function Home({ id, data, onDocumentHandle }) {
   const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
