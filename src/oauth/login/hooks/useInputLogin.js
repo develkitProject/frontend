@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { loginApi } from '../../../data/login';
+import { loginApi } from '../../data/login';
 import { setAccessToken } from '../../../Cookie';
 
 export default function useInputLogin() {
