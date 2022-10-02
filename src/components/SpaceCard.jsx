@@ -4,14 +4,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import CardProfile from '../common/elements/CardProfile';
 
-function SpaceCard({
-  data,
-  error,
-  isLoading,
-  width,
-  deleteButton,
-  deleteWorkSpaces,
-}) {
+function SpaceCard({ data, error, isLoading, width }) {
   const navigate = useNavigate();
 
   return (
