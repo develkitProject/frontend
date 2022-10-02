@@ -18,6 +18,17 @@ export const docsApi = coreApi.injectEndpoints({
       providesTags: ['Docs'],
     }),
 
+    getDocList: builder.query({
+      query: (list) => {
+        return {
+          url: `/api/workspaces/${list?.id}/docs?cursorId=${list?.cursorId}&direction=${list?.direction}`,
+          method: 'GET',
+          headers,
+        };
+      },
+      providesTags: ['Docs'],
+    }),
+
     getDocDetail: builder.query({
       query: ({ workspaces, docid }) => {
         return {
@@ -82,7 +93,6 @@ export const docsApi = coreApi.injectEndpoints({
       },
       invalidatesTags: ['Docs'],
     }),
-    // 초대코드
     getDocSearch: builder.query({
       query: (obj) => {
         return {
@@ -98,6 +108,7 @@ export const docsApi = coreApi.injectEndpoints({
 
 export const {
   useGetDocQuery,
+  useGetDocListQuery,
   useGetDocDetailQuery,
   useAddDocMutation,
   useAddDocImageMutation,
