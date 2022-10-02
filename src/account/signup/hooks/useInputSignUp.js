@@ -46,21 +46,16 @@ export default function useInputSignUp() {
       username: email,
       nickname,
       password,
-    });
-  }, [getSignUp, signUpInputs]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      if (data.success === true) {
-        alert('회원가입에 성공하셨습니다.');
+    }).then((res) => {
+      if (res.data) {
+        alert('회원가입에 성공하셨습니다. 환영합니다!');
         dispatch(setIsLoginModal(true));
         dispatch(setIsSignUpModal(false));
+      } else {
+        alert('회원가입에 실패했습니다. 다시시도해주세요!');
       }
-    }
-    if (isFail) {
-      alert('회원가입에 실패했습니다. 다시 시도해주세요');
-    }
-  }, [data]);
+    });
+  }, [getSignUp, signUpInputs]);
 
   return {
     signUpInputs,

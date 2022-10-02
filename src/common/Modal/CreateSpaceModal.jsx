@@ -1,6 +1,6 @@
 import React, { useRef, useState, useReducer } from 'react';
 import styled from 'styled-components';
-import Draggable from 'react-draggable';
+import useChangeImage from '../../pages/mypage/hooks/useChangeImage';
 import ModalContainer from './ModalContainer';
 import { StButton } from '../../account/login/style';
 import imgupload from '../img/imgupload.svg';
@@ -16,9 +16,9 @@ const reducer = (state, action) => {
 
 function CreateSpaceModal({ onClose }) {
   const imgRef = useRef('');
-  const [imageUrl, setImageUrl] = useState(null);
-  const [imgFile, setImgFile] = useState('');
+  // const [imageUrl, setImageUrl] = useState(null);
   const [addWorkSpaces] = useAddWorkSpacesMutation();
+  const { onChangeImage, imageUrl } = useChangeImage();
 
   const [state, setState] = useReducer(reducer, {
     title: '',
@@ -50,15 +50,15 @@ function CreateSpaceModal({ onClose }) {
     }
   };
 
-  const onChangeImage = () => {
-    const reader = new FileReader();
-    const file = imgRef?.current?.files[0];
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImageUrl(reader.result);
-      setImgFile(file);
-    };
-  };
+  // const onChangeImage = () => {
+  //   const reader = new FileReader();
+  //   const file = imgRef?.current?.files[0];
+  //   reader.readAsDataURL(file);
+  //   reader.onloadend = () => {
+  //     setImageUrl(reader.result);
+  //     setImgFile(file);
+  //   };
+  // };
 
   return (
     <ModalContainer>
@@ -107,7 +107,9 @@ function CreateSpaceModal({ onClose }) {
             id="upload-photo"
             name="upload-photo"
             type="file"
-            onChange={onChangeImage}
+            onChange={() => {
+              onChangeImage(imgRef);
+            }}
             ref={imgRef}
           />
         </ModalWrap>
