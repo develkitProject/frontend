@@ -215,14 +215,16 @@ const StFooter = styled.div`
   flex-direction: column;
   position: relative;
   font-size: 17px;
-  line-height: 18px;
+  line-height: 17px;
 `;
 
 const StDiv = styled.div`
   margin-top: 10px;
   /* overflow: hidden; */
   white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 20px;
 `;
 
 const SpaceName = styled.span`

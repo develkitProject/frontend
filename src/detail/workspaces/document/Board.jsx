@@ -1,13 +1,20 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetDocSearchQuery } from '../../../redux/modules/docs';
+import {
+  useGetDocListQuery,
+  useGetDocSearchQuery,
+} from '../../../redux/modules/docs';
 import SearchBar from '../../../components/SearchBar';
 
 function Board({ onDocumentHandle, error, isLoading, data }) {
   const params = useParams();
+  const [cursorId, setCursorId] = useState('');
+  const [direction, setDirection] = useState('');
+
   const id = Number(params.id);
   const doc = data?.data;
+
   const [state, setState] = useState(null);
   const { data: searchData } = useGetDocSearchQuery(state, {
     // eslint-disable-next-line eqeqeq
@@ -19,6 +26,27 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
   const onSearchHandle = (obj) => {
     setSearchDocs(1);
     setState(obj);
+  };
+
+  // const [listDoc, { data: listData }] = useGetDocListQuery(state, {
+  //   skip: cursorId === 0,
+  // });
+
+  // const docList = listData?.data;
+  // console.log(docList);
+
+  const onPageChangeHandler = (location) => {
+    if (doc.length >= 10) {
+      setCursorId(data?.data[9].id);
+      setDirection(location);
+    } else {
+      setCursorId(0);
+    }
+
+    if (cursorId !== 0) {
+      const list = { id, cursorId, direction };
+      listDoc(list);
+    }
   };
 
   return (
@@ -102,9 +130,23 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
           </StTbody>
         </StTableContainer>
         <StPagination>
-          <StChangePage> ◀ 이전 </StChangePage>
+          <StChangePage
+            onClick={() => {
+              onPageChangeHandler('Previous');
+            }}
+          >
+            {' '}
+            ◀ 이전{' '}
+          </StChangePage>
           <div style={{ margin: '0px 20px 0 20px' }} />
-          <StChangePage> 다음 ▶</StChangePage>
+          <StChangePage
+            onClick={() => {
+              onPageChangeHandler('Recent');
+            }}
+          >
+            {' '}
+            다음 ▶
+          </StChangePage>
         </StPagination>
       </StWrapper>
       <SearchBar
