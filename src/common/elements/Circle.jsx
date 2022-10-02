@@ -5,9 +5,7 @@ import circle from '../img/circle.svg';
 function Circle() {
   return (
     <>
-      {/* <Container> */}
       <StCircle />
-      {/* </Container> */}
     </>
   );
 }

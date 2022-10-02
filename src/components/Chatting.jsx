@@ -14,11 +14,10 @@ import noteBook from '../common/img/notebook.png';
 function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const [users, setUsers] = useState(null);
   const textRef = useRef(null);
+  const target = useRef(null);
   const { isOpen, toggle } = useModalOverlay();
   const { data, isLoading } = useGetChatMessagesQuery(id);
   const [nextgetChat] = useNextChatMessagesMutation();
-  const target = useRef(null);
-
   const [Opacity, setOpacity] = useState(false);
   const [minimum, setMinimum] = useState(false);
   const [prevHeight, setPrevHeight] = useState(null);

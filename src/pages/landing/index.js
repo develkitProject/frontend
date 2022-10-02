@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FullPage, Slide } from 'react-full-page/lib';
 import 'animate.css';
 import WorkSpaceErrorModal from '../../common/modal/error';
-import SignupModal from '../../account/signup/SignupModal';
+import SignupModal from '../../account/signup';
 import { setIsSignUpModal } from '../../redux/modules/global';
 import { selectIsSignUpModal } from '../../redux/modules/global/selectors';
 
@@ -65,8 +65,8 @@ function Landing({ path, setPath }) {
   return (
     <FullPage controls controlsProps={{ className: 'slide-navigation' }}>
       <TopButton />
-      {SlideComponents.map((item) => (
-        <Slide>{item}</Slide>
+      {SlideComponents.map((item, i) => (
+        <Slide key={i}>{item}</Slide>
       ))}
       {isOpenErrorModal && (
         <WorkSpaceErrorModal
