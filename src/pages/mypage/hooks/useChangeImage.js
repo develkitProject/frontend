@@ -1,4 +1,4 @@
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useState } from 'react';
 
 export default function useChangeImage() {
   const [imageUrl, setImageUrl] = useState(null);

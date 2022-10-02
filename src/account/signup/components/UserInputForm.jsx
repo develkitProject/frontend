@@ -26,7 +26,7 @@ function UserInputForm({ onChange, errorStatus, successStatus }) {
         name="email"
         isSuccess={successStatus.isEmail}
         isError={errorStatus.isEmail}
-        errorText="이메일 주소를 다시 확인해주세요."
+        errorText="이메일 형식이 아니거나 중복되었습니다!"
         placeholder="이메일을 입력해주세요!"
         onChange={onChange}
       />
