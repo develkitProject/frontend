@@ -45,14 +45,6 @@ function MyPage2({ user }) {
     }
   };
 
-  // const onChangeImage = () => {
-  //   const reader = new FileReader();
-  //   const file = imgRef?.current?.files[0];
-  //   reader.readAsDataURL(file);
-  //   reader.onloadend = () => {
-  //     setImageUrl(reader.result);
-  //   };
-  // };
   return (
     <S.StWrapper>
       <S.StProfile>
