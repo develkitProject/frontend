@@ -4,7 +4,7 @@ import {
   setIsLoginModal,
   setIsSignUpModal,
 } from '../../../redux/modules/global';
-import { useGetSignUpMutation } from '../../../redux/query/signup';
+import { useGetSignUpMutation } from '../../../redux/query/account';
 
 export default function useInputSignUp() {
   const dispatch = useDispatch();

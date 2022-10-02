@@ -2,7 +2,7 @@ import './App.css';
 import { useState } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Header from './components/Header';
-import Landing from './pages/Landing';
+import Landing from './Landing';
 import MyPage from './pages/MyPage';
 import WorkSpace from './pages/WorkSpace';
 import Kakao from './pages/KaKao';
