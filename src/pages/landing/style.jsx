@@ -1,10 +1,10 @@
 import styled, { keyframes } from 'styled-components';
 
-import velkit from '../common/img/velkit.png';
-import velkit2 from '../common/img/velkit2.png';
-import velkit3 from '../common/img/velkit3.png';
-import twinklestar from '../common/img/twinklestar.svg';
-import circle from '../common/img/circle.svg';
+import velkit from '../../common/img/velkit.png';
+import velkit2 from '../../common/img/velkit2.png';
+import velkit3 from '../../common/img/velkit3.png';
+import twinklestar from '../../common/img/twinklestar.svg';
+import circle from '../../common/img/circle.svg';
 import 'animate.css';
 
 export const Wrapper = styled.div`

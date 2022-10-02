@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Fourth1 from '../../common/img/Fourth1.png';
-import Fourth2 from '../../common/img/Fourth2.png';
+import Fourth1 from '../../../common/img/Fourth1.png';
+import Fourth2 from '../../../common/img/Fourth2.png';
 
-import Footer from '../../components/Footer';
+import Footer from '../../../components/Footer';
 import * as St from '../style';
 
 function FourthSlide({ onClickSignUpModal, onClickEventPage }) {

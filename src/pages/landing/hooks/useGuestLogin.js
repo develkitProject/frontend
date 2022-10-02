@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { loginApi } from '../../data/login';
-import { getCookieToken, setAccessToken } from '../../Cookie';
+import { loginApi } from '../../../account/data/login';
+import { getCookieToken, setAccessToken } from '../../../Cookie';
 
 export default function useGuestLogin() {
   const cookies = getCookieToken();

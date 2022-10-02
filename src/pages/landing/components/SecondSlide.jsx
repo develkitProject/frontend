@@ -1,8 +1,8 @@
 import React from 'react';
 
-import SecondCard1 from '../../common/img/SecondCard1.png';
-import SecondCard2 from '../../common/img/SecondCard2.png';
-import SecondCard3 from '../../common/img/SecondCard3.png';
+import SecondCard1 from '../../../common/img/SecondCard1.png';
+import SecondCard2 from '../../../common/img/SecondCard2.png';
+import SecondCard3 from '../../../common/img/SecondCard3.png';
 import 'animate.css';
 
 import * as St from '../style';

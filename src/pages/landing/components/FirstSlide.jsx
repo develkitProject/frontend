@@ -1,8 +1,8 @@
 import React from 'react';
 
-import scroll from '../../common/img/scroll.svg';
-import icon from '../../common/img/icon1.png';
-import Header from '../../components/Header';
+import scroll from '../../../common/img/scroll.svg';
+import icon from '../../../common/img/icon1.png';
+import Header from '../../../components/Header';
 import 'animate.css';
 
 import * as St from '../style';

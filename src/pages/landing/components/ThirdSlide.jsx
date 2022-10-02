@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ThirdBackground from '../../common/img/ThirdBackground.png';
-import ThirdImg from '../../common/img/ThirdImg.png';
+import ThirdBackground from '../../../common/img/ThirdBackground.png';
+import ThirdImg from '../../../common/img/ThirdImg.png';
 
 import * as St from '../style';
 

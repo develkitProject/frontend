@@ -3,17 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FullPage, Slide } from 'react-full-page/lib';
 import 'animate.css';
-import WorkSpaceErrorModal from '../common/Modal/error';
-import SignupModal from '../oauth/signup/SignupModal';
-import { setIsSignUpModal } from '../redux/modules/global';
-import { selectIsSignUpModal } from '../redux/modules/global/selectors';
+import WorkSpaceErrorModal from '../../common/modal/error';
+import SignupModal from '../../account/signup/SignupModal';
+import { setIsSignUpModal } from '../../redux/modules/global';
+import { selectIsSignUpModal } from '../../redux/modules/global/selectors';
 
-import TopButton from '../common/elements/TopButton';
+import TopButton from '../../common/elements/TopButton';
 import FirstSlide from './components/FirstSlide';
 import SecondSlide from './components/SecondSlide';
 import ThirdSlide from './components/ThirdSlide';
 import FourthSlide from './components/FourthSlide';
-import useModalOverlay from '../oauth/signup/hooks/useModalOverlay';
+import useModalOverlay from '../../account/signup/hooks/useModalOverlay';
 import useGuestLogin from './hooks/useGuestLogin';
 
 function Landing({ path, setPath }) {
