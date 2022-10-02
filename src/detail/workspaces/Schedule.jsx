@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 import BlackButton from '../../common/elements/BlackButton';
 import CalendarApp from './calendar/CalendarApp';
-import CalendarModal from '../../common/Modal/CalendarModal';
+import CalendarModal from '../../common/modal/CalendarModal';
 
 export default function Schedule({ id }) {
   const [isOpen, setIsOpen] = useState(false);

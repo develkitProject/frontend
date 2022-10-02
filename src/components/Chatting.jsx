@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import Draggable from 'react-draggable';
-import useModalOverlay from '../oauth/signup/hooks/useModalOverlay';
+import useModalOverlay from '../account/signup/hooks/useModalOverlay';
 import velkit from '../common/img/velkit.png';
 import {
   useGetChatMessagesQuery,
@@ -15,7 +15,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const [users, setUsers] = useState(null);
   const textRef = useRef(null);
   const { isOpen, toggle } = useModalOverlay();
-  const { data, isLoading, error, refetch } = useGetChatMessagesQuery(id);
+  const { data, isLoading } = useGetChatMessagesQuery(id);
   const [nextgetChat] = useNextChatMessagesMutation();
   const target = useRef(null);
 

@@ -1,13 +1,12 @@
 import React, { useCallback, useState, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
-import velkit from '../common/img/velkit.png';
-import BasicInput from '../common/elements/BasicInput';
+import velkit from '../../common/img/velkit.png';
+import BasicInput from '../../common/elements/BasicInput';
 import {
   useDeleteUserInfoMutation,
-  useGetUserInfoQuery,
   useUpdateUserInfoMutation,
-} from '../redux/modules/user';
-import { removeUser } from '../Cookie';
+} from '../../redux/modules/user';
+import { removeUser } from '../../Cookie';
 
 function MyPage2({ user }) {
   const [updateUserInfo] = useUpdateUserInfoMutation();
@@ -76,7 +75,7 @@ function MyPage2({ user }) {
             {nickname || userNickname}
           </StEmail>
           <StEmail fontSize="18px" fontColor="#999999" fontWeight="400">
-            {user?.username}
+            {user?.data.username}
           </StEmail>
         </div>
         <StChange onClick={deleteUserInfo}>회원탈퇴</StChange>

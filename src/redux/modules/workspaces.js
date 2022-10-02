@@ -17,6 +17,18 @@ export const workspaceApi = coreApi.injectEndpoints({
       providesTags: ['Workspaces'],
     }),
 
+    addWorkspaceCode: builder.mutation({
+      query: (codes) => {
+        return {
+          url: '/api/invitation/codes',
+          method: 'POST',
+          body: codes,
+          headers,
+        };
+      },
+      invalidatesTags: ['Workspaces'],
+    }),
+
     getWorkspaceInfo: builder.query({
       query: (id) => ({
         url: `/api/workspaces/${id}/info`,
@@ -91,7 +103,7 @@ export const workspaceApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      providesTags: ['Notice'],
+      providesTags: ['Workspaces'],
     }),
     getWorkSpacesJoin: builder.mutation({
       query: (id) => {
@@ -130,6 +142,7 @@ export const workspaceApi = coreApi.injectEndpoints({
 export const {
   useGetWorkspacesQuery,
   useAddWorkSpacesMutation,
+  useAddWorkspaceCodeMutation,
   useGetWorkspaceInfoQuery,
   useUpdateWorkspaceInfoMutation,
   useDeleteWorkSpacesMutation,
