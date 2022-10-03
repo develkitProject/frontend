@@ -5,9 +5,7 @@ import { useParams } from 'react-router-dom';
 import Editor from '../../../components/Editor';
 import { useAddDocMutation } from '../../../redux/modules/docs';
 
-function DocsWrite({ onDocumentHandle }) {
-  const params = useParams();
-  const id = Number(params.id);
+function DocsWrite({ onDocumentHandle, id }) {
   const nameInput = useRef();
 
   const [addDoc] = useAddDocMutation();

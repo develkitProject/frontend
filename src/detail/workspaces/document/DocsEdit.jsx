@@ -8,9 +8,7 @@ import {
   useUpdateDocMutation,
 } from '../../../redux/modules/docs';
 
-function DocsEdit({ stateId, onDocumentHandle }) {
-  const params = useParams();
-  const id = Number(params.id);
+function DocsEdit({ stateId, onDocumentHandle, id }) {
   const docid = stateId;
   const nameInput = useRef();
   const { data } = useGetDocDetailQuery({

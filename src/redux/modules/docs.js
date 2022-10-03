@@ -21,7 +21,7 @@ export const docsApi = coreApi.injectEndpoints({
     getDocList: builder.query({
       query: (list) => {
         return {
-          url: `/api/workspaces/${list?.id}/docs?cursorId=${list?.cursorId}&direction=${list?.direction}`,
+          url: `/api/workspaces/${list.id}/docs?cursorId=${list.cursorId}&direction=${list.direction}`,
           method: 'GET',
           headers,
         };

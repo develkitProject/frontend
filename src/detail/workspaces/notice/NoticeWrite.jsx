@@ -2,15 +2,10 @@ import styled from 'styled-components';
 import React, { useState, useReducer } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useNavigate, useParams } from 'react-router-dom';
 import { useAddNoticeMutation } from '../../../redux/modules/notices';
 import NoticeEditor from './NoticeEditor';
 
-function NoticeWrite({ onNoticeHandle }) {
-  const navigate = useNavigate();
-  const params = useParams();
-  const id = Number(params.id);
-
+function NoticeWrite({ onNoticeHandle, id }) {
   const [addNotice] = useAddNoticeMutation();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');

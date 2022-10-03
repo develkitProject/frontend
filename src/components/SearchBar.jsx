@@ -27,6 +27,7 @@ function SearchBar({ id, onSearchHandle, setSearchDocs }) {
     if (e.key === 'Enter') {
       if (keyword !== '') {
         handleClick();
+        e.target.value = '';
       } else {
         setSearchDocs(0);
       }

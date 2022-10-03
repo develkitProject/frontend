@@ -9,9 +9,8 @@ import {
 import BlackButton from '../../../common/elements/BlackButton';
 import DocsEdit from './DocsEdit';
 
-function DocDetail({ stateId, onDocumentHandle }) {
-  const params = useParams();
-  const workspaces = Number(params.id);
+function DocDetail({ stateId, onDocumentHandle, id }) {
+  const workspaces = id;
   const docid = stateId;
   const { data } = useGetDocDetailQuery({
     workspaces,

@@ -11,7 +11,6 @@ import UpdateSpaceModal from '../../common/modal/UpdateSpaceModal';
 
 export default function ProjectInfo({ id, user }) {
   const navigate = useNavigate();
-  const params = useParams();
 
   const { data, error, isLoading, refetch } = useGetWorkspaceInfoQuery(id);
   const info = data?.data;
