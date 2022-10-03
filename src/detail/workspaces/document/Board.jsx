@@ -1,54 +1,48 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import {
   useGetDocListQuery,
   useGetDocSearchQuery,
 } from '../../../redux/modules/docs';
 import SearchBar from '../../../components/SearchBar';
 
-function Board({ onDocumentHandle, error, isLoading, data }) {
-  const params = useParams();
-  const [cursorId, setCursorId] = useState('');
-  const [direction, setDirection] = useState('');
-
-  const id = Number(params.id);
-  const doc = data?.data;
+function Board({ onDocumentHandle, error, isLoading, data, id }) {
+  // eslint-disable-next-line prefer-const
 
   const [state, setState] = useState(null);
+  const [searchDocs, setSearchDocs] = useState(0);
+  const [pageList, setPageList] = useState({
+    id: null,
+    cursorId: null,
+    direction: null,
+  });
   const { data: searchData } = useGetDocSearchQuery(state, {
     // eslint-disable-next-line eqeqeq
     skip: state == undefined,
   });
+  const { data: listData } = useGetDocListQuery(pageList, {
+    // eslint-disable-next-line eqeqeq
+    skip: pageList.cursorId == undefined,
+  });
+  const doc = data?.data;
   const docs = searchData?.data;
-  const [searchDocs, setSearchDocs] = useState(0);
+  const docsList = listData?.data;
 
   const onSearchHandle = (obj) => {
     setSearchDocs(1);
     setState(obj);
   };
 
-  // const [listDoc, { data: listData }] = useGetDocListQuery(state, {
-  //   skip: cursorId === 0,
-  // });
-
-  // const docList = listData?.data;
-  // console.log(docList);
-
-  const onPageChangeHandler = (location) => {
-    if (doc.length >= 10) {
-      setCursorId(data?.data[9].id);
-      setDirection(location);
-    } else {
-      setCursorId(0);
-    }
-
-    if (cursorId !== 0) {
-      const list = { id, cursorId, direction };
-      listDoc(list);
-    }
+  const onFetchDocs = async (direction) => {
+    const lastdoc = doc[doc.length - 1];
+    const list = {
+      id,
+      cursorId: lastdoc.id,
+      direction,
+    };
+    setPageList(list);
+    setSearchDocs(2);
   };
-
   return (
     <>
       <StWrapper>
@@ -97,7 +91,7 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
                       );
                     })}
                   </>
-                ) : (
+                ) : searchDocs === 1 ? (
                   <>
                     {docs?.map((data, i) => {
                       return (
@@ -124,7 +118,35 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
                       );
                     })}
                   </>
-                )}
+                ) : searchDocs === 2 ? (
+                  <>
+                    {' '}
+                    {docsList?.map((data, i) => {
+                      return (
+                        <StTable
+                          key={data.id}
+                          onClick={() => {
+                            onDocumentHandle('detail', data.id);
+                          }}
+                        >
+                          <div>{data.id}</div>
+                          <div
+                            style={{
+                              textAlign: 'left',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                            }}
+                          >
+                            {data.title}
+                          </div>
+                          <div>{data.nickname}</div>
+                          <div>{data.createdAt.slice(0, -13)}</div>
+                          <div>{data.modifiedAt.slice(0, -13)}</div>
+                        </StTable>
+                      );
+                    })}
+                  </>
+                ) : null}
               </>
             ) : null}
           </StTbody>
@@ -132,7 +154,7 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
         <StPagination>
           <StChangePage
             onClick={() => {
-              onPageChangeHandler('Previous');
+              onFetchDocs('Recent');
             }}
           >
             {' '}
@@ -141,7 +163,7 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
           <div style={{ margin: '0px 20px 0 20px' }} />
           <StChangePage
             onClick={() => {
-              onPageChangeHandler('Recent');
+              onFetchDocs('Previous');
             }}
           >
             {' '}

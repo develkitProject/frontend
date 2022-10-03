@@ -9,9 +9,7 @@ import {
   useUpdateNoticeMutation,
 } from '../../../redux/modules/notices';
 
-function NoticeEdit({ stateId, onNoticeHandle }) {
-  const params = useParams();
-  const id = Number(params.id);
+function NoticeEdit({ stateId, onNoticeHandle, id }) {
   const { data, error, isLoading } = useGetNoticeQuery(id);
   const noticeData = data?.data.filter((x) => x.id === stateId);
 

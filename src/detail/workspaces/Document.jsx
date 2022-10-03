@@ -8,9 +8,7 @@ import DocsEdit from './document/DocsEdit';
 import DocDetail from './document/DocDetail';
 import BlackButton from '../../common/elements/BlackButton';
 
-export default function Document() {
-  const params = useParams();
-  const id = Number(params.id);
+export default function Document({ id }) {
   const [tab, setTab] = useState('list');
   const [stateId, setStateId] = useState(0);
   const { data, error, isLoading, refetch } = useGetDocQuery(id);
@@ -58,11 +56,12 @@ export default function Document() {
             data={data}
             document={doc}
             onDocumentHandle={onDocumentHandle}
+            id={id}
           />
         </>
       ) : tab === 'write' ? (
         <>
-          <DocsWrite onDocumentHandle={onDocumentHandle} />
+          <DocsWrite onDocumentHandle={onDocumentHandle} id={id} />
         </>
       ) : tab === 'detail' ? (
         <>
@@ -70,11 +69,16 @@ export default function Document() {
             doc={doc}
             stateId={stateId}
             onDocumentHandle={onDocumentHandle}
+            id={id}
           />
         </>
       ) : tab === 'edit' ? (
         <>
-          <DocsEdit stateId={stateId} onDocumentHandle={onDocumentHandle} />
+          <DocsEdit
+            stateId={stateId}
+            onDocumentHandle={onDocumentHandle}
+            id={id}
+          />
         </>
       ) : null}
     </>

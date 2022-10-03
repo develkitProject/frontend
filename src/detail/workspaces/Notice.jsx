@@ -7,9 +7,7 @@ import BlackButton from '../../common/elements/BlackButton';
 import NoticeWrite from './notice/NoticeWrite';
 import NoticeEdit from './notice/NoticeEdit';
 
-export default function Notice({ user }) {
-  const params = useParams();
-  const id = Number(params.id);
+export default function Notice({ user, id }) {
   const [tab, setTab] = useState('list');
   const [stateId, setStateId] = useState(0);
   const { data, error, isLoading, refetch } = useGetNoticeQuery(id);
@@ -63,11 +61,15 @@ export default function Notice({ user }) {
         </div>
       ) : tab === 'write' ? (
         <div>
-          <NoticeWrite onNoticeHandle={onNoticeHandle} />
+          <NoticeWrite onNoticeHandle={onNoticeHandle} id={id} />
         </div>
       ) : tab === 'edit' ? (
         <div>
-          <NoticeEdit onNoticeHandle={onNoticeHandle} stateId={stateId} />
+          <NoticeEdit
+            onNoticeHandle={onNoticeHandle}
+            stateId={stateId}
+            id={id}
+          />
         </div>
       ) : null}
     </>

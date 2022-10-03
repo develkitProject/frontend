@@ -16,7 +16,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const textRef = useRef(null);
   const target = useRef(null);
   const { isOpen, toggle } = useModalOverlay();
-  const { data, isLoading } = useGetChatMessagesQuery(id);
+  const { data, isLoading, refetch } = useGetChatMessagesQuery(id);
   const [nextgetChat] = useNextChatMessagesMutation();
   const [Opacity, setOpacity] = useState(false);
   const [minimum, setMinimum] = useState(false);
@@ -81,7 +81,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
 
   useEffect(() => {
     setChatMessages(messageList);
-    // refetch();
+    refetch();
   }, [messageList]);
 
   // eslint-disable-next-line consistent-return

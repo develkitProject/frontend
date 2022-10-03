@@ -25,7 +25,6 @@ function Header({ path, setPath }) {
 
   const isLogin = useSelector(selectIsLoginModal);
   const isSignUp = useSelector(selectIsSignUpModal);
-
   const { data } = useGetUserInfoQuery();
 
   useEffect(() => {
@@ -101,13 +100,6 @@ function Header({ path, setPath }) {
             >
               Project
             </StMenuName>
-            {/* <StMenuName
-              onClick={() => {
-                alert('기능 준비중입니다!');
-              }}
-            >
-              Community
-            </StMenuName> */}
             <StMenuName
               onClick={() => {
                 onMoveHandle(4, '/faq');

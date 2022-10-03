@@ -4,7 +4,7 @@ import BlackButton from '../../common/elements/BlackButton';
 import Address from './address/Address';
 import InvitationCodeModal from '../../common/modal/InvitationCodeModal';
 
-export default function Contacts({ id, data_1, error_1, isLoading_1 }) {
+export default function Contacts({ data_1, error_1, isLoading_1 }) {
   const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
 
   const handleClose = () => {
