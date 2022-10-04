@@ -38,13 +38,13 @@ function Address({ data_1, error_1, isLoading_1 }) {
 export default Address;
 
 const StWrapper = styled.div`
-  width: 100%;
-  /* min-height: 40vh; */
+  width: 95%;
   margin-top: 30px;
-  margin-left: 40px;
+  margin-left: 30px;
+  margin-right: 30px;
   margin-bottom: 10vh;
   display: flex;
-  /* justify-content: space-evenly; */
+  justify-content: space-evenly;
   color: #333333;
   font-size: 16px;
   letter-spacing: -0.8px;

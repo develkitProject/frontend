@@ -11,29 +11,23 @@ export default function TopButton() {
     });
   };
 
-  useEffect(() => {
-    const handleShowButton = () => {
-      if (window.scrollY > 500) {
-        setShowButton(true);
-      } else {
-        setShowButton(false);
-      }
-    };
-    window.addEventListener('scroll', handleShowButton);
-    return () => {
-      window.removeEventListener('scroll', handleShowButton);
-    };
-  }, []);
+  const handleShowButton = () => {
+    if (window.scrollY > 500) {
+      setShowButton(true);
+    } else {
+      setShowButton(false);
+    }
 
-  return (
-    <div>
-      {showButton ? (
+    window.addEventListener('scroll', handleShowButton);
+
+    return (
+      showButton && (
         <ScrollButton id="top" onClick={scrollToTop} type="button">
           TOP
         </ScrollButton>
-      ) : null}
-    </div>
-  );
+      )
+    );
+  };
 }
 
 const ScrollButton = styled.button`
