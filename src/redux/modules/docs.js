@@ -18,7 +18,7 @@ export const docsApi = coreApi.injectEndpoints({
       providesTags: ['Docs'],
     }),
 
-    getDocList: builder.query({
+    getDocList: builder.mutation({
       query: (list) => {
         return {
           url: `/api/workspaces/${list.id}/docs?cursorId=${list.cursorId}&direction=${list.direction}`,
@@ -26,7 +26,7 @@ export const docsApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      providesTags: ['Docs'],
+      invalidatesTags: ['Docs'],
     }),
 
     getDocDetail: builder.query({
@@ -37,7 +37,7 @@ export const docsApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      providesTags: ['Docs'],
+      invalidatesTags: ['Docs'],
     }),
 
     addDoc: builder.mutation({
@@ -108,7 +108,7 @@ export const docsApi = coreApi.injectEndpoints({
 
 export const {
   useGetDocQuery,
-  useGetDocListQuery,
+  useGetDocListMutation,
   useGetDocDetailQuery,
   useAddDocMutation,
   useAddDocImageMutation,

@@ -42,11 +42,16 @@ export default function WorkspaceDetailPage() {
     error: error_1,
   } = useGetMemberListQuery(id);
   const { data: userData } = useGetUserInfoQuery();
-
+  const [tab, setTab] = useState('list');
+  const [stateId, setStateId] = useState(0);
   const title = data?.data.workspaces.title;
   const [isOpen, setIsOpen] = useState(true);
   const cookie = getCookieToken();
   const user = userData?.data;
+  const onDocumentHandle = (tabpoint, docsid) => {
+    setTab(tabpoint);
+    setStateId(docsid);
+  };
 
   useEffect(() => {
     if (!cookie) {
@@ -88,6 +93,10 @@ export default function WorkspaceDetailPage() {
           data_1={data_1}
           error_1={error_1}
           isLoading_1={isLoading_1}
+          tab={tab}
+          setTab={setTab}
+          stateId={stateId}
+          onDocumentHandle={onDocumentHandle}
           // refetch={refetch}
         />
       </S.Projects>

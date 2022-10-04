@@ -38,7 +38,6 @@ function Login() {
 
   const handleLogin = () => {
     window.location.href = KAKAO_AUTH_URL;
-    console.log('s');
   };
 
   return (

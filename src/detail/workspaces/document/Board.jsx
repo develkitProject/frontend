@@ -1,49 +1,66 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  useGetDocListQuery,
+  useGetDocListMutation,
   useGetDocSearchQuery,
 } from '../../../redux/modules/docs';
 import SearchBar from '../../../components/SearchBar';
 
-function Board({ onDocumentHandle, error, isLoading, data, id }) {
+function Board({ onDocumentHandle, error, isLoading, data, id, refetch }) {
   // eslint-disable-next-line prefer-const
 
   const [state, setState] = useState(null);
+  const [prevDocs, setPrevDocs] = useState([]);
   const [searchDocs, setSearchDocs] = useState(0);
-  const [pageList, setPageList] = useState({
-    id: null,
-    cursorId: null,
-    direction: null,
-  });
   const { data: searchData } = useGetDocSearchQuery(state, {
     // eslint-disable-next-line eqeqeq
     skip: state == undefined,
   });
-  const { data: listData } = useGetDocListQuery(pageList, {
-    // eslint-disable-next-line eqeqeq
-    skip: pageList.cursorId == undefined,
-  });
+  const [getDocList] = useGetDocListMutation();
+
   const doc = data?.data;
   const docs = searchData?.data;
-  const docsList = listData?.data;
+
+  useEffect(() => {
+    setPrevDocs(doc);
+  }, []);
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   const onSearchHandle = (obj) => {
     setSearchDocs(1);
     setState(obj);
   };
-  console.log(pageList);
 
-  const onFetchDocs = async (direction) => {
-    const lastdoc = doc[doc.length - 1];
-    const list = {
-      id,
-      cursorId: lastdoc.id,
-      direction,
-    };
-    setPageList(list);
-    setSearchDocs(2);
-    // const
+  const onFetchDocs = (direction) => {
+    const lastDoc = prevDocs[prevDocs.length - 1];
+    const firstDoc = prevDocs[0];
+    let list;
+    if (direction === 'Recent') {
+      list = {
+        id,
+        cursorId: firstDoc.id,
+        direction: 'Recent',
+      };
+    } else {
+      list = {
+        id,
+        cursorId: lastDoc.id,
+        direction: 'Previous',
+      };
+    }
+    getDocList(list).then((res) => {
+      if (direction === 'Recent' && res.data.data.length === 0) {
+        alert('첫페이지입니다!');
+      } else if (direction === 'Previous' && res.data.data.length === 0)
+        alert('마지막페이지입니다!');
+      else {
+        setPrevDocs(() => res.data.data);
+      }
+    });
+    // setSearchDocs(2);
   };
 
   return (
@@ -69,7 +86,7 @@ function Board({ onDocumentHandle, error, isLoading, data, id }) {
               <>
                 {searchDocs === 0 ? (
                   <>
-                    {doc?.map((data, i) => {
+                    {prevDocs?.map((data, i) => {
                       return (
                         <StTable
                           key={data.id}
@@ -97,34 +114,6 @@ function Board({ onDocumentHandle, error, isLoading, data, id }) {
                 ) : searchDocs === 1 ? (
                   <>
                     {docs?.map((data, i) => {
-                      return (
-                        <StTable
-                          key={data.id}
-                          onClick={() => {
-                            onDocumentHandle('detail', data.id);
-                          }}
-                        >
-                          <div>{data.id}</div>
-                          <div
-                            style={{
-                              textAlign: 'left',
-                              overflow: 'hidden',
-                              textOverflow: 'ellipsis',
-                            }}
-                          >
-                            {data.title}
-                          </div>
-                          <div>{data.nickname}</div>
-                          <div>{data.createdAt.slice(0, -13)}</div>
-                          <div>{data.modifiedAt.slice(0, -13)}</div>
-                        </StTable>
-                      );
-                    })}
-                  </>
-                ) : searchDocs === 2 ? (
-                  <>
-                    {' '}
-                    {docsList?.map((data, i) => {
                       return (
                         <StTable
                           key={data.id}

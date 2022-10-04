@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useGetDocQuery } from '../../redux/modules/docs';
 import Board from './document/Board';
@@ -8,16 +7,19 @@ import DocsEdit from './document/DocsEdit';
 import DocDetail from './document/DocDetail';
 import BlackButton from '../../common/elements/BlackButton';
 
-export default function Document({ id }) {
-  const [tab, setTab] = useState('list');
-  const [stateId, setStateId] = useState(0);
+export default function Document({
+  id,
+  setTab,
+  tab,
+  stateId,
+  onDocumentHandle,
+}) {
   const { data, error, isLoading, refetch } = useGetDocQuery(id);
   const doc = data?.data;
 
-  const onDocumentHandle = (tabpoint, docsid) => {
-    setTab(tabpoint);
-    setStateId(docsid);
-  };
+  useEffect(() => {
+    setTab('list');
+  }, []);
 
   return (
     <>
@@ -56,6 +58,7 @@ export default function Document({ id }) {
             data={data}
             document={doc}
             onDocumentHandle={onDocumentHandle}
+            refetch={refetch}
             id={id}
           />
         </>
