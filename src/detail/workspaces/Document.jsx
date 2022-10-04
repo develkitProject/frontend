@@ -7,19 +7,9 @@ import DocsEdit from './document/DocsEdit';
 import DocDetail from './document/DocDetail';
 import BlackButton from '../../common/elements/BlackButton';
 
-export default function Document({
-  id,
-  setTab,
-  tab,
-  stateId,
-  onDocumentHandle,
-}) {
+export default function Document({ id, tab, stateId, onDocumentHandle }) {
   const { data, error, isLoading, refetch } = useGetDocQuery(id);
   const doc = data?.data;
-
-  useEffect(() => {
-    setTab('list');
-  }, []);
 
   return (
     <>

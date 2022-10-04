@@ -32,7 +32,9 @@ stompClient.connect(headers, () => {});
 stompClient.debug = () => {};
 
 export default function WorkspaceDetailPage() {
-  const { onClickMenu, menu } = useChangeMenu();
+  const { onClickMenu, menu, tab, onDocumentHandle, setTab, stateId } =
+    useChangeMenu();
+
   const navigate = useNavigate();
   const id = Number(useParams().id);
   const { data, isLoading } = useGetMainWorkSpacesQuery(id);
@@ -42,16 +44,10 @@ export default function WorkspaceDetailPage() {
     error: error_1,
   } = useGetMemberListQuery(id);
   const { data: userData } = useGetUserInfoQuery();
-  const [tab, setTab] = useState('list');
-  const [stateId, setStateId] = useState(0);
   const title = data?.data.workspaces.title;
   const [isOpen, setIsOpen] = useState(true);
   const cookie = getCookieToken();
   const user = userData?.data;
-  const onDocumentHandle = (tabpoint, docsid) => {
-    setTab(tabpoint);
-    setStateId(docsid);
-  };
 
   useEffect(() => {
     if (!cookie) {
@@ -96,6 +92,7 @@ export default function WorkspaceDetailPage() {
           tab={tab}
           setTab={setTab}
           stateId={stateId}
+          onClickMenu={onClickMenu}
           onDocumentHandle={onDocumentHandle}
           // refetch={refetch}
         />

@@ -6,7 +6,7 @@ import { useGetNoticeQuery } from '../../redux/modules/notices';
 import BlackButton from '../../common/elements/BlackButton';
 import InvitationCodeModal from '../../common/modal/InvitationCodeModal';
 
-export default function Home({ id, data, onDocumentHandle }) {
+export default function Home({ id, data, onClickMenu }) {
   const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
 
@@ -114,9 +114,11 @@ export default function Home({ id, data, onDocumentHandle }) {
                   return (
                     <StTable
                       key={data.id}
-                      // onClick={() => {
-                      //   onDocumentHandle('detail', data.id);
-                      // }}
+                      onClick={onClickMenu({
+                        key: 'document',
+                        tab: 'detail',
+                        docsId: data.id,
+                      })}
                     >
                       <StDataDiv>{data.nickname}</StDataDiv>
                       <StDataDiv>{data.title}</StDataDiv>
