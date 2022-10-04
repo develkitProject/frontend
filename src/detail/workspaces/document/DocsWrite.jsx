@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useState, useReducer, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import Editor from '../../../components/Editor';
 import Circle from '../../../common/elements/Circle';
@@ -60,7 +60,7 @@ function DocsWrite({ onDocumentHandle, id }) {
 
   if (isLoading)
     return (
-      <Overlay style={{ overflowY: 'hidden' }}>
+      <Overlay>
         <Circle />
         <span style={{ color: 'white', fontSize: '20px', marginTop: '10px' }}>
           문서 업로드중입니다!
