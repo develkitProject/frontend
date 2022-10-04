@@ -25,7 +25,9 @@ function Header({ path, setPath }) {
 
   const isLogin = useSelector(selectIsLoginModal);
   const isSignUp = useSelector(selectIsSignUpModal);
-  const { data } = useGetUserInfoQuery();
+  const { data } = useGetUserInfoQuery(cookies, {
+    skip: cookies === undefined,
+  });
 
   useEffect(() => {
     if (location === '/') {
