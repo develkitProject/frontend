@@ -189,7 +189,19 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
               <span style={{ color: 'black' }}>{data.message}</span>
             </MessageBox>
           </div>
-          <TimeSpan>{data.createdAt.split(' ')[1].slice(0, -7)}</TimeSpan>
+          <div>
+            <TimeSpan
+              style={{
+                marginBottom: '5px',
+                fontSize: '12px',
+                color: '#a1a1a1',
+                letterSpacing: '-0.5px',
+              }}
+            >
+              {data.createdAt.split(' ')[0].substr(5, 9)}
+            </TimeSpan>
+            <TimeSpan>{data.createdAt.split(' ')[1].slice(0, -7)}</TimeSpan>
+          </div>
         </Stdiv>
       );
     });

@@ -50,5 +50,5 @@ const ScrollButton = styled.button`
   bottom: 2rem;
   right: 2rem;
   font-weight: 700;
-  z-index: 3;
+  z-index: 999;
 `;

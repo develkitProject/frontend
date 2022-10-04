@@ -32,6 +32,7 @@ function Board({ onDocumentHandle, error, isLoading, data, id }) {
     setSearchDocs(1);
     setState(obj);
   };
+  console.log(pageList);
 
   const onFetchDocs = async (direction) => {
     const lastdoc = doc[doc.length - 1];
@@ -42,7 +43,9 @@ function Board({ onDocumentHandle, error, isLoading, data, id }) {
     };
     setPageList(list);
     setSearchDocs(2);
+    // const
   };
+
   return (
     <>
       <StWrapper>
