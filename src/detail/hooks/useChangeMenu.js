@@ -5,8 +5,9 @@ export default function useChangeMenu() {
   const [tab, setTab] = useState('list');
   const [stateId, setStateId] = useState(0);
 
-  const onDocumentHandle = (tabpoint, docsid) => {
+  const onDocumentHandle = (tabpoint, docsId) => {
     setTab(tabpoint);
+    setStateId(docsId);
   };
 
   const onClickMenu =
