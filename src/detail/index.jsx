@@ -34,7 +34,6 @@ stompClient.debug = () => {};
 export default function WorkspaceDetailPage() {
   const { onClickMenu, menu, tab, onDocumentHandle, setTab, stateId } =
     useChangeMenu();
-
   const navigate = useNavigate();
   const id = Number(useParams().id);
   const { data, isLoading } = useGetMainWorkSpacesQuery(id);

@@ -108,30 +108,34 @@ function Board({ onDocumentHandle, error, isLoading, data, id, refetch }) {
                   </>
                 ) : searchDocs === 1 ? (
                   <>
-                    {docs?.map((data, i) => {
-                      return (
-                        <StTable
-                          key={data.id}
-                          onClick={() => {
-                            onDocumentHandle('detail', data.id);
-                          }}
-                        >
-                          <div>{data.id}</div>
-                          <div
-                            style={{
-                              textAlign: 'left',
-                              overflow: 'hidden',
-                              textOverflow: 'ellipsis',
+                    {docs?.length !== 0 ? (
+                      docs?.map((data, i) => {
+                        return (
+                          <StTable
+                            key={data.id}
+                            onClick={() => {
+                              onDocumentHandle('detail', data.id);
                             }}
                           >
-                            {data.title}
-                          </div>
-                          <div>{data.nickname}</div>
-                          <div>{data.createdAt.slice(0, -13)}</div>
-                          <div>{data.modifiedAt.slice(0, -13)}</div>
-                        </StTable>
-                      );
-                    })}
+                            <div>{data.id}</div>
+                            <div
+                              style={{
+                                textAlign: 'left',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                              }}
+                            >
+                              {data.title}
+                            </div>
+                            <div>{data.nickname}</div>
+                            <div>{data.createdAt.slice(0, -13)}</div>
+                            <div>{data.modifiedAt.slice(0, -13)}</div>
+                          </StTable>
+                        );
+                      })
+                    ) : (
+                      <div>검색결과가 없습니다</div>
+                    )}
                   </>
                 ) : null}
               </>

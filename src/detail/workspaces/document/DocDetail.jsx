@@ -22,7 +22,7 @@ function DocDetail({ stateId, onDocumentHandle, id }) {
   const urls = data?.data.fileUrls;
 
   const [deleteDocument] = useDeleteDocMutation({ workspaces, docid });
-
+  console.log(data?.data);
   const deleteDoc = () => {
     if (window.confirm('정말 지우시겠습니까?')) {
       deleteDocument({ workspaces, docid });

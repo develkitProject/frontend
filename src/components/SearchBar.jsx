@@ -20,18 +20,20 @@ function SearchBar({ id, onSearchHandle, setSearchDocs }) {
   };
   const handleClick = () => {
     const obj = { id, type, keyword, field };
-    onSearchHandle(obj);
+    if (keyword.trim() !== '') {
+      onSearchHandle(obj);
+    }
+  };
+
+  const onReset = () => {
+    setKeyword('');
   };
 
   const onKeyDown = (e) => {
     if (e.key === 'Enter') {
-      if (keyword !== '') {
-        handleClick();
-        e.target.value = '';
-      } else {
-        setSearchDocs(0);
-      }
+      handleClick();
     }
+    onReset();
   };
 
   return (
