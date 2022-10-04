@@ -23,11 +23,7 @@ function Board({ onDocumentHandle, error, isLoading, data, id, refetch }) {
 
   useEffect(() => {
     setPrevDocs(doc);
-  }, []);
-
-  useEffect(() => {
-    refetch();
-  }, []);
+  }, [data]);
 
   const onSearchHandle = (obj) => {
     setSearchDocs(1);
@@ -60,7 +56,6 @@ function Board({ onDocumentHandle, error, isLoading, data, id, refetch }) {
         setPrevDocs(() => res.data.data);
       }
     });
-    // setSearchDocs(2);
   };
 
   return (

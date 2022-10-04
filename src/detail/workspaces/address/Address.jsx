@@ -38,30 +38,25 @@ function Address({ data_1, error_1, isLoading_1 }) {
 export default Address;
 
 const StWrapper = styled.div`
-  width: 95%;
-  margin-top: 30px;
-  margin-left: 30px;
-  margin-right: 30px;
-  margin-bottom: 10vh;
+  width: 100%;
+  min-width: 1000px;
   display: flex;
   justify-content: space-evenly;
   color: #333333;
   font-size: 16px;
   letter-spacing: -0.8px;
+  align-items: center;
   flex-wrap: wrap;
 `;
 
 const StAddressContainer = styled.div`
   margin: 1%;
   width: 40%;
-  min-width: 430px;
+  min-width: 400px;
   height: 140px;
   background-color: #eef8f8;
   display: flex;
-  align-items: center;
-  @media only screen and (max-width: 783px) {
-    width: 200px;
-  }
+  box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.1), 0 4px 20px 0 rgba(0, 0, 0, 0.1);
 `;
 
 const StAddress = styled.div`

@@ -45,20 +45,6 @@ const StIntroContainer = styled.div`
   border-bottom: solid 1px #c6c6c6;
 `;
 
-const StButton = styled.button`
-  background-color: #000000;
-  width: 150px;
-  height: 35px;
-  border-radius: 8px;
-  border: 0px;
-  color: #fff;
-  text-align: center;
-  font-size: 0.9rem;
-  font-weight: 500;
-  /* letter-spacing: -1px; */
-  cursor: pointer;
-`;
-
 const StTitle = styled.p`
   color: #333333;
   text-align: left;

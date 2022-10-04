@@ -96,12 +96,11 @@ function NoticeList({
 export default NoticeList;
 
 const StWrapper = styled.div`
-  width: 96%;
-  margin-left: 18px;
-  margin-top: 20px;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: center;
+  justify-content: center;
   color: #333333;
   letter-spacing: -0.8px;
 `;
@@ -112,8 +111,10 @@ const StNoticeContainer = styled.div`
   flex-direction: column;
   align-items: left;
   background-color: #eef8f8;
-  margin: 5px;
+  margin-top: 10px;
   margin-bottom: 15px;
+  width: 90%;
+  box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.1), 0 4px 20px 0 rgba(0, 0, 0, 0.1);
 `;
 
 const StNoticeBox = styled.div`

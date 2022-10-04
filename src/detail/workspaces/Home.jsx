@@ -189,6 +189,7 @@ const StNoticeContainer = styled.div`
   align-items: left;
   background-color: #eef8f8;
   margin-top: 10px;
+  box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.1), 0 4px 20px 0 rgba(0, 0, 0, 0.1);
 `;
 
 const StNoticeBox = styled.div`

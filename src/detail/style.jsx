@@ -11,7 +11,8 @@ export const Wrapper = styled.section`
 `;
 
 export const Projects = styled.div`
-  width: 65%;
+  width: 70%;
+  min-width: 1000px;
   /* height: 90vh; */
   margin-left: 50px;
   margin-top: 60px;
