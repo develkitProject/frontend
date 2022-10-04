@@ -4,6 +4,14 @@ import styled from 'styled-components';
 export default function TopButton() {
   const [showButton, setShowButton] = useState(false);
 
+  const handleShowButton = () => {
+    if (window.scrollY > 500) {
+      setShowButton(true);
+    } else {
+      setShowButton(false);
+    }
+  };
+
   const scrollToTop = () => {
     window.scroll({
       top: 0,
@@ -11,23 +19,18 @@ export default function TopButton() {
     });
   };
 
-  const handleShowButton = () => {
-    if (window.scrollY > 500) {
-      setShowButton(true);
-    } else {
-      setShowButton(false);
-    }
+  window.addEventListener('scroll', handleShowButton);
 
-    window.addEventListener('scroll', handleShowButton);
-
-    return (
-      showButton && (
-        <ScrollButton id="top" onClick={scrollToTop} type="button">
-          TOP
-        </ScrollButton>
-      )
-    );
-  };
+  return (
+    <ScrollButton
+      id="top"
+      style={{ display: showButton ? 'inline' : 'none' }}
+      onClick={scrollToTop}
+      type="button"
+    >
+      TOP
+    </ScrollButton>
+  );
 }
 
 const ScrollButton = styled.button`
