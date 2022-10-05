@@ -49,7 +49,6 @@ function Address({ data_1, error_1, isLoading_1 }) {
       }
     });
   };
-
   return (
     <StWrapper>
       <StAddressDiv>

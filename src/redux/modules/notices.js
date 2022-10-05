@@ -18,7 +18,16 @@ export const noticesApi = coreApi.injectEndpoints({
       },
       providesTags: ['Notice'],
     }),
-
+    getNextNotice: builder.mutation({
+      query: (obj) => {
+        return {
+          url: `/api/workspaces/${obj.id}/notice?cursorId=${obj.cursorId}`,
+          method: 'GET',
+          headers,
+        };
+      },
+      providesTags: ['Notice'],
+    }),
     addNotice: builder.mutation({
       query: (notice) => {
         return {
@@ -62,4 +71,5 @@ export const {
   useGetNoticeQuery,
   useUpdateNoticeMutation,
   useDeleteNoticeMutation,
+  useGetNextNoticeMutation,
 } = noticesApi;

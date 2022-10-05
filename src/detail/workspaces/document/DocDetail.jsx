@@ -21,7 +21,7 @@ function DocDetail({ stateId, onDocumentHandle, id }) {
   const files = data?.data.fileNames;
   const urls = data?.data.fileUrls;
   const userNickname = userData?.data.nickname;
-  const createUsername = document?.username;
+  const createUsername = document?.nickname;
 
   const [deleteDocument] = useDeleteDocMutation();
   const deleteDoc = () => {
