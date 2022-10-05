@@ -3,6 +3,8 @@ import React, { useState, useRef } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { useParams } from 'react-router-dom';
 import Editor from '../../../components/Editor';
+import { Overlay } from './DocsWrite';
+import Circle from '../../../common/elements/Circle';
 import {
   useGetDocDetailQuery,
   useUpdateDocMutation,
@@ -18,7 +20,7 @@ function DocsEdit({ stateId, onDocumentHandle, id }) {
   const document = data?.data;
   const [title, setTitle] = useState(document?.title);
   const [content, setContent] = useState(document?.content);
-  const [editDoc] = useUpdateDocMutation();
+  const [editDoc, { isLoading }] = useUpdateDocMutation();
   const [newFile, setNewFile] = useState([]);
   const files = document.fileNames;
   const urls = document.fileUrls;
@@ -29,7 +31,9 @@ function DocsEdit({ stateId, onDocumentHandle, id }) {
 
   const onFileChange = (e) => {
     const file = e.target.files[0];
-    setNewFile([...newFile, file]);
+    if (file !== undefined) {
+      setNewFile((newFile) => [...newFile, file]);
+    }
   };
 
   const onDeleteFile = (name) => {
@@ -68,16 +72,28 @@ function DocsEdit({ stateId, onDocumentHandle, id }) {
         'data',
         new Blob([JSON.stringify(data)], { type: 'application/json' }),
       );
-      editDoc(formData);
-      // eslint-disable-next-line no-alert
-      window.alert('문서가 수정되었습니다');
-      onDocumentHandle('list');
+      editDoc(formData).then((res) => {
+        if (res.data) {
+          window.alert('문서가 수정되었습니다');
+          onDocumentHandle('list');
+        } else {
+          window.alert('파일용량은 총 30MB를 넘을 수 없습니다!');
+        }
+      });
     } else {
       // eslint-disable-next-line no-alert
       window.alert('제목과 내용을 모두 채워주세요!');
     }
   };
-
+  if (isLoading)
+    return (
+      <Overlay>
+        <Circle />
+        <span style={{ color: 'white', fontSize: '20px', marginTop: '10px' }}>
+          문서 업로드중입니다!
+        </span>
+      </Overlay>
+    );
   return (
     <StEditorContainer>
       <StInputTitle

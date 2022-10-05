@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import styled from 'styled-components';
 import velkit2 from '../../../common/img/velkit2.png';
 import velkit3 from '../../../common/img/velkit3.png';
+import useModalOverlay from '../../../account/signup/hooks/useModalOverlay';
 import {
   useGetSchedulesQuery,
   useDeleteSchedulesMutation,
@@ -17,16 +18,13 @@ export default function CalendarApp({ id }) {
   const { data } = useGetSchedulesQuery(id);
   const [deleteSchedules] = useDeleteSchedulesMutation();
   const dataArr = data?.data;
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, open, close } = useModalOverlay();
+  // const [isOpen, setIsOpen] = useState(false);
   const [detailData, setDetailData] = useState([]);
-
-  const openDetail = () => {
-    setIsOpen(true);
-  };
 
   const saveStateDetail = (content) => {
     setDetailData(content);
-    openDetail();
+    open();
   };
   const onDeleteSchedules = (schedulesId) => {
     const obj = {
@@ -39,7 +37,7 @@ export default function CalendarApp({ id }) {
       deleteSchedules(obj);
       // eslint-disable-next-line no-alert
       alert('일정이 삭제되었습니다!');
-      setIsOpen(false);
+      close();
     }
   };
 
@@ -109,7 +107,7 @@ export default function CalendarApp({ id }) {
               onDeleteSchedules(detailData.id);
             }}
           >
-            x
+            삭제
           </StDeleteButton>
           <Velkit />
         </StDetail>
@@ -146,6 +144,9 @@ const StMark = styled.div`
   font-size: 15px;
   text-align: center;
   overflow: hidden;
+  &:hover {
+    background-color: #055869;
+  }
 `;
 
 const StDetail = styled.div`
@@ -170,6 +171,7 @@ const StDeleteButton = styled.span`
   top: 10px;
   right: 20px;
   cursor: pointer;
+  font-size: 15px;
 `;
 
 const StDate = styled.span`

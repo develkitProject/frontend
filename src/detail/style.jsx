@@ -78,6 +78,7 @@ export const StButton = styled.button`
   background-color: #00a99d;
   margin-left: 3%;
   width: 95%;
+  min-width: 120px;
   height: 40px;
   border-radius: 8px;
   border: 0px;

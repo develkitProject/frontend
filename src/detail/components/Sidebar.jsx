@@ -46,7 +46,7 @@ const menuData = [
   },
 ];
 
-export default function Sidebar({ onClickMenu, handleClick, menu }) {
+export default function Sidebar({ onClickMenu, menu, toggle }) {
   return (
     <S.StWrapper>
       {menuData.map(({ key, title, subItem, icon, tab }) => (
@@ -104,7 +104,7 @@ export default function Sidebar({ onClickMenu, handleClick, menu }) {
         </div>
       ))}
       <div>
-        <S.StButton onClick={handleClick}>
+        <S.StButton onClick={toggle}>
           <S.MenuIcon src={chat} />
           채팅하기
         </S.StButton>
