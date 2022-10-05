@@ -6,7 +6,7 @@ import {
 } from '../../../redux/modules/docs';
 import SearchBar from '../../../components/SearchBar';
 
-function Board({ onDocumentHandle, error, isLoading, data, id, refetch }) {
+function Board({ onDocumentHandle, error, isLoading, data, id }) {
   // eslint-disable-next-line prefer-const
 
   const [state, setState] = useState(null);

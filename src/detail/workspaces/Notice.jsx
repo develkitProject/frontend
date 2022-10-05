@@ -50,13 +50,13 @@ export default function Notice({ user, id }) {
       {tab === 'list' ? (
         <div>
           <NoticeList
-            error={error}
-            isLoading={isLoading}
-            data={data}
             notice={notice}
             onNoticeHandle={onNoticeHandle}
             user={user}
             id={id}
+            data={data}
+            error={error}
+            isLoading={isLoading}
           />
         </div>
       ) : tab === 'write' ? (
