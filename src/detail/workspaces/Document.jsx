@@ -59,7 +59,6 @@ export default function Document({ id, tab, stateId, onDocumentHandle }) {
       ) : tab === 'detail' ? (
         <>
           <DocDetail
-            doc={doc}
             stateId={stateId}
             onDocumentHandle={onDocumentHandle}
             id={id}

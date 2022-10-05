@@ -6,6 +6,7 @@ import {
   useGetMainWorkSpacesQuery,
   useGetMemberListQuery,
 } from '../redux/modules/workspaces';
+import useModalOverlay from '../account/signup/hooks/useModalOverlay';
 import { useGetUserInfoQuery } from '../redux/modules/user';
 import Sidebar from './components/Sidebar';
 import useChangeMenu from './hooks/useChangeMenu';
@@ -42,9 +43,9 @@ export default function WorkspaceDetailPage() {
     isLoading: isLoading_1,
     error: error_1,
   } = useGetMemberListQuery(id);
+  const { isOpen, toggle } = useModalOverlay();
   const { data: userData } = useGetUserInfoQuery();
   const title = data?.data.workspaces.title;
-  const [isOpen, setIsOpen] = useState(true);
   const cookie = getCookieToken();
   const user = userData?.data;
 
@@ -56,10 +57,6 @@ export default function WorkspaceDetailPage() {
   }, [cookie, navigate]);
 
   const messageBoxRef = useRef();
-
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-  };
 
   //---------------------------------------------------------------
 
@@ -75,11 +72,7 @@ export default function WorkspaceDetailPage() {
   // if (!(data_1 && user)) return null;
   return (
     <S.Wrapper>
-      <Sidebar
-        onClickMenu={onClickMenu}
-        handleClick={handleClick}
-        menu={menu}
-      />
+      <Sidebar onClickMenu={onClickMenu} toggle={toggle} menu={menu} />
       <S.Projects>
         <SelectWorkspaceMenu
           id={id}
@@ -97,7 +90,7 @@ export default function WorkspaceDetailPage() {
         />
       </S.Projects>
 
-      {isOpen && (
+      {!isOpen && (
         <Chatting
           id={id}
           title={title}

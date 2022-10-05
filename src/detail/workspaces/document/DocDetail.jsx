@@ -1,37 +1,37 @@
 /* eslint-disable react/no-array-index-key */
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import {
   useDeleteDocMutation,
   useGetDocDetailQuery,
 } from '../../../redux/modules/docs';
+import { useGetUserInfoQuery } from '../../../redux/modules/user';
 import BlackButton from '../../../common/elements/BlackButton';
 import DocsEdit from './DocsEdit';
 
 function DocDetail({ stateId, onDocumentHandle, id }) {
-  const workspaces = id;
   const docid = stateId;
   const { data } = useGetDocDetailQuery({
-    workspaces,
+    workspaces: id,
     docid,
   });
+  const { data: userData } = useGetUserInfoQuery();
   const document = data?.data;
   const readMember = data?.data.readMember;
   const files = data?.data.fileNames;
   const urls = data?.data.fileUrls;
+  const userNickname = userData?.data.nickname;
+  const createUsername = document?.username;
+  console.log(userData?.data.username);
+  console.log(document?.username);
 
-  const [deleteDocument] = useDeleteDocMutation({ workspaces, docid });
-  console.log(data?.data);
+  const [deleteDocument] = useDeleteDocMutation();
   const deleteDoc = () => {
     if (window.confirm('정말 지우시겠습니까?')) {
-      deleteDocument({ workspaces, docid });
+      deleteDocument({ workspaces: id, docid });
       onDocumentHandle('list');
     }
   };
-
-  // const a = ['a', 'b', 'c', 'd'];
-  // const b = ['e', 'f', 'g', 'h'];
 
   const nameUrl = files?.map((elem, idx) => {
     return { key_1: elem, key_2: urls[idx] };
@@ -64,26 +64,23 @@ function DocDetail({ stateId, onDocumentHandle, id }) {
                   >
                     수정
                   </StDetail>
-                  <StVerticalBar>|</StVerticalBar>
-                  <StDetail onClick={deleteDoc} style={{ cursor: 'pointer' }}>
-                    삭제
-                  </StDetail>
+                  {userNickname === createUsername ? (
+                    <>
+                      <StVerticalBar>|</StVerticalBar>
+                      <StDetail
+                        onClick={deleteDoc}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        삭제
+                      </StDetail>
+                    </>
+                  ) : null}
                 </StInfoContainer>
-                <div
-                  style={{
-                    display: 'flex',
-                    backgroundColor: '#EEF8F8',
-                    borderRadius: '15px',
-                    padding: '20px',
-                    width: '35%',
-                    minWidth: '250px',
-                  }}
-                >
+                <FileDiv>
                   <StDetail
                     style={{
                       color: 'black',
-                      verticalAlign: 'middle',
-                      minWidth: '70px',
+                      marginLeft: '-5px',
                     }}
                   >
                     첨부파일:{' '}
@@ -94,7 +91,7 @@ function DocDetail({ stateId, onDocumentHandle, id }) {
                       style={{
                         color: 'black',
                         cursor: 'auto',
-                        marginLeft: '20px',
+                        marginLeft: '10px',
                       }}
                     >
                       첨부파일이 없습니다.
@@ -108,11 +105,20 @@ function DocDetail({ stateId, onDocumentHandle, id }) {
                     >
                       {nameUrl?.map((file, i) => {
                         return (
-                          <div key={i} style={{ margin: '0px 0px 5px 20px' }}>
+                          <div
+                            key={i}
+                            style={{
+                              overflow: 'hidden',
+                              width: '240px',
+                              textOverflow: 'ellipsis',
+                              wordWrap: 'break-word',
+                            }}
+                          >
                             <FileName
                               href={file.key_2}
                               target="_blank"
                               download={file.key_1}
+                              style={{ marginLeft: '10px' }}
                             >
                               {file.key_1}
                             </FileName>
@@ -121,7 +127,7 @@ function DocDetail({ stateId, onDocumentHandle, id }) {
                       })}
                     </div>
                   )}
-                </div>
+                </FileDiv>
               </StIntroContainer>
               <StContentContainer>
                 <StContent>
@@ -153,10 +159,17 @@ function DocDetail({ stateId, onDocumentHandle, id }) {
                     >
                       수정
                     </StDetail>
-                    <StVerticalBar>|</StVerticalBar>
-                    <StDetail onClick={deleteDoc} style={{ fontWeight: '500' }}>
-                      삭제
-                    </StDetail>
+                    {userNickname === createUsername ? (
+                      <>
+                        <StVerticalBar>|</StVerticalBar>
+                        <StDetail
+                          onClick={deleteDoc}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          삭제
+                        </StDetail>
+                      </>
+                    ) : null}
                   </StSideMent>
                 </StInfoContainer>
 
@@ -331,6 +344,17 @@ const FileName = styled.a`
   font-size: 18px;
   cursor: pointer;
   text-decoration: none;
+`;
+
+const FileDiv = styled.div`
+  display: flex;
+  background-color: #eef8f8;
+  border-radius: 15px;
+  padding: 20px;
+  width: 300px;
+  overflow: hidden;
+  text-overflow: break-word;
+  white-space: nowrap;
 `;
 
 // const a = ['a', 'b', 'c', 'd']

@@ -26,7 +26,7 @@ export const docsApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      invalidatesTags: ['Docs'],
+      providesTags: ['Docs'],
     }),
 
     getDocDetail: builder.query({
@@ -37,7 +37,7 @@ export const docsApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      invalidatesTags: ['Docs'],
+      providesTags: ['Docs'],
     }),
 
     addDoc: builder.mutation({
