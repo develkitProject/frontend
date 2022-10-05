@@ -23,8 +23,12 @@ function DocsWrite({ onDocumentHandle, id }) {
 
   const onFileChange = (e) => {
     const file = e.target.files[0];
-    setNewFile((newFile) => [...newFile, file]);
+    if (file !== undefined) {
+      setNewFile((newFile) => [...newFile, file]);
+    }
   };
+  // const newArr = newFile.filter((element, i) => element !== undefined);
+  // setNewFile((newFile) => [...newFile, newArr]);
 
   const onDeleteFile = (name) => {
     setNewFile(newFile?.filter((file) => file.name !== name));
@@ -50,7 +54,7 @@ function DocsWrite({ onDocumentHandle, id }) {
           window.alert('문서가 등록되었습니다');
           onDocumentHandle('list');
         } else {
-          window.alert('파일용량은 30MB를 넘을 수 없습니다!');
+          window.alert('파일용량은 총 30MB를 넘을 수 없습니다!');
         }
       });
     } else {
@@ -240,7 +244,7 @@ const DeleteButton = styled.button`
   font-size: 15px;
 `;
 
-const Overlay = styled.div`
+export const Overlay = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;

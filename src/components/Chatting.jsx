@@ -57,12 +57,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
     if (prevHeight !== messageBoxRef.current.scrollHeight) {
       await nextgetChat(obj).then((res) =>
         // eslint-disable-next-line no-unsafe-optional-chaining
-        setTimeout(() =>
-          setChatMessages((chatMessages) => [
-            ...chatMessages,
-            ...res.data.data,
-          ]),
-        ),
+        setChatMessages((chatMessages) => [...chatMessages, ...res.data.data]),
       );
       setPrevHeight(messageBoxRef.current.scrollHeight);
     }

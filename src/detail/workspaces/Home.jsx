@@ -8,13 +8,11 @@ import InvitationCodeModal from '../../common/modal/InvitationCodeModal';
 
 export default function Home({ id, data, onClickMenu }) {
   const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(true);
 
   const { data: docdata } = useGetDocQuery(id);
   const { data: noticedata } = useGetNoticeQuery(id);
-  const firstNotice = noticedata?.data[noticedata.data.length - 1];
+  const firstNotice = data?.data.notices;
   const fourDocuments = docdata?.data?.slice(0, 4);
-
   const title = data?.data?.workspaces?.title;
   const content = data?.data.workspaces.content;
 
@@ -23,9 +21,6 @@ export default function Home({ id, data, onClickMenu }) {
   };
   const handleClick = () => {
     setInvitationCodeOpen(!invitationCodeOpen);
-  };
-  const clickHandler = () => {
-    setIsOpen(!isOpen);
   };
 
   return (
@@ -90,6 +85,10 @@ export default function Home({ id, data, onClickMenu }) {
             </StNoticeBox>
           </StNoticeContainer>
         </StNoticeWrapper>
+      </div>
+      <div>
+        <StScheduleWrapper>
+          <StScheduleTitle fontColor="#333333">문서 및 계획</StScheduleTitle>
 
         <StDocumentWrapper>
           <StDocumentTitle onClick={clickHandler} fontColor="#333333">
