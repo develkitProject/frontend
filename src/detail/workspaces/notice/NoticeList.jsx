@@ -1,19 +1,26 @@
 import styled from 'styled-components';
-import React, { useState, useEffect } from 'react';
-import { useDeleteNoticeMutation } from '../../../redux/modules/notices';
-import { getCookieToken } from '../../../Cookie';
+import React, { useRef, useState, useEffect } from 'react';
+import {
+  useDeleteNoticeMutation,
+  useGetNextNoticeMutation,
+} from '../../../redux/modules/notices';
 
 function NoticeList({
   user,
-  error,
-  isLoading,
-  data,
-  notice,
   onNoticeHandle,
   id,
+  notice,
+  data,
+  error,
+  isLoading,
 }) {
+  const target = useRef(null);
   const userInfo = user?.username;
+
+  const [prevNotices, setPrevNotices] = useState(notice);
   const [deleteNotices] = useDeleteNoticeMutation();
+  const [getNextNotice] = useGetNextNoticeMutation();
+
   const deleteNotice = (dataId) => {
     const data = {
       id,
@@ -22,6 +29,42 @@ function NoticeList({
     if (window.confirm('정말 지우시겠습니까?')) {
       deleteNotices(data);
     }
+  };
+  useEffect(() => {
+    setPrevNotices(notice);
+  }, [data]);
+
+  useEffect(() => {
+    let observer;
+    if (target.current && !isLoading) {
+      observer = new IntersectionObserver(onIntersect);
+      observer.observe(target.current);
+    }
+    return () => observer && observer.disconnect();
+  }, [prevNotices]);
+
+  const onIntersect = (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          onFetchNotices();
+        }, 300);
+        // observer.observe(entry.target);
+      }
+    });
+  };
+
+  const onFetchNotices = async () => {
+    const last = prevNotices[prevNotices.length - 1];
+    const obj = {
+      cursorId: last.id,
+      id,
+    };
+    await getNextNotice(obj).then((res) => {
+      if (res?.data.data.length !== 0) {
+        setPrevNotices((prevNotices) => [...prevNotices, ...res.data.data]);
+      }
+    });
   };
 
   return (
@@ -33,7 +76,7 @@ function NoticeList({
           <>데이터를 불러오는 중입니다</>
         ) : data ? (
           <>
-            {notice?.map((data, i) => {
+            {prevNotices?.map((data, i) => {
               const writerInfo = data.username;
               return (
                 <StNoticeContainer key={data.id}>
@@ -87,7 +130,7 @@ function NoticeList({
             })}
           </>
         ) : null}
-        <div style={{ marginTop: '5%' }} />
+        <div ref={target} style={{ marginTop: '5%' }} />
       </StWrapper>
     </>
   );

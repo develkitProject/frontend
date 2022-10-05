@@ -4,8 +4,6 @@ import styled from 'styled-components';
 function Address({ data_1, error_1, isLoading_1 }) {
   const member = data_1?.data;
 
-  console.log(data_1);
-
   return (
     <StWrapper>
       {error_1 ? (
