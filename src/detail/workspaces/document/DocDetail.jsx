@@ -22,8 +22,6 @@ function DocDetail({ stateId, onDocumentHandle, id }) {
   const urls = data?.data.fileUrls;
   const userNickname = userData?.data.nickname;
   const createUsername = document?.username;
-  console.log(userData?.data.username);
-  console.log(document?.username);
 
   const [deleteDocument] = useDeleteDocMutation();
   const deleteDoc = () => {

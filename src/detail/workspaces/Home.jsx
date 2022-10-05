@@ -85,15 +85,9 @@ export default function Home({ id, data, onClickMenu }) {
             </StNoticeBox>
           </StNoticeContainer>
         </StNoticeWrapper>
-      </div>
-      <div>
-        <StScheduleWrapper>
-          <StScheduleTitle fontColor="#333333">문서 및 계획</StScheduleTitle>
 
         <StDocumentWrapper>
-          <StDocumentTitle onClick={clickHandler} fontColor="#333333">
-            문서 및 계획
-          </StDocumentTitle>
+          <StDocumentTitle fontColor="#333333">문서 및 계획</StDocumentTitle>
           <StTableContainer>
             <StThead>
               <StTable style={{ height: '50px', borderBottom: 'none' }}>
