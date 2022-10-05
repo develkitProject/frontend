@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
+import { createBrowserHistory } from 'history';
 import {
   useGetMainWorkSpacesQuery,
   useGetMemberListQuery,
@@ -31,7 +32,28 @@ stompClient.connect(headers, () => {});
 
 stompClient.debug = () => {};
 
+// 뒤로가기 막기
+
 export default function WorkspaceDetailPage() {
+  const history = createBrowserHistory();
+  useEffect(() => {
+    const preventGoBack = () => {
+      console.log('막기확인');
+      // if (
+      //   window.confirm('워크스페이스 밖으로 이동 됩니다. 정말 나가시겠습니까?')
+      // ) {
+      //   navigate('/workspace');
+      // }
+    };
+
+    const unPreventGoBack = history.listen(({ action }) => {
+      if (action === 'POP') {
+        preventGoBack();
+      }
+    });
+    return unPreventGoBack;
+  });
+
   const { onClickMenu, menu, tab, onDocumentHandle, setTab, stateId } =
     useChangeMenu();
   const navigate = useNavigate();

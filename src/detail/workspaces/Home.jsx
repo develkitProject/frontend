@@ -42,7 +42,7 @@ export default function Home({ id, data, onClickMenu }) {
       {invitationCodeOpen ? (
         <InvitationCodeModal onClose={handleClose} />
       ) : null}
-      <div>
+      <StWrapper>
         <StNoticeWrapper>
           <StTitle
             style={{ marginBottom: '15px' }}
@@ -90,13 +90,11 @@ export default function Home({ id, data, onClickMenu }) {
             </StNoticeBox>
           </StNoticeContainer>
         </StNoticeWrapper>
-      </div>
-      <div>
-        <StScheduleWrapper>
-          <StScheduleTitle onClick={clickHandler} fontColor="#333333">
-            문서 및 계획
-          </StScheduleTitle>
 
+        <StDocumentWrapper>
+          <StDocumentTitle onClick={clickHandler} fontColor="#333333">
+            문서 및 계획
+          </StDocumentTitle>
           <StTableContainer>
             <StThead>
               <StTable style={{ height: '50px', borderBottom: 'none' }}>
@@ -107,7 +105,6 @@ export default function Home({ id, data, onClickMenu }) {
                 <div>수정일</div>
               </StTable>
             </StThead>
-
             <StTbody>
               {fourDocuments?.length !== 0 ? (
                 fourDocuments?.map((data) => {
@@ -133,13 +130,11 @@ export default function Home({ id, data, onClickMenu }) {
               )}
             </StTbody>
           </StTableContainer>
-        </StScheduleWrapper>
-      </div>
+        </StDocumentWrapper>
+      </StWrapper>
     </>
   );
 }
-
-// 예시
 
 const StIntroContainer = styled.div`
   margin-left: 20px;
@@ -169,9 +164,17 @@ const StContent = styled.span`
   letter-spacing: -1px;
 `;
 
+const StWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
 const StNoticeWrapper = styled.div`
   width: 94%;
-  margin-left: 30px;
+  margin-left: 3%;
+  margin-right: 3%;
   margin-top: 35px;
   display: flex;
   flex-direction: column;
@@ -224,10 +227,11 @@ const StInfoDiv = styled.div`
   margin-top: 15px;
 `;
 
-const StScheduleWrapper = styled.div`
+const StDocumentWrapper = styled.div`
   width: 94%;
   /* min-height: 100px; */
-  margin-left: 30px;
+  margin-left: 3%;
+  margin-right: 3%;
   margin-top: 35px;
   margin-bottom: 20px;
   display: flex;
@@ -238,7 +242,7 @@ const StScheduleWrapper = styled.div`
   letter-spacing: -0.8px;
 `;
 
-const StScheduleTitle = styled.span`
+const StDocumentTitle = styled.span`
   color: ${(props) => props.fontColor};
   text-align: left;
   font-size: 20px;

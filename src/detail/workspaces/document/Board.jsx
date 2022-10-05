@@ -65,8 +65,8 @@ function Board({ onDocumentHandle, error, isLoading, data, id, refetch }) {
         <StTableContainer>
           <StThead>
             <StTable style={{ borderBottom: 'none' }}>
-              <div>No</div>
-              <div>업무명</div>
+              <div>No.</div>
+              <div>제목</div>
               <div>작성자</div>
               <div>등록일</div>
               <div>수정일</div>
@@ -174,9 +174,9 @@ function Board({ onDocumentHandle, error, isLoading, data, id, refetch }) {
 export default Board;
 
 const StWrapper = styled.div`
-  width: 96%;
-  /* min-height: 400px; */
-  margin-left: 20px;
+  width: 94%;
+  margin-left: 3%;
+  margin-right: 3%;
   margin-top: 30px;
   margin-bottom: 100px;
   display: flex;
@@ -186,7 +186,6 @@ const StWrapper = styled.div`
   color: #333333;
   font-size: 16px;
   letter-spacing: -0.8px;
-  /* position: absolute; */
 `;
 
 const StTitle = styled.p`
@@ -202,11 +201,10 @@ const StTableContainer = styled.div`
   width: 100%;
   align-items: left;
   position: relative;
-  //문서가 길어지면 안보이는 게 있어서 pagination이 필요함
 `;
 
 const StTable = styled.div`
-  grid-template-columns: 1fr 3fr 1fr 1fr 1fr;
+  grid-template-columns: 0.8fr 3.2fr 1fr 1fr 1fr;
   display: grid;
   border-bottom: 1px solid #c6c6c6;
 `;
@@ -224,7 +222,6 @@ const StThead = styled.div`
 `;
 
 const StTbody = styled.div`
-  /* height: 50px; */
   color: #333333;
   align-items: center;
   line-height: 50px;
