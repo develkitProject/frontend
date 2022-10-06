@@ -138,7 +138,7 @@ function Header({ path, setPath }) {
           </StDiv>
         ) : (
           <StDiv>
-            <StAlarmImg src={alarm} onClick={handleAlarm} />
+            {/* <StAlarmImg src={alarm} onClick={handleAlarm} /> */}
             <StProfileImg
               src={userData?.profileImageUrl}
               onClick={() => {

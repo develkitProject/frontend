@@ -20,7 +20,7 @@ function InvitationCodeModal({ onClose }) {
   const copyCode = async () => {
     try {
       await navigator.clipboard.writeText(invite_code).then(() => {
-        SweetAlertHook('success', '초대코드복사완료');
+        SweetAlertHook(2000, 'success', '초대코드복사완료');
         handleClose();
       });
     } catch (e) {
