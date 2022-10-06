@@ -4,6 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import Editor from '../../../components/Editor';
 import Circle from '../../../common/elements/Circle';
 import { useAddDocMutation } from '../../../redux/modules/docs';
+import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 
 function DocsWrite({ onDocumentHandle, id }) {
   const nameInput = useRef();
@@ -49,7 +50,7 @@ function DocsWrite({ onDocumentHandle, id }) {
       );
       await addDoc(formData, id).then((res) => {
         if (res.data) {
-          window.alert('문서가 등록되었습니다');
+          SweetAlertHook(2000, 'success', '문서가 등록되었습니다');
           onDocumentHandle('list');
         } else {
           window.alert('파일용량은 총 30MB를 넘을 수 없습니다!');

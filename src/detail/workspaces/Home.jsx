@@ -24,8 +24,6 @@ export default function Home({ id, data, onClickMenu }) {
     setInvitationCodeOpen(!invitationCodeOpen);
   };
 
-  console.log(firstNotice);
-
   return (
     <>
       <StIntroContainer>

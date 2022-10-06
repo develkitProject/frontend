@@ -4,6 +4,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useAddNoticeMutation } from '../../../redux/modules/notices';
 import NoticeEditor from './NoticeEditor';
+import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 
 function NoticeWrite({ onNoticeHandle, id }) {
   const [addNotice] = useAddNoticeMutation();
@@ -22,10 +23,10 @@ function NoticeWrite({ onNoticeHandle, id }) {
         content,
       };
       addNotice(notice);
-      window.alert('공지사항이 등록되었습니다');
+      SweetAlertHook(2000, 'success', '공지사항이 등록되었습니다');
       onNoticeHandle('list');
     } else {
-      window.alert('제목과 내용을 모두 채워주세요!');
+      SweetAlertHook(2000, 'error', '제목과 내용을 모두 채워주세요!');
     }
   };
 

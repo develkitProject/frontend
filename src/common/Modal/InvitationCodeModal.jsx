@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useGetInviteCodeQuery } from '../../redux/modules/workspaces';
 import useOutSideClick from '../hooks/useOutSideClick';
+import { SweetAlertHook } from '../elements/SweetAlert';
 
 function InvitationCodeModal({ onClose }) {
   const params = useParams();
@@ -19,11 +20,15 @@ function InvitationCodeModal({ onClose }) {
   const copyCode = async () => {
     try {
       await navigator.clipboard.writeText(invite_code).then(() => {
-        alert('코드를 복사했습니다.');
+        SweetAlertHook('success', '초대코드복사완료');
         handleClose();
       });
     } catch (e) {
-      alert('코드복사에러: 브라우저(IE지원불가)를 확인해주세요');
+      SweetAlertHook(
+        2000,
+        'error',
+        '코드복사에러: 브라우저(IE지원불가)를 확인해주세요',
+      );
     }
   };
 

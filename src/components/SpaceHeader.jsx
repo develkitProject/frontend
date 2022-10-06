@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import CodeConfirmModal from '../common/modal/CodeConfirmModal';
 import { getCookieToken } from '../Cookie';
 import { useAddWorkspaceCodeMutation } from '../redux/modules/workspaces';
+import { SweetAlertHook } from '../common/elements/SweetAlert';
 
 function SpaceHeader() {
   const headers = {
@@ -33,10 +34,10 @@ function SpaceHeader() {
           setSpaceData(response?.data?.data.workspaces);
         });
       } catch (error) {
-        alert('없는 코드입니다!');
+        SweetAlertHook(2000, 'error', '없는 코드입니다!');
       }
     } else {
-      window.alert('코드를 입력해주세요!');
+      SweetAlertHook(2000, 'error', '코드를 입력해주세요!');
     }
   };
 
