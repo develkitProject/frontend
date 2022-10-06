@@ -3,14 +3,15 @@ import React, { useState, useRef } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { useParams } from 'react-router-dom';
 import Editor from '../../../components/Editor';
+import { Overlay } from './DocsWrite';
+import Circle from '../../../common/elements/Circle';
 import {
   useGetDocDetailQuery,
   useUpdateDocMutation,
 } from '../../../redux/modules/docs';
+import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 
-function DocsEdit({ stateId, onDocumentHandle }) {
-  const params = useParams();
-  const id = Number(params.id);
+function DocsEdit({ stateId, onDocumentHandle, id }) {
   const docid = stateId;
   const nameInput = useRef();
   const { data } = useGetDocDetailQuery({
@@ -20,7 +21,7 @@ function DocsEdit({ stateId, onDocumentHandle }) {
   const document = data?.data;
   const [title, setTitle] = useState(document?.title);
   const [content, setContent] = useState(document?.content);
-  const [editDoc] = useUpdateDocMutation();
+  const [editDoc, { isLoading }] = useUpdateDocMutation();
   const [newFile, setNewFile] = useState([]);
   const files = document.fileNames;
   const urls = document.fileUrls;
@@ -31,7 +32,9 @@ function DocsEdit({ stateId, onDocumentHandle }) {
 
   const onFileChange = (e) => {
     const file = e.target.files[0];
-    setNewFile([...newFile, file]);
+    if (file !== undefined) {
+      setNewFile((newFile) => [...newFile, file]);
+    }
   };
 
   const onDeleteFile = (name) => {
@@ -70,16 +73,28 @@ function DocsEdit({ stateId, onDocumentHandle }) {
         'data',
         new Blob([JSON.stringify(data)], { type: 'application/json' }),
       );
-      editDoc(formData);
-      // eslint-disable-next-line no-alert
-      window.alert('문서가 수정되었습니다');
-      onDocumentHandle('list');
+      editDoc(formData).then((res) => {
+        if (res.data) {
+          SweetAlertHook(2000, 'success', '문서가 수정되었습니다');
+          onDocumentHandle('list');
+        } else {
+          window.alert('파일용량은 총 30MB를 넘을 수 없습니다!');
+        }
+      });
     } else {
       // eslint-disable-next-line no-alert
-      window.alert('제목과 내용을 모두 채워주세요!');
+      SweetAlertHook(2000, 'error', '제목과 내용을 모두 채워주세요!');
     }
   };
-
+  if (isLoading)
+    return (
+      <Overlay>
+        <Circle />
+        <span style={{ color: 'white', fontSize: '20px', marginTop: '10px' }}>
+          문서 업로드중입니다!
+        </span>
+      </Overlay>
+    );
   return (
     <StEditorContainer>
       <StInputTitle
@@ -93,9 +108,7 @@ function DocsEdit({ stateId, onDocumentHandle }) {
       <EditorBlock>
         <div
           style={{
-            // width: '50%',
             display: 'flex',
-            // justifyContent: 'center',
             alignItems: 'center',
           }}
         >

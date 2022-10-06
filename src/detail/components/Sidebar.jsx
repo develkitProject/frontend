@@ -25,6 +25,7 @@ const menuData = [
       {
         key: 'document',
         subTitle: '문서',
+        tab: 'list',
       },
     ],
   },
@@ -45,15 +46,15 @@ const menuData = [
   },
 ];
 
-export default function Sidebar({ onClickMenu, handleClick, menu }) {
+export default function Sidebar({ onClickMenu, menu, toggle }) {
   return (
     <S.StWrapper>
-      {menuData.map(({ key, title, subItem, icon }) => (
+      {menuData.map(({ key, title, subItem, icon, tab }) => (
         <div key={key}>
           {!subItem ? (
             <S.StLabel
               role="presentation"
-              onClick={onClickMenu({ key })}
+              onClick={onClickMenu({ key, tab })}
               key={key}
               style={
                 key === menu
@@ -77,12 +78,11 @@ export default function Sidebar({ onClickMenu, handleClick, menu }) {
               >
                 <S.MenuIcon src={icon} />
                 {title}
-                {/* <Icon.ArrowDown /> */}
               </S.StLabel>
               <S.StMenuInDiv>
-                {subItem.map(({ key, subTitle }) => (
+                {subItem.map(({ key, subTitle, tab }) => (
                   <S.StMenuIn
-                    onClick={onClickMenu({ key })}
+                    onClick={onClickMenu({ key, tab })}
                     key={key}
                     style={
                       key === menu
@@ -103,7 +103,7 @@ export default function Sidebar({ onClickMenu, handleClick, menu }) {
         </div>
       ))}
       <div>
-        <S.StButton onClick={handleClick}>
+        <S.StButton onClick={toggle}>
           <S.MenuIcon src={chat} />
           채팅하기
         </S.StButton>

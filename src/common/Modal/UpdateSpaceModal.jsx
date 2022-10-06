@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import ModalContainer from './ModalContainer';
 import { StButton } from '../../account/login/style';
-import imgupload from '../img/imgupload.svg';
+import useChangeImage from '../../pages/mypage/hooks/useChangeImage';
 import CloseButton from '../elements/CloseButton';
 import {
   useGetWorkspaceInfoQuery,
@@ -21,16 +21,14 @@ function UpdateSpaceModal({ onClose }) {
   const params = useParams();
   const id = Number(params.id);
   const { data, error, isLoading } = useGetWorkspaceInfoQuery(id);
-
   const [updateWorkSpaces] = useUpdateWorkspaceInfoMutation(id);
+  const { onChangeImage, imageUrl } = useChangeImage();
 
   const preTitle = data?.data?.title;
   const preContent = data?.data?.content;
   const preImg = data?.data?.imageUrl;
 
   const imgRef = useRef('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [imgFile, setImgFile] = useState('');
 
   const [state, setState] = useReducer(reducer, {
     title: preTitle,
@@ -62,16 +60,6 @@ function UpdateSpaceModal({ onClose }) {
     } else {
       window.alert('프로젝트 제목과 소개를 모두 채워주세요!');
     }
-  };
-
-  const onChangeImage = () => {
-    const reader = new FileReader();
-    const file = imgRef?.current?.files[0];
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImageUrl(reader.result);
-      setImgFile(file);
-    };
   };
 
   return (
@@ -121,7 +109,9 @@ function UpdateSpaceModal({ onClose }) {
             id="upload-photo"
             name="upload-photo"
             type="file"
-            onChange={onChangeImage}
+            onChange={() => {
+              onChangeImage(imgRef);
+            }}
             ref={imgRef}
           />
         </ModalWrap>

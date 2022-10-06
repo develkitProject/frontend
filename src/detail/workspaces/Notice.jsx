@@ -6,10 +6,9 @@ import NoticeList from './notice/NoticeList';
 import BlackButton from '../../common/elements/BlackButton';
 import NoticeWrite from './notice/NoticeWrite';
 import NoticeEdit from './notice/NoticeEdit';
+import { StContent, StIntroContainer, StTitle } from '../style';
 
-export default function Notice({ user }) {
-  const params = useParams();
-  const id = Number(params.id);
+export default function Notice({ user, id }) {
   const [tab, setTab] = useState('list');
   const [stateId, setStateId] = useState(0);
   const { data, error, isLoading, refetch } = useGetNoticeQuery(id);
@@ -52,52 +51,28 @@ export default function Notice({ user }) {
       {tab === 'list' ? (
         <div>
           <NoticeList
-            error={error}
-            isLoading={isLoading}
-            data={data}
             notice={notice}
             onNoticeHandle={onNoticeHandle}
             user={user}
             id={id}
+            data={data}
+            error={error}
+            isLoading={isLoading}
           />
         </div>
       ) : tab === 'write' ? (
         <div>
-          <NoticeWrite onNoticeHandle={onNoticeHandle} />
+          <NoticeWrite onNoticeHandle={onNoticeHandle} id={id} />
         </div>
       ) : tab === 'edit' ? (
         <div>
-          <NoticeEdit onNoticeHandle={onNoticeHandle} stateId={stateId} />
+          <NoticeEdit
+            onNoticeHandle={onNoticeHandle}
+            stateId={stateId}
+            id={id}
+          />
         </div>
       ) : null}
     </>
   );
 }
-
-const StIntroContainer = styled.div`
-  margin-left: 20px;
-  margin-right: 20px;
-  min-height: 12vh;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: solid 1px #c6c6c6;
-`;
-
-const StTitle = styled.p`
-  color: #333333;
-  text-align: left;
-  font-size: 24px;
-  font-weight: bold;
-  letter-spacing: -1.5px;
-`;
-
-const StContent = styled.p`
-  margin-top: 10px;
-  color: #333333;
-  text-align: left;
-  font-size: 16px;
-  font-weight: normal;
-  letter-spacing: -1px;
-`;

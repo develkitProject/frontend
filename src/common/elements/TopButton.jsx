@@ -4,6 +4,14 @@ import styled from 'styled-components';
 export default function TopButton() {
   const [showButton, setShowButton] = useState(false);
 
+  const handleShowButton = () => {
+    if (window.scrollY > 500) {
+      setShowButton(true);
+    } else {
+      setShowButton(false);
+    }
+  };
+
   const scrollToTop = () => {
     window.scroll({
       top: 0,
@@ -11,28 +19,17 @@ export default function TopButton() {
     });
   };
 
-  useEffect(() => {
-    const handleShowButton = () => {
-      if (window.scrollY > 500) {
-        setShowButton(true);
-      } else {
-        setShowButton(false);
-      }
-    };
-    window.addEventListener('scroll', handleShowButton);
-    return () => {
-      window.removeEventListener('scroll', handleShowButton);
-    };
-  }, []);
+  window.addEventListener('scroll', handleShowButton);
 
   return (
-    <div>
-      {showButton ? (
-        <ScrollButton id="top" onClick={scrollToTop} type="button">
-          TOP
-        </ScrollButton>
-      ) : null}
-    </div>
+    <ScrollButton
+      id="top"
+      style={{ display: showButton ? 'inline' : 'none' }}
+      onClick={scrollToTop}
+      type="button"
+    >
+      TOP
+    </ScrollButton>
   );
 }
 
@@ -50,5 +47,5 @@ const ScrollButton = styled.button`
   bottom: 2rem;
   right: 2rem;
   font-weight: 700;
-  z-index: 3;
+  z-index: 999;
 `;

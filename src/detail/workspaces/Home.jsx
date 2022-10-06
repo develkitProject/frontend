@@ -4,17 +4,16 @@ import React, { useState, useEffect } from 'react';
 import { useGetDocQuery } from '../../redux/modules/docs';
 import { useGetNoticeQuery } from '../../redux/modules/notices';
 import BlackButton from '../../common/elements/BlackButton';
-import InvitationCodeModal from '../../common/Modal/InvitationCodeModal';
+import InvitationCodeModal from '../../common/modal/InvitationCodeModal';
+import { StContent, StIntroContainer, StTitle } from '../style';
 
-export default function Home({ id, data, onDocumentHandle }) {
+export default function Home({ id, data, onClickMenu }) {
   const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(true);
 
   const { data: docdata } = useGetDocQuery(id);
   const { data: noticedata } = useGetNoticeQuery(id);
-  const firstNotice = noticedata?.data[noticedata.data.length - 1];
+  const firstNotice = data?.data.notices;
   const fourDocuments = docdata?.data?.slice(0, 4);
-
   const title = data?.data?.workspaces?.title;
   const content = data?.data.workspaces.content;
 
@@ -24,15 +23,12 @@ export default function Home({ id, data, onDocumentHandle }) {
   const handleClick = () => {
     setInvitationCodeOpen(!invitationCodeOpen);
   };
-  const clickHandler = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
     <>
       <StIntroContainer>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <StTitle fontColor="#333333" fontSize="1.5rem">
+          <StTitle style={{ color: '#333333', fontSize: '1.5rem' }}>
             {title}
           </StTitle>
           <StContent>{content}</StContent>
@@ -42,28 +38,30 @@ export default function Home({ id, data, onDocumentHandle }) {
       {invitationCodeOpen ? (
         <InvitationCodeModal onClose={handleClose} />
       ) : null}
-      <div>
+      <StWrapper>
         <StNoticeWrapper>
           <StTitle
-            style={{ marginBottom: '15px' }}
-            fontColor="#333333"
-            fontSize="20px"
+            style={{ marginBottom: '15px', color: '#333333', fontSize: '20px' }}
           >
             필독
           </StTitle>
           <StNoticeContainer>
             <StTitle
-              style={{ marginBottom: '15px' }}
-              fontColor="#00a99d"
-              fontSize="20px"
+              style={{
+                marginBottom: '15px',
+                color: '#00a99d',
+                fontSize: '20px',
+              }}
             >
               공지사항
             </StTitle>
             <StNoticeBox>
               <StTitle
-                style={{ marginBottom: '15px' }}
-                fontColor="#333333"
-                fontSize="20px"
+                style={{
+                  marginBottom: '15px',
+                  color: '#333333',
+                  fontSize: '20px',
+                }}
               >
                 {firstNotice !== undefined ? (
                   firstNotice?.title
@@ -80,23 +78,19 @@ export default function Home({ id, data, onDocumentHandle }) {
               </StNoticeContent>
               <StInfoDiv>
                 <span>
-                  {firstNotice && firstNotice.nickname} &nbsp; &nbsp; &nbsp;
-                  &nbsp;{' '}
+                  {firstNotice && firstNotice.createdAt.slice(0, -13)}{' '}
                 </span>
                 <span>
-                  {firstNotice && firstNotice.createdAt.slice(0, -13)}{' '}
+                  {firstNotice && firstNotice.nickname} &nbsp; &nbsp; &nbsp;
+                  &nbsp;{' '}
                 </span>
               </StInfoDiv>
             </StNoticeBox>
           </StNoticeContainer>
         </StNoticeWrapper>
-      </div>
-      <div>
-        <StScheduleWrapper>
-          <StScheduleTitle onClick={clickHandler} fontColor="#333333">
-            문서 및 계획
-          </StScheduleTitle>
 
+        <StDocumentWrapper>
+          <StDocumentTitle fontColor="#333333">문서 및 계획</StDocumentTitle>
           <StTableContainer>
             <StThead>
               <StTable style={{ height: '50px', borderBottom: 'none' }}>
@@ -107,16 +101,17 @@ export default function Home({ id, data, onDocumentHandle }) {
                 <div>수정일</div>
               </StTable>
             </StThead>
-
             <StTbody>
               {fourDocuments?.length !== 0 ? (
                 fourDocuments?.map((data) => {
                   return (
                     <StTable
                       key={data.id}
-                      // onClick={() => {
-                      //   onDocumentHandle('detail', data.id);
-                      // }}
+                      onClick={onClickMenu({
+                        key: 'document',
+                        tab: 'detail',
+                        docsId: data.id,
+                      })}
                     >
                       <StDataDiv>{data.nickname}</StDataDiv>
                       <StDataDiv>{data.title}</StDataDiv>
@@ -131,45 +126,23 @@ export default function Home({ id, data, onDocumentHandle }) {
               )}
             </StTbody>
           </StTableContainer>
-        </StScheduleWrapper>
-      </div>
+        </StDocumentWrapper>
+      </StWrapper>
     </>
   );
 }
 
-// 예시
-
-const StIntroContainer = styled.div`
-  margin-left: 20px;
-  margin-right: 20px;
-  min-height: 12vh;
+const StWrapper = styled.div`
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
-  border-bottom: solid 1px #c6c6c6;
-`;
-
-const StTitle = styled.span`
-  color: ${(props) => props.fontColor};
-  text-align: left;
-  font-size: ${(props) => props.fontSize};
-  font-weight: bold;
-  letter-spacing: -1.5px;
-`;
-
-const StContent = styled.span`
-  margin-top: 10px;
-  color: #333333;
-  text-align: left;
-  font-size: 16px;
-  font-weight: normal;
-  letter-spacing: -1px;
 `;
 
 const StNoticeWrapper = styled.div`
   width: 94%;
-  margin-left: 30px;
+  margin-left: 3%;
+  margin-right: 3%;
   margin-top: 35px;
   display: flex;
   flex-direction: column;
@@ -187,6 +160,7 @@ const StNoticeContainer = styled.div`
   align-items: left;
   background-color: #eef8f8;
   margin-top: 10px;
+  box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.1), 0 4px 20px 0 rgba(0, 0, 0, 0.1);
 `;
 
 const StNoticeBox = styled.div`
@@ -221,10 +195,10 @@ const StInfoDiv = styled.div`
   margin-top: 15px;
 `;
 
-const StScheduleWrapper = styled.div`
+const StDocumentWrapper = styled.div`
   width: 94%;
-  /* min-height: 100px; */
-  margin-left: 30px;
+  margin-left: 3%;
+  margin-right: 3%;
   margin-top: 35px;
   margin-bottom: 20px;
   display: flex;
@@ -235,7 +209,7 @@ const StScheduleWrapper = styled.div`
   letter-spacing: -0.8px;
 `;
 
-const StScheduleTitle = styled.span`
+const StDocumentTitle = styled.span`
   color: ${(props) => props.fontColor};
   text-align: left;
   font-size: 20px;

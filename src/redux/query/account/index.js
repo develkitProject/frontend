@@ -1,6 +1,6 @@
 import { coreApi } from '../coreApi';
 
-export const signUpApi = coreApi.injectEndpoints({
+export const accountApi = coreApi.injectEndpoints({
   endpoints: (builder) => ({
     getEmailCheck: builder.mutation({
       query: ({ email }) => ({
@@ -18,7 +18,21 @@ export const signUpApi = coreApi.injectEndpoints({
         body,
       }),
     }),
+    getLogin: builder.mutation({
+      query: ({ username, password }) => ({
+        url: '/api/members/login',
+        method: 'POST',
+        body: {
+          username,
+          password,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetEmailCheckMutation, useGetSignUpMutation } = signUpApi;
+export const {
+  useGetEmailCheckMutation,
+  useGetSignUpMutation,
+  useGetLoginMutation,
+} = accountApi;

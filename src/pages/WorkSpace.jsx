@@ -5,12 +5,13 @@ import {
   useGetWorkspacesQuery,
   useDeleteWorkSpacesMutation,
 } from '../redux/modules/workspaces';
+import useModalOverlay from '../account/signup/hooks/useModalOverlay';
 import Circle from '../common/elements/Circle';
 import CreateCard from '../components/CreateCard';
 import SpaceCard from '../components/SpaceCard';
 import SpaceHeader from '../components/SpaceHeader';
-import WorkSpaceErrorModal from '../common/Modal/error';
-import CreateSpaceModal from '../common/Modal/CreateSpaceModal';
+import WorkSpaceErrorModal from '../common/modal/error';
+import CreateSpaceModal from '../common/modal/CreateSpaceModal';
 
 function WorkSpace() {
   const { data, error, isLoading, refetch } = useGetWorkspacesQuery();
@@ -19,11 +20,6 @@ function WorkSpace() {
   const cookies = getCookieToken();
   const [createOpen, setCreateOpen] = useState(false);
   const [deleteButton, setDeletebutton] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
 
   useEffect(() => {
     refetch();
@@ -32,7 +28,7 @@ function WorkSpace() {
   return (
     <>
       {!cookies ? (
-        <WorkSpaceErrorModal onClose={handleClose} open={isOpen} />
+        <WorkSpaceErrorModal />
       ) : (
         <StWrapper>
           <SpaceHeader />

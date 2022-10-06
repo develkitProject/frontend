@@ -1,19 +1,26 @@
 import styled from 'styled-components';
-import React, { useState, useEffect } from 'react';
-import { useDeleteNoticeMutation } from '../../../redux/modules/notices';
-import { getCookieToken } from '../../../Cookie';
+import React, { useRef, useState, useEffect } from 'react';
+import {
+  useDeleteNoticeMutation,
+  useGetNextNoticeMutation,
+} from '../../../redux/modules/notices';
 
 function NoticeList({
   user,
-  error,
-  isLoading,
-  data,
-  notice,
   onNoticeHandle,
   id,
+  notice,
+  data,
+  error,
+  isLoading,
 }) {
+  const target = useRef(null);
   const userInfo = user?.username;
+
+  const [prevNotices, setPrevNotices] = useState(notice);
   const [deleteNotices] = useDeleteNoticeMutation();
+  const [getNextNotice] = useGetNextNoticeMutation();
+
   const deleteNotice = (dataId) => {
     const data = {
       id,
@@ -22,6 +29,41 @@ function NoticeList({
     if (window.confirm('정말 지우시겠습니까?')) {
       deleteNotices(data);
     }
+  };
+  useEffect(() => {
+    setPrevNotices(notice);
+  }, [data]);
+
+  useEffect(() => {
+    let observer;
+    if (target.current && !isLoading) {
+      observer = new IntersectionObserver(onIntersect);
+      observer.observe(target.current);
+    }
+    return () => observer && observer.disconnect();
+  }, [prevNotices]);
+
+  const onIntersect = (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          onFetchNotices();
+        }, 300);
+      }
+    });
+  };
+
+  const onFetchNotices = async () => {
+    const last = prevNotices[prevNotices.length - 1];
+    const obj = {
+      cursorId: last.id,
+      id,
+    };
+    await getNextNotice(obj).then((res) => {
+      if (res?.data.data.length !== 0) {
+        setPrevNotices((prevNotices) => [...prevNotices, ...res.data.data]);
+      }
+    });
   };
 
   return (
@@ -33,11 +75,10 @@ function NoticeList({
           <>데이터를 불러오는 중입니다</>
         ) : data ? (
           <>
-            {notice?.map((data, i) => {
+            {prevNotices?.map((data, i) => {
               const writerInfo = data.username;
               return (
                 <StNoticeContainer key={data.id}>
-                  {/* <StTitle fontColor='#00a99d' style={{marginTop: "30px"}}>공지사항</StTitle> */}
                   <StNoticeBox>
                     <StInfoDiv>
                       <StProfileImg src={data.profileImage} />
@@ -87,7 +128,7 @@ function NoticeList({
             })}
           </>
         ) : null}
-        <div style={{ marginTop: '5%' }} />
+        <div ref={target} style={{ marginTop: '5%' }} />
       </StWrapper>
     </>
   );
@@ -96,12 +137,11 @@ function NoticeList({
 export default NoticeList;
 
 const StWrapper = styled.div`
-  width: 96%;
-  margin-left: 18px;
-  margin-top: 20px;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: center;
+  justify-content: center;
   color: #333333;
   letter-spacing: -0.8px;
 `;
@@ -112,8 +152,10 @@ const StNoticeContainer = styled.div`
   flex-direction: column;
   align-items: left;
   background-color: #eef8f8;
-  margin: 5px;
+  margin-top: 10px;
   margin-bottom: 15px;
+  width: 90%;
+  box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.1), 0 4px 20px 0 rgba(0, 0, 0, 0.1);
 `;
 
 const StNoticeBox = styled.div`

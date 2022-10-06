@@ -103,8 +103,20 @@ export const workspaceApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      providesTags: ['Notice'],
+      providesTags: ['Workspaces'],
     }),
+
+    getNextMember: builder.mutation({
+      query: (updateMember) => {
+        return {
+          url: `/api/workspaces/${updateMember.id}?cursorId=${updateMember.cursorId}`,
+          method: 'GET',
+          headers,
+        };
+      },
+      providesTags: ['Workspaces'],
+    }),
+
     getWorkSpacesJoin: builder.mutation({
       query: (id) => {
         return {
@@ -152,4 +164,5 @@ export const {
   useGetInviteCodeQuery,
   useGetInviteCodeInfoMutation,
   useGetWorkSpacesJoinMutation,
+  useGetNextMemberMutation,
 } = workspaceApi;

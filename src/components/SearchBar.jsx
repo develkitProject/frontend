@@ -20,17 +20,20 @@ function SearchBar({ id, onSearchHandle, setSearchDocs }) {
   };
   const handleClick = () => {
     const obj = { id, type, keyword, field };
-    onSearchHandle(obj);
+    if (keyword.trim() !== '') {
+      onSearchHandle(obj);
+    }
+  };
+
+  const onReset = () => {
+    setKeyword('');
   };
 
   const onKeyDown = (e) => {
     if (e.key === 'Enter') {
-      if (keyword !== '') {
-        handleClick();
-      } else {
-        setSearchDocs(0);
-      }
+      handleClick();
     }
+    onReset();
   };
 
   return (
@@ -104,7 +107,6 @@ const StImgBox = styled.div`
   background-color: #00a99d;
   width: 55px;
   height: 40px;
-  /* border: 1px solid #DCDCDC; */
   border-left: none;
   border-radius: 0 5px 5px 0;
   cursor: pointer;

@@ -31,37 +31,53 @@ function CodeConfirmModal({ onClose, spaceData }) {
   return (
     <Overlay>
       <ModalWrap ref={modalRef}>
-        <StMentDiv>
-          <StTitle fontWeight="bold" fontSize="24px" fontColor="#00a99d">
-            다음 프로젝트에 가입하시겠습니까?
+        {spaceData ? (
+          <>
+            <StMentDiv>
+              <StTitle fontWeight="bold" fontSize="24px" fontColor="#00a99d">
+                다음 프로젝트에 가입하시겠습니까?
+              </StTitle>
+              <StTitle fontSize="14px" fontColor="#626262">
+                아래 정보를 확인하시어 가입을 희망하시는 프로젝트가 맞는 경우
+                <span style={{ fontWeight: '600' }}> “가입하기” </span>버튼을
+                눌러주세요
+              </StTitle>
+            </StMentDiv>
+            <StInfoDiv>
+              <StImg img={spaceData.imageUrl} />
+              <StInfoDetail>
+                <StInfoMent>{spaceData.title}</StInfoMent>
+                <StInfoMent>{spaceData.content}</StInfoMent>
+                <StInfoMent>
+                  담당자: {spaceData.createdBy.nickname} (
+                  {spaceData.createdAt.split(' ')[0]})
+                </StInfoMent>
+              </StInfoDetail>
+            </StInfoDiv>
+            <StButtonBox>
+              <StButton
+                fontColor="white"
+                buttonColor="#00a99d"
+                onClick={onJoin}
+              >
+                가입하기
+              </StButton>
+              <StButton
+                fontColor="#424242"
+                buttonColor="#D9D9D9"
+                onClick={onClose}
+              >
+                취소
+              </StButton>
+            </StButtonBox>
+          </>
+        ) : (
+          <StTitle fontWeight="bold" fontSize="22px" fontColor="#00a99d">
+            잘못된 초대코드입니다.
+            <br />
+            초대코드를 다시 한번 확인해주세요
           </StTitle>
-          <StTitle fontSize="14px" fontColor="#626262">
-            아래 정보를 확인하시어 가입을 희망하시는 프로젝트가 맞는 경우
-            <span style={{ fontWeight: '600' }}> “가입하기” </span>버튼을
-            눌러주세요
-          </StTitle>
-        </StMentDiv>
-        <StInfoDiv>
-          <StImg img={spaceData.imageUrl} />
-          <StInfoDetail>
-            <StInfoMent>{spaceData.title}</StInfoMent>
-            <StInfoMent>{spaceData.content}</StInfoMent>
-            <StInfoMent>
-              담당자: {spaceData.createdBy.nickname} (
-              {spaceData.createdAt.split(' ')[0]})
-            </StInfoMent>
-          </StInfoDetail>
-        </StInfoDiv>
-        <StButtonBox>
-          <StButton fontColor="white" buttonColor="#00a99d" onClick={onJoin}>
-            가입하기
-          </StButton>
-          <StButton fontColor="#424242" buttonColor="#D9D9D9" onClick={onClose}>
-            취소
-          </StButton>
-        </StButtonBox>
-        {/* </>
-      ) : null} */}
+        )}
       </ModalWrap>
     </Overlay>
   );

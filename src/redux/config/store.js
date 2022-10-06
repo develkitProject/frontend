@@ -1,6 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-
-// import user from '../modules/user';
 import { coreApi } from '../query/coreApi';
 import { workspaceApi } from '../modules/workspaces';
 import global from '../modules/global';

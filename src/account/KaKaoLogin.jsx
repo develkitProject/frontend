@@ -24,12 +24,6 @@ function KakaoLogin() {
           <StIcon src={KakaoIcon} />
           카카오계정으로 로그인
         </StKaKaoLoginButton>
-
-        {/* <img
-          art='kakao login'
-          src='//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg'
-          style={{ width: '100%', height: '75%', cursor: 'pointer' }}
-        /> */}
       </div>
     </div>
   );

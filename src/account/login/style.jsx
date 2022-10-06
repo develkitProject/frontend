@@ -78,7 +78,6 @@ export const StButton = styled.button`
   border-radius: 8px;
   border: none;
   background-color: #00a99d;
-  /* margin-top: 15px; */
   color: white;
   font-weight: 500;
   font-size: 15px;

@@ -8,10 +8,9 @@ import {
   useGetNoticeQuery,
   useUpdateNoticeMutation,
 } from '../../../redux/modules/notices';
+import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 
-function NoticeEdit({ stateId, onNoticeHandle }) {
-  const params = useParams();
-  const id = Number(params.id);
+function NoticeEdit({ stateId, onNoticeHandle, id }) {
   const { data, error, isLoading } = useGetNoticeQuery(id);
   const noticeData = data?.data.filter((x) => x.id === stateId);
 
@@ -32,7 +31,7 @@ function NoticeEdit({ stateId, onNoticeHandle }) {
         content,
       };
       editNotice(notice);
-      window.alert('공지사항이 수정되었습니다');
+      SweetAlertHook(2000, 'success', '공지사항이 수정되었습니다');
       onNoticeHandle('list');
     } else {
       window.alert('제목과 내용을 모두 채워주세요!');

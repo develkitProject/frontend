@@ -2,11 +2,12 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import './Calendar.css'; // css import
+import './Calendar.css';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 import velkit2 from '../../../common/img/velkit2.png';
 import velkit3 from '../../../common/img/velkit3.png';
+import useModalOverlay from '../../../account/signup/hooks/useModalOverlay';
 import {
   useGetSchedulesQuery,
   useDeleteSchedulesMutation,
@@ -17,16 +18,12 @@ export default function CalendarApp({ id }) {
   const { data } = useGetSchedulesQuery(id);
   const [deleteSchedules] = useDeleteSchedulesMutation();
   const dataArr = data?.data;
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, open, close } = useModalOverlay();
   const [detailData, setDetailData] = useState([]);
-
-  const openDetail = () => {
-    setIsOpen(true);
-  };
 
   const saveStateDetail = (content) => {
     setDetailData(content);
-    openDetail();
+    open();
   };
   const onDeleteSchedules = (schedulesId) => {
     const obj = {
@@ -39,7 +36,7 @@ export default function CalendarApp({ id }) {
       deleteSchedules(obj);
       // eslint-disable-next-line no-alert
       alert('일정이 삭제되었습니다!');
-      setIsOpen(false);
+      close();
     }
   };
 
@@ -50,7 +47,6 @@ export default function CalendarApp({ id }) {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        // width: '100%',
         position: 'relative',
       }}
     >
@@ -58,7 +54,6 @@ export default function CalendarApp({ id }) {
         onChange={onChange}
         value={value}
         showNeighboringMonth={false}
-        // showNeighboringMonth={false}
         formatDay={(locale, date) =>
           date.toLocaleString('en', { day: 'numeric' })
         }
@@ -109,24 +104,11 @@ export default function CalendarApp({ id }) {
               onDeleteSchedules(detailData.id);
             }}
           >
-            x
+            삭제
           </StDeleteButton>
           <Velkit />
         </StDetail>
       )}
-      <div
-        style={{
-          position: 'absolute',
-          right: '40px',
-          color: 'rgb(51, 129, 123)',
-          fontWeight: '600',
-          fontSize: '20px',
-          bottom: '50px',
-        }}
-        className="text-gray-500 mt-4"
-      >
-        {dayjs(value).format('YYYY년 MM월 DD일')}
-      </div>
     </div>
   );
 }
@@ -146,6 +128,9 @@ const StMark = styled.div`
   font-size: 15px;
   text-align: center;
   overflow: hidden;
+  &:hover {
+    background-color: #055869;
+  }
 `;
 
 const StDetail = styled.div`
@@ -170,6 +155,7 @@ const StDeleteButton = styled.span`
   top: 10px;
   right: 20px;
   cursor: pointer;
+  font-size: 15px;
 `;
 
 const StDate = styled.span`
@@ -198,7 +184,6 @@ const Velkit = styled.div`
   height: 70px;
   background-image: url(${velkit3});
   background-size: 100% 100%;
-  /* transform: scaleX(-1); */
   position: absolute;
   right: -30px;
   bottom: -20px;
@@ -228,7 +213,6 @@ const StContentBox2 = styled.div`
   letter-spacing: -0.4px;
   display: flex;
   justify-content: center;
-  /* padding-left: 10px; */
   border-radius: 10px;
   align-items: center;
   font-size: 17px;

@@ -1,24 +1,62 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useGetDocSearchQuery } from '../../../redux/modules/docs';
+import React, { useState, useEffect } from 'react';
+import {
+  useGetDocListMutation,
+  useGetDocSearchQuery,
+} from '../../../redux/modules/docs';
 import SearchBar from '../../../components/SearchBar';
+import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 
-function Board({ onDocumentHandle, error, isLoading, data }) {
-  const params = useParams();
-  const id = Number(params.id);
-  const doc = data?.data;
+function Board({ onDocumentHandle, error, isLoading, data, id }) {
+  // eslint-disable-next-line prefer-const
+
   const [state, setState] = useState(null);
+  const [prevDocs, setPrevDocs] = useState([]);
+  const [searchDocs, setSearchDocs] = useState(0);
   const { data: searchData } = useGetDocSearchQuery(state, {
     // eslint-disable-next-line eqeqeq
     skip: state == undefined,
   });
+  const [getDocList] = useGetDocListMutation();
+
+  const doc = data?.data;
   const docs = searchData?.data;
-  const [searchDocs, setSearchDocs] = useState(0);
+
+  useEffect(() => {
+    setPrevDocs(doc);
+  }, [data]);
 
   const onSearchHandle = (obj) => {
     setSearchDocs(1);
     setState(obj);
+  };
+
+  const onFetchDocs = (direction) => {
+    const lastDoc = prevDocs[prevDocs.length - 1];
+    const firstDoc = prevDocs[0];
+    let list;
+    if (direction === 'Recent') {
+      list = {
+        id,
+        cursorId: firstDoc.id,
+        direction: 'Recent',
+      };
+    } else {
+      list = {
+        id,
+        cursorId: lastDoc.id,
+        direction: 'Previous',
+      };
+    }
+    getDocList(list).then((res) => {
+      if (direction === 'Recent' && res.data.data.length === 0) {
+        SweetAlertHook(2000, 'error', '첫페이지입니다!');
+      } else if (direction === 'Previous' && res.data.data.length === 0)
+        SweetAlertHook(2000, 'error', '마지막페이지입니다!');
+      else {
+        setPrevDocs(() => res.data.data);
+      }
+    });
   };
 
   return (
@@ -28,8 +66,8 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
         <StTableContainer>
           <StThead>
             <StTable style={{ borderBottom: 'none' }}>
-              <div>No</div>
-              <div>업무명</div>
+              <div>No.</div>
+              <div>제목</div>
               <div>작성자</div>
               <div>등록일</div>
               <div>수정일</div>
@@ -44,7 +82,7 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
               <>
                 {searchDocs === 0 ? (
                   <>
-                    {doc?.map((data, i) => {
+                    {prevDocs?.map((data, i) => {
                       return (
                         <StTable
                           key={data.id}
@@ -69,42 +107,60 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
                       );
                     })}
                   </>
-                ) : (
+                ) : searchDocs === 1 ? (
                   <>
-                    {docs?.map((data, i) => {
-                      return (
-                        <StTable
-                          key={data.id}
-                          onClick={() => {
-                            onDocumentHandle('detail', data.id);
-                          }}
-                        >
-                          <div>{data.id}</div>
-                          <div
-                            style={{
-                              textAlign: 'left',
-                              overflow: 'hidden',
-                              textOverflow: 'ellipsis',
+                    {docs?.length !== 0 ? (
+                      docs?.map((data, i) => {
+                        return (
+                          <StTable
+                            key={data.id}
+                            onClick={() => {
+                              onDocumentHandle('detail', data.id);
                             }}
                           >
-                            {data.title}
-                          </div>
-                          <div>{data.nickname}</div>
-                          <div>{data.createdAt.slice(0, -13)}</div>
-                          <div>{data.modifiedAt.slice(0, -13)}</div>
-                        </StTable>
-                      );
-                    })}
+                            <div>{data.id}</div>
+                            <div
+                              style={{
+                                textAlign: 'left',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                              }}
+                            >
+                              {data.title}
+                            </div>
+                            <div>{data.nickname}</div>
+                            <div>{data.createdAt.slice(0, -13)}</div>
+                            <div>{data.modifiedAt.slice(0, -13)}</div>
+                          </StTable>
+                        );
+                      })
+                    ) : (
+                      <div>검색결과가 없습니다</div>
+                    )}
                   </>
-                )}
+                ) : null}
               </>
             ) : null}
           </StTbody>
         </StTableContainer>
         <StPagination>
-          <StChangePage> ◀ 이전 </StChangePage>
+          <StChangePage
+            onClick={() => {
+              onFetchDocs('Recent');
+            }}
+          >
+            {' '}
+            ◀ 이전{' '}
+          </StChangePage>
           <div style={{ margin: '0px 20px 0 20px' }} />
-          <StChangePage> 다음 ▶</StChangePage>
+          <StChangePage
+            onClick={() => {
+              onFetchDocs('Previous');
+            }}
+          >
+            {' '}
+            다음 ▶
+          </StChangePage>
         </StPagination>
       </StWrapper>
       <SearchBar
@@ -119,9 +175,9 @@ function Board({ onDocumentHandle, error, isLoading, data }) {
 export default Board;
 
 const StWrapper = styled.div`
-  width: 96%;
-  /* min-height: 400px; */
-  margin-left: 20px;
+  width: 94%;
+  margin-left: 3%;
+  margin-right: 3%;
   margin-top: 30px;
   margin-bottom: 100px;
   display: flex;
@@ -131,7 +187,6 @@ const StWrapper = styled.div`
   color: #333333;
   font-size: 16px;
   letter-spacing: -0.8px;
-  /* position: absolute; */
 `;
 
 const StTitle = styled.p`
@@ -147,11 +202,10 @@ const StTableContainer = styled.div`
   width: 100%;
   align-items: left;
   position: relative;
-  //문서가 길어지면 안보이는 게 있어서 pagination이 필요함
 `;
 
 const StTable = styled.div`
-  grid-template-columns: 1fr 3fr 1fr 1fr 1fr;
+  grid-template-columns: 0.8fr 3.2fr 1fr 1fr 1fr;
   display: grid;
   border-bottom: 1px solid #c6c6c6;
 `;
@@ -169,7 +223,6 @@ const StThead = styled.div`
 `;
 
 const StTbody = styled.div`
-  /* height: 50px; */
   color: #333333;
   align-items: center;
   line-height: 50px;

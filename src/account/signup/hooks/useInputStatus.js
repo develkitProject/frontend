@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useGetEmailCheckMutation } from '../../../redux/query/signup';
+import { useGetEmailCheckMutation } from '../../../redux/query/account';
 
 const emailCheckReg =
-  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+  /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 const passwordCheckReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
 
 export default function useInputStatus({ signUpInputs }) {
@@ -37,18 +37,22 @@ export default function useInputStatus({ signUpInputs }) {
 
   useEffect(() => {
     if (email.length < 4) return;
-    getEmailCheck({ email });
-    if (!emailCheckReg.test(email)) {
-      setErrorStatus({ ...errorStatus, isEmail: true });
-      setSuccessStatus({ ...successStatus, isEmail: false });
-    } else {
-      setErrorStatus({ ...errorStatus, isEmail: false });
-      setSuccessStatus({ ...successStatus, isEmail: true });
-    }
+    getEmailCheck({ email }).then((res) => {
+      if (!emailCheckReg.test(email)) {
+        setErrorStatus({ ...errorStatus, isEmail: true });
+        setSuccessStatus({ ...successStatus, isEmail: false });
+      } else if (emailCheckReg.test(email) && !res.data.success) {
+        setErrorStatus({ ...errorStatus, isEmail: true });
+        setSuccessStatus({ ...successStatus, isEmail: false });
+      } else if (emailCheckReg.test(email) && res.data.success) {
+        setErrorStatus({ ...errorStatus, isEmail: false });
+        setSuccessStatus({ ...successStatus, isEmail: true });
+      }
+    });
   }, [email]);
 
   useEffect(() => {
-    if (password.length >= 3)
+    if (password.length >= 5) {
       if (passwordCheckReg.test(password)) {
         setErrorStatus({ ...errorStatus, isPassword: false });
         setSuccessStatus({ ...successStatus, isPassword: true });
@@ -56,6 +60,10 @@ export default function useInputStatus({ signUpInputs }) {
         setErrorStatus({ ...errorStatus, isPassword: true });
         setSuccessStatus({ ...successStatus, isPassword: false });
       }
+    } else {
+      setErrorStatus({ ...errorStatus, isPassword: null });
+      setSuccessStatus({ ...successStatus, isPassword: null });
+    }
   }, [password]);
 
   useEffect(() => {

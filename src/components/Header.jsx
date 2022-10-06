@@ -6,14 +6,15 @@ import { getCookieToken, removeCookieToken } from '../Cookie';
 import alarm from '../common/img/alarm.svg';
 import logo from '../common/img/logo.png';
 import Login from '../account/login';
-import SignupModal from '../account/signup/SignupModal';
-import MyProfileModal from '../common/Modal/MyProfileModal';
+import SignupModal from '../account/signup';
+import MyProfileModal from '../common/modal/MyProfileModal';
 import { setIsLoginModal, setIsSignUpModal } from '../redux/modules/global';
 import {
   selectIsLoginModal,
   selectIsSignUpModal,
 } from '../redux/modules/global/selectors';
 import { useGetUserInfoQuery } from '../redux/modules/user';
+import { SweetAlertHook } from '../common/elements/SweetAlert';
 
 function Header({ path, setPath }) {
   const navigate = useNavigate();
@@ -25,8 +26,9 @@ function Header({ path, setPath }) {
 
   const isLogin = useSelector(selectIsLoginModal);
   const isSignUp = useSelector(selectIsSignUpModal);
-
-  const { data } = useGetUserInfoQuery();
+  const { data } = useGetUserInfoQuery(cookies, {
+    skip: cookies === undefined,
+  });
 
   useEffect(() => {
     if (location === '/') {
@@ -54,28 +56,13 @@ function Header({ path, setPath }) {
     setProfileOpen(false);
   };
 
-  const moveMain = () => {
-    setPath(1);
-    navigate('/');
-  };
-
-  const moveProject = () => {
-    setPath(2);
-    navigate('/workspace');
-  };
-
-  const moveFAQ = () => {
-    setPath(4);
-    navigate('/faq');
-  };
-
-  const moveEvent = () => {
-    setPath(5);
-    navigate('/event');
+  const onMoveHandle = (path, page) => {
+    setPath(path);
+    navigate(page);
   };
 
   const handleAlarm = () => {
-    window.alert('기능구현중입니다.');
+    SweetAlertHook(2000, 'error', '기능 구현 중 입니다.');
   };
 
   return (
@@ -90,37 +77,43 @@ function Header({ path, setPath }) {
             alignItems: 'center',
           }}
         >
-          <StLogo alt="logo" src={logo} onClick={moveMain} />
+          <StLogo
+            alt="logo"
+            src={logo}
+            onClick={() => {
+              onMoveHandle(1, '/');
+            }}
+          />
 
-          {/* <StDiv style={!matches ? { display: 'none' } : null}> */}
           <StMenuDiv>
             <StMenuName
-              onClick={moveMain}
+              onClick={() => {
+                onMoveHandle(1, '/');
+              }}
               style={path === 1 ? { opacity: '1' } : null}
             >
               About
             </StMenuName>
             <StMenuName
-              onClick={moveProject}
+              onClick={() => {
+                onMoveHandle(2, '/workspace');
+              }}
               style={path === 2 ? { opacity: '1' } : null}
             >
               Project
             </StMenuName>
-            {/* <StMenuName
-              onClick={() => {
-                alert('기능 준비중입니다!');
-              }}
-            >
-              Community
-            </StMenuName> */}
             <StMenuName
-              onClick={moveFAQ}
+              onClick={() => {
+                onMoveHandle(4, '/faq');
+              }}
               style={path === 4 ? { opacity: '1' } : null}
             >
               FAQ
             </StMenuName>
             <StMenuName
-              onClick={moveEvent}
+              onClick={() => {
+                onMoveHandle(5, '/event');
+              }}
               style={path === 5 ? { opacity: '1' } : null}
             >
               Event
@@ -145,7 +138,7 @@ function Header({ path, setPath }) {
           </StDiv>
         ) : (
           <StDiv>
-            <StAlarmImg src={alarm} onClick={handleAlarm} />
+            {/* <StAlarmImg src={alarm} onClick={handleAlarm} /> */}
             <StProfileImg
               src={userData?.profileImageUrl}
               onClick={() => {
@@ -174,7 +167,6 @@ const StHeaderDiv = styled.div`
   height: 10vh;
   left: 0px;
   top: 0px;
-  /* border-bottom: 1px solid white; */
   display: flex;
   justify-content: space-between;
   min-height: 100px;
@@ -240,7 +232,6 @@ const StProfileImg = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 70%;
-  /* background-color: white; */
   cursor: pointer;
 `;
 
@@ -250,8 +241,6 @@ const StAlarmImg = styled.img`
   width: 20px;
   height: 20.5px;
   border: solid black 1px;
-  /* border-radius: 70%; */
-  /* background-color: white; */
   cursor: pointer;
 `;
 

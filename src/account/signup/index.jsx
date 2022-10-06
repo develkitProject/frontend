@@ -1,8 +1,7 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 
 import { useDispatch } from 'react-redux';
-import ModalContainer from '../../common/Modal/ModalContainer';
-import useOutSideClick from '../../common/hooks/useOutSideClick';
+import ModalContainer from '../../common/modal/ModalContainer';
 
 import useInputSignUp from './hooks/useInputSignUp';
 import UserInputForm from './components/UserInputForm';

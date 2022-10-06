@@ -14,11 +14,10 @@ import noteBook from '../common/img/notebook.png';
 function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const [users, setUsers] = useState(null);
   const textRef = useRef(null);
-  const { isOpen, toggle } = useModalOverlay();
-  const { data, isLoading, error, refetch } = useGetChatMessagesQuery(id);
-  const [nextgetChat] = useNextChatMessagesMutation();
   const target = useRef(null);
-
+  const { isOpen, toggle } = useModalOverlay();
+  const { data, isLoading, refetch } = useGetChatMessagesQuery(id);
+  const [nextgetChat] = useNextChatMessagesMutation();
   const [Opacity, setOpacity] = useState(false);
   const [minimum, setMinimum] = useState(false);
   const [prevHeight, setPrevHeight] = useState(null);
@@ -42,7 +41,6 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
         setTimeout(() => {
           fetchMessage();
         }, 300);
-        // observer.observe(entry.target);
       }
     });
   };
@@ -58,12 +56,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
     if (prevHeight !== messageBoxRef.current.scrollHeight) {
       await nextgetChat(obj).then((res) =>
         // eslint-disable-next-line no-unsafe-optional-chaining
-        setTimeout(() =>
-          setChatMessages((chatMessages) => [
-            ...chatMessages,
-            ...res.data.data,
-          ]),
-        ),
+        setChatMessages((chatMessages) => [...chatMessages, ...res.data.data]),
       );
       setPrevHeight(messageBoxRef.current.scrollHeight);
     }
@@ -82,7 +75,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
 
   useEffect(() => {
     setChatMessages(messageList);
-    // refetch();
+    refetch();
   }, [messageList]);
 
   // eslint-disable-next-line consistent-return
@@ -161,7 +154,6 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
     ?.slice(0)
     .reverse()
     .map((data, i) => {
-      // if (data.type === 'TALK') {
       return (
         <Stdiv
           key={i}
@@ -190,7 +182,19 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
               <span style={{ color: 'black' }}>{data.message}</span>
             </MessageBox>
           </div>
-          <TimeSpan>{data.createdAt.split(' ')[1].slice(0, -7)}</TimeSpan>
+          <div>
+            <TimeSpan
+              style={{
+                marginBottom: '5px',
+                fontSize: '12px',
+                color: '#a1a1a1',
+                letterSpacing: '-0.5px',
+              }}
+            >
+              {data.createdAt.split(' ')[0].substr(5, 9)}
+            </TimeSpan>
+            <TimeSpan>{data.createdAt.split(' ')[1].slice(0, -7)}</TimeSpan>
+          </div>
         </Stdiv>
       );
     });
@@ -208,7 +212,6 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
           minimum={minimum}
         >
           <StChatHeader>
-            {/* <ArrowDiv /> */}
             <span style={{ marginLeft: '15px', fontSize: '15px' }}>
               {title}
             </span>
@@ -222,7 +225,6 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
                   ? { alignItems: 'center' }
                   : { alignItems: 'flex-start' }
               }
-              // style={minimum ? { bottom: '10px' } : { bottom: '18px' }}
             >
               {minimum ? '+' : '_'}
             </PlusToggle>
@@ -304,7 +306,6 @@ const StChatBox = styled.div`
   width: 350px;
   height: ${(props) => (props.minimum ? '40px' : '560px')};
   background-color: #f6daa2;
-  /* position: relative; */
   right: 20%;
   box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.1), 0 4px 20px 0 rgba(0, 0, 0, 0.2);
   position: absolute;
@@ -400,7 +401,6 @@ const MessageBox = styled.div`
 const Stdiv = styled.div`
   margin: 3px;
   display: flex;
-  /* flex-direction: column; */
   padding: 0px 10px;
   align-items: flex-end;
   margin-bottom: 7px;
@@ -455,8 +455,6 @@ const TimeSpan = styled.div`
   letter-spacing: -0.9px;
   font-size: 13px;
   padding: 0px 9px;
-  /* margin-top: 38px; */
-  /* align-items: flex-start; */
 `;
 
 const NameSpan = styled.span`
@@ -470,7 +468,6 @@ const move = keyframes`
       transform: translateX(0px);
     }
     50% {
-      /* transform: translateY(-25px); */
       transform: translateX(25px);
     }
     100% {

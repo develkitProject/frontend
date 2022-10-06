@@ -1,16 +1,15 @@
 import styled from 'styled-components';
-import React, { useState, useReducer, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import 'react-quill/dist/quill.snow.css';
-import { useParams } from 'react-router-dom';
 import Editor from '../../../components/Editor';
+import Circle from '../../../common/elements/Circle';
 import { useAddDocMutation } from '../../../redux/modules/docs';
+import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 
-function DocsWrite({ onDocumentHandle }) {
-  const params = useParams();
-  const id = Number(params.id);
+function DocsWrite({ onDocumentHandle, id }) {
   const nameInput = useRef();
 
-  const [addDoc] = useAddDocMutation();
+  const [addDoc, { isLoading }] = useAddDocMutation();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [newFile, setNewFile] = useState([]);
@@ -25,14 +24,16 @@ function DocsWrite({ onDocumentHandle }) {
 
   const onFileChange = (e) => {
     const file = e.target.files[0];
-    setNewFile((newFile) => [...newFile, file]);
+    if (file !== undefined) {
+      setNewFile((newFile) => [...newFile, file]);
+    }
   };
 
   const onDeleteFile = (name) => {
     setNewFile(newFile?.filter((file) => file.name !== name));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (title !== '' && content !== '') {
       const formData = new FormData();
       const data = {
@@ -47,14 +48,28 @@ function DocsWrite({ onDocumentHandle }) {
         'data',
         new Blob([JSON.stringify(data)], { type: 'application/json' }),
       );
-      addDoc(formData, id);
-      window.alert('문서가 등록되었습니다');
-      onDocumentHandle('list');
+      await addDoc(formData, id).then((res) => {
+        if (res.data) {
+          SweetAlertHook(2000, 'success', '문서가 등록되었습니다');
+          onDocumentHandle('list');
+        } else {
+          window.alert('파일용량은 총 30MB를 넘을 수 없습니다!');
+        }
+      });
     } else {
       window.alert('제목과 내용을 모두 채워주세요!');
     }
   };
 
+  if (isLoading)
+    return (
+      <Overlay>
+        <Circle />
+        <span style={{ color: 'white', fontSize: '20px', marginTop: '10px' }}>
+          문서 업로드중입니다!
+        </span>
+      </Overlay>
+    );
   return (
     <StEditorContainer>
       <StInputTitle
@@ -226,4 +241,20 @@ const DeleteButton = styled.button`
   cursor: pointer;
   margin-left: 10px;
   font-size: 15px;
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
