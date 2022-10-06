@@ -16,7 +16,6 @@ const reducer = (state, action) => {
 
 function CreateSpaceModal({ onClose }) {
   const imgRef = useRef('');
-  // const [imageUrl, setImageUrl] = useState(null);
   const [addWorkSpaces] = useAddWorkSpacesMutation();
   const { onChangeImage, imageUrl } = useChangeImage();
 
@@ -49,16 +48,6 @@ function CreateSpaceModal({ onClose }) {
       window.alert('프로젝트 제목과 소개를 모두 채워주세요!');
     }
   };
-
-  // const onChangeImage = () => {
-  //   const reader = new FileReader();
-  //   const file = imgRef?.current?.files[0];
-  //   reader.readAsDataURL(file);
-  //   reader.onloadend = () => {
-  //     setImageUrl(reader.result);
-  //     setImgFile(file);
-  //   };
-  // };
 
   return (
     <ModalContainer>

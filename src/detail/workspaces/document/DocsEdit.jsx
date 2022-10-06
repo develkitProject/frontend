@@ -107,9 +107,7 @@ function DocsEdit({ stateId, onDocumentHandle, id }) {
       <EditorBlock>
         <div
           style={{
-            // width: '50%',
             display: 'flex',
-            // justifyContent: 'center',
             alignItems: 'center',
           }}
         >

@@ -32,16 +32,7 @@ function SpaceCard({ data, error, isLoading, width }) {
                   <SpaceDate>
                     {data.workspaces.createdAt.slice(0, -13)}
                   </SpaceDate>
-                  <SpaceGoal weight="500">
-                    {data.workspaces.content}
-                    {/* 목표{' '} */}
-                    {/* <SpaceGoal
-                weight='200'
-                style={{ marginLeft: '10px', fontWeight: '400' }}
-              >
-                
-              </SpaceGoal> */}
-                  </SpaceGoal>
+                  <SpaceGoal weight="500">{data.workspaces.content}</SpaceGoal>
                 </StFooter>
                 <CardProfile data={data.workspaces} />
               </StFooterDiv>
@@ -166,7 +157,6 @@ const StSpaceCard = styled.div`
   width: ${(props) => props.width};
   height: 300px;
   border-radius: 16px;
-  /* margin-left: 20px; */
   margin-bottom: 30px;
   background-color: white;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.1);
@@ -220,7 +210,6 @@ const StFooter = styled.div`
 
 const StDiv = styled.div`
   margin-top: 10px;
-  /* overflow: hidden; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

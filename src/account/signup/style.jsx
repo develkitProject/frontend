@@ -63,7 +63,3 @@ export const Text = styled.pre`
   letter-spacing: -0.05em;
   margin-top: 7px;
 `;
-
-// export const SubTitle = styled.h4`
-//     color:
-// `;

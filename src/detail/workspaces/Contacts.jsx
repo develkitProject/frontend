@@ -34,7 +34,7 @@ export default function Contacts({ data_1, error_1, isLoading_1 }) {
   );
 }
 
-const StIntroContainer = styled.div`
+export const StIntroContainer = styled.div`
   margin-left: 20px;
   margin-right: 20px;
   min-height: 12vh;
@@ -45,19 +45,20 @@ const StIntroContainer = styled.div`
   border-bottom: solid 1px #c6c6c6;
 `;
 
-const StTitle = styled.p`
+export const StTitle = styled.div`
   color: #333333;
   text-align: left;
-  font-size: 1.5rem;
+  font-size: 24px;
   font-weight: bold;
   letter-spacing: -1.5px;
 `;
 
-const StContent = styled.p`
+export const StContent = styled.div`
   margin-top: 10px;
   color: #333333;
   text-align: left;
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: normal;
   letter-spacing: -1px;
+  line-height: 20px;
 `;

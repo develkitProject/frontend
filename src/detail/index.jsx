@@ -69,7 +69,6 @@ export default function WorkspaceDetailPage() {
     projectInfo: ProjectInfo,
   }[menu];
 
-  // if (!(data_1 && user)) return null;
   return (
     <S.Wrapper>
       <Sidebar onClickMenu={onClickMenu} toggle={toggle} menu={menu} />
@@ -86,7 +85,6 @@ export default function WorkspaceDetailPage() {
           stateId={stateId}
           onClickMenu={onClickMenu}
           onDocumentHandle={onDocumentHandle}
-          // refetch={refetch}
         />
       </S.Projects>
 

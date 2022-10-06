@@ -107,7 +107,6 @@ const StImgBox = styled.div`
   background-color: #00a99d;
   width: 55px;
   height: 40px;
-  /* border: 1px solid #DCDCDC; */
   border-left: none;
   border-radius: 0 5px 5px 0;
   cursor: pointer;

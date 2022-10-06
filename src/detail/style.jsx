@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Wrapper = styled.section`
   width: 100%;
   min-height: 80vh;
-  /* min-height: 100vh; */
   background-color: #f2f2f2;
   display: flex;
   flex-direction: row;
@@ -13,7 +12,6 @@ export const Wrapper = styled.section`
 export const Projects = styled.div`
   width: 70%;
   min-width: 1000px;
-  /* height: 90vh; */
   margin-left: 50px;
   margin-top: 60px;
   margin-bottom: 50px;
@@ -42,10 +40,8 @@ export const StLabel = styled.div`
   width: 200px;
   border-bottom: solid 1px #c6c6c6;
   display: table-cell;
-  /* align-items: center; */
   height: 35px;
   line-height: 35px;
-  /* vertical-align: middle; */
   cursor: pointer;
 `;
 

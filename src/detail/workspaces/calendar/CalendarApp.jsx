@@ -2,7 +2,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import './Calendar.css'; // css import
+import './Calendar.css';
 import dayjs from 'dayjs';
 import styled from 'styled-components';
 import velkit2 from '../../../common/img/velkit2.png';
@@ -19,7 +19,6 @@ export default function CalendarApp({ id }) {
   const [deleteSchedules] = useDeleteSchedulesMutation();
   const dataArr = data?.data;
   const { isOpen, open, close } = useModalOverlay();
-  // const [isOpen, setIsOpen] = useState(false);
   const [detailData, setDetailData] = useState([]);
 
   const saveStateDetail = (content) => {
@@ -48,7 +47,6 @@ export default function CalendarApp({ id }) {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        // width: '100%',
         position: 'relative',
       }}
     >
@@ -56,7 +54,6 @@ export default function CalendarApp({ id }) {
         onChange={onChange}
         value={value}
         showNeighboringMonth={false}
-        // showNeighboringMonth={false}
         formatDay={(locale, date) =>
           date.toLocaleString('en', { day: 'numeric' })
         }
@@ -200,7 +197,6 @@ const Velkit = styled.div`
   height: 70px;
   background-image: url(${velkit3});
   background-size: 100% 100%;
-  /* transform: scaleX(-1); */
   position: absolute;
   right: -30px;
   bottom: -20px;
@@ -230,7 +226,6 @@ const StContentBox2 = styled.div`
   letter-spacing: -0.4px;
   display: flex;
   justify-content: center;
-  /* padding-left: 10px; */
   border-radius: 10px;
   align-items: center;
   font-size: 17px;

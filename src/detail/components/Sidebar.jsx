@@ -78,7 +78,6 @@ export default function Sidebar({ onClickMenu, menu, toggle }) {
               >
                 <S.MenuIcon src={icon} />
                 {title}
-                {/* <Icon.ArrowDown /> */}
               </S.StLabel>
               <S.StMenuInDiv>
                 {subItem.map(({ key, subTitle, tab }) => (

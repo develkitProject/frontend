@@ -6,7 +6,6 @@ export const Wrapper = styled.div`
   width: 100%;
   background-color: #f8f8f8;
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
   font-weight: 600;
@@ -122,7 +121,6 @@ export const StProfile = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
-  /* position: relative; */
   box-shadow: 12px 16px 10px rgba(0, 0, 0, 0.1);
 `;
 
@@ -175,7 +173,6 @@ export const StDetail = styled.div`
 export const StButton = styled.button`
   background-color: #000000;
   margin-top: 50px;
-  /* width: ${(props) => props.width}; */
   width: 200px;
   height: 50px;
   border-radius: 8px;
@@ -184,7 +181,6 @@ export const StButton = styled.button`
   text-align: center;
   font-size: 16px;
   font-weight: 500;
-  /* letter-spacing: -1px; */
   cursor: pointer;
 `;
 

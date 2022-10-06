@@ -121,7 +121,4 @@ const StGo = styled.button`
   margin-top: 0;
   display: inline;
   cursor: pointer;
-  /* @media screen and (max-width: 800px) {
-    display: none;
-  } */
 `;
