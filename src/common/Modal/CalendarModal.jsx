@@ -49,8 +49,7 @@ function CalendarModal({ onClose, id }) {
           <StMent>
             프로젝트 일정관리에서 프로젝트 관련 일정을 추가할 수 있습니다
           </StMent>
-          {/* <LeftBox>
-        </LeftBox> */}
+
           <InputBox>
             <InputSpan>일정 제목</InputSpan>
           </InputBox>
@@ -63,11 +62,7 @@ function CalendarModal({ onClose, id }) {
           />
           <InputBox>
             <InputSpan>날짜</InputSpan>
-            <DateInput
-              type="date"
-              // data-placeholder="날짜 입력"
-              onChange={onChangeDate}
-            />
+            <DateInput type="date" onChange={onChangeDate} />
           </InputBox>
           <Button1 text="일정 생성하기" width="300px" onClick={handleSubmit} />
         </ModalWrap>

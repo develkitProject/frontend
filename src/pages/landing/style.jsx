@@ -94,7 +94,6 @@ export const Link = styled.div`
   padding-bottom: 17px;
   letter-spacing: 0.01em;
   cursor: pointer;
-  /* text-decoration: underline; */
   &:hover {
     opacity: 0.7;
   }
@@ -147,9 +146,6 @@ export const Velkit = styled.div`
   left: 65%;
   top: 20%;
   animation: ${move} 2s 0s infinite;
-  /* animation-iteration-count: infinite;
-  animation-name: bounce;
-  animation-timing-function: linear; */
 `;
 
 export const Velkit2 = styled.div`
@@ -161,9 +157,6 @@ export const Velkit2 = styled.div`
   left: 30%;
   top: 45%;
   animation: ${move} 2s 0s infinite;
-  /* animation-iteration-count: infinite;
-  animation-name: bounce;
-  animation-timing-function: linear; */
 `;
 
 export const rotate = keyframes`
@@ -173,8 +166,6 @@ export const rotate = keyframes`
 `;
 
 export const Circle = styled.div`
-  /* width: 25%;
-  height: 25%; */
   min-width: 250px;
   min-height: 250px;
   background-image: url(${circle});
@@ -198,9 +189,6 @@ export const Velkit3 = styled.div`
   left: 80%;
   top: 50%;
   animation: ${move} 2s 0s infinite;
-  /* animation-iteration-count: infinite;
-  animation-name: bounce;
-  animation-timing-function: linear; */
 `;
 
 export const Twinklestar = styled.div`

@@ -4,6 +4,7 @@ import useModalOverlay from '../../account/signup/hooks/useModalOverlay';
 import BlackButton from '../../common/elements/BlackButton';
 import CalendarApp from './calendar/CalendarApp';
 import CalendarModal from '../../common/modal/CalendarModal';
+import { StContent, StIntroContainer, StTitle } from '../style';
 
 export default function Schedule({ id }) {
   const { isOpen, open, close, toggle } = useModalOverlay();
@@ -22,31 +23,3 @@ export default function Schedule({ id }) {
     </>
   );
 }
-
-const StIntroContainer = styled.div`
-  margin-left: 20px;
-  margin-right: 20px;
-  min-height: 12vh;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: solid 1px #c6c6c6;
-`;
-
-const StTitle = styled.p`
-  color: #333333;
-  text-align: left;
-  font-size: 24px;
-  font-weight: bold;
-  letter-spacing: -1.5px;
-`;
-
-const StContent = styled.p`
-  margin-top: 10px;
-  color: #333333;
-  text-align: left;
-  font-size: 16px;
-  font-weight: normal;
-  letter-spacing: -1px;
-`;

@@ -11,17 +11,6 @@ const GlobalStyle = createGlobalStyle`
         overflow-x: hidden;
         min-height:100%;
     }
-    /* button{
-        display: flex;
-        cursor: pointer;
-        outline: none;
-        border-radius: 3px;W
-    };
-    input{
-        display: flex;
-        outline: none;
-        padding-left: 10px;
-    } */
 `;
 
 export default GlobalStyle;

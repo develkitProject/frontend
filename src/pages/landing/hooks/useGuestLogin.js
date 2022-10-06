@@ -18,7 +18,6 @@ export default function useGuestLogin() {
         } else {
           setAccessToken(res.headers.authorization);
           alert('게스트 로그인이 완료되었습니다! 반가워요');
-          // navigate('/');
           window.location.reload();
         }
       })

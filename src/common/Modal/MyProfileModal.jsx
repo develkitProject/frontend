@@ -90,9 +90,6 @@ export const StDiv = styled.div`
   margin-bottom: 10px;
   align-items: center;
   text-align: center;
-  /* font-weight: ${(props) => props.fontWeight};
-  font-size: ${(props) => props.fontSize};
-  color: ${(props) => props.fontColor}; */
 `;
 
 const StProfileImg = styled.img`

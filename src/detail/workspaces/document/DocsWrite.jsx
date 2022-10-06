@@ -27,8 +27,6 @@ function DocsWrite({ onDocumentHandle, id }) {
       setNewFile((newFile) => [...newFile, file]);
     }
   };
-  // const newArr = newFile.filter((element, i) => element !== undefined);
-  // setNewFile((newFile) => [...newFile, newArr]);
 
   const onDeleteFile = (name) => {
     setNewFile(newFile?.filter((file) => file.name !== name));

@@ -8,6 +8,7 @@ import {
   useQuitWorkSpaceMutation,
 } from '../../redux/modules/workspaces';
 import UpdateSpaceModal from '../../common/modal/UpdateSpaceModal';
+import { StContent, StIntroContainer, StTitle } from '../style';
 
 export default function ProjectInfo({ id, user }) {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ export default function ProjectInfo({ id, user }) {
     <>
       <StIntroContainer>
         <div>
-          <StTitle fontSize="24">프로젝트 정보</StTitle>
+          <StTitle>프로젝트 정보</StTitle>
           <StContent>
             프로젝트 정보 확인 및 탈퇴 (팀장의 경우 프로젝트 수정 및 삭제 가능)
           </StContent>
@@ -66,17 +67,17 @@ export default function ProjectInfo({ id, user }) {
           <>
             <StImg img={info.imageUrl} />
             <StInfoContainer>
-              <StTitle fontSize="18">프로젝트 이름</StTitle>
+              <StTitle style={{ fontSize: '18px' }}>프로젝트 이름</StTitle>
               <StContent>{info.title}</StContent>
-              <StTitle fontSize="18" style={{ marginTop: '20px' }}>
+              <StTitle style={{ fontSize: '18px', marginTop: '20px' }}>
                 프로젝트 소개
               </StTitle>
               <StContent>{info.content}</StContent>
             </StInfoContainer>
             <StInfoContainer>
-              <StTitle fontSize="18">프로젝트 생성일자</StTitle>
+              <StTitle style={{ fontSize: '18px' }}>프로젝트 생성일자</StTitle>
               <StContent>{info.createdAt.slice(0, -13)}</StContent>
-              <StTitle fontSize="18" style={{ marginTop: '20px' }}>
+              <StTitle style={{ fontSize: '18px', marginTop: '20px' }}>
                 프로젝트 팀원
               </StTitle>
               <StContent>{info.userNumInWorkSpace}명</StContent>
@@ -105,17 +106,6 @@ export default function ProjectInfo({ id, user }) {
   );
 }
 
-const StIntroContainer = styled.div`
-  margin-left: 20px;
-  margin-right: 20px;
-  min-height: 12vh;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: solid 1px #c6c6c6;
-`;
-
 const StBodyContainer = styled.div`
   margin-top: 30px;
   margin-left: 40px;
@@ -123,24 +113,6 @@ const StBodyContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-`;
-
-const StTitle = styled.p`
-  color: #333333;
-  text-align: left;
-  font-size: ${(props) => props.fontSize}px;
-  font-weight: bold;
-  letter-spacing: -1.5px;
-`;
-
-const StContent = styled.p`
-  margin-top: 10px;
-  color: #333333;
-  text-align: left;
-  font-size: 16px;
-  font-weight: normal;
-  letter-spacing: -1px;
-  line-height: 20px;
 `;
 
 const StImg = styled.div`

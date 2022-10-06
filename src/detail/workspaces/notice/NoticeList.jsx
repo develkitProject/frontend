@@ -49,7 +49,6 @@ function NoticeList({
         setTimeout(() => {
           onFetchNotices();
         }, 300);
-        // observer.observe(entry.target);
       }
     });
   };
@@ -80,7 +79,6 @@ function NoticeList({
               const writerInfo = data.username;
               return (
                 <StNoticeContainer key={data.id}>
-                  {/* <StTitle fontColor='#00a99d' style={{marginTop: "30px"}}>공지사항</StTitle> */}
                   <StNoticeBox>
                     <StInfoDiv>
                       <StProfileImg src={data.profileImage} />

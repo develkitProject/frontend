@@ -185,9 +185,6 @@ function DocDetail({ stateId, onDocumentHandle, id }) {
                 </div>
               </StFooterContainer>
             </Projects>
-            {/* <BoardContainer>
-              <Board />
-            </BoardContainer> */}
           </>
         ) : tab === 2 ? (
           <div>
@@ -229,13 +226,10 @@ const DocContainer = styled.div`
 const Projects = styled.div`
   width: 100%;
   min-height: 60vh;
-  /* margin-left: 50px; */
-  /* margin-top: 45px; */
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: left;
-  /* margin-bottom: 30px; */
 `;
 
 const StIntroContainer = styled.div`
@@ -243,7 +237,6 @@ const StIntroContainer = styled.div`
   min-height: 12vh;
   display: flex;
   flex-direction: column;
-  /* border-bottom: solid 1px #c6c6c6; */
 `;
 
 const StTitle = styled.span`
@@ -354,25 +347,3 @@ const FileDiv = styled.div`
   text-overflow: break-word;
   white-space: nowrap;
 `;
-
-// const a = ['a', 'b', 'c', 'd']
-// const b = ['e', 'f', 'g', 'h']
-
-// a배열과 b배열을 합쳐서
-
-// const c = [ {
-//   key_1 : 'a',
-//   key_2 : 'e',
-// },
-// {
-//   key_1 : 'b',
-//   key_2 : 'f',
-// },
-// {
-//   key_1 : 'c',
-//   key_2 : 'g',
-// },
-// {
-//   key_1 : 'd',
-//   key_2 : 'h',
-// }, ]

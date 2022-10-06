@@ -60,8 +60,6 @@ function CodeConfirmModal({ onClose, spaceData }) {
             취소
           </StButton>
         </StButtonBox>
-        {/* </>
-      ) : null} */}
       </ModalWrap>
     </Overlay>
   );

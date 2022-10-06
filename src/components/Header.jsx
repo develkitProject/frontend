@@ -84,7 +84,6 @@ function Header({ path, setPath }) {
             }}
           />
 
-          {/* <StDiv style={!matches ? { display: 'none' } : null}> */}
           <StMenuDiv>
             <StMenuName
               onClick={() => {
@@ -167,7 +166,6 @@ const StHeaderDiv = styled.div`
   height: 10vh;
   left: 0px;
   top: 0px;
-  /* border-bottom: 1px solid white; */
   display: flex;
   justify-content: space-between;
   min-height: 100px;
@@ -233,7 +231,6 @@ const StProfileImg = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 70%;
-  /* background-color: white; */
   cursor: pointer;
 `;
 
@@ -243,8 +240,6 @@ const StAlarmImg = styled.img`
   width: 20px;
   height: 20.5px;
   border: solid black 1px;
-  /* border-radius: 70%; */
-  /* background-color: white; */
   cursor: pointer;
 `;
 

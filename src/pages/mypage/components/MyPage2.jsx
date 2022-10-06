@@ -39,7 +39,6 @@ function MyPage2({ user }) {
       };
       updateUserInfo(updateInfo);
       window.alert('회원정보가 수정되었습니다!');
-      // window.location.reload();
     } else {
       window.alert('닉네임은 2~8글자여야합니다.');
     }
@@ -86,7 +85,6 @@ function MyPage2({ user }) {
             marginTop="80px"
             onChange={onChange}
             name="nickname"
-            // value={user?.nickname}
             placeholder={userNickname}
             maxLength="8"
           />
@@ -103,8 +101,6 @@ function MyPage2({ user }) {
           <S.StVelkit />
         </div>
       </S.StDetail>
-
-      {/* {imageUrl ? <StImgTag src={imageUrl} /> : null} */}
 
       <input
         style={{ display: 'none' }}

@@ -6,7 +6,6 @@ export default function PreventGoBack() {
 
   useEffect(() => {
     const preventGoBack = () => {
-      console.log('막기확인');
       if (
         window.confirm('워크스페이스 밖으로 이동 됩니다. 정말 나가시겠습니까?')
       ) {
