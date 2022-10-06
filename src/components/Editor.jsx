@@ -11,7 +11,6 @@ function Editor({ value, setContent }) {
   useEffect(() => {
     setEditContent(value);
   }, [setContent, value]);
-  // const [imgurl, setImgurl] =useState("")
   const [addDocImage] = useAddDocImageMutation();
 
   const headers = {
@@ -20,7 +19,6 @@ function Editor({ value, setContent }) {
 
   const onChange = (e) => {
     setContent(e.target.value);
-    // console.log(value);
   };
 
   const imageHandler = () => {

@@ -4,7 +4,7 @@ import useModalOverlay from '../../account/signup/hooks/useModalOverlay';
 import BlackButton from '../../common/elements/BlackButton';
 import CalendarApp from './calendar/CalendarApp';
 import CalendarModal from '../../common/modal/CalendarModal';
-import { StContent, StIntroContainer, StTitle } from './Contacts';
+import { StContent, StIntroContainer, StTitle } from '../style';
 
 export default function Schedule({ id }) {
   const { isOpen, open, close, toggle } = useModalOverlay();

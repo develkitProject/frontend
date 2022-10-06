@@ -8,7 +8,7 @@ import {
   useQuitWorkSpaceMutation,
 } from '../../redux/modules/workspaces';
 import UpdateSpaceModal from '../../common/modal/UpdateSpaceModal';
-import { StContent, StIntroContainer, StTitle } from './Contacts';
+import { StContent, StIntroContainer, StTitle } from '../style';
 
 export default function ProjectInfo({ id, user }) {
   const navigate = useNavigate();

@@ -85,3 +85,32 @@ export const StButton = styled.button`
   letter-spacing: -1px;
   cursor: pointer;
 `;
+
+export const StIntroContainer = styled.div`
+  margin-left: 20px;
+  margin-right: 20px;
+  min-height: 12vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: solid 1px #c6c6c6;
+`;
+
+export const StTitle = styled.div`
+  color: #333333;
+  text-align: left;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: -1.5px;
+`;
+
+export const StContent = styled.div`
+  margin-top: 10px;
+  color: #333333;
+  text-align: left;
+  font-size: 16px;
+  font-weight: normal;
+  letter-spacing: -1px;
+  line-height: 20px;
+`;

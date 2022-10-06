@@ -3,6 +3,7 @@ import { useState } from 'react';
 import BlackButton from '../../common/elements/BlackButton';
 import Address from './address/Address';
 import InvitationCodeModal from '../../common/modal/InvitationCodeModal';
+import { StContent, StIntroContainer, StTitle } from '../style';
 
 export default function Contacts({ data_1, error_1, isLoading_1 }) {
   const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
@@ -33,32 +34,3 @@ export default function Contacts({ data_1, error_1, isLoading_1 }) {
     </>
   );
 }
-
-export const StIntroContainer = styled.div`
-  margin-left: 20px;
-  margin-right: 20px;
-  min-height: 12vh;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: solid 1px #c6c6c6;
-`;
-
-export const StTitle = styled.div`
-  color: #333333;
-  text-align: left;
-  font-size: 24px;
-  font-weight: bold;
-  letter-spacing: -1.5px;
-`;
-
-export const StContent = styled.div`
-  margin-top: 10px;
-  color: #333333;
-  text-align: left;
-  font-size: 16px;
-  font-weight: normal;
-  letter-spacing: -1px;
-  line-height: 20px;
-`;

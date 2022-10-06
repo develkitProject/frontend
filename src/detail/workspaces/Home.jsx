@@ -5,7 +5,7 @@ import { useGetDocQuery } from '../../redux/modules/docs';
 import { useGetNoticeQuery } from '../../redux/modules/notices';
 import BlackButton from '../../common/elements/BlackButton';
 import InvitationCodeModal from '../../common/modal/InvitationCodeModal';
-import { StContent, StIntroContainer, StTitle } from './Contacts';
+import { StContent, StIntroContainer, StTitle } from '../style';
 
 export default function Home({ id, data, onClickMenu }) {
   const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);

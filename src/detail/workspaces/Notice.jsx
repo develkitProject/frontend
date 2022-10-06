@@ -6,7 +6,7 @@ import NoticeList from './notice/NoticeList';
 import BlackButton from '../../common/elements/BlackButton';
 import NoticeWrite from './notice/NoticeWrite';
 import NoticeEdit from './notice/NoticeEdit';
-import { StContent, StIntroContainer, StTitle } from './Contacts';
+import { StContent, StIntroContainer, StTitle } from '../style';
 
 export default function Notice({ user, id }) {
   const [tab, setTab] = useState('list');

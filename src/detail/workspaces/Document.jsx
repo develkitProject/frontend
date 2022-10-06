@@ -6,7 +6,7 @@ import DocsWrite from './document/DocsWrite';
 import DocsEdit from './document/DocsEdit';
 import DocDetail from './document/DocDetail';
 import BlackButton from '../../common/elements/BlackButton';
-import { StContent, StIntroContainer, StTitle } from './Contacts';
+import { StContent, StIntroContainer, StTitle } from '../style';
 
 export default function Document({ id, tab, stateId, onDocumentHandle }) {
   const { data, error, isLoading, refetch } = useGetDocQuery(id);
