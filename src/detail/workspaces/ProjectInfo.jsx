@@ -9,6 +9,7 @@ import {
 } from '../../redux/modules/workspaces';
 import UpdateSpaceModal from '../../common/modal/UpdateSpaceModal';
 import { StContent, StIntroContainer, StTitle } from '../style';
+import { SweetAlertConfirmHook } from '../../common/elements/SweetAlertConfirm';
 
 export default function ProjectInfo({ id, user }) {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export default function ProjectInfo({ id, user }) {
 
   const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
   const deleteWorkSpace = (id) => {
-    if (window.confirm('정말 지우시겠습니까?')) {
+    if (SweetAlertConfirmHook('정말 프로젝트를 삭제하시겠습니까?')) {
       deleteWorkSpaces(id);
       navigate('/workspace');
     }
