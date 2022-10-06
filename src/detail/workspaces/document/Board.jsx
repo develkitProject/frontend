@@ -5,6 +5,7 @@ import {
   useGetDocSearchQuery,
 } from '../../../redux/modules/docs';
 import SearchBar from '../../../components/SearchBar';
+import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 
 function Board({ onDocumentHandle, error, isLoading, data, id }) {
   // eslint-disable-next-line prefer-const
@@ -49,9 +50,9 @@ function Board({ onDocumentHandle, error, isLoading, data, id }) {
     }
     getDocList(list).then((res) => {
       if (direction === 'Recent' && res.data.data.length === 0) {
-        alert('첫페이지입니다!');
+        SweetAlertHook(2000, 'error', '첫페이지입니다!');
       } else if (direction === 'Previous' && res.data.data.length === 0)
-        alert('마지막페이지입니다!');
+        SweetAlertHook(2000, 'error', '마지막페이지입니다!');
       else {
         setPrevDocs(() => res.data.data);
       }

@@ -9,6 +9,7 @@ import {
   useGetDocDetailQuery,
   useUpdateDocMutation,
 } from '../../../redux/modules/docs';
+import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 
 function DocsEdit({ stateId, onDocumentHandle, id }) {
   const docid = stateId;
@@ -74,7 +75,7 @@ function DocsEdit({ stateId, onDocumentHandle, id }) {
       );
       editDoc(formData).then((res) => {
         if (res.data) {
-          window.alert('문서가 수정되었습니다');
+          SweetAlertHook(2000, 'success', '문서가 수정되었습니다');
           onDocumentHandle('list');
         } else {
           window.alert('파일용량은 총 30MB를 넘을 수 없습니다!');
@@ -82,7 +83,7 @@ function DocsEdit({ stateId, onDocumentHandle, id }) {
       });
     } else {
       // eslint-disable-next-line no-alert
-      window.alert('제목과 내용을 모두 채워주세요!');
+      SweetAlertHook(2000, 'error', '제목과 내용을 모두 채워주세요!');
     }
   };
   if (isLoading)

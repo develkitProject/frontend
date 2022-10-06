@@ -5,6 +5,7 @@ import CloseButton from '../elements/CloseButton';
 import Button1 from '../elements/Button';
 import ModalContainer from './ModalContainer';
 import { useAddSchedulesMutation } from '../../redux/modules/schedules';
+import { SweetAlertHook } from '../elements/SweetAlert';
 
 function CalendarModal({ onClose, id }) {
   const modalRef = useRef(null);
@@ -36,7 +37,7 @@ function CalendarModal({ onClose, id }) {
       handleClose();
     } else {
       // eslint-disable-next-line no-alert
-      alert('빈칸을 전부 채워주세요 !');
+      SweetAlertHook(2000, 'error', '빈칸을 모두 채워주세요');
     }
   };
 

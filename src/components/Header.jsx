@@ -14,6 +14,7 @@ import {
   selectIsSignUpModal,
 } from '../redux/modules/global/selectors';
 import { useGetUserInfoQuery } from '../redux/modules/user';
+import { SweetAlertHook } from '../common/elements/SweetAlert';
 
 function Header({ path, setPath }) {
   const navigate = useNavigate();
@@ -61,7 +62,7 @@ function Header({ path, setPath }) {
   };
 
   const handleAlarm = () => {
-    window.alert('기능구현중입니다.');
+    SweetAlertHook(2000, 'error', '기능 구현 중 입니다.');
   };
 
   return (

@@ -109,19 +109,6 @@ export default function CalendarApp({ id }) {
           <Velkit />
         </StDetail>
       )}
-      <div
-        style={{
-          position: 'absolute',
-          right: '40px',
-          color: 'rgb(51, 129, 123)',
-          fontWeight: '600',
-          fontSize: '20px',
-          bottom: '50px',
-        }}
-        className="text-gray-500 mt-4"
-      >
-        {dayjs(value).format('YYYY년 MM월 DD일')}
-      </div>
     </div>
   );
 }
