@@ -35,16 +35,16 @@ export default function useInputLogin() {
     loginApi({ username, password })
       .then((res) => {
         if (res.data.success === false) {
-          SweetAlertHook(2000, 'error', '아이디 또는 비밀번호를 확인해주세요.');
+          alert('아이디 또는 비밀번호를 확인해주세요');
         } else {
           setAccessToken(res.headers.authorization);
-          alert('로그인완료!');
+          alert('로그인 완료!');
           navigate('/workspace');
           window.location.reload();
         }
       })
       .catch((err) => {
-        SweetAlertHook(2000, 'error', '아이디 또는 비밀번호를 확인해주세요.');
+        alert('아이디 또는 비밀번호를 확인해주세요');
       });
   }, [inputs, navigate]);
 
