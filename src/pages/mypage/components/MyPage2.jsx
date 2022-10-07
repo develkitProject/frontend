@@ -8,6 +8,7 @@ import { removeUser } from '../../../Cookie';
 import * as S from '../style';
 import useChangeImage from '../hooks/useChangeImage';
 import { SweetAlertHook } from '../../../common/elements/SweetAlert';
+import { SweetAlertConfirmHook } from '../../../common/elements/SweetAlertConfirm';
 
 function MyPage2({ user }) {
   const [updateUserInfo] = useUpdateUserInfoMutation();
@@ -23,11 +24,16 @@ function MyPage2({ user }) {
   }, []);
 
   const [deleteUserInfos] = useDeleteUserInfoMutation();
+
+  const quitFunction = () => {
+    deleteUserInfos();
+    removeUser();
+    window.location.href = '/';
+  };
+
   const deleteUserInfo = () => {
-    if (window.confirm('정말 탈퇴하시겠습니까?')) {
-      deleteUserInfos();
-      removeUser();
-      window.location.href = '/';
+    // eslint-disable-next-line no-empty
+    if (SweetAlertConfirmHook('정말 탈퇴하시겠습니까?', quitFunction)) {
     }
   };
 

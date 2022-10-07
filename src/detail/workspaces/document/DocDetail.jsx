@@ -31,13 +31,6 @@ function DocDetail({ stateId, onDocumentHandle, id }) {
     onDocumentHandle('list');
   };
 
-  // const deleteDoc = () => {
-  //   if (window.confirm('정말 지우시겠습니까?')) {
-  //     deleteDocument({ workspaces: id, docid });
-  //     onDocumentHandle('list');
-  //   }
-  // };
-
   const deleteDoc = () => {
     // eslint-disable-next-line no-empty
     if (SweetAlertConfirmHook('정말 문서를 삭제하시겠습니까?', onDeleteDoc)) {

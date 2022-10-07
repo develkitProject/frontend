@@ -4,6 +4,7 @@ import {
   useDeleteNoticeMutation,
   useGetNextNoticeMutation,
 } from '../../../redux/modules/notices';
+import { SweetAlertConfirmHook } from '../../../common/elements/SweetAlertConfirm';
 
 function NoticeList({
   user,
@@ -21,15 +22,20 @@ function NoticeList({
   const [deleteNotices] = useDeleteNoticeMutation();
   const [getNextNotice] = useGetNextNoticeMutation();
 
-  const deleteNotice = (dataId) => {
+  const deleteFunction = (dataId) => {
     const data = {
       id,
       dataId,
     };
-    if (window.confirm('정말 지우시겠습니까?')) {
-      deleteNotices(data);
+    deleteNotices(data);
+  };
+
+  const deleteNotice = (dataId) => {
+    // eslint-disable-next-line no-empty
+    if (SweetAlertConfirmHook('정말 지우시겠습니까?', deleteFunction, dataId)) {
     }
   };
+
   useEffect(() => {
     setPrevNotices(notice);
   }, [data]);
