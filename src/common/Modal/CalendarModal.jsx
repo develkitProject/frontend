@@ -10,11 +10,9 @@ import { SweetAlertHook } from '../elements/SweetAlert';
 
 function CalendarModal({ onClose, id }) {
   const modalRef = useRef(null);
-  const newDate = new Date(+new Date() + 3240 * 10000)
-    .toISOString()
-    .split('T')[0];
+
   const [state, setState] = useState('');
-  const [date, setDate] = useState('1994-11-02');
+  const [date, setDate] = useState('');
   const [addSchedules] = useAddSchedulesMutation();
 
   const onChange = (e) => {
@@ -39,6 +37,7 @@ function CalendarModal({ onClose, id }) {
     if (state !== '' && date !== '') {
       addSchedules(data);
       handleClose();
+      SweetAlertHook(2000, 'success', '일정이 생성되었습니다!');
     } else {
       // eslint-disable-next-line no-alert
       SweetAlertHook(2000, 'error', '빈칸을 모두 채워주세요');

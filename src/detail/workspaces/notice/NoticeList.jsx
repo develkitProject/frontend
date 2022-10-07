@@ -4,6 +4,7 @@ import {
   useDeleteNoticeMutation,
   useGetNextNoticeMutation,
 } from '../../../redux/modules/notices';
+import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 import { SweetAlertConfirmHook } from '../../../common/elements/SweetAlertConfirm';
 
 function NoticeList({
@@ -28,6 +29,7 @@ function NoticeList({
       dataId,
     };
     deleteNotices(data);
+    SweetAlertHook(2000, 'success', '공지사항이 삭제되었습니다!');
   };
 
   const deleteNotice = (dataId) => {
