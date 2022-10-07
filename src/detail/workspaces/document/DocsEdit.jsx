@@ -10,6 +10,7 @@ import {
   useUpdateDocMutation,
 } from '../../../redux/modules/docs';
 import { SweetAlertHook } from '../../../common/elements/SweetAlert';
+import { SweetAlertOk } from '../../../common/elements/SweetAlertOk';
 
 function DocsEdit({ stateId, onDocumentHandle, id }) {
   const docid = stateId;
@@ -83,7 +84,7 @@ function DocsEdit({ stateId, onDocumentHandle, id }) {
       });
     } else {
       // eslint-disable-next-line no-alert
-      SweetAlertHook(2000, 'error', '제목과 내용을 모두 채워주세요!');
+      SweetAlertOk('error', '제목과 내용을 모두 채워주세요!');
     }
   };
   if (isLoading)

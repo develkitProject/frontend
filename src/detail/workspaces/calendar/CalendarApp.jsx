@@ -51,21 +51,6 @@ export default function CalendarApp({ id }) {
     }
   };
 
-  // const onDeleteSchedules = (schedulesId) => {
-  //   const obj = {
-  //     id,
-  //     schedulesId,
-  //   };
-
-  //   // eslint-disable-next-line no-alert
-  //   if (window.confirm('일정을 지우시겠습니까?')) {
-  //     deleteSchedules(obj);
-  //     // eslint-disable-next-line no-alert
-  //     alert('일정이 삭제되었습니다!');
-  //     close();
-  //   }
-  // };
-
   return (
     <div
       style={{

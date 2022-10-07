@@ -9,6 +9,7 @@ import * as S from '../style';
 import useChangeImage from '../hooks/useChangeImage';
 import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 import { SweetAlertConfirmHook } from '../../../common/elements/SweetAlertConfirm';
+import { SweetAlertOk } from '../../../common/elements/SweetAlertOk';
 
 function MyPage2({ user }) {
   const [updateUserInfo] = useUpdateUserInfoMutation();
@@ -46,7 +47,7 @@ function MyPage2({ user }) {
       updateUserInfo(updateInfo);
       SweetAlertHook(2000, 'success', '회원정보가 수정되었습니다!');
     } else {
-      SweetAlertHook(2000, 'error', '닉네임은 2~8글자여야합니다.');
+      SweetAlertOk('error', '닉네임은 2~8글자여야합니다.');
     }
   };
 

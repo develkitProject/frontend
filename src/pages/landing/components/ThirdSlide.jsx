@@ -1,4 +1,5 @@
 import React from 'react';
+import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 
 import ThirdBackground from '../../../common/img/ThirdBackground.png';
 import ThirdImg from '../../../common/img/ThirdImg.png';
@@ -46,7 +47,7 @@ function ThirdSlide() {
               </St.CardMentContainer>
               <St.Link
                 onClick={() => {
-                  alert('기능 준비중입니다!');
+                  SweetAlertHook(2000, 'error', '기능 준비중입니다!');
                 }}
                 style={{
                   marginTop: '60px',

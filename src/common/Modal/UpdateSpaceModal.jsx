@@ -9,6 +9,7 @@ import {
   useGetWorkspaceInfoQuery,
   useUpdateWorkspaceInfoMutation,
 } from '../../redux/modules/workspaces';
+import { SweetAlertHook } from '../elements/SweetAlert';
 
 const reducer = (state, action) => {
   return {
@@ -55,10 +56,10 @@ function UpdateSpaceModal({ onClose }) {
         content,
       };
       updateWorkSpaces(updateInfo);
-      window.alert('프로젝트가 수정되었습니다!');
+      SweetAlertHook(2000, 'success', '프로젝트가 수정되었습니다!');
       handleClose();
     } else {
-      window.alert('프로젝트 제목과 소개를 모두 채워주세요!');
+      SweetAlertHook(2000, 'error', '프로젝트 제목과 소개를 모두 채워주세요!');
     }
   };
 

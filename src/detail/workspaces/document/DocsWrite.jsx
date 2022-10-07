@@ -5,6 +5,7 @@ import Editor from '../../../components/Editor';
 import Circle from '../../../common/elements/Circle';
 import { useAddDocMutation } from '../../../redux/modules/docs';
 import { SweetAlertHook } from '../../../common/elements/SweetAlert';
+import { SweetAlertOk } from '../../../common/elements/SweetAlertOk';
 
 function DocsWrite({ onDocumentHandle, id }) {
   const nameInput = useRef();
@@ -57,7 +58,7 @@ function DocsWrite({ onDocumentHandle, id }) {
         }
       });
     } else {
-      window.alert('제목과 내용을 모두 채워주세요!');
+      SweetAlertOk('error', '제목과 내용을 모두 채워주세요!');
     }
   };
 
