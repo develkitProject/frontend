@@ -128,7 +128,8 @@ function DocsWrite({ onDocumentHandle, id }) {
                 paddingLeft: '20px',
               }}
             >
-              파일 개수의 제한은 없으나 전체 파일 용량은 총 30MB로 제한됩니다.
+              파일 개수의 제한은 없으나 전체 파일 용량은 총 30MB로 제한됩니다. (
+              xls, doc, ppt, pdf, hwp){' '}
             </button>
             <button
               type="button"
