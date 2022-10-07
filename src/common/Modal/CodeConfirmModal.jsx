@@ -26,7 +26,7 @@ function CodeConfirmModal({ onClose, spaceData }) {
       SweetAlertHook(2000, 'success', '가입되었습니다!');
       navigate(`/workspace/main/${spaceData.id}`);
     } catch (error) {
-      SweetAlertOk('error', '이미 가입된 워크스페이스입니다!');
+      alert('이미 가입된 워크스페이스입니다!');
     }
   };
 

@@ -46,7 +46,7 @@ function CreateSpaceModal({ onClose }) {
       SweetAlertHook(2000, 'success', '프로젝트가 생성되었습니다!');
       handleClose();
     } else {
-      SweetAlertHook(2000, 'error', '프로젝트 제목과 소개를 모두 채워주세요!');
+      alert('프로젝트 이름과 소개를 모두 채워주세요!');
     }
   };
 
