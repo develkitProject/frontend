@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { loginApi } from '../../../account/data/login';
-import { SweetAlertHook } from '../../../common/elements/SweetAlert';
+import { SweetAlertOk } from '../../../common/elements/SweetAlertOk';
 import { getCookieToken, setAccessToken } from '../../../Cookie';
 
 export default function useGuestLogin() {
@@ -15,7 +15,7 @@ export default function useGuestLogin() {
     loginApi({ username, password })
       .then((res) => {
         if (res.data.success === false) {
-          alert('아이디 또는 비밀번호를 확인해주세요.');
+          SweetAlertOk('error', '아이디 또는 비밀번호를 확인해주세요.');
         } else {
           setAccessToken(res.headers.authorization);
           alert('게스트 로그인이 완료되었습니다! 반가워요');
@@ -23,7 +23,7 @@ export default function useGuestLogin() {
         }
       })
       .catch((err) => {
-        alert('아이디 또는 비밀번호를 확인해주세요!');
+        SweetAlertOk('error', '아이디 또는 비밀번호를 확인해주세요.');
       });
   };
 

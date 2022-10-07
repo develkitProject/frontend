@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import useOutSideClick from '../hooks/useOutSideClick';
 import { useGetWorkSpacesJoinMutation } from '../../redux/modules/workspaces';
 import { getCookieToken } from '../../Cookie';
+import { SweetAlertHook } from '../elements/SweetAlert';
+import { SweetAlertOk } from '../elements/SweetAlertOk';
 
 function CodeConfirmModal({ onClose, spaceData }) {
   const modalRef = useRef(null);
@@ -21,10 +23,10 @@ function CodeConfirmModal({ onClose, spaceData }) {
   const onJoin = async () => {
     try {
       const result = await getWorkSpacesJoin(spaceData.id).unwrap();
-      alert('가입되었습니다!');
+      SweetAlertHook(2000, 'success', '가입되었습니다!');
       navigate(`/workspace/main/${spaceData.id}`);
     } catch (error) {
-      alert('이미 가입된 워크스페이스입니다!');
+      SweetAlertOk('error', '이미 가입된 워크스페이스입니다!');
     }
   };
 

@@ -12,6 +12,8 @@ import {
   useGetSchedulesQuery,
   useDeleteSchedulesMutation,
 } from '../../../redux/modules/schedules';
+import { SweetAlertConfirmHook } from '../../../common/elements/SweetAlertConfirm';
+import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 
 export default function CalendarApp({ id }) {
   const [value, onChange] = useState(new Date());
@@ -25,18 +27,27 @@ export default function CalendarApp({ id }) {
     setDetailData(content);
     open();
   };
-  const onDeleteSchedules = (schedulesId) => {
+
+  const deleteFunction = (schedulesId) => {
     const obj = {
       id,
       schedulesId,
     };
+    deleteSchedules(obj);
+    SweetAlertHook(2000, 'success', '일정이 삭제되었습니다!');
+    close();
+  };
 
-    // eslint-disable-next-line no-alert
-    if (window.confirm('일정을 지우시겠습니까?')) {
-      deleteSchedules(obj);
-      // eslint-disable-next-line no-alert
-      alert('일정이 삭제되었습니다!');
-      close();
+  const onDeleteSchedules = (schedulesId) => {
+    // eslint-disable-next-line no-empty
+    if (
+      SweetAlertConfirmHook(
+        '정말 일정을 지우시겠습니까?',
+        deleteFunction,
+        schedulesId,
+      )
+    ) {
+      // eslint-disable-next-line no-empty
     }
   };
 

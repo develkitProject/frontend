@@ -25,29 +25,33 @@ export default function ProjectInfo({ id, user }) {
   };
   const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
 
-  const testFunc = () => {
+  const delProjectFunc = () => {
     deleteWorkSpaces(id);
     navigate('/workspace');
   };
 
-  // const deleteWorkSpace = () => {
-  //   if (window.confirm('정말 삭제하시겠습니까?')) {
-  //     deleteWorkSpaces(id);
-  //     navigate('/workspace');
-  //   }
-  // };
-
   const deleteWorkSpace = () => {
     // eslint-disable-next-line no-empty
-    if (SweetAlertConfirmHook('정말 프로젝트를 삭제하시겠습니까?', testFunc)) {
+    if (
+      SweetAlertConfirmHook('정말 프로젝트를 삭제하시겠습니까?', delProjectFunc)
+    ) {
+      // eslint-disable-next-line no-empty
     }
   };
 
   const [quitWorkSpaces] = useQuitWorkSpaceMutation();
+
+  const quitWorkspaceFunc = (id) => {
+    quitWorkSpaces(id);
+    navigate('/workspace');
+  };
+
   const quitWorkSpace = (id) => {
-    if (window.confirm('정말 탈퇴하시겠습니까?')) {
-      quitWorkSpaces(id);
-      navigate('/workspace');
+    // eslint-disable-next-line no-empty
+    if (
+      SweetAlertConfirmHook('정말 탈퇴하시겠습니까?', quitWorkspaceFunc, id)
+    ) {
+      // eslint-disable-next-line no-empty
     }
   };
 
