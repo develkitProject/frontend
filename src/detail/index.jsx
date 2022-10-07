@@ -37,7 +37,7 @@ export default function WorkspaceDetailPage() {
     useChangeMenu();
   const navigate = useNavigate();
   const id = Number(useParams().id);
-  const { data, isLoading } = useGetMainWorkSpacesQuery(id);
+  const { data, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
   const {
     data: data_1,
     isLoading: isLoading_1,
@@ -75,7 +75,6 @@ export default function WorkspaceDetailPage() {
       <S.Projects>
         <SelectWorkspaceMenu
           id={id}
-          data={data}
           user={user}
           data_1={data_1}
           error_1={error_1}

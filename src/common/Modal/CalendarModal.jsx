@@ -1,5 +1,6 @@
 import React, { useRef, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import dayjs from 'dayjs';
 import BasicInput from '../elements/BasicInput';
 import CloseButton from '../elements/CloseButton';
 import Button1 from '../elements/Button';
@@ -9,8 +10,11 @@ import { SweetAlertHook } from '../elements/SweetAlert';
 
 function CalendarModal({ onClose, id }) {
   const modalRef = useRef(null);
+  const newDate = new Date(+new Date() + 3240 * 10000)
+    .toISOString()
+    .split('T')[0];
   const [state, setState] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState('1994-11-02');
   const [addSchedules] = useAddSchedulesMutation();
 
   const onChange = (e) => {

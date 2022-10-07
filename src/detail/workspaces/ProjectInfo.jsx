@@ -14,7 +14,7 @@ import { SweetAlertConfirmHook } from '../../common/elements/SweetAlertConfirm';
 export default function ProjectInfo({ id, user }) {
   const navigate = useNavigate();
 
-  const { data, error, isLoading, refetch } = useGetWorkspaceInfoQuery(id);
+  const { data, error, isLoading } = useGetWorkspaceInfoQuery(id);
   const info = data?.data;
   const leaderInfo = data?.data?.createUserEmail;
   const userInfo = user?.username;
@@ -23,12 +23,23 @@ export default function ProjectInfo({ id, user }) {
   const handleClose = () => {
     setUpdateOpen(false);
   };
-
   const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
-  const deleteWorkSpace = (id) => {
-    if (SweetAlertConfirmHook('정말 프로젝트를 삭제하시겠습니까?')) {
-      deleteWorkSpaces(id);
-      navigate('/workspace');
+
+  const testFunc = () => {
+    deleteWorkSpaces(id);
+    navigate('/workspace');
+  };
+
+  // const deleteWorkSpace = () => {
+  //   if (window.confirm('정말 삭제하시겠습니까?')) {
+  //     deleteWorkSpaces(id);
+  //     navigate('/workspace');
+  //   }
+  // };
+
+  const deleteWorkSpace = () => {
+    // eslint-disable-next-line no-empty
+    if (SweetAlertConfirmHook('정말 프로젝트를 삭제하시겠습니까?', testFunc)) {
     }
   };
 

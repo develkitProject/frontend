@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-export const SweetAlertConfirmHook = (title) => {
+export const SweetAlertConfirmHook = (title, testFunction) => {
   Swal.fire({
     icon: 'error',
     toast: true,
@@ -12,7 +12,7 @@ export const SweetAlertConfirmHook = (title) => {
     cancelButtonText: '취소',
   }).then((result) => {
     if (result.isConfirmed) {
-      console.log('삭제');
+      testFunction();
     }
   });
 };
