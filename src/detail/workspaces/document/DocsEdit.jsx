@@ -111,32 +111,66 @@ function DocsEdit({ stateId, onDocumentHandle, id }) {
           style={{
             display: 'flex',
             alignItems: 'center',
+            flexDirection: 'column',
           }}
         >
           <div
             style={{
               display: 'flex',
-              flexDirection: 'column',
+              flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
-              margin: '30px 0px 0px 50px',
+              margin: '30px 0px 0px 0px',
+              width: '93%',
+              marginBottom: '10px',
             }}
           >
             <button
               type="button"
               style={{
-                width: '150px',
-                height: '50px',
+                width: '17%',
+                height: '40px',
                 fontWeight: '500',
+                background: '#D9D9D9',
+                cursor: 'pointer',
+                border: '1px solid #424242',
               }}
               onClick={onClickInput}
             >
-              파일업로드하기!
+              파일업로드
             </button>
-            <span style={{ width: '150px', marginTop: '10px' }}>
-              {' '}
-              파일용량은 총 <br /> 30MB로 제한됩니다
-            </span>
+
+            <button
+              type="button"
+              style={{
+                color: '#424242',
+                width: '68%',
+                height: '40px',
+                fontWeight: '500',
+                background: 'white',
+                border: '1px solid #424242',
+                textAlign: 'left',
+                paddingLeft: '20px',
+              }}
+            >
+              파일 개수의 제한은 없으나 전체 파일 용량은 총 30MB로 제한됩니다. (
+              xls, doc, ppt, pdf, hwp)
+            </button>
+
+            <button
+              type="button"
+              style={{
+                width: '7%',
+                height: '40px',
+                fontWeight: '500',
+                background: '#00A99D',
+                cursor: 'pointer',
+                border: '1px solid #424242',
+              }}
+              onClick={onClickInput}
+            >
+              ➕
+            </button>
           </div>
           <input
             style={{ display: 'none' }}
@@ -149,9 +183,12 @@ function DocsEdit({ stateId, onDocumentHandle, id }) {
           />
           <div
             style={{
+              width: '88%',
               display: 'flex',
               flexDirection: 'column',
+              justifyContent: 'flex-start',
               color: '#00a99d',
+              textAlign: 'left',
             }}
           >
             {prevFile?.map((data, i) => {
