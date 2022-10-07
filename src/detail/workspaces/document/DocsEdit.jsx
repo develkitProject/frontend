@@ -83,7 +83,6 @@ function DocsEdit({ stateId, onDocumentHandle, id }) {
         }
       });
     } else {
-      // eslint-disable-next-line no-alert
       SweetAlertOk('error', '제목과 내용을 모두 채워주세요!');
     }
   };

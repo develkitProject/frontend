@@ -7,6 +7,7 @@ import {
 } from '../../../redux/modules/docs';
 import { useGetUserInfoQuery } from '../../../redux/modules/user';
 import BlackButton from '../../../common/elements/BlackButton';
+import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 import { SweetAlertConfirmHook } from '../../../common/elements/SweetAlertConfirm';
 import DocsEdit from './DocsEdit';
 
@@ -29,6 +30,7 @@ function DocDetail({ stateId, onDocumentHandle, id }) {
   const onDeleteDoc = () => {
     deleteDocument({ workspaces: id, docid });
     onDocumentHandle('list');
+    SweetAlertHook(2000, 'success', '문서가 삭제되었습니다!');
   };
 
   const deleteDoc = () => {
