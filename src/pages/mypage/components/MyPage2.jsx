@@ -8,6 +8,8 @@ import { removeUser } from '../../../Cookie';
 import * as S from '../style';
 import useChangeImage from '../hooks/useChangeImage';
 import { SweetAlertHook } from '../../../common/elements/SweetAlert';
+import { SweetAlertConfirmHook } from '../../../common/elements/SweetAlertConfirm';
+import { SweetAlertOk } from '../../../common/elements/SweetAlertOk';
 
 function MyPage2({ user }) {
   const [updateUserInfo] = useUpdateUserInfoMutation();
@@ -23,11 +25,16 @@ function MyPage2({ user }) {
   }, []);
 
   const [deleteUserInfos] = useDeleteUserInfoMutation();
+
+  const quitFunction = () => {
+    deleteUserInfos();
+    removeUser();
+    window.location.href = '/';
+  };
+
   const deleteUserInfo = () => {
-    if (window.confirm('정말 탈퇴하시겠습니까?')) {
-      deleteUserInfos();
-      removeUser();
-      window.location.href = '/';
+    // eslint-disable-next-line no-empty
+    if (SweetAlertConfirmHook('정말 탈퇴하시겠습니까?', quitFunction)) {
     }
   };
 
@@ -40,7 +47,7 @@ function MyPage2({ user }) {
       updateUserInfo(updateInfo);
       SweetAlertHook(2000, 'success', '회원정보가 수정되었습니다!');
     } else {
-      SweetAlertHook(2000, 'error', '닉네임은 2~8글자여야합니다.');
+      SweetAlertOk('error', '닉네임은 2~8글자여야합니다.');
     }
   };
 

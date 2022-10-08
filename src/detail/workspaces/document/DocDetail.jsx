@@ -7,6 +7,8 @@ import {
 } from '../../../redux/modules/docs';
 import { useGetUserInfoQuery } from '../../../redux/modules/user';
 import BlackButton from '../../../common/elements/BlackButton';
+import { SweetAlertHook } from '../../../common/elements/SweetAlert';
+import { SweetAlertConfirmHook } from '../../../common/elements/SweetAlertConfirm';
 import DocsEdit from './DocsEdit';
 
 function DocDetail({ stateId, onDocumentHandle, id }) {
@@ -24,10 +26,16 @@ function DocDetail({ stateId, onDocumentHandle, id }) {
   const createUsername = document?.nickname;
 
   const [deleteDocument] = useDeleteDocMutation();
+
+  const onDeleteDoc = () => {
+    deleteDocument({ workspaces: id, docid });
+    onDocumentHandle('list');
+    SweetAlertHook(2000, 'success', '문서가 삭제되었습니다!');
+  };
+
   const deleteDoc = () => {
-    if (window.confirm('정말 지우시겠습니까?')) {
-      deleteDocument({ workspaces: id, docid });
-      onDocumentHandle('list');
+    // eslint-disable-next-line no-empty
+    if (SweetAlertConfirmHook('정말 문서를 삭제하시겠습니까?', onDeleteDoc)) {
     }
   };
 

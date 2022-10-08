@@ -1,21 +1,25 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { useGetDocQuery } from '../../redux/modules/docs';
-import { useGetNoticeQuery } from '../../redux/modules/notices';
+import { useGetMainWorkSpacesQuery } from '../../redux/modules/workspaces';
 import BlackButton from '../../common/elements/BlackButton';
 import InvitationCodeModal from '../../common/modal/InvitationCodeModal';
 import { StContent, StIntroContainer, StTitle } from '../style';
 
-export default function Home({ id, data, onClickMenu }) {
+export default function Home({ id, onClickMenu }) {
   const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
-
+  const { data, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
   const { data: docdata } = useGetDocQuery(id);
-  const { data: noticedata } = useGetNoticeQuery(id);
+  const [prevNotice, setPrevNotice] = useState(null);
   const firstNotice = data?.data.notices;
   const fourDocuments = docdata?.data?.slice(0, 4);
   const title = data?.data?.workspaces?.title;
   const content = data?.data.workspaces.content;
+
+  // console.log(data);
+  useEffect(() => {
+    refetch();
+  }, [data]);
 
   const handleClose = () => {
     setInvitationCodeOpen(false);
@@ -63,7 +67,7 @@ export default function Home({ id, data, onClickMenu }) {
                   fontSize: '20px',
                 }}
               >
-                {firstNotice !== undefined ? (
+                {firstNotice !== null ? (
                   firstNotice?.title
                 ) : (
                   <div>전달할 공지사항이 없습니다! 입력해보세요</div>
@@ -72,7 +76,7 @@ export default function Home({ id, data, onClickMenu }) {
               <StNoticeContent>
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: firstNotice && firstNotice.content,
+                    __html: firstNotice && firstNotice?.content,
                   }}
                 />
               </StNoticeContent>

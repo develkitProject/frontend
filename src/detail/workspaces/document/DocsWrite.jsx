@@ -5,6 +5,7 @@ import Editor from '../../../components/Editor';
 import Circle from '../../../common/elements/Circle';
 import { useAddDocMutation } from '../../../redux/modules/docs';
 import { SweetAlertHook } from '../../../common/elements/SweetAlert';
+import { SweetAlertOk } from '../../../common/elements/SweetAlertOk';
 
 function DocsWrite({ onDocumentHandle, id }) {
   const nameInput = useRef();
@@ -57,7 +58,7 @@ function DocsWrite({ onDocumentHandle, id }) {
         }
       });
     } else {
-      window.alert('제목과 내용을 모두 채워주세요!');
+      SweetAlertOk('error', '제목과 내용을 모두 채워주세요!');
     }
   };
 
@@ -127,7 +128,8 @@ function DocsWrite({ onDocumentHandle, id }) {
                 paddingLeft: '20px',
               }}
             >
-              파일 개수의 제한은 없으나 전체 파일 용량은 총 30MB로 제한됩니다.
+              파일 개수의 제한은 없으나 전체 파일 용량은 총 30MB로 제한됩니다. (
+              xls, doc, ppt, pdf, hwp){' '}
             </button>
             <button
               type="button"

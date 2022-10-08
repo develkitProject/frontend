@@ -9,11 +9,12 @@ import {
 } from '../../redux/modules/workspaces';
 import UpdateSpaceModal from '../../common/modal/UpdateSpaceModal';
 import { StContent, StIntroContainer, StTitle } from '../style';
+import { SweetAlertConfirmHook } from '../../common/elements/SweetAlertConfirm';
 
 export default function ProjectInfo({ id, user }) {
   const navigate = useNavigate();
 
-  const { data, error, isLoading, refetch } = useGetWorkspaceInfoQuery(id);
+  const { data, error, isLoading } = useGetWorkspaceInfoQuery(id);
   const info = data?.data;
   const leaderInfo = data?.data?.createUserEmail;
   const userInfo = user?.username;
@@ -22,20 +23,35 @@ export default function ProjectInfo({ id, user }) {
   const handleClose = () => {
     setUpdateOpen(false);
   };
-
   const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
-  const deleteWorkSpace = (id) => {
-    if (window.confirm('정말 지우시겠습니까?')) {
-      deleteWorkSpaces(id);
-      navigate('/workspace');
+
+  const delProjectFunc = () => {
+    deleteWorkSpaces(id);
+    navigate('/workspace');
+  };
+
+  const deleteWorkSpace = () => {
+    // eslint-disable-next-line no-empty
+    if (
+      SweetAlertConfirmHook('정말 프로젝트를 삭제하시겠습니까?', delProjectFunc)
+    ) {
+      // eslint-disable-next-line no-empty
     }
   };
 
   const [quitWorkSpaces] = useQuitWorkSpaceMutation();
+
+  const quitWorkspaceFunc = (id) => {
+    quitWorkSpaces(id);
+    navigate('/workspace');
+  };
+
   const quitWorkSpace = (id) => {
-    if (window.confirm('정말 탈퇴하시겠습니까?')) {
-      quitWorkSpaces(id);
-      navigate('/workspace');
+    // eslint-disable-next-line no-empty
+    if (
+      SweetAlertConfirmHook('정말 탈퇴하시겠습니까?', quitWorkspaceFunc, id)
+    ) {
+      // eslint-disable-next-line no-empty
     }
   };
 

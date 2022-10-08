@@ -17,13 +17,14 @@ function WorkSpace() {
   const { data, error, isLoading, refetch } = useGetWorkspacesQuery();
   const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
   const workspaces = data?.data;
+  const [workSpaces, setWorkSpaces] = useState();
   const cookies = getCookieToken();
   const [createOpen, setCreateOpen] = useState(false);
   const [deleteButton, setDeletebutton] = useState(true);
 
   useEffect(() => {
-    refetch();
-  }, [data, refetch]);
+    setWorkSpaces(workspaces);
+  }, [data]);
 
   return (
     <>
@@ -44,7 +45,7 @@ function WorkSpace() {
               </>
             ) : data ? (
               <>
-                {workspaces
+                {workSpaces
                   ?.slice(0)
                   .reverse()
                   .map((data, i) => {

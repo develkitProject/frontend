@@ -6,6 +6,7 @@ import { StButton } from '../../account/login/style';
 import imgupload from '../img/imgupload.svg';
 import CloseButton from '../elements/CloseButton';
 import { useAddWorkSpacesMutation } from '../../redux/modules/workspaces';
+import { SweetAlertHook } from '../elements/SweetAlert';
 
 const reducer = (state, action) => {
   return {
@@ -42,10 +43,10 @@ function CreateSpaceModal({ onClose }) {
         content,
       };
       addWorkSpaces(obj);
-      window.alert('프로젝트가 생성되었습니다!');
+      SweetAlertHook(2000, 'success', '프로젝트가 생성되었습니다!');
       handleClose();
     } else {
-      window.alert('프로젝트 제목과 소개를 모두 채워주세요!');
+      alert('프로젝트 이름과 소개를 모두 채워주세요!');
     }
   };
 
