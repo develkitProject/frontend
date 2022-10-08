@@ -44,27 +44,6 @@
 <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/> <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=Git&logoColor=white"/> <img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=Notion&logoColor=white"/> <img src="https://img.shields.io/badge/Slack-4A154B?style=flat-square&logo=Slack&logoColor=white"/> <img src="https://img.shields.io/badge/Figma-F24E1E?style=flat-square&logo=Figma&logoColor=white"/> 
 <br/><br/>
 
-### 🗼서비스 아키텍쳐
--------------------------------------------
-<img width="895" alt="디벨킷아키텍처" src="https://user-images.githubusercontent.com/70882917/193648270-6f9f85d4-dc2c-41be-ad19-386deafd5012.png">
-<br/><br/>
-
-### 📜 API
--------------------------------------------
-[🗒 API 설계](https://www.notion.so/379722be5a5f4ff4a4a61a0b5e72d244?v=7ebf5e46885447629e6cd31fab990a9d)
-<br/><br/>
-
-### 💻 기술적 의사 결정
--------------------------------------------
-|기술명|이유|
-|:---|:---|
-|React|본 서비스가 컴포넌트 단위로 변동되는 것이 UX적으로 좋은 것을 고려하여 컴포넌트를 통하여 웹 페이지를 효율적으로 개발 및 관리할 수 있는 React를 선택|
-|CloudFront|사용자에게 제공되는 정적 컨텐츠의 전송 속도를 높이고 HTTPS를 적용시키기 위해 선택|
-|RTK Query| 상태관리에서 더 나은 캐싱 자동화, 데이터 패칭 로직 단순화를 구현<br> RTK의 연장선으로 쓸 수 있어서 추가 라이브러리가 필요 없고, REST API가 기본적으로 내장되어 있어서 구현이 편리한 점을 고려하여 선택<br> 하나의 모듈(createAPI)을 중심으로 관련 코드를 모두 작성할 수 있어서 유지 보수가 편한 것을 고려하여 선택<br>|
-|Stomp,Sock.Js|stomp는 단순 (또는 스트리밍) 텍스트 지향 메시징 프로토콜 spring에 종속적<br> 구독방식으로 사용 중|
-
-<br/><br/>
-
 ### 👨‍🚀주요 기능
 -------------------------------------------------------
 [게스트로그인] 회원가입하지 않은 사용자가 서비스를 체험해 볼 수 있는 기능<br/>
@@ -88,6 +67,27 @@
 
 <br/><br/>
 
+
+### 🗼서비스 아키텍쳐
+-------------------------------------------
+<img width="895" alt="디벨킷아키텍처" src="https://user-images.githubusercontent.com/70882917/193648270-6f9f85d4-dc2c-41be-ad19-386deafd5012.png">
+<br/><br/>
+
+### 📜 API
+-------------------------------------------
+[🗒 API 설계](https://www.notion.so/379722be5a5f4ff4a4a61a0b5e72d244?v=7ebf5e46885447629e6cd31fab990a9d)
+<br/><br/>
+
+### 💻 기술적 의사 결정
+-------------------------------------------
+|기술명|이유|
+|:---|:---|
+|React|본 서비스가 컴포넌트 단위로 변동되는 것이 UX적으로 좋은 것을 고려하여 컴포넌트를 통하여 웹 페이지를 효율적으로 개발 및 관리할 수 있는 React를 선택|
+|CloudFront|사용자에게 제공되는 정적 컨텐츠의 전송 속도를 높이고 HTTPS를 적용시키기 위해 선택|
+|RTK Query| 상태관리에서 더 나은 캐싱 자동화, 데이터 패칭 로직 단순화를 구현<br> RTK의 연장선으로 쓸 수 있어서 추가 라이브러리가 필요 없고, REST API가 기본적으로 내장되어 있어서 구현이 편리한 점을 고려하여 선택<br> 하나의 모듈(createAPI)을 중심으로 관련 코드를 모두 작성할 수 있어서 유지 보수가 편한 것을 고려하여 선택<br>|
+|Stomp,Sock.Js|stomp는 단순 (또는 스트리밍) 텍스트 지향 메시징 프로토콜 spring에 종속적<br> 구독방식으로 사용 중|
+
+<br/><br/>
 
 ### ⛑트러블 슈팅
 ----------------------------------------------------
