@@ -68,7 +68,7 @@ function NoticeList({
       id,
     };
     await getNextNotice(obj).then((res) => {
-      if (res?.data.data.length !== 0) {
+      if (res.data.data.length !== 0) {
         setPrevNotices((prevNotices) => [...prevNotices, ...res.data.data]);
       }
     });

@@ -40,7 +40,7 @@ function CalendarModal({ onClose, id }) {
       SweetAlertHook(2000, 'success', '일정이 생성되었습니다!');
     } else {
       // eslint-disable-next-line no-alert
-      SweetAlertHook(2000, 'error', '빈칸을 모두 채워주세요');
+      alert('빈칸을 모두 채워주세요!');
     }
   };
 

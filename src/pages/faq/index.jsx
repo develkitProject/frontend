@@ -3,7 +3,7 @@ import FaqContents from './components/FaqContent';
 import FaqIcon from './components/FaqIcon';
 
 import * as S from './style';
-import useShowFaq from './useShowFaq';
+import useShowFaq from './hooks/useShowFaq';
 
 export default function FAQPage() {
   const { questions, handleShowQuestions, handleCloseQuestions } = useShowFaq();
