@@ -6,7 +6,7 @@ import {
 } from '../../../redux/modules/notices';
 import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 import { SweetAlertConfirmHook } from '../../../common/elements/SweetAlertConfirm';
-import useObserver from '../../hooks/useObserver';
+import useObserver from '../../../common/hooks/useObserver';
 
 function NoticeList({
   user,
