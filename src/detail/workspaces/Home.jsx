@@ -10,7 +10,6 @@ export default function Home({ id, onClickMenu }) {
   const [invitationCodeOpen, setInvitationCodeOpen] = useState(false);
   const { data, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
   const { data: docdata } = useGetDocQuery(id);
-  const [prevNotice, setPrevNotice] = useState(null);
   const firstNotice = data?.data.notices;
   const fourDocuments = docdata?.data?.slice(0, 4);
   const title = data?.data?.workspaces?.title;

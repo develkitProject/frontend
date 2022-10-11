@@ -8,7 +8,6 @@ function Address({ data_1, error_1, isLoading_1 }) {
   const id = Number(params.id);
   const member = data_1?.data;
   const [members, setMembers] = useState(member);
-  const textRef = useRef(null);
   const target = useRef(null);
   const [getNextMember] = useGetNextMemberMutation();
 
