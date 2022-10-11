@@ -5,7 +5,6 @@ import {
   useGetWorkspacesQuery,
   useDeleteWorkSpacesMutation,
 } from '../redux/modules/workspaces';
-import useModalOverlay from '../account/signup/hooks/useModalOverlay';
 import Circle from '../common/elements/Circle';
 import CreateCard from '../components/CreateCard';
 import SpaceCard from '../components/SpaceCard';
