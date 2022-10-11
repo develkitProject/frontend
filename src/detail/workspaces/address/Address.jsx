@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useGetNextMemberMutation } from '../../../redux/modules/workspaces';
-import useObserver from '../../hooks/useObserver';
+import useObserver from '../../../common/hooks/useObserver';
 
 function Address({ data_1, error_1, isLoading_1 }) {
   const params = useParams();

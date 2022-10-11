@@ -9,7 +9,7 @@ import {
   useGetChatMessagesQuery,
   useNextChatMessagesMutation,
 } from '../redux/modules/chat';
-import useObserver from '../detail/hooks/useObserver';
+import useObserver from '../common/hooks/useObserver';
 import noteBook from '../common/img/notebook.png';
 
 function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
