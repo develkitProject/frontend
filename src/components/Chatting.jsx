@@ -9,12 +9,12 @@ import {
   useGetChatMessagesQuery,
   useNextChatMessagesMutation,
 } from '../redux/modules/chat';
+import useObserver from '../detail/hooks/useObserver';
 import noteBook from '../common/img/notebook.png';
 
 function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
   const [users, setUsers] = useState(null);
   const textRef = useRef(null);
-  const target = useRef(null);
   const { isOpen, toggle } = useModalOverlay();
   const { data, isLoading, refetch } = useGetChatMessagesQuery(id);
   const [nextgetChat] = useNextChatMessagesMutation();
@@ -26,26 +26,7 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
 
   // -----------------------------무한 스크롤----------------------------------------
 
-  useEffect(() => {
-    let observer;
-    if (target.current && !isLoading) {
-      observer = new IntersectionObserver(onIntersect);
-      observer.observe(target.current);
-    }
-    return () => observer && observer.disconnect();
-  }, [chatMessages]);
-
-  const onIntersect = (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          fetchMessage();
-        }, 300);
-      }
-    });
-  };
-
-  const fetchMessage = async () => {
+  const onFetchMessage = async () => {
     const last = chatMessages[chatMessages.length - 1];
     const obj = {
       message: last.message,
@@ -61,6 +42,12 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
       setPrevHeight(messageBoxRef.current.scrollHeight);
     }
   };
+
+  const { target } = useObserver({
+    fetcher: onFetchMessage,
+    dependency: chatMessages,
+    isLoading,
+  });
 
   function onMiniMode() {
     setMinimum(!minimum);

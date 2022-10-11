@@ -1,6 +1,7 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-export default function useObserver(a, b) {
+export default function useObserver(options) {
+  const { fetcher, dependency, isLoading } = options;
   const target = useRef(null);
 
   useEffect(() => {
@@ -10,17 +11,17 @@ export default function useObserver(a, b) {
       observer.observe(target.current);
     }
     return () => observer && observer.disconnect();
-  }, [chatMessages]);
+  }, [dependency]);
 
   const onIntersect = (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         setTimeout(() => {
-          fetchMessage();
+          fetcher();
         }, 300);
       }
     });
   };
 
-  return {};
+  return { target };
 }
