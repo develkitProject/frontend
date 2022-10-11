@@ -2,18 +2,18 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useGetNextMemberMutation } from '../../../redux/modules/workspaces';
+import useObserver from '../../hooks/useObserver';
 
 function Address({ data_1, error_1, isLoading_1 }) {
   const params = useParams();
   const id = Number(params.id);
   const member = data_1?.data;
   const [members, setMembers] = useState(member);
-  const target = useRef(null);
   const [getNextMember] = useGetNextMemberMutation();
 
   const cursorId = members[members.length - 1].user.id;
 
-  const NextMember = async () => {
+  const onFetchNextMember = async () => {
     try {
       const updateMember = {
         id,
@@ -29,24 +29,11 @@ function Address({ data_1, error_1, isLoading_1 }) {
     }
   };
 
-  useEffect(() => {
-    let observer;
-    if (target.current && !isLoading_1) {
-      observer = new IntersectionObserver(onIntersect);
-      observer.observe(target.current);
-    }
-    return () => observer && observer.disconnect();
-  }, [members]);
-
-  const onIntersect = (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          NextMember();
-        }, 300);
-      }
-    });
-  };
+  const { target } = useObserver({
+    fetcher: onFetchNextMember,
+    dependency: members,
+    isLoading: isLoading_1,
+  });
   return (
     <StWrapper>
       <StAddressDiv>

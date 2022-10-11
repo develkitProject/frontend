@@ -6,6 +6,7 @@ import {
 } from '../../../redux/modules/notices';
 import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 import { SweetAlertConfirmHook } from '../../../common/elements/SweetAlertConfirm';
+import useObserver from '../../hooks/useObserver';
 
 function NoticeList({
   user,
@@ -16,7 +17,7 @@ function NoticeList({
   error,
   isLoading,
 }) {
-  const target = useRef(null);
+  // const target = useRef(null);
   const userInfo = user?.username;
 
   const [prevNotices, setPrevNotices] = useState(notice);
@@ -38,29 +39,6 @@ function NoticeList({
     }
   };
 
-  useEffect(() => {
-    setPrevNotices(notice);
-  }, [data]);
-
-  useEffect(() => {
-    let observer;
-    if (target.current && !isLoading) {
-      observer = new IntersectionObserver(onIntersect);
-      observer.observe(target.current);
-    }
-    return () => observer && observer.disconnect();
-  }, [prevNotices]);
-
-  const onIntersect = (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          onFetchNotices();
-        }, 300);
-      }
-    });
-  };
-
   const onFetchNotices = async () => {
     const last = prevNotices[prevNotices.length - 1];
     const obj = {
@@ -73,6 +51,16 @@ function NoticeList({
       }
     });
   };
+
+  useEffect(() => {
+    setPrevNotices(notice);
+  }, [data]);
+
+  const { target } = useObserver({
+    fetcher: onFetchNotices,
+    dependency: prevNotices,
+    isLoading,
+  });
 
   return (
     <>
