@@ -36,5 +36,6 @@ module.exports = {
     'no-plusplus': 0,
     'react/no-unescaped-entities': 0,
     'no-undef': 0,
+    'import/no-unresolved': 'off',
   },
 };
