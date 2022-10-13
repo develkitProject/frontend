@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import React, { useState, useReducer } from 'react';
-import ReactQuill from 'react-quill';
+import React, { useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { useAddNoticeMutation } from '../../../redux/modules/notices';
 import NoticeEditor from './NoticeEditor';

@@ -3,7 +3,6 @@ import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginApi } from '../../data/login';
 import { setAccessToken } from '../../../Cookie';
-import { SweetAlertHook } from '../../../common/elements/SweetAlert';
 
 export default function useInputLogin() {
   const navigate = useNavigate();

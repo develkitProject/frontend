@@ -1,4 +1,4 @@
-import React, { useRef, useState, useReducer } from 'react';
+import React, { useRef, useReducer } from 'react';
 import styled from 'styled-components';
 import useChangeImage from '../../pages/mypage/hooks/useChangeImage';
 import ModalContainer from './ModalContainer';
