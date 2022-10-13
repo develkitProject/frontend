@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import BlackButton from '../../common/elements/BlackButton';
 import {
   useDeleteWorkSpacesMutation,

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   useDeleteNoticeMutation,
   useGetNextNoticeMutation,
@@ -17,7 +17,6 @@ function NoticeList({
   error,
   isLoading,
 }) {
-  // const target = useRef(null);
   const userInfo = user?.username;
 
   const [prevNotices, setPrevNotices] = useState(notice);

@@ -2,7 +2,6 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
-import { getCookieToken } from '../../../Cookie';
 
 function NoticeEditor({ value, setContent }) {
   const QuillRef = useRef();
