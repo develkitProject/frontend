@@ -1,8 +1,6 @@
 import styled from 'styled-components';
-import React, { useState, useReducer } from 'react';
-import ReactQuill from 'react-quill';
+import React, { useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
-import { useNavigate, useParams } from 'react-router-dom';
 import NoticeEditor from './NoticeEditor';
 import {
   useGetNoticeQuery,

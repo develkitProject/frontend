@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import React, { useState, useRef } from 'react';
 import 'react-quill/dist/quill.snow.css';
-import { useParams } from 'react-router-dom';
 import Editor from '../../../components/Editor';
 import { Overlay } from './DocsWrite';
 import Circle from '../../../common/elements/Circle';
