@@ -46,9 +46,7 @@ export const docsApi = coreApi.injectEndpoints({
           url: `/api/workspaces/${formData.get('id')}/docs`,
           method: 'POST',
           body: formData,
-          headers: {
-            Authorization: getCookieToken(),
-          },
+          headers,
         };
       },
       invalidatesTags: ['Docs'],
@@ -61,9 +59,7 @@ export const docsApi = coreApi.injectEndpoints({
           url: `/api/images`,
           method: 'POST',
           body: formData,
-          headers: {
-            Authorization: getCookieToken(),
-          },
+          headers,
         };
       },
       invalidatesTags: ['Docs'],

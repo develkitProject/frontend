@@ -45,15 +45,16 @@ function NoticeList({
       id,
     };
     await getNextNotice(obj).then((res) => {
-      if (res.data.data.length !== 0) {
-        setPrevNotices((prevNotices) => [...prevNotices, ...res.data.data]);
+      const nextNotices = res.data.data;
+      if (nextNotices.length !== 0) {
+        setPrevNotices((prevNotices) => [...prevNotices, ...nextNotices]);
       }
     });
   };
 
   useEffect(() => {
     setPrevNotices(notice);
-  }, [data]);
+  }, [notice]);
 
   const { target } = useObserver({
     fetcher: onFetchNotices,
