@@ -12,21 +12,22 @@ import {
 import useObserver from '../common/hooks/useObserver';
 import noteBook from '../common/img/notebook.png';
 
-function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
+function Chatting({ title, id, stompClient, headers, user }) {
   const [users, setUsers] = useState(null);
   const textRef = useRef(null);
+  const messageBoxRef = useRef(null);
   const { isOpen, toggle } = useModalOverlay();
   const { data, isLoading, refetch } = useGetChatMessagesQuery(id);
   const [nextgetChat] = useNextChatMessagesMutation();
   const [Opacity, setOpacity] = useState(false);
   const [minimum, setMinimum] = useState(false);
-  const [prevHeight, setPrevHeight] = useState(null);
+  const [prevHeight, setPrevHeight] = useState(0);
   const messageList = data?.data;
   const [chatMessages, setChatMessages] = useState([]);
 
   // -----------------------------무한 스크롤----------------------------------------
 
-  const onFetchMessage = async () => {
+  const onFetchMessage = () => {
     const last = chatMessages[chatMessages.length - 1];
     const obj = {
       message: last.message,
@@ -35,7 +36,8 @@ function Chatting({ title, id, stompClient, headers, messageBoxRef, user }) {
       id,
     };
     if (prevHeight !== messageBoxRef.current.scrollHeight) {
-      await nextgetChat(obj).then((res) =>
+      // console.log(prevHeight, messageBoxRef.current.scrollHeight);
+      nextgetChat(obj).then((res) =>
         setChatMessages((chatMessages) => [...chatMessages, ...res.data.data]),
       );
       setPrevHeight(messageBoxRef.current.scrollHeight);
