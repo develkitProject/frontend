@@ -29,7 +29,6 @@
 |임준철|[https://github.com/cheoljun0422](https://github.com/cheoljun0422)|BE/Spring|
 |류현VL|[https://github.com/LuisKlopp](https://github.com/LuisKlopp)|FE/React|
 |이지혜|[https://github.com/G-Hae](https://github.com/G-Hae)|FE/React|
-|원동환|[https://github.com/endol007](https://github.com/endol007)|FE/Supporter|
 |김소정|[https://github.com/kimsojeong01](https://github.com/kimsojeong01)|Designer|
 
 <br/><br/>
