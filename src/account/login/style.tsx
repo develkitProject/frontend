@@ -85,7 +85,7 @@ export const StButton = styled.button`
   margin-top: 10px;
 `;
 
-export const StMent = styled.span`
+export const StMent = styled.span<{ fontColor: string }>`
   color: ${(props) => props.fontColor};
   font-family: 'Consolas';
   font-size: 22px;

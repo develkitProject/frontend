@@ -13,16 +13,7 @@ module.exports = {
       'error',
       { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
     ],
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-      },
-    ],
+    'import/extensions': ['off'],
     'react/react-in-jsx-scope': 0,
     'no-unused-vars': 1,
     'import/no-named-as-default-member': 0,
