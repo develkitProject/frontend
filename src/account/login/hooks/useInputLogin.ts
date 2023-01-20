@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react';
-
 import { useNavigate } from 'react-router-dom';
 import { loginApi } from '../../data/login';
 import { setAccessToken } from '../../../Cookie';
@@ -12,16 +11,16 @@ export default function useInputLogin() {
   });
 
   const onChangeUserInputs = useCallback(
-    (e) => {
+    (e: { target: { name: string; value: string } }) => {
       const { name, value } = e.target;
       setInputs({
         ...inputs,
         [name]: value,
       });
+      return undefined;
     },
     [inputs],
   );
-
   // eslint-disable-next-line consistent-return
   const onClickLogin = useCallback(() => {
     const { username, password } = inputs;
@@ -48,7 +47,7 @@ export default function useInputLogin() {
   }, [inputs, navigate]);
 
   return {
-    onClickLogin,
     onChangeUserInputs,
+    onClickLogin,
   };
 }

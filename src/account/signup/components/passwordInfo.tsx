@@ -1,6 +1,11 @@
+import React from 'react';
 import styled from 'styled-components';
 
-export default function PasswordInfo({ isOpen }) {
+type IsOpen = {
+  isOpen: boolean;
+};
+
+export default function PasswordInfo({ isOpen }: IsOpen) {
   return (
     <>
       {isOpen && (
