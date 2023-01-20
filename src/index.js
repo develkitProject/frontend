@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import GlobalStyle from './GlobalStyle';
+import GlobalStyle from './GlobalStyle.tsx';
 import store from './redux/config/store';
 import ScrollToTop from './common/hooks/useScrollTop';
 
