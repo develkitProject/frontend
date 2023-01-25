@@ -36,7 +36,7 @@ function Login() {
     dispatch(setIsSignUpModal(true));
   }, [dispatch]);
 
-  const handleLogin = () => {
+  const handleLogin = (): void => {
     window.location.href = KAKAO_AUTH_URL;
   };
 
@@ -107,7 +107,7 @@ function Login() {
             <KakaoDiv style={{ textAlign: 'center' }}>
               ---------------------------------- 또는
               ----------------------------------
-              <KakaoLogin onClick={handleLogin} style={{ width: '100%' }} />
+              <KakaoLogin onClick={handleLogin} />
               <StMent fontColor="#999999" style={{ fontSize: '12px' }}>
                 회원가입 시 디벨킷의 서비스 이용 약관과 개인정보 보호정책에
                 동의하게 됩니다.
