@@ -66,16 +66,15 @@ function Chatting({ title, id, stompClient, headers, user }) {
     refetch();
   }, [messageList]);
 
-  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (prevHeight) {
       const currentHeight = messageBoxRef.current.scrollHeight - prevHeight;
       messageBoxRef.current.scrollTo(0, currentHeight);
-      return setPrevHeight(null);
+      setPrevHeight(0);
+      // return setPrevHeight(0);
     }
     messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
   }, [chatMessages]);
-
   // -----------------------------무한 스크롤----------------------------------------
 
   const userArray = [...new Set(users)];
