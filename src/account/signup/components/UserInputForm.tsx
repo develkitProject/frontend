@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { ChangeEventHandler, FormEvent } from 'react';
 
 import BasicInput from '../../../common/elements/BasicInput';
 import Icon from '../../../common/elements/Icon';
 import useModalOverlay from '../hooks/useModalOverlay';
 import PasswordInfo from './passwordInfo';
 
-function UserInputForm({ onChange, errorStatus, successStatus }) {
+interface FunctionProps {
+  errorStatus: {
+    isNickname: boolean;
+    isEmail: boolean;
+    isPassword: boolean;
+    isPasswordConfirm: boolean;
+  };
+  successStatus: {
+    isNickname: boolean;
+    isEmail: boolean;
+    isPassword: boolean;
+    isPasswordConfirm: boolean;
+  };
+  onChange: (e: FormEvent<HTMLInputElement>) => void;
+}
+
+function UserInputForm({
+  onChange,
+  errorStatus,
+  successStatus,
+}: FunctionProps) {
   const { isOpen, toggle } = useModalOverlay();
 
   return (
@@ -19,6 +39,10 @@ function UserInputForm({ onChange, errorStatus, successStatus }) {
         isError={errorStatus.isNickname}
         placeholder="닉네임"
         onChange={onChange}
+        // type={''}
+        marginBottom={''}
+        // value={''}
+        // maxLength={0}
       />
       <BasicInput
         marginTop="20px"
@@ -29,6 +53,10 @@ function UserInputForm({ onChange, errorStatus, successStatus }) {
         errorText="이메일 형식이 아니거나 중복되었습니다!"
         placeholder="이메일을 입력해주세요!"
         onChange={onChange}
+        // type={''}
+        marginBottom={''}
+        // value={''}
+        // maxLength={0}
       />
       <div>
         <BasicInput
@@ -45,6 +73,9 @@ function UserInputForm({ onChange, errorStatus, successStatus }) {
           placeholder="비밀번호를 입력해주세요!"
           errorText="비밀번호는 8~20자 내외로 영어+숫자+특수문자 조합입니다."
           onChange={onChange}
+          marginBottom={''}
+          // value={''}
+          // maxLength={0}
         />
         <PasswordInfo isOpen={isOpen} />
       </div>
@@ -59,6 +90,8 @@ function UserInputForm({ onChange, errorStatus, successStatus }) {
         errorText="비밀번호를 다시 확인해주세요"
         placeholder="비밀번호를 한번 더 입력해주세요!"
         onChange={onChange}
+        // value={''}
+        // maxLength={0}
       />
     </form>
   );

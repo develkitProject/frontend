@@ -1,3 +1,8 @@
+import { ReactEventHandler } from 'react';
+
+interface OnClick {
+  onClick: ReactEventHandler;
+}
 const Icon = {
   CheckSuccess: () => (
     <svg
@@ -13,7 +18,7 @@ const Icon = {
       />
     </svg>
   ),
-  PasswordInfo: ({ onClick }) => (
+  PasswordInfo: ({ onClick }: OnClick) => (
     <svg
       onClick={onClick}
       width="18"

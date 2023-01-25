@@ -27,7 +27,7 @@ function Login() {
 
   const modalRef = useRef(null);
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     dispatch(setIsLoginModal(false));
   };
 
@@ -113,7 +113,7 @@ function Login() {
                 동의하게 됩니다.
               </StMent>
             </KakaoDiv>
-            <CloseButton handleClose={handleClose} />
+            <CloseButton onClose={handleClose} />
           </LoginWrap>
         </ModalWrap>
       </Overlay>
