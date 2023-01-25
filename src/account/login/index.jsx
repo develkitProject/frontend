@@ -36,7 +36,7 @@ function Login() {
     dispatch(setIsSignUpModal(true));
   }, [dispatch]);
 
-  const handleLogin = (): void => {
+  const handleLogin = () => {
     window.location.href = KAKAO_AUTH_URL;
   };
 
