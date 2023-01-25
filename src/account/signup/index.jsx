@@ -71,7 +71,7 @@ function SignupModal({ onClose }) {
               </St.Text>
             </St.ButtonDiv>
           </St.LoginWrap>
-          <CloseButton handleClose={handleClose} />
+          <CloseButton onClose={handleClose} />
         </St.ModalWrap>
       </St.Overlay>
     </ModalContainer>

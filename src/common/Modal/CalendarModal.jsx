@@ -24,9 +24,9 @@ function CalendarModal({ onClose, id }) {
     setDate(e.target.value);
   };
 
-  const handleClose = useCallback(() => {
-    onClose?.();
-  }, [onClose]);
+  // const handleClose = useCallback(() => {
+  //   onClose?.();
+  // }, [onClose]);
 
   const handleSubmit = () => {
     const data = {
