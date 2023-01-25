@@ -2,14 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import KakaoIcon from '../common/img/kakaoIcon.png';
 
-const { Kakao } = window;
+const { Kakao }: Window = window;
 const loginWithKakao = () => {
   Kakao.Auth.authorize({
     redirectUri: 'https://d-velkit.com/kakao',
   });
 };
 
-function KakaoLogin() {
+type Props = {
+  onClick: () => void;
+};
+
+function KakaoLogin({ onClick }: Props) {
   return (
     <div
       style={{
