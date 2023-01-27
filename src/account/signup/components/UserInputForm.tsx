@@ -3,21 +3,12 @@ import React, { ChangeEventHandler, FormEvent } from 'react';
 import BasicInput from '../../../common/elements/BasicInput';
 import Icon from '../../../common/elements/Icon';
 import useModalOverlay from '../hooks/useModalOverlay';
+import { IState } from '../hooks/useInputStatus';
 import PasswordInfo from './passwordInfo';
 
 interface FunctionProps {
-  errorStatus: {
-    isNickname: boolean;
-    isEmail: boolean;
-    isPassword: boolean;
-    isPasswordConfirm: boolean;
-  };
-  successStatus: {
-    isNickname: boolean;
-    isEmail: boolean;
-    isPassword: boolean;
-    isPasswordConfirm: boolean;
-  };
+  errorStatus: IState;
+  successStatus: IState;
   onChange: (e: FormEvent<HTMLInputElement>) => void;
 }
 

@@ -12,8 +12,8 @@ interface IProps {
   // eslint-disable-next-line no-restricted-globals
   name: string | undefined;
   label: string | ReactNode;
-  isError: boolean;
-  isSuccess: boolean;
+  isError: boolean | null;
+  isSuccess: boolean | null;
   errorText: string;
   value?: string;
   maxLength?: number;

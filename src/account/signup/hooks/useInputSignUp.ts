@@ -4,6 +4,7 @@ import {
   ReactEventHandler,
   ChangeEvent,
   ChangeEventHandler,
+  FormEvent,
 } from 'react';
 import { useDispatch } from 'react-redux';
 import {
@@ -22,11 +23,11 @@ export default function useInputSignUp() {
     passwordConfirm: '',
   });
 
-  const [getSignUp] = useGetSignUpMutation();
+  const [getSignUp, { error, isLoading }] = useGetSignUpMutation();
 
   const onChangeSignUpInputs = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
+    (e: FormEvent<HTMLInputElement>) => {
+      const { name, value } = e.target as HTMLInputElement;
 
       if (timer) {
         clearTimeout(timer);
@@ -46,13 +47,16 @@ export default function useInputSignUp() {
     [signUpInputs],
   );
 
+  //     data :
+  // {username: "fbgus3333333@dd.do", profileImage: null}
+
   const handleSignUp = useCallback(() => {
     const { nickname, email, password } = signUpInputs;
     getSignUp({
       username: email,
       nickname,
       password,
-    }).then((res) => {
+    }).then((res: any) => {
       if (res.data) {
         alert('회원가입에 성공하셨습니다. 환영합니다!');
         dispatch(setIsLoginModal(true));

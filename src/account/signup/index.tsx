@@ -26,9 +26,10 @@ function SignupModal() {
 
   useEffect(() => {
     const $body = document.querySelector('body');
+    if (!$body) return () => {};
     $body.style.overflow = 'hidden';
     // eslint-disable-next-line no-return-assign
-    return () => ($body.style.overflow = 'auto');
+    return (): string => ($body.style.overflow = 'auto');
   }, []);
 
   // useOutSideClick(modalRef, handleClose);
