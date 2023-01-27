@@ -11,7 +11,7 @@ import CloseButton from '../../common/elements/CloseButton';
 import * as St from './style';
 import { setIsSignUpModal } from '../../redux/modules/global';
 
-function SignupModal({ onClose }) {
+function SignupModal() {
   const dispatch = useDispatch();
 
   const { signUpInputs, onChangeSignUpInputs, handleSignUp } = useInputSignUp();

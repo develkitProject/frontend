@@ -1,4 +1,10 @@
-import { useState, useCallback } from 'react';
+import {
+  useState,
+  useCallback,
+  ReactEventHandler,
+  ChangeEvent,
+  ChangeEventHandler,
+} from 'react';
 import { useDispatch } from 'react-redux';
 import {
   setIsLoginModal,
@@ -8,7 +14,7 @@ import { useGetSignUpMutation } from '../../../redux/query/account';
 
 export default function useInputSignUp() {
   const dispatch = useDispatch();
-  const [timer, setTimer] = useState(0);
+  const [timer, setTimer] = useState<number>(0);
   const [signUpInputs, setSignUpInputs] = useState({
     nickname: '',
     email: '',
@@ -16,16 +22,16 @@ export default function useInputSignUp() {
     passwordConfirm: '',
   });
 
-  const [getSignUp, { data, isSuccess, isFail }] = useGetSignUpMutation();
+  const [getSignUp] = useGetSignUpMutation();
 
   const onChangeSignUpInputs = useCallback(
-    (e) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
 
       if (timer) {
         clearTimeout(timer);
       }
-      const newTimer = setTimeout(async () => {
+      const newTimer = window.setTimeout(async () => {
         try {
           setSignUpInputs({
             ...signUpInputs,
