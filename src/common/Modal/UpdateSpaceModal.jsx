@@ -103,7 +103,7 @@ function UpdateSpaceModal({ onClose }) {
               프로젝트 수정하기
             </StButton>
           </Wrapper>
-          <CloseButton handleClose={handleClose}>X</CloseButton>
+          <CloseButton onClose={handleClose}>X</CloseButton>
           <input
             style={{ display: 'none' }}
             accept="image/*"

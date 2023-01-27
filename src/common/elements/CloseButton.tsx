@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { ReactEventHandler } from 'react';
 
 import styled from 'styled-components';
 
-export default function CloseButton({ handleClose }) {
+interface OnClose {
+  onClose: ReactEventHandler;
+}
+
+export default function CloseButton({ onClose }: OnClose) {
   return (
     <>
-      <XButton onClick={handleClose} type="button">
+      <XButton onClick={onClose} type="button">
         X
       </XButton>
     </>

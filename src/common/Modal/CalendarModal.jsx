@@ -1,6 +1,6 @@
 import React, { useRef, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import dayjs from 'dayjs';
+import useModalOverlay from '../../account/signup/hooks/useModalOverlay';
 import BasicInput from '../elements/BasicInput';
 import CloseButton from '../elements/CloseButton';
 import Button1 from '../elements/Button';
@@ -14,6 +14,7 @@ function CalendarModal({ onClose, id }) {
   const [state, setState] = useState('');
   const [date, setDate] = useState('');
   const [addSchedules] = useAddSchedulesMutation();
+  // const { handleClose } = useOnClose();
 
   const onChange = (e) => {
     setState(e.target.value);
@@ -23,9 +24,9 @@ function CalendarModal({ onClose, id }) {
     setDate(e.target.value);
   };
 
-  const handleClose = useCallback(() => {
-    onClose?.();
-  }, [onClose]);
+  // const handleClose = useCallback(() => {
+  //   onClose?.();
+  // }, [onClose]);
 
   const handleSubmit = () => {
     const data = {
@@ -48,7 +49,7 @@ function CalendarModal({ onClose, id }) {
     <ModalContainer>
       <Overlay>
         <ModalWrap ref={modalRef}>
-          <CloseButton handleClose={handleClose} />
+          <CloseButton onClose={onClose} />
           <StProject>프로젝트 일정 만들기</StProject>
           <StMent>
             프로젝트 일정관리에서 프로젝트 관련 일정을 추가할 수 있습니다

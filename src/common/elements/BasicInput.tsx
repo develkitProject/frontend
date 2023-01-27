@@ -1,7 +1,23 @@
-import { useCallback } from 'react';
+import { ChangeEvent, FormEventHandler, ReactNode, useCallback } from 'react';
 
 import styled from 'styled-components';
 import Icon from './Icon';
+
+interface IProps {
+  placeholder: string;
+  type?: string;
+  marginTop: string;
+  marginBottom: string;
+  onChange: FormEventHandler<HTMLInputElement>;
+  // eslint-disable-next-line no-restricted-globals
+  name: string | undefined;
+  label: string | ReactNode;
+  isError: boolean | null;
+  isSuccess: boolean | null;
+  errorText: string;
+  value?: string;
+  maxLength?: number;
+}
 
 export default function BasicInput({
   placeholder,
@@ -16,8 +32,8 @@ export default function BasicInput({
   errorText,
   value,
   maxLength,
-}) {
-  const setBorderStyle = useCallback(() => {
+}: IProps) {
+  const setBorderStyle = useCallback((): string => {
     if (isSuccess) return '1px solid #00A99D';
     if (isError) return '1px solid #E75E5E';
     return '1px solid #999999';
@@ -33,7 +49,6 @@ export default function BasicInput({
           placeholder={placeholder}
           onChange={onChange}
           value={value}
-          borderStyle={setBorderStyle()}
           maxLength={maxLength}
         />
         {isSuccess && <Icon.CheckSuccess />}
@@ -47,7 +62,7 @@ export default function BasicInput({
   );
 }
 
-const Spacer = styled.div`
+const Spacer = styled.div<{ marginTop: string; marginBottom: string }>`
   margin-top: ${(props) => props.marginTop};
   margin-bottom: ${(props) => props.marginBottom};
 `;
@@ -60,7 +75,7 @@ const LabelText = styled.span`
   text-align: left;
 `;
 
-const InputWrapper = styled.div`
+const InputWrapper = styled.div<{ borderStyle: string }>`
   border: ${(props) => props.borderStyle};
   line-height: 60px;
   border-radius: 10px;

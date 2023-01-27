@@ -90,7 +90,7 @@ function CreateSpaceModal({ onClose }) {
               프로젝트 생성하기
             </StButton>
           </Wrapper>
-          <CloseButton handleClose={handleClose}>X</CloseButton>
+          <CloseButton onClose={handleClose}>X</CloseButton>
           <input
             style={{ display: 'none' }}
             accept="image/*"

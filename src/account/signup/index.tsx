@@ -11,7 +11,7 @@ import CloseButton from '../../common/elements/CloseButton';
 import * as St from './style';
 import { setIsSignUpModal } from '../../redux/modules/global';
 
-function SignupModal({ onClose }) {
+function SignupModal() {
   const dispatch = useDispatch();
 
   const { signUpInputs, onChangeSignUpInputs, handleSignUp } = useInputSignUp();
@@ -26,9 +26,10 @@ function SignupModal({ onClose }) {
 
   useEffect(() => {
     const $body = document.querySelector('body');
+    if (!$body) return () => {};
     $body.style.overflow = 'hidden';
     // eslint-disable-next-line no-return-assign
-    return () => ($body.style.overflow = 'auto');
+    return (): string => ($body.style.overflow = 'auto');
   }, []);
 
   // useOutSideClick(modalRef, handleClose);
@@ -71,7 +72,7 @@ function SignupModal({ onClose }) {
               </St.Text>
             </St.ButtonDiv>
           </St.LoginWrap>
-          <CloseButton handleClose={handleClose} />
+          <CloseButton onClose={handleClose} />
         </St.ModalWrap>
       </St.Overlay>
     </ModalContainer>

@@ -55,7 +55,13 @@ export const Button = styled.button`
   cursor: pointer;
 `;
 
-export const Text = styled.pre`
+interface IText {
+  color: string;
+  size: string;
+  bold?: string;
+}
+
+export const Text = styled.pre<IText>`
   color: ${(props) => props.color};
   font-size: ${(props) => props.size}px;
   font-weight: ${(props) => props.bold};
