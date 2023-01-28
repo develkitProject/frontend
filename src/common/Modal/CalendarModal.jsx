@@ -37,7 +37,7 @@ function CalendarModal({ onClose, id }) {
 
     if (state !== '' && date !== '') {
       addSchedules(data);
-      handleClose();
+      onClose();
       SweetAlertHook(2000, 'success', '일정이 생성되었습니다!');
     } else {
       // eslint-disable-next-line no-alert
