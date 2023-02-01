@@ -1,5 +1,6 @@
 import React, { useRef, useReducer } from 'react';
 import styled from 'styled-components';
+
 import useChangeImage from '../../pages/mypage/hooks/useChangeImage';
 import ModalContainer from './ModalContainer';
 import { StButton } from '../../account/login/style';
@@ -46,6 +47,7 @@ function CreateSpaceModal({ onClose }) {
       SweetAlertHook(2000, 'success', '프로젝트가 생성되었습니다!');
       handleClose();
     } else {
+      // eslint-disable-next-line
       alert('프로젝트 이름과 소개를 모두 채워주세요!');
     }
   };
