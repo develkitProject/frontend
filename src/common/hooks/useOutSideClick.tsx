@@ -1,8 +1,11 @@
-import { useEffect } from 'react';
+import React, { RefObject, useEffect, MouseEvent } from 'react';
 
-function useOutSideClick(ref, callback) {
+function useOutSideClick(
+  ref: RefObject<HTMLInputElement>,
+  callback: () => void,
+) {
   useEffect(() => {
-    const handelClick = (event) => {
+    const handelClick = (event: { target: any }) => {
       if (ref.current && !ref.current.contains(event.target)) {
         callback?.();
       }
