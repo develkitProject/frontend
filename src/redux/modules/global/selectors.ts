@@ -2,11 +2,11 @@
 import { createSelector } from 'reselect';
 
 export const selectIsLoginModal = createSelector(
-  (state) => state.global.isLoginModal,
+  (state: { global: { isLoginModal: any } }) => state.global.isLoginModal,
   (v) => v,
 );
 
 export const selectIsSignUpModal = createSelector(
-  (state) => state.global.isSignUpModal,
+  (state: { global: { isSignUpModal: any } }) => state.global.isSignUpModal,
   (v) => v,
 );
