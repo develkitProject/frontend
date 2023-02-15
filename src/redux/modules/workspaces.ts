@@ -92,7 +92,6 @@ export const workspaceApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      invalidatesTags: ['Workspaces'],
     }),
     // 프로젝트 가입 회원 조회
     getMemberList: builder.query({
@@ -114,7 +113,6 @@ export const workspaceApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      providesTags: ['Workspaces'],
     }),
 
     getWorkSpacesJoin: builder.mutation({

@@ -1,6 +1,5 @@
 import React, { useRef, useReducer } from 'react';
 import styled from 'styled-components';
-
 import useChangeImage from '../../pages/mypage/hooks/useChangeImage';
 import ModalContainer from './ModalContainer';
 import { StButton } from '../../account/login/style';
@@ -9,15 +8,20 @@ import CloseButton from '../elements/CloseButton';
 import { useAddWorkSpacesMutation } from '../../redux/modules/workspaces';
 import { SweetAlertHook } from '../elements/SweetAlert';
 
-const reducer = (state, action) => {
+interface Props {
+  title: string;
+  content: string;
+}
+
+const reducer = (state: Props, action: { name: string; value: string }) => {
   return {
     ...state,
     [action.name]: action.value,
   };
 };
 
-function CreateSpaceModal({ onClose }) {
-  const imgRef = useRef('');
+function CreateSpaceModal({ onClose }: { onClose: () => void }) {
+  const imgRef = useRef<HTMLInputElement>(null);
   const [addWorkSpaces] = useAddWorkSpacesMutation();
   const { onChangeImage, imageUrl } = useChangeImage();
 
@@ -27,14 +31,11 @@ function CreateSpaceModal({ onClose }) {
   });
 
   const { title, content } = state;
-  const onChange = (e) => {
+  const onChange = (e: { target: any }) => {
     setState(e.target);
   };
 
   const modalRef = useRef(null);
-  const handleClose = () => {
-    onClose?.();
-  };
 
   const handleSubmit = () => {
     if (title !== '' && content !== '') {
@@ -45,7 +46,7 @@ function CreateSpaceModal({ onClose }) {
       };
       addWorkSpaces(obj);
       SweetAlertHook(2000, 'success', '프로젝트가 생성되었습니다!');
-      handleClose();
+      onClose();
     } else {
       // eslint-disable-next-line
       alert('프로젝트 이름과 소개를 모두 채워주세요!');
@@ -64,7 +65,7 @@ function CreateSpaceModal({ onClose }) {
             <StInputTitle>커버 이미지</StInputTitle>
             <StImageBox
               src={imageUrl || imgupload}
-              onClick={() => imgRef.current.click()}
+              onClick={() => imgRef.current?.click()}
             />
             <StInputTitle>프로젝트 이름</StInputTitle>
             <StInput
@@ -92,16 +93,14 @@ function CreateSpaceModal({ onClose }) {
               프로젝트 생성하기
             </StButton>
           </Wrapper>
-          <CloseButton onClose={handleClose}>X</CloseButton>
+          <CloseButton onClose={onClose} />
           <input
             style={{ display: 'none' }}
             accept="image/*"
             id="upload-photo"
             name="upload-photo"
             type="file"
-            onChange={() => {
-              onChangeImage(imgRef);
-            }}
+            onChange={onChangeImage}
             ref={imgRef}
           />
         </ModalWrap>

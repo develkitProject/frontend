@@ -1,11 +1,10 @@
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useOutSideClick from '../hooks/useOutSideClick';
 import { useGetWorkSpacesJoinMutation } from '../../redux/modules/workspaces';
 import { getCookieToken } from '../../Cookie';
 import { SweetAlertHook } from '../elements/SweetAlert';
-import { SweetAlertOk } from '../elements/SweetAlertOk';
 
 function CodeConfirmModal({ onClose, spaceData }) {
   const modalRef = useRef(null);

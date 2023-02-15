@@ -5,6 +5,7 @@ import {
   useGetWorkspacesQuery,
   useDeleteWorkSpacesMutation,
 } from '../redux/modules/workspaces';
+import useModalOverlay from '../account/signup/hooks/useModalOverlay';
 import Circle from '../common/elements/Circle';
 import CreateCard from '../components/CreateCard';
 import SpaceCard from '../components/SpaceCard';
@@ -18,8 +19,8 @@ function WorkSpace() {
   const workspaces = data?.data;
   const [workSpaces, setWorkSpaces] = useState();
   const cookies = getCookieToken();
-  const [createOpen, setCreateOpen] = useState(false);
   const [deleteButton, setDeletebutton] = useState(true);
+  const { isOpen, open, close } = useModalOverlay();
 
   useEffect(() => {
     setWorkSpaces(workspaces);
@@ -33,7 +34,7 @@ function WorkSpace() {
         <StWrapper>
           <SpaceHeader />
           <CardWrapper>
-            <CreateCard createOpen={createOpen} setCreateOpen={setCreateOpen} />
+            <CreateCard open={open} />
             {error ? (
               <>에러가 발생하였습니다.</>
             ) : isLoading ? (
@@ -65,13 +66,7 @@ function WorkSpace() {
           {}
         </StWrapper>
       )}
-      {createOpen && (
-        <CreateSpaceModal
-          onClose={() => {
-            setCreateOpen(false);
-          }}
-        />
-      )}
+      {isOpen && <CreateSpaceModal onClose={close} />}
     </>
   );
 }

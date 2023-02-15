@@ -1,4 +1,10 @@
-import React, { useRef, useCallback, useEffect, useState } from 'react';
+import React, {
+  useRef,
+  useCallback,
+  useEffect,
+  useState,
+  ChangeEvent,
+} from 'react';
 import styled from 'styled-components';
 import useModalOverlay from '../../account/signup/hooks/useModalOverlay';
 import BasicInput from '../elements/BasicInput';
@@ -8,7 +14,7 @@ import ModalContainer from './ModalContainer';
 import { useAddSchedulesMutation } from '../../redux/modules/schedules';
 import { SweetAlertHook } from '../elements/SweetAlert';
 
-function CalendarModal({ onClose, id }) {
+function CalendarModal({ onClose, id }: { onClose: () => void; id: number }) {
   const modalRef = useRef(null);
 
   const [state, setState] = useState('');
@@ -16,11 +22,11 @@ function CalendarModal({ onClose, id }) {
   const [addSchedules] = useAddSchedulesMutation();
   // const { handleClose } = useOnClose();
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setState(e.target.value);
   };
 
-  const onChangeDate = (e) => {
+  const onChangeDate = (e: ChangeEvent<HTMLInputElement>) => {
     setDate(e.target.value);
   };
 

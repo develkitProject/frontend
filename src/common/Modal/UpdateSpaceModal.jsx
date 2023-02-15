@@ -110,9 +110,7 @@ function UpdateSpaceModal({ onClose }) {
             id="upload-photo"
             name="upload-photo"
             type="file"
-            onChange={() => {
-              onChangeImage(imgRef);
-            }}
+            onChange={onChangeImage}
             ref={imgRef}
           />
         </ModalWrap>

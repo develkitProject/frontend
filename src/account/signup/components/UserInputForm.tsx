@@ -31,7 +31,7 @@ function UserInputForm({
         placeholder="닉네임"
         onChange={onChange}
         // type={''}
-        marginBottom={''}
+        marginBottom=""
         // value={''}
         // maxLength={0}
       />
@@ -45,7 +45,7 @@ function UserInputForm({
         placeholder="이메일을 입력해주세요!"
         onChange={onChange}
         // type={''}
-        marginBottom={''}
+        marginBottom=""
         // value={''}
         // maxLength={0}
       />
@@ -64,7 +64,7 @@ function UserInputForm({
           placeholder="비밀번호를 입력해주세요!"
           errorText="비밀번호는 8~20자 내외로 영어+숫자+특수문자 조합입니다."
           onChange={onChange}
-          marginBottom={''}
+          marginBottom=""
           // value={''}
           // maxLength={0}
         />
