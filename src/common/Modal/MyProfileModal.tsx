@@ -1,12 +1,17 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import Draggable from 'react-draggable';
-import useGetUser from '../hooks/useGetUser';
+import { UserData } from '../../types/workspaces.types';
 import { removeCookieToken } from '../../Cookie';
 import useOutSideClick from '../hooks/useOutSideClick';
 
-function MyProfileModal({ onClose, userData }) {
+function MyProfileModal({
+  onClose,
+  userData,
+}: {
+  onClose: () => void;
+  userData: UserData;
+}) {
   const navigate = useNavigate();
   const modalRef = useRef(null);
   const logout = () => {
@@ -21,7 +26,7 @@ function MyProfileModal({ onClose, userData }) {
   const moveAndClose = useCallback(() => {
     navigate('/mypage');
     handleClose();
-  });
+  }, []);
 
   useOutSideClick(modalRef, handleClose);
 
@@ -44,7 +49,7 @@ function MyProfileModal({ onClose, userData }) {
             마이페이지
           </StButton>
           <StButton
-            bc="#999999"
+            borderColor="#999999"
             fontColor="#999999"
             onClick={() => {
               logout();
@@ -109,11 +114,19 @@ const StMent = styled.div`
   font-size: 16px;
 `;
 
-export const StButton = styled.button`
+interface Props {
+  borderColor?: string;
+  fontColor?: string;
+  color?: string;
+  border?: string;
+  fontHoverColor?: string;
+}
+
+export const StButton = styled.button<Props>`
   width: 78%;
   height: 5.5vh;
   border-radius: 20px;
-  border: 1.5px solid ${(props) => props.bc};
+  border: 1.5px solid ${(props) => props.borderColor};
   background-color: #ffffff;
   margin-top: 8px;
   margin-bottom: 8px;

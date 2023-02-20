@@ -1,23 +1,24 @@
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useOutSideClick from '../hooks/useOutSideClick';
 import { useGetWorkSpacesJoinMutation } from '../../redux/modules/workspaces';
-import { getCookieToken } from '../../Cookie';
 import { SweetAlertHook } from '../elements/SweetAlert';
-import { SweetAlertOk } from '../elements/SweetAlertOk';
+import type { Workspaces } from '../../types/workspaces.types';
 
-function CodeConfirmModal({ onClose, spaceData }) {
-  const modalRef = useRef(null);
+interface Props {
+  onClose?: () => void;
+  spaceData: Workspaces;
+}
+
+function CodeConfirmModal({ onClose, spaceData }: Props) {
+  const modalRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  const headers = {
-    Authorization: getCookieToken(),
-  };
+
   const [getWorkSpacesJoin, { error }] = useGetWorkSpacesJoinMutation();
   const handleClose = useCallback(() => {
     onClose?.();
   }, [onClose]);
-
   useOutSideClick(modalRef, handleClose);
 
   const onJoin = async () => {
@@ -126,7 +127,11 @@ const StMentDiv = styled.div`
   align-items: center;
 `;
 
-const StTitle = styled.div`
+const StTitle = styled.div<{
+  fontWeight?: string;
+  fontSize?: string;
+  fontColor?: string;
+}>`
   letter-spacing: -1px;
   font-weight: ${(props) => props.fontWeight};
   font-size: ${(props) => props.fontSize};
@@ -141,7 +146,7 @@ const StInfoDiv = styled.div`
   justify-content: center;
 `;
 
-const StImg = styled.div`
+const StImg = styled.div<{ img: string }>`
   margin-top: 8px;
   width: 150px;
   height: 135px;
@@ -177,7 +182,10 @@ const StButtonBox = styled.div`
   flex-direction: row;
 `;
 
-export const StButton = styled.button`
+export const StButton = styled.button<{
+  fontColor?: string;
+  buttonColor?: string;
+}>`
   width: 170px;
   margin-left: 10px;
   margin-right: 10px;

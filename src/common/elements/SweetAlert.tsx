@@ -1,6 +1,10 @@
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
-export const SweetAlertHook = (timer, icon, title) => {
+export const SweetAlertHook = (
+  timer: number,
+  icon: SweetAlertIcon,
+  title: string,
+) => {
   Swal.mixin({
     toast: true,
     position: 'top',
@@ -11,8 +15,5 @@ export const SweetAlertHook = (timer, icon, title) => {
       toast.addEventListener('mouseenter', Swal.stopTimer);
       toast.addEventListener('mouseleave', Swal.resumeTimer);
     },
-  }).fire({
-    icon,
-    title,
-  });
+  }).fire({ icon, title });
 };

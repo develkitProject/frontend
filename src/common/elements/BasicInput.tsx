@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEventHandler, ReactNode, useCallback } from 'react';
+import { FormEventHandler, ReactNode, useCallback } from 'react';
 
 import styled from 'styled-components';
 import Icon from './Icon';
@@ -7,19 +7,21 @@ interface IProps {
   placeholder: string;
   type?: string;
   marginTop: string;
-  marginBottom: string;
+  marginBottom?: string;
   onChange: FormEventHandler<HTMLInputElement>;
   // eslint-disable-next-line no-restricted-globals
-  name: string | undefined;
-  label: string | ReactNode;
-  isError: boolean | null;
-  isSuccess: boolean | null;
-  errorText: string;
+  name?: string;
+  label?: string | ReactNode;
+  isError?: boolean | null;
+  isSuccess?: boolean | null;
+  errorText?: string;
   value?: string;
   maxLength?: number;
+  width?: string;
 }
 
 export default function BasicInput({
+  width,
   placeholder,
   type,
   marginTop,
@@ -62,7 +64,7 @@ export default function BasicInput({
   );
 }
 
-const Spacer = styled.div<{ marginTop: string; marginBottom: string }>`
+const Spacer = styled.div<{ marginTop: string; marginBottom?: string }>`
   margin-top: ${(props) => props.marginTop};
   margin-bottom: ${(props) => props.marginBottom};
 `;

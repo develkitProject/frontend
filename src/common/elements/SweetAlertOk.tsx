@@ -1,6 +1,6 @@
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
-export const SweetAlertOk = (icon, title) => {
+export const SweetAlertOk = (icon: SweetAlertIcon, title: string) => {
   Swal.mixin({
     toast: true,
     position: 'top',

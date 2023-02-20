@@ -1,4 +1,3 @@
-// Need to use the React-specific entry point to import createApi
 import { getCookieToken } from '../../Cookie';
 import { coreApi } from '../query/coreApi';
 

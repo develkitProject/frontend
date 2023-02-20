@@ -2,15 +2,15 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-export default function BlackButton(props) {
+interface IProps {
+  onClick(): void;
+  text: string;
+}
+
+export default function BlackButton({ onClick, text }: IProps) {
   return (
-    <StButton
-      type="button"
-      onClick={() => {
-        props.onClick();
-      }}
-    >
-      {props.text}
+    <StButton type="button" onClick={onClick}>
+      {text}
     </StButton>
   );
 }

@@ -1,65 +1,55 @@
 import React, { useRef, useReducer } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import useChangeImage from '../../pages/mypage/hooks/useChangeImage';
 import ModalContainer from './ModalContainer';
 import { StButton } from '../../account/login/style';
-import useChangeImage from '../../pages/mypage/hooks/useChangeImage';
+import imgupload from '../img/imgupload.svg';
 import CloseButton from '../elements/CloseButton';
-import {
-  useGetWorkspaceInfoQuery,
-  useUpdateWorkspaceInfoMutation,
-} from '../../redux/modules/workspaces';
+import { useAddWorkSpacesMutation } from '../../redux/modules/workspaces';
 import { SweetAlertHook } from '../elements/SweetAlert';
 
-const reducer = (state, action) => {
+interface Props {
+  title: string;
+  content: string;
+}
+
+const reducer = (state: Props, action: { name: string; value: string }) => {
   return {
     ...state,
     [action.name]: action.value,
   };
 };
 
-function UpdateSpaceModal({ onClose }) {
-  const params = useParams();
-  const id = Number(params.id);
-  const { data, error, isLoading } = useGetWorkspaceInfoQuery(id);
-  const [updateWorkSpaces] = useUpdateWorkspaceInfoMutation(id);
+function CreateSpaceModal({ onClose }: { onClose: () => void }) {
+  const imgRef = useRef<HTMLInputElement>(null);
+  const [addWorkSpaces] = useAddWorkSpacesMutation();
   const { onChangeImage, imageUrl } = useChangeImage();
 
-  const preTitle = data?.data?.title;
-  const preContent = data?.data?.content;
-  const preImg = data?.data?.imageUrl;
-
-  const imgRef = useRef('');
-
   const [state, setState] = useReducer(reducer, {
-    title: preTitle,
-    content: preContent,
+    title: '',
+    content: '',
   });
 
   const { title, content } = state;
-
-  const onChange = (e) => {
+  const onChange = (e: { target: any }) => {
     setState(e.target);
   };
 
   const modalRef = useRef(null);
-  const handleClose = () => {
-    onClose?.();
-  };
 
   const handleSubmit = () => {
     if (title !== '' && content !== '') {
-      const updateInfo = {
-        id,
+      const obj = {
         image: imageUrl,
         title,
         content,
       };
-      updateWorkSpaces(updateInfo);
-      SweetAlertHook(2000, 'success', '프로젝트가 수정되었습니다!');
-      handleClose();
+      addWorkSpaces(obj);
+      SweetAlertHook(2000, 'success', '프로젝트가 생성되었습니다!');
+      onClose();
     } else {
-      alert('프로젝트 제목과 소개를 모두 채워주세요!');
+      // eslint-disable-next-line
+      alert('프로젝트 이름과 소개를 모두 채워주세요!');
     }
   };
 
@@ -68,27 +58,27 @@ function UpdateSpaceModal({ onClose }) {
       <Overlay>
         <ModalWrap ref={modalRef}>
           <Wrapper>
-            <StProject>프로젝트 수정하기</StProject>
+            <StProject>프로젝트 생성하기</StProject>
             <StMent>
               프로젝트 생성 후, 프로젝트 홈에서 초대코드를 복사할 수 있습니다.
             </StMent>
             <StInputTitle>커버 이미지</StInputTitle>
             <StImageBox
-              src={imageUrl || preImg}
-              onClick={() => imgRef.current.click()}
+              src={imageUrl || imgupload}
+              onClick={() => imgRef.current?.click()}
             />
             <StInputTitle>프로젝트 이름</StInputTitle>
             <StInput
               onChange={onChange}
               name="title"
-              value={title}
+              placeholder="프로젝트명을 입력해주세요(20자 이내)"
               maxLength={20}
             />
             <StInputTitle>프로젝트 소개</StInputTitle>
             <StInput
               onChange={onChange}
               name="content"
-              value={content}
+              placeholder="프로젝트를 소개해주세요(50자 이내)"
               maxLength={50}
             />
             <StButton
@@ -100,19 +90,17 @@ function UpdateSpaceModal({ onClose }) {
                 fontSize: '20px',
               }}
             >
-              프로젝트 수정하기
+              프로젝트 생성하기
             </StButton>
           </Wrapper>
-          <CloseButton onClose={handleClose}>X</CloseButton>
+          <CloseButton onClose={onClose} />
           <input
             style={{ display: 'none' }}
             accept="image/*"
             id="upload-photo"
             name="upload-photo"
             type="file"
-            onChange={() => {
-              onChangeImage(imgRef);
-            }}
+            onChange={onChangeImage}
             ref={imgRef}
           />
         </ModalWrap>
@@ -121,7 +109,7 @@ function UpdateSpaceModal({ onClose }) {
   );
 }
 
-export default UpdateSpaceModal;
+export default CreateSpaceModal;
 
 const ModalWrap = styled.div`
   width: 650px;

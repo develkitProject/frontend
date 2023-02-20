@@ -215,17 +215,6 @@ const StLogJoin = styled.p`
   cursor: pointer;
 `;
 
-const StLogBtn = styled.button`
-  width: 120px;
-  height: 40px;
-  border-radius: 100px;
-  background-color: #040404;
-  color: white;
-  font-size: 16px;
-  border: 1px solid #d7d7d7;
-  cursor: pointer; ;
-`;
-
 const StProfileImg = styled.img`
   padding: 1px;
   margin-right: 10px;

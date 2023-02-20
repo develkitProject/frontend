@@ -8,7 +8,17 @@ import error_outline from '../img/error_outline.svg';
 import { setIsLoginModal, setIsSignUpModal } from '../../redux/modules/global';
 import KakaoIcon from '../img/kakaoIcon.png';
 
-function WorkSpaceErrorModal({ onClose }) {
+interface OnClose {
+  onClose: () => void;
+}
+
+interface Props {
+  fontWeight?: string;
+  fontSize?: string;
+  fontColor?: string;
+}
+
+function WorkSpaceErrorModal({ onClose }: OnClose) {
   const dispatch = useDispatch();
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=https://d-velkit.com/kakao&response_type=code`;
   const modalRef = useRef(null);
@@ -18,13 +28,10 @@ function WorkSpaceErrorModal({ onClose }) {
     onClose?.();
   }, [onClose]);
 
-  const handleOpenSignUp = useCallback(
-    (event) => {
-      onClose?.();
-      dispatch(setIsSignUpModal(true));
-    },
-    [dispatch, onClose],
-  );
+  const handleOpenSignUp = useCallback(() => {
+    onClose?.();
+    dispatch(setIsSignUpModal(true));
+  }, [dispatch, onClose]);
 
   const handleOpenLogin = useCallback(() => {
     onClose?.();
@@ -136,7 +143,7 @@ const ModalWrap = styled.div`
   align-items: center;
 `;
 
-export const StAlert = styled.div`
+export const StAlert = styled.div<Props>`
   letter-spacing: -1.5px;
   font-weight: ${(props) => props.fontWeight};
   font-size: ${(props) => props.fontSize};
@@ -145,7 +152,7 @@ export const StAlert = styled.div`
   margin-bottom: 10px;
 `;
 
-export const StButton = styled.button`
+export const StButton = styled.button<{ bc: string }>`
   width: 60%;
   height: 50px;
   border-radius: 10px;

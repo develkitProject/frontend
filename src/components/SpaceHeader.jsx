@@ -18,7 +18,6 @@ function SpaceHeader() {
   const onChange = (e) => {
     setCode(e.target.value);
   };
-
   const handleClose = () => {
     setInviteCodeConfirm(false);
   };

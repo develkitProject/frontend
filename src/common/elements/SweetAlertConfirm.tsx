@@ -1,6 +1,10 @@
 import Swal from 'sweetalert2';
 
-export const SweetAlertConfirmHook = (title, onConfirm, dataId) => {
+export const SweetAlertConfirmHook = (
+  title: string,
+  onConfirm: (arg0: string) => void,
+  dataId: string,
+) => {
   Swal.fire({
     icon: 'error',
     toast: true,
