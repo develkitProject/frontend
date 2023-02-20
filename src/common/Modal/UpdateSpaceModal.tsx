@@ -1,4 +1,4 @@
-import React, { useRef, useReducer } from 'react';
+import React, { useRef, useReducer, ChangeEvent } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import ModalContainer from './ModalContainer';
@@ -11,25 +11,28 @@ import {
 } from '../../redux/modules/workspaces';
 import { SweetAlertHook } from '../elements/SweetAlert';
 
-const reducer = (state, action) => {
+const reducer = (
+  state: { title: string; content: string },
+  action: { name: string; value: string },
+) => {
   return {
     ...state,
     [action.name]: action.value,
   };
 };
 
-function UpdateSpaceModal({ onClose }) {
+function UpdateSpaceModal({ onClose }: { onClose: () => void }) {
   const params = useParams();
   const id = Number(params.id);
   const { data, error, isLoading } = useGetWorkspaceInfoQuery(id);
-  const [updateWorkSpaces] = useUpdateWorkspaceInfoMutation(id);
+  const [updateWorkSpaces] = useUpdateWorkspaceInfoMutation();
   const { onChangeImage, imageUrl } = useChangeImage();
 
   const preTitle = data?.data?.title;
   const preContent = data?.data?.content;
   const preImg = data?.data?.imageUrl;
 
-  const imgRef = useRef('');
+  const imgRef = useRef<HTMLInputElement>(null);
 
   const [state, setState] = useReducer(reducer, {
     title: preTitle,
@@ -38,7 +41,7 @@ function UpdateSpaceModal({ onClose }) {
 
   const { title, content } = state;
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setState(e.target);
   };
 
@@ -75,7 +78,7 @@ function UpdateSpaceModal({ onClose }) {
             <StInputTitle>커버 이미지</StInputTitle>
             <StImageBox
               src={imageUrl || preImg}
-              onClick={() => imgRef.current.click()}
+              onClick={() => imgRef.current?.click()}
             />
             <StInputTitle>프로젝트 이름</StInputTitle>
             <StInput
@@ -103,7 +106,7 @@ function UpdateSpaceModal({ onClose }) {
               프로젝트 수정하기
             </StButton>
           </Wrapper>
-          <CloseButton onClose={handleClose}>X</CloseButton>
+          <CloseButton onClose={onClose} />
           <input
             style={{ display: 'none' }}
             accept="image/*"

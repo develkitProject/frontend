@@ -5,7 +5,7 @@ import { useGetInviteCodeQuery } from '../../redux/modules/workspaces';
 import useOutSideClick from '../hooks/useOutSideClick';
 import { SweetAlertHook } from '../elements/SweetAlert';
 
-function InvitationCodeModal({ onClose }) {
+function InvitationCodeModal({ onClose }: { onClose: () => void }) {
   const params = useParams();
   const id = Number(params.id);
   const modalRef = useRef(null);

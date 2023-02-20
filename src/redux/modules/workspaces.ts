@@ -1,9 +1,17 @@
 import { getCookieToken } from '../../Cookie';
 import { coreApi } from '../query/coreApi';
+import { WorkspacesData } from '../../types/workspaces.types';
 
 const headers = {
   Authorization: getCookieToken(),
 };
+
+interface UpdateInfo {
+  id: number;
+  image: string | ArrayBuffer | null;
+  title: string;
+  content: string;
+}
 
 export const workspaceApi = coreApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -17,7 +25,7 @@ export const workspaceApi = coreApi.injectEndpoints({
       providesTags: ['Workspaces'],
     }),
 
-    addWorkspaceCode: builder.mutation({
+    addWorkspaceCode: builder.mutation<WorkspacesData, string>({
       query: (codes) => {
         return {
           url: '/api/invitation/codes',
@@ -51,7 +59,7 @@ export const workspaceApi = coreApi.injectEndpoints({
     }),
 
     updateWorkspaceInfo: builder.mutation({
-      query: (updateInfo) => {
+      query: (updateInfo: UpdateInfo) => {
         return {
           url: `/api/workspaces/${updateInfo.id}`,
           method: 'PUT',
@@ -115,7 +123,7 @@ export const workspaceApi = coreApi.injectEndpoints({
       },
     }),
 
-    getWorkSpacesJoin: builder.mutation({
+    getWorkSpacesJoin: builder.mutation<WorkspacesData, number>({
       query: (id) => {
         return {
           url: `/api/workspaces/join/${id}`,
