@@ -5,7 +5,7 @@ import logo from '../common/img/logo.png';
 function Footer() {
   const navigate = useNavigate();
 
-  const onMovePageHandle = (page) => {
+  const onMovePageHandle = (page: string) => {
     navigate(page);
   };
 
@@ -128,7 +128,6 @@ const StInfoDetail = styled.div`
 
 const StInfoName = styled.div`
   margin-right: 8px;
-  cursor: ${(props) => props.cs};
   font-size: 1rem;
 `;
 
