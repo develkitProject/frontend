@@ -34,7 +34,7 @@ function WorkSpace() {
         <StWrapper>
           <SpaceHeader />
           <CardWrapper>
-            <CreateCard open={open} />
+            <CreateCard openDialog={open} />
             {error ? (
               <>에러가 발생하였습니다.</>
             ) : isLoading ? (

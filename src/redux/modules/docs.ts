@@ -26,7 +26,6 @@ export const docsApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      providesTags: ['Docs'],
     }),
 
     getDocDetail: builder.query({

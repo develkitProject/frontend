@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Add from '../common/img/add.png';
 
-function CreateCard({ open }) {
+interface Props {
+  openDialog: () => void;
+}
+
+function CreateCard({ openDialog }: Props) {
   return (
     <StSpaceCard>
       <StText>진행중인 프로젝트</StText>
-      <StButton onClick={open}>+프로젝트 생성하기</StButton>
+      <StButton onClick={openDialog}>+프로젝트 생성하기</StButton>
     </StSpaceCard>
   );
 }
