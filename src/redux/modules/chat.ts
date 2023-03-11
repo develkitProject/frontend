@@ -26,7 +26,6 @@ export const chatApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      providesTags: ['Messages'],
     }),
   }),
 });

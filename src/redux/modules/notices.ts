@@ -26,7 +26,6 @@ export const noticesApi = coreApi.injectEndpoints({
           headers,
         };
       },
-      providesTags: ['Notice'],
     }),
     addNotice: builder.mutation({
       query: (notice) => {
