@@ -1,11 +1,18 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState, KeyboardEvent } from 'react';
 import search from '../common/img/search.png';
 
-function SearchBar({ id, onSearchHandle, setSearchDocs }) {
-  const [type, setType] = useState('ContentTitle');
-  const [field, setField] = useState('keyword');
-  const handleSelect = (e) => {
+interface Props {
+  id: string;
+  onSearchHandle: (a: object) => void;
+  setSearchDocs: React.Dispatch<React.SetStateAction<number>>
+}
+
+function SearchBar({ id, onSearchHandle, setSearchDocs }: Props) {
+  console.log(id, onSearchHandle, setSearchDocs)
+  const [type, setType] = useState<string>('ContentTitle');
+  const [field, setField] = useState<string>('keyword');
+  const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     setType(e.target.value);
     if (e.target.value === 'Writer') {
       setField('writer');
@@ -15,7 +22,7 @@ function SearchBar({ id, onSearchHandle, setSearchDocs }) {
   };
 
   const [keyword, setKeyword] = useState('');
-  const handleInput = (e) => {
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   };
   const handleClick = () => {
@@ -29,7 +36,7 @@ function SearchBar({ id, onSearchHandle, setSearchDocs }) {
     setKeyword('');
   };
 
-  const onKeyDown = (e) => {
+  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleClick();
     }
