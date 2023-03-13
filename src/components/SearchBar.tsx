@@ -9,7 +9,6 @@ interface Props {
 }
 
 function SearchBar({ id, onSearchHandle, setSearchDocs }: Props) {
-  console.log(id, onSearchHandle, setSearchDocs)
   const [type, setType] = useState<string>('ContentTitle');
   const [field, setField] = useState<string>('keyword');
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
