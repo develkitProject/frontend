@@ -51,12 +51,7 @@ function WorkSpace() {
                   .map((data, i) => {
                     return (
                       <div style={{ width: '70%' }} key={data.workspaces.id}>
-                        <SpaceCard
-                          data={data}
-                          width="100%"
-                          deleteButton={deleteButton}
-                          deleteWorkSpaces={deleteWorkSpaces}
-                        />
+                        <SpaceCard data={data} width="100%" />
                       </div>
                     );
                   })}

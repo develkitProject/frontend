@@ -1,22 +1,22 @@
 import React from 'react';
-
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import CardProfile from '../common/elements/CardProfile';
+import {Notices, Workspaces} from '../types/workspaces.types'
 
-function SpaceCard({ data, error, isLoading, width }) {
+interface Props {
+  data: {
+    notices: Notices;
+    workspaces: Workspaces;
+  }
+  width: string;
+}
+
+function SpaceCard({ data, width }: Props) {
   const navigate = useNavigate();
 
   return (
-    <>
-      {error ? (
-        <>
-          <div>에러가 발생했습니다.</div>
-          <div>자세한 사항은 관리자에게 문의해주세요</div>
-        </>
-      ) : isLoading ? (
-        <>정보를 불러오는 중입니다.</>
-      ) : data ? (
+
         <>
           <StSpaceCard direction="row" width={width} key={data.workspaces.id}>
             <StCardImage
@@ -143,14 +143,13 @@ function SpaceCard({ data, error, isLoading, width }) {
             </StFooterBox>
           </StSpaceCard>
         </>
-      ) : null}
-    </>
+
   );
 }
 
 export default SpaceCard;
 
-const StSpaceCard = styled.div`
+const StSpaceCard = styled.div<{direction: string; width: string}>`
   display: flex;
   flex-direction: ${(props) => props.direction};
   margin: 10px 10px 10px 10px;
@@ -162,7 +161,7 @@ const StSpaceCard = styled.div`
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.1);
 `;
 
-const StCardImage = styled.div`
+const StCardImage = styled.div<{data: Workspaces}>`
   cursor: pointer;
   width: 40%;
   height: 100%;
@@ -216,7 +215,7 @@ const StDiv = styled.div`
   line-height: 20px;
 `;
 
-const SpaceName = styled.span`
+const SpaceName = styled.span<{fontSize?: string}>`
   font-size: ${(props) => props.fontSize}px;
   font-weight: 500;
   font-family: 'Noto Sans KR', sans-serif;
@@ -232,7 +231,7 @@ const SpaceDate = styled.span`
   color: #999;
 `;
 
-const SpaceGoal = styled.span`
+const SpaceGoal = styled.span<{weight: string}>`
   margin-top: 35px;
   font-size: 18px;
   height: 23px;
