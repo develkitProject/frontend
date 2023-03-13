@@ -8,7 +8,7 @@ import type { Workspaces } from '../../types/workspaces.types';
 
 interface Props {
   onClose?: () => void;
-  spaceData: Workspaces;
+  spaceData: Workspaces | null;
 }
 
 function CodeConfirmModal({ onClose, spaceData }: Props) {
@@ -23,9 +23,9 @@ function CodeConfirmModal({ onClose, spaceData }: Props) {
 
   const onJoin = async () => {
     try {
-      const result = await getWorkSpacesJoin(spaceData.id).unwrap();
+      const result = await getWorkSpacesJoin(spaceData!.id).unwrap();
       SweetAlertHook(2000, 'success', '가입되었습니다!');
-      navigate(`/workspace/main/${spaceData.id}`);
+      navigate(`/workspace/main/${spaceData!.id}`);
     } catch (error) {
       alert('이미 가입된 워크스페이스입니다!');
     }

@@ -1,21 +1,21 @@
+import React, { ChangeEvent, useState } from 'react';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { SerializedError } from '@reduxjs/toolkit';
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import { Notices, Workspaces } from '../types/workspaces.types';
 import CodeConfirmModal from '../common/modal/CodeConfirmModal';
 import { getCookieToken } from '../Cookie';
 import { useAddWorkspaceCodeMutation } from '../redux/modules/workspaces';
 import { SweetAlertHook } from '../common/elements/SweetAlert';
 
 function SpaceHeader() {
-  const headers = {
-    Authorization: getCookieToken(),
-  };
-
+  
   const [workspaceCode] = useAddWorkspaceCodeMutation();
   const [spaceData, setSpaceData] = useState(null);
   const [inviteCodeConfirm, setInviteCodeConfirm] = useState(false);
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState<string>('');
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCode(e.target.value);
   };
   const handleClose = () => {
@@ -28,9 +28,10 @@ function SpaceHeader() {
     };
     if (code) {
       try {
-        await workspaceCode(codes, { headers }).then((response) => {
-          setInviteCodeConfirm(true);
-          setSpaceData(response?.data?.data.workspaces);
+        await workspaceCode(codes).then((response: any) => {
+          const workspacesData = response.data.data.workspaces
+            setInviteCodeConfirm(true);
+            setSpaceData(workspacesData);
         });
       } catch (error) {
         SweetAlertHook(2000, 'error', '없는 코드입니다!');
@@ -57,7 +58,6 @@ function SpaceHeader() {
         <CodeConfirmModal
           onClose={handleClose}
           spaceData={spaceData}
-          headers={headers}
         />
       ) : null}
     </StHeaderDiv>
