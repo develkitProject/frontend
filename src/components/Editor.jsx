@@ -17,10 +17,6 @@ function Editor({ value, setContent }) {
     Authorization: getCookieToken(),
   };
 
-  const onChange = (e) => {
-    setContent(e.target.value);
-  };
-
   const imageHandler = () => {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
