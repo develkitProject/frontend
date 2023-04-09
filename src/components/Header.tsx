@@ -16,7 +16,10 @@ import {
 import { useGetUserInfoQuery } from '../redux/modules/user';
 import { SweetAlertHook } from '../common/elements/SweetAlert';
 
-function Header({ path, setPath }) {
+function Header({ path, setPath }: {
+  path: number;
+  setPath: (path: number) => void;
+}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cookies = getCookieToken();
@@ -56,7 +59,7 @@ function Header({ path, setPath }) {
     setProfileOpen(false);
   };
 
-  const onMoveHandle = (path, page) => {
+  const onMoveHandle = (path: number, page: string) => {
     setPath(path);
     navigate(page);
   };
@@ -90,7 +93,7 @@ function Header({ path, setPath }) {
               onClick={() => {
                 onMoveHandle(1, '/');
               }}
-              style={path === 1 ? { opacity: '1' } : null}
+              style={{opacity: `${path === 1} ? '1' : null`}}
             >
               About
             </StMenuName>
@@ -98,7 +101,7 @@ function Header({ path, setPath }) {
               onClick={() => {
                 onMoveHandle(2, '/workspace');
               }}
-              style={path === 2 ? { opacity: '1' } : null}
+              style={{opacity: `${path === 2} ? '1' : null`}}
             >
               Project
             </StMenuName>
@@ -106,7 +109,7 @@ function Header({ path, setPath }) {
               onClick={() => {
                 onMoveHandle(4, '/faq');
               }}
-              style={path === 4 ? { opacity: '1' } : null}
+              style={{opacity: `${path === 4} ? '1' : null`}}
             >
               FAQ
             </StMenuName>
@@ -114,7 +117,7 @@ function Header({ path, setPath }) {
               onClick={() => {
                 onMoveHandle(5, '/event');
               }}
-              style={path === 5 ? { opacity: '1' } : null}
+              style={{opacity: `${path === 5} ? '1' : null`}}
             >
               Event
             </StMenuName>
@@ -130,7 +133,6 @@ function Header({ path, setPath }) {
             <StLogJoin
               fontColor="white"
               onClick={openSignUpModal}
-              SignupButton={openSignUpModal}
             >
               JOIN
             </StLogJoin>
@@ -151,8 +153,8 @@ function Header({ path, setPath }) {
           </StDiv>
         )}
       </StHeaderDiv>
-      {isLogin && <Login onSignupButton={openSignUpModal} open={isLogin} />}
-      {isSignUp && <SignupModal open={isSignUp} />}
+      {isLogin && <Login />}
+      {isSignUp && <SignupModal/>}
     </>
   );
 }
@@ -205,7 +207,7 @@ const StMenuName = styled.span`
   }
 `;
 
-const StLogJoin = styled.p`
+const StLogJoin = styled.p<{fontColor?: string}>`
   color: ${(props) => props.fontColor};
   padding-left: 5px;
   padding-right: 5px;
