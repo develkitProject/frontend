@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ClickMenuType } from './types';
 
 export default function useChangeMenu() {
   const [menu, setMenu] = useState('home');
@@ -11,7 +12,7 @@ export default function useChangeMenu() {
   };
 
   const onClickMenu =
-    ({ key, tab, docsId }: {key: string, tab: string, docsId: number}) =>
+    ({ key, tab, docsId }: ClickMenuType) =>
     () => {
       setMenu(key);
       if (tab) {
