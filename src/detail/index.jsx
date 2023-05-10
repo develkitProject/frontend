@@ -37,7 +37,7 @@ export default function WorkspaceDetailPage() {
     useChangeMenu();
   const navigate = useNavigate();
   const id = Number(useParams().id);
-  const { data, isLoading, refetch } = useGetMainWorkSpacesQuery(id);
+  const { data } = useGetMainWorkSpacesQuery(id);
   const {
     data: data_1,
     isLoading: isLoading_1,
