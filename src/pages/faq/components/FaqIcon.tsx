@@ -13,7 +13,7 @@ const FaqIcon = {
       />
     </svg>
   ),
-  ArrowDown: ({ onClick }) => (
+  ArrowDown: ({ onClick }: {onClick: () => void}) => (
     <svg
       onClick={onClick}
       width="30"
@@ -36,7 +36,7 @@ const FaqIcon = {
       </defs>
     </svg>
   ),
-  ArrowUp: ({ onClick }) => (
+  ArrowUp: ({ onClick }: {onClick: () => void}) => (
     <svg
       onClick={onClick}
       width="30"
