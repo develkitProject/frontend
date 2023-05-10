@@ -27,7 +27,7 @@ export default function useShowFaq() {
   const [questions, setQuestions] = useState(questionsData);
 
   const handleShowQuestions =
-    ({ key }) =>
+    ({ key }: { key: string }) =>
     () => {
       setQuestions(
         questions.map((question) =>
@@ -42,7 +42,7 @@ export default function useShowFaq() {
     };
 
   const handleCloseQuestions =
-    ({ key }) =>
+    ({ key }: { key: string }) =>
     () => {
       setQuestions(
         questions.map((question) =>

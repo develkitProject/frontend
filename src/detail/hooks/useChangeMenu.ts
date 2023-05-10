@@ -12,7 +12,7 @@ export default function useChangeMenu() {
   };
 
   const onClickMenu =
-    ({ key, tab, docsId }: ClickMenuType) =>
+    ({ key, tab, docsId }: ClickMenuType ) =>
     () => {
       setMenu(key);
       if (tab) {

@@ -61,7 +61,7 @@ export const BottomLine = styled.div`
   width: 1000px;
 `;
 
-export const Ment = styled.span`
+export const Ment = styled.span<{fontColor: string}>`
   color: ${(props) => props.fontColor};
   font-family: 'Consolas';
   font-size: 1.2rem;
