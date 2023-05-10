@@ -4,8 +4,23 @@ import schedule from '../../common/img/schedule.svg';
 import contacts from '../../common/img/contacts.svg';
 import laptop from '../../common/img/laptop.svg';
 import chat from '../../common/img/chat.svg';
+import { ClickMenuType } from '../hooks/types';
 
 import * as S from '../style';
+
+interface SubItem  {
+  key: string;
+  subTitle: string;
+  tab?: string;
+};
+
+interface MenuData  {
+  key: string;
+  icon: string;
+  title: string;
+  subItem?: SubItem[];
+  tab?: string;
+};
 
 const menuData = [
   {
@@ -46,10 +61,17 @@ const menuData = [
   },
 ];
 
-export default function Sidebar({ onClickMenu, menu, toggle }) {
+
+interface Props {
+  onClickMenu: (params: ClickMenuType) => () => void;
+  menu: string;
+  toggle: () => void
+}
+
+export default function Sidebar({ onClickMenu, menu, toggle }: Props) {
   return (
     <S.StWrapper>
-      {menuData.map(({ key, title, subItem, icon, tab }) => (
+      {menuData.map(({ key, title, subItem, icon, tab }: MenuData) => (
         <div key={key}>
           {!subItem ? (
             <S.StLabel
@@ -63,7 +85,7 @@ export default function Sidebar({ onClickMenu, menu, toggle }) {
                       backgroundColor: '#EEF8F8',
                       borderRadius: '10px',
                     }
-                  : null
+                  : undefined
               }
             >
               <S.MenuIcon src={icon} />
@@ -91,7 +113,7 @@ export default function Sidebar({ onClickMenu, menu, toggle }) {
                             backgroundColor: '#EEF8F8',
                             borderRadius: '10px',
                           }
-                        : null
+                        : undefined
                     }
                   >
                     {subTitle}

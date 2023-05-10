@@ -7,7 +7,7 @@ import useShowFaq from './hooks/useShowFaq';
 
 export default function FAQPage() {
   const { questions, handleShowQuestions, handleCloseQuestions } = useShowFaq();
-
+  
   const Contents = {
     first: <FaqContents.First />,
     second: <FaqContents.Second />,
@@ -42,7 +42,7 @@ export default function FAQPage() {
             {isOpen && (
               <>
                 <S.QuestionContentsWrapper>
-                  {Contents[key]}
+                  { Contents[key as keyof typeof Contents] }
                 </S.QuestionContentsWrapper>
                 <S.BottomLine />
               </>
