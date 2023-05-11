@@ -6,7 +6,10 @@ import Fourth2 from '../../../common/img/Fourth2.png';
 import Footer from '../../../components/Footer';
 import * as St from '../style';
 
-function FourthSlide({ onClickSignUpModal, onClickEventPage }) {
+function FourthSlide({ onClickSignUpModal, onClickEventPage }: {
+  onClickSignUpModal: () => void;
+  onClickEventPage: () => void;
+}) {
   return (
     <>
       <St.Wrapper height="80vh">

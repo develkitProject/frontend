@@ -7,13 +7,21 @@ import 'animate.css';
 
 import * as St from '../style';
 
+interface Props {
+  setPath: (num: number) => void;
+  path: number
+  onClickSubmit: () => void;
+  cookies: string;
+  onClickGuestLogin: () => void;
+}
+
 function FirstSlide({
   setPath,
   path,
   onClickSubmit,
   cookies,
   onClickGuestLogin,
-}) {
+}: Props) {
   return (
     <>
       <Header setPath={setPath} path={path} />
