@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { FullPage, Slide } from 'react-full-page/lib';
+import { FullPage, Slide } from 'react-full-page';
 import 'animate.css';
 import WorkSpaceErrorModal from '../../common/modal/error';
 import SignupModal from '../../account/signup';
@@ -16,7 +16,7 @@ import FourthSlide from './components/FourthSlide';
 import useModalOverlay from '../../account/signup/hooks/useModalOverlay';
 import useGuestLogin from './hooks/useGuestLogin';
 
-function Landing({ path, setPath }) {
+function Landing({ path, setPath }: {path: number, setPath: (path: number) => void}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -63,18 +63,17 @@ function Landing({ path, setPath }) {
   ];
 
   return (
-    <FullPage controls controlsProps={{ className: 'slide-navigation' }}>
+    <FullPage controlProps={{ className: 'slide-navigation' }}>
       <TopButton />
       {SlideComponents.map((item, i) => (
         <Slide key={i}>{item}</Slide>
       ))}
       {isOpenErrorModal && (
         <WorkSpaceErrorModal
-          open={isOpenErrorModal}
           onClose={closeErrorModal}
         />
       )}
-      {isSignUp && <SignupModal open={isSignUp} />}
+      {isSignUp && <SignupModal />}
     </FullPage>
   );
 }

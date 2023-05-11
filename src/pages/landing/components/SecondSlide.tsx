@@ -10,7 +10,7 @@ import * as St from '../style';
 function SecondSlide() {
   return (
     <St.Wrapper height="100vh">
-      <St.Main style={{ alginItems: 'center' }}>
+      <St.Main>
         <St.SecondIntroDiv>
           <div>프로젝트 협업툴, 더 꼼꼼히 따져봐야 합니다.</div>
           <St.SecondMent>

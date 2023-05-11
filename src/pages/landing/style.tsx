@@ -7,7 +7,7 @@ import twinklestar from '../../common/img/twinklestar.svg';
 import circle from '../../common/img/circle.svg';
 import 'animate.css';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{height: string}>`
   color: white;
   width: 100%;
   height: ${(props) => props.height};
@@ -39,7 +39,7 @@ export const Main = styled.div`
   font-family: 'Noto Sans KR', sans-serif;
 `;
 
-export const Wrap = styled.div`
+export const Wrap = styled.div<{dp: string}>`
   width: 100%;
   justify-content: left;
   align-items: left;
@@ -54,7 +54,7 @@ export const Intro = styled.div`
   flex-direction: column;
 `;
 
-export const Ment = styled.span`
+export const Ment = styled.span<{fontColor?: string}>`
   color: ${(props) => props.fontColor};
   font-family: 'Consolas';
   font-size: 1.4rem;
@@ -62,7 +62,7 @@ export const Ment = styled.span`
   letter-spacing: 0.03em;
 `;
 
-export const IntroMent = styled.div`
+export const IntroMent = styled.div<{fontColor?: string}>`
   color: ${(props) => props.fontColor};
   margin-top: 4%;
   font-size: 54px;
@@ -277,7 +277,7 @@ export const CardElement = styled.div`
   margin: 1%;
 `;
 
-export const ImgContainer = styled.div`
+export const ImgContainer = styled.div<{img: string}>`
   width: 100%;
   height: 230px;
   border-radius: 15px;
@@ -301,7 +301,7 @@ export const CardMentContent = styled.div`
   color: #999999;
 `;
 
-export const ImgWrapper = styled.div`
+export const ImgWrapper = styled.div<{img: string}>`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)),
@@ -330,7 +330,7 @@ export const ImgBox = styled.div`
   justify-content: center;
 `;
 
-export const ThirdImgTest = styled.div`
+export const ThirdImgTest = styled.div<{img: string}>`
   align-items: left;
   width: 450px;
   height: 420px;
@@ -351,7 +351,7 @@ export const MentContainer = styled.div`
   width: 100%;
 `;
 
-export const FourthImg = styled.div`
+export const FourthImg = styled.div<{img: string}>`
   align-items: left;
   width: 33vw;
   height: 40vh;
