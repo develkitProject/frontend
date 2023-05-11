@@ -110,7 +110,7 @@ export const FaqTitle = styled.h1`
   margin-top: 10px;
 `;
 
-export const Ment = styled.span`
+export const Ment = styled.span<{fontColor?: string}>`
   color: ${(props) => props.fontColor};
   font-family: 'Consolas';
   font-size: 1.2rem;
@@ -119,7 +119,7 @@ export const Ment = styled.span`
   margin-top: 50px;
 `;
 
-const StImgContainer = styled.div`
+const StImgContainer = styled.div<{img?: string}>`
   width: 800px;
   height: 800px;
   background: url(${(props) => props.img}) no-repeat;
