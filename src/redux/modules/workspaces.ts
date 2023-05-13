@@ -2,15 +2,6 @@ import { getCookieToken } from '../../Cookie';
 import { coreApi } from '../query/coreApi';
 import { Workspaces, Notices } from '../../types/workspaces.types';
 
-interface Props {
-  data: {
-    data: {
-      workspaces: Workspaces;
-      notices: Notices;
-    }
-  }
-}
-
 const headers = {
   Authorization: getCookieToken(),
 };

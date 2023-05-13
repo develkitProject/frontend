@@ -32,8 +32,6 @@ function SignupModal() {
     return (): string => ($body.style.overflow = 'auto');
   }, []);
 
-  // useOutSideClick(modalRef, handleClose);
-
   return (
     <ModalContainer>
       <St.Overlay>
