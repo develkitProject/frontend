@@ -130,7 +130,7 @@ export const StSpan = styled.span`
   margin-bottom: 20px;
 `;
 
-export const StImage = styled.div`
+export const StImage = styled.div<{profileImageUrl: string}>`
   width: 180px;
   height: 180px;
   border-radius: 100px;
@@ -140,7 +140,13 @@ export const StImage = styled.div`
   cursor: pointer;
 `;
 
-export const StEmail = styled.span`
+interface Props {
+  fontWeight: string;
+  fontSize: string;
+  fontColor: string;
+}
+
+export const StEmail = styled.span<Props>`
   font-weight: ${(props) => props.fontWeight};
   font-size: ${(props) => props.fontSize};
   color: ${(props) => props.fontColor};

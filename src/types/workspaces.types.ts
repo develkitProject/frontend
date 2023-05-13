@@ -42,7 +42,7 @@ export interface WorkspacesData {
   data: [
     {
       notices: Notices;
-      workspace: Workspaces;
+      workspaces: Workspaces;
     },
   ];
 }

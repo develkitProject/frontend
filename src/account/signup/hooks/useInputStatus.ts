@@ -24,7 +24,7 @@ const passwordCheckReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
 export default function useInputStatus({ signUpInputs }: IProps) {
   const { nickname, email, password, passwordConfirm } = signUpInputs;
 
-  const [getEmailCheck, { data }] = useGetEmailCheckMutation();
+  const [getEmailCheck] = useGetEmailCheckMutation();
 
   const [successStatus, setSuccessStatus] = useState<IState>({
     isNickname: null,

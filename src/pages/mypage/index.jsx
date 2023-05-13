@@ -11,7 +11,6 @@ function MyPage() {
   const [tab, setTab] = useState(false);
   const { data, error, isLoading } = useGetWorkspacesQuery();
   const { data: user } = useGetUserInfoQuery();
-
   return (
     <S.Wrapper>
       <S.RowDiv>

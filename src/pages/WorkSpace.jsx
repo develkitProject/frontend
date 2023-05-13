@@ -14,12 +14,10 @@ import WorkSpaceErrorModal from '../common/modal/error';
 import CreateSpaceModal from '../common/modal/CreateSpaceModal';
 
 function WorkSpace() {
-  const { data, error, isLoading, refetch } = useGetWorkspacesQuery();
-  const [deleteWorkSpaces] = useDeleteWorkSpacesMutation();
+  const { data, error, isLoading } = useGetWorkspacesQuery();
   const workspaces = data?.data;
   const [workSpaces, setWorkSpaces] = useState();
   const cookies = getCookieToken();
-  const [deleteButton, setDeletebutton] = useState(true);
   const { isOpen, open, close } = useModalOverlay();
 
   useEffect(() => {

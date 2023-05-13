@@ -1,9 +1,6 @@
 import {
   useState,
   useCallback,
-  ReactEventHandler,
-  ChangeEvent,
-  ChangeEventHandler,
   FormEvent,
 } from 'react';
 import { useDispatch } from 'react-redux';
@@ -23,7 +20,7 @@ export default function useInputSignUp() {
     passwordConfirm: '',
   });
 
-  const [getSignUp, { error, isLoading }] = useGetSignUpMutation();
+  const [ getSignUp ] = useGetSignUpMutation();
 
   const onChangeSignUpInputs = useCallback(
     (e: FormEvent<HTMLInputElement>) => {
@@ -46,9 +43,6 @@ export default function useInputSignUp() {
     },
     [signUpInputs],
   );
-
-  //     data :
-  // {username: "fbgus3333333@dd.do", profileImage: null}
 
   const handleSignUp = useCallback(() => {
     const { nickname, email, password } = signUpInputs;
