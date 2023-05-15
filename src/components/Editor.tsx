@@ -5,17 +5,13 @@ import styled from 'styled-components';
 import { getCookieToken } from '../Cookie';
 import { useAddDocImageMutation } from '../redux/modules/docs';
 
-function Editor({ value, setContent }) {
-  const QuillRef = useRef();
+function Editor({ value, setContent }: {value: string, setContent: () => void}) {
+  const QuillRef = useRef<ReactQuill>();
   const [editContent, setEditContent] = useState(value);
   useEffect(() => {
     setEditContent(value);
   }, [setContent, value]);
   const [addDocImage] = useAddDocImageMutation();
-
-  const headers = {
-    Authorization: getCookieToken(),
-  };
 
   const imageHandler = () => {
     const input = document.createElement('input');
@@ -25,15 +21,15 @@ function Editor({ value, setContent }) {
 
     // eslint-disable-next-line consistent-return
     input.onchange = async () => {
-      const file = input.files[0];
+      const file = input.files && input.files[0];
       const formData = new FormData();
       if (file) {
         formData.append('image', file);
         try {
-          await addDocImage(formData, { headers }).then((result) => {
-            const IMG_URL = result?.data?.data?.images[0];
-            const range = QuillRef.current?.getEditor().getSelection()?.index;
-            if (range !== null && range !== undefined) {
+          await addDocImage(formData).then((result: any) => {
+            console.log(result)
+            const IMG_URL =  result?.data?.data?.images[0];
+            const range = QuillRef.current?.getEditor().getSelection()?.index;            if (range !== null && range !== undefined) {
               const quill = QuillRef.current?.getEditor();
               quill?.setSelection(range, 1);
               quill?.clipboard.dangerouslyPasteHTML(
@@ -43,7 +39,7 @@ function Editor({ value, setContent }) {
             }
             return { ...result, success: true };
           });
-        } catch (error) {
+        } catch (error: any) {
           const err = error;
           return { ...err.response, success: false };
         }
@@ -102,11 +98,9 @@ function Editor({ value, setContent }) {
         }}
         style={{ height: '500px', width: '96%' }}
         theme="snow"
-        name="content"
         modules={modules}
         formats={formats}
         onChange={setContent}
-        content={editContent}
         defaultValue={editContent}
       />
     </StEditorContainer>
